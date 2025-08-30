@@ -1,0 +1,11 @@
+.svelte-kit/**
+node_modules/**
+build/**
+coverage/**
+test-results/**
+*.cjs
+REPORT_*.md
+PATTERNS_LEARNED.json
+IMPROVEMENTS_SUGGESTED.md
+LOG_POSTMORTEM.md
+lighthouserc.js

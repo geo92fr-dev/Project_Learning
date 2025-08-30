@@ -1,0 +1,103 @@
+{
+  ".svelte-kit/generated/server/internal.js": {
+    "file": "internal.js",
+    "imports": [
+      "_internal.js"
+    ],
+    "isEntry": true,
+    "src": ".svelte-kit/generated/server/internal.js"
+  },
+  "_index.js": {
+    "file": "chunks/index.js",
+    "imports": [
+      "_ssr.js"
+    ]
+  },
+  "_internal.js": {
+    "file": "chunks/internal.js",
+    "imports": [
+      "_ssr.js"
+    ]
+  },
+  "_navigation.js": {
+    "file": "chunks/navigation.js",
+    "imports": [
+      "_index.js"
+    ]
+  },
+  "_ssr.js": {
+    "file": "chunks/ssr.js"
+  },
+  "node_modules/@sveltejs/kit/src/runtime/components/error.svelte": {
+    "file": "entries/fallbacks/error.svelte.js",
+    "imports": [
+      "_ssr.js"
+    ],
+    "isEntry": true,
+    "src": "node_modules/@sveltejs/kit/src/runtime/components/error.svelte"
+  },
+  "node_modules/@sveltejs/kit/src/runtime/components/layout.svelte": {
+    "file": "entries/fallbacks/layout.svelte.js",
+    "imports": [
+      "_ssr.js"
+    ],
+    "isEntry": true,
+    "src": "node_modules/@sveltejs/kit/src/runtime/components/layout.svelte"
+  },
+  "node_modules/@sveltejs/kit/src/runtime/server/index.js": {
+    "file": "index.js",
+    "imports": [
+      "_internal.js",
+      "_index.js"
+    ],
+    "isEntry": true,
+    "src": "node_modules/@sveltejs/kit/src/runtime/server/index.js"
+  },
+  "src/routes/+page.css": {
+    "file": "_app/immutable/assets/_page.6f085c24.css",
+    "src": "src/routes/+page.css"
+  },
+  "src/routes/+page.svelte": {
+    "css": [
+      "_app/immutable/assets/_page.6f085c24.css"
+    ],
+    "file": "entries/pages/_page.svelte.js",
+    "imports": [
+      "_ssr.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/+page.svelte"
+  },
+  "src/routes/auth/+page.css": {
+    "file": "_app/immutable/assets/_page.d2595b0a.css",
+    "src": "src/routes/auth/+page.css"
+  },
+  "src/routes/auth/+page.svelte": {
+    "css": [
+      "_app/immutable/assets/_page.d2595b0a.css"
+    ],
+    "file": "entries/pages/auth/_page.svelte.js",
+    "imports": [
+      "_ssr.js",
+      "_navigation.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/auth/+page.svelte"
+  },
+  "src/routes/dashboard/+page.css": {
+    "file": "_app/immutable/assets/_page.5deba8a5.css",
+    "src": "src/routes/dashboard/+page.css"
+  },
+  "src/routes/dashboard/+page.svelte": {
+    "css": [
+      "_app/immutable/assets/_page.5deba8a5.css"
+    ],
+    "file": "entries/pages/dashboard/_page.svelte.js",
+    "imports": [
+      "_ssr.js",
+      "_navigation.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/dashboard/+page.svelte"
+  }
+}

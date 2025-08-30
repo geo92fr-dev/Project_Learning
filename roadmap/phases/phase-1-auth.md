@@ -1,14 +1,17 @@
 # 🔐 Phase 1 : Firebase & Authentification (1 semaine) - v1.0 MVP
 
 ## 🎯 Contexte IA
+
 **Objectif** : Authentification Google OAuth avec popup moderne et protection des routes.
 **Version cible** : v1.0 (MVP avec auth fonctionnelle)
 **Pré-requis** : Phase 0 complétée, projet SvelteKit configuré
 
 ## 📚 Référence Modulaire
+
 **[REF]** Toute l'implémentation est documentée dans : **[firebase-auth.md](../references/auth/firebase-auth.md)**
 
 Cette référence contient :
+
 - ✅ Configuration Firebase complète avec variables d'environnement
 - ✅ Types TypeScript étendus et évolutifs
 - ✅ Store d'authentification réactif avec persistance
@@ -21,12 +24,14 @@ Cette référence contient :
 ## 🚀 Instructions d'implémentation
 
 ### Étape 1.1 : Configuration Firebase
+
 ```bash
 [CMD] npm install firebase
 [CMD] npm install -D @types/firebase
 ```
 
 **[FILE]** Créer `.env.local` :
+
 ```env
 VITE_FIREBASE_API_KEY=your_api_key
 VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
@@ -37,10 +42,12 @@ VITE_FIREBASE_APP_ID=1:123456789:web:abcdef
 ```
 
 ### Étape 1.2 : Store d'authentification
+
 **[FILE]** Créer `src/lib/stores/auth.ts` :
+
 ```typescript
-import { writable } from 'svelte/store';
-import type { User } from 'firebase/auth';
+import { writable } from "svelte/store";
+import type { User } from "firebase/auth";
 
 interface AuthState {
   user: User | null;
@@ -51,26 +58,30 @@ interface AuthState {
 export const authStore = writable<AuthState>({
   user: null,
   loading: true,
-  error: null
+  error: null,
 });
 ```
 
 ### Étape 1.3 : Configuration Firebase
+
 **[FILE]** Créer `src/lib/firebase/config.ts` selon la référence modulaire
 
 ### Étape 1.4 : Composants d'authentification
+
 **[FILE]** Créer `src/lib/components/auth/LoginForm.svelte`
 **[FILE]** Créer `src/lib/components/auth/SignupForm.svelte`
 
 ## 🧪 Tests de validation Phase 1
 
 ### Tests obligatoires
+
 1. **[TEST]** `npm run test:auth` - Tests authentification passent
 2. **[TEST]** `npm run test:e2e:auth` - Tests E2E auth passent
 3. **[TEST]** `npm run build` - Build sans erreur
 4. **[CHECK]** `npm run validate 1` - Validation complète Phase 1
 
 ### Critères de validation obligatoires
+
 - ✅ Configuration Firebase opérationnelle
 - ✅ Authentification Google fonctionnelle
 - ✅ Protection des routes active

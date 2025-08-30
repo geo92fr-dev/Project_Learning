@@ -1,0 +1,29 @@
+{
+  "version": "1.0",
+  "lastAnalysis": "2025-08-30T14:55:35.708Z",
+  "errorPatterns": {},
+  "solutionPatterns": {},
+  "preventionRules": [],
+  "qualityImprovements": [
+    {
+      "type": "documentation",
+      "priority": "MEDIUM",
+      "category": "automation",
+      "description": "Auto-génération documentation patterns appris",
+      "implementation": [
+        "Créer DOC_PATTERNS_LEARNED.md automatique",
+        "Synchroniser avec post-mortem",
+        "Alertes documentation obsolète"
+      ],
+      "impact": "Documentation toujours à jour"
+    }
+  ],
+  "learningMetrics": {
+    "totalIncidents": 0,
+    "resolvedIncidents": 0,
+    "averageResolutionTime": 0,
+    "recurrenceRate": "NaN",
+    "improvementsSuggested": 1,
+    "improvementsImplemented": 0
+  }
+}

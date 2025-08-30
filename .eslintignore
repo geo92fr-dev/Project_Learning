@@ -1,0 +1,18 @@
+# ESLint exclusions
+.svelte-kit/
+node_modules/
+build/
+dist/
+coverage/
+
+# Fichiers générés automatiquement
+PATTERNS_LEARNED.json
+REPORT_*.md
+IMPROVEMENTS_SUGGESTED.md
+LOG_POSTMORTEM.md
+CONFIG_quality_gates.json
+
+# Fichiers build
+*.d.ts
+*.map
+vite.config.js.timestamp-*

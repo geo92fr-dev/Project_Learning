@@ -1,0 +1,107 @@
+{
+  "phase-0": {
+    "coverage": {
+      "minimum": 70,
+      "target": 80
+    },
+    "complexity": {
+      "max": 5
+    },
+    "security": {
+      "level": "medium"
+    },
+    "performance": {
+      "lighthouse": 70
+    }
+  },
+  "phase-1": {
+    "coverage": {
+      "minimum": 80,
+      "target": 85
+    },
+    "complexity": {
+      "max": 7
+    },
+    "security": {
+      "level": "high"
+    },
+    "performance": {
+      "lighthouse": 75
+    }
+  },
+  "phase-2": {
+    "coverage": {
+      "minimum": 85,
+      "target": 90
+    },
+    "complexity": {
+      "max": 8
+    },
+    "security": {
+      "level": "moderate"
+    },
+    "performance": {
+      "lighthouse": 80
+    }
+  },
+  "phase-3": {
+    "coverage": {
+      "minimum": 85,
+      "target": 90
+    },
+    "complexity": {
+      "max": 8
+    },
+    "security": {
+      "level": "high"
+    },
+    "performance": {
+      "lighthouse": 85
+    }
+  },
+  "phase-4": {
+    "coverage": {
+      "minimum": 90,
+      "target": 95
+    },
+    "complexity": {
+      "max": 9
+    },
+    "security": {
+      "level": "critical"
+    },
+    "performance": {
+      "lighthouse": 90
+    }
+  },
+  "phase-5": {
+    "coverage": {
+      "minimum": 90,
+      "target": 95
+    },
+    "complexity": {
+      "max": 9
+    },
+    "security": {
+      "level": "critical"
+    },
+    "performance": {
+      "lighthouse": 90
+    }
+  },
+  "phase-6": {
+    "coverage": {
+      "minimum": 95,
+      "target": 98
+    },
+    "complexity": {
+      "max": 10
+    },
+    "security": {
+      "level": "critical"
+    },
+    "performance": {
+      "lighthouse": 95
+    }
+  }
+}

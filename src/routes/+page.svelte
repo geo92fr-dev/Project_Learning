@@ -1,34 +1,31 @@
 <script>
-  import { auth } from '$lib/firebase.js';
-  import { onAuthStateChanged } from 'firebase/auth';
-  import { onMount } from 'svelte';
-
-  let user = null;
-
-  onMount(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      user = currentUser;
-    });
-  });
+  import { version, phase } from "$lib/index.js";
 </script>
 
 <svelte:head>
-  <title>Nouveau Projet</title>
-  <meta name="description" content="Application Svelte + Firebase" />
+  <title>FunLearning - {phase}</title>
+  <meta name="description" content="Application d'apprentissage interactive" />
 </svelte:head>
 
 <main>
-  <h1>🚀 Nouveau Projet Svelte + Firebase</h1>
-  
-  {#if user}
-    <p>Connecté en tant que : {user.email}</p>
-  {:else}
-    <p>Non connecté</p>
-  {/if}
+  <h1>🎓 FunLearning</h1>
+
+  <div class="status">
+    <h2>Statut du Projet</h2>
+    <p><strong>Version:</strong> {version}</p>
+    <p><strong>Phase actuelle:</strong> {phase}</p>
+    <p><strong>Statut:</strong> ✅ Configuration de base terminée</p>
+  </div>
 
   <div class="info">
-    <p>Créé avec <strong>MyDevFramework</strong></p>
-    <p>Prêt pour le développement !</p>
+    <h3>Phase 0 - Setup & Architecture</h3>
+    <ul>
+      <li>✅ SvelteKit configuré</li>
+      <li>✅ Structure de dossiers créée</li>
+      <li>✅ Tests unitaires configurés (Vitest)</li>
+      <li>✅ TypeScript configuré</li>
+      <li>🎯 Prêt pour Phase 1 (Firebase & Auth)</li>
+    </ul>
   </div>
 </main>
 
