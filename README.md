@@ -79,9 +79,14 @@ Le fichier `src/lib/firebase.js` contient la configuration Firebase.
 
 ## 📚 Documentation
 
-- **Roadmap détaillée** : Voir `DOC_ROADMAP.md`
-- **Workspace parent** : Voir `../README.md` pour l'organisation globale
-- **Framework utilisé** : Voir `../MyDevFramework/README.md`
+### 🗺️ **Roadmap Structurée** (Recommandé)
+- **Navigation centrale** : [`roadmap/README.md`](roadmap/README.md) - Roadmap par phases
+- **Phase actuelle** : [Phase 0 : Setup & Architecture](roadmap/phases/phase-0-setup.md)
+
+### 📋 **Documentation Complète**
+- **Roadmap détaillée** : [`DOC_ROADMAP.md`](DOC_ROADMAP.md) - Version complète (12,000+ lignes)
+- **Workspace parent** : [`../README.md`](../README.md) - Organisation globale
+- **Framework utilisé** : [`../MyDevFramework/README.md`](../MyDevFramework/README.md)
 
 ## 🎯 Statut du Projet
 
