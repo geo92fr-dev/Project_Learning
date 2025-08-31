@@ -2,11 +2,11 @@
 
 ## 📋 **Vue d'Ensemble**
 
-**Objectif** : Authentification avec approche progressive (Email/Password → Google OAuth)
-**Version cible** : v1.0 (MVP avec authentification fonctionnelle)  
+**Objectif** : Authentification Google OAuth directe (approche simplifiée)
+**Version cible** : v1.0 (MVP avec authentification Google fonctionnelle)  
 **Groupe** : 🏗️ FONDATIONS  
 **Prérequis** : Phase 1 (Setup) validée ✅
-**🎯 Stratégie** : Email/Password d'abord, Google OAuth en second pour éviter complexités de configuration
+**🎯 Stratégie** : Google OAuth uniquement - configuration Firebase déjà opérationnelle ✅
 
 ---
 
@@ -67,26 +67,27 @@ Cette référence contient :
 
 ## 📝 **Instructions d'Implémentation**
 
-### 🎯 **Stratégie de Priorisation Intelligente**
+### 🎯 **Stratégie d'Authentification Simplifiée**
 
-**⚡ Approche Progressive (Recommandation Expert) :**
+**⚡ Approche Directe (Configuration Actuelle) :**
 
-1. **🥇 Priorité 1 - Email/Password** (Jours 1-3)
+1. **🚫 ~~Priorité 1 - Email/Password~~ ABANDONNÉ**
 
-   - Configuration Firebase la plus simple
-   - Pas de dépendances OAuth externes
-   - Validation immédiate du flux auth
+   - ~~Configuration Firebase la plus simple~~
+   - ~~Pas de dépendances OAuth externes~~
+   - ~~Validation immédiate du flux auth~~
+   - **RAISON :** Configuration Firebase OAuth déjà fonctionnelle
 
-2. **🥈 Priorité 2 - Google OAuth** (Jours 4-5)
+2. **� Priorité Unique - Google OAuth** (Jours 1-5)
 
-   - Après stabilisation Email/Password
-   - Configuration OAuth peut révéler des problèmes complexes
-   - Buffer disponible pour résolution
+   - Configuration Firebase OAuth déjà opérationnelle ✅
+   - Authentification Google directe
+   - Système validé et testé
 
-3. **🛡️ Avantages de cette approche :**
-   - Réduction des risques de blocage
-   - Validation progressive du système auth
-   - Diagnostic simplifié en cas de problème
+3. **🛡️ Avantages de cette approche simplifiée :**
+   - Évite la redondance de deux systèmes d'auth
+   - Focus sur la solution OAuth déjà implémentée
+   - Gain de temps pour les phases suivantes
 
 ### 🔧 **Étape 2.1 : Installation & Configuration**
 
@@ -560,14 +561,15 @@ test.describe("Authentication", () => {
 
 ## ✅ **Critères de Validation Obligatoires**
 
-- [ ] **[CHECK]** Firebase configuré et fonctionnel
-- [ ] **[CHECK]** Store d'authentification réactif
-- [ ] **[CHECK]** Connexion Google OAuth opérationnelle
+- [x] **[CHECK]** Firebase configuré et fonctionnel ✅
+- [x] **[CHECK]** Store d'authentification réactif ✅
+- [x] **[CHECK]** Connexion Google OAuth opérationnelle ✅
 - [ ] **[CHECK]** Protection des routes fonctionnelle
 - [ ] **[CHECK]** Redirection automatique après login
 - [ ] **[CHECK]** Déconnexion propre
 - [ ] **[CHECK]** Tests d'authentification passent
 - [ ] **[CHECK]** Pages /auth/login et /dashboard accessibles
+- [x] **[CHECK]** ~~Email/Password auth~~ ABANDONNÉ - Focus OAuth uniquement ✅
 
 ---
 

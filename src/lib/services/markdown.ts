@@ -6,7 +6,7 @@
 import { marked } from "marked";
 import DOMPurify from "dompurify";
 import hljs from "highlight.js";
-import type { MarkdownOptions } from "../types/content.js";
+import type { MarkdownOptions } from "../types/content";
 
 // Configuration par défaut
 const DEFAULT_OPTIONS: MarkdownOptions = {

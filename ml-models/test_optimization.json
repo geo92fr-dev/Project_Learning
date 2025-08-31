@@ -1,0 +1,15 @@
+{
+  "name": "test_optimization",
+  "algorithm": "random_forest",
+  "features": ["impact_zones", "change_type", "file_size", "educational_level"],
+  "target": "optimal_test_strategy",
+  "trained_at": "2025-08-31T12:25:42.298Z",
+  "training_samples": 1,
+  "parameters": {
+    "n_estimators": 59,
+    "max_depth": 7,
+    "min_samples_split": 2
+  },
+  "accuracy": 0.9501574956307961,
+  "status": "trained"
+}

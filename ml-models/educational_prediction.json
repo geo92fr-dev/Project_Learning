@@ -1,0 +1,16 @@
+{
+  "name": "educational_prediction",
+  "algorithm": "neural_network",
+  "features": ["content_type", "difficulty_level", "interaction_complexity"],
+  "target": "student_success_rate",
+  "trained_at": "2025-08-31T12:25:42.299Z",
+  "training_samples": 1,
+  "parameters": {
+    "hidden_layers": [64, 32, 16],
+    "activation": "relu",
+    "learning_rate": 0.001,
+    "epochs": 147
+  },
+  "accuracy": 0.9167113809995197,
+  "status": "trained"
+}

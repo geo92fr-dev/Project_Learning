@@ -1,0 +1,212 @@
+{
+  "name": "vscode-funlearning-cbd",
+  "displayName": "FunLearning CBD Assistant",
+  "description": "Extension VS Code spécialisée pour FunLearning avec validation CBD temps réel",
+  "version": "1.0.0",
+  "publisher": "funlearning-team",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other",
+    "Education",
+    "Snippets",
+    "Linters"
+  ],
+  "keywords": [
+    "funlearning",
+    "cbd",
+    "education",
+    "svelte",
+    "firebase",
+    "pedagogie"
+  ],
+  "activationEvents": [
+    "onLanguage:svelte",
+    "onLanguage:javascript",
+    "onLanguage:typescript",
+    "workspaceContains:**/svelte.config.js",
+    "workspaceContains:**/package.json"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "funlearning.validatePrompt",
+        "title": "🔍 Valider Prompt CBD",
+        "category": "FunLearning"
+      },
+      {
+        "command": "funlearning.showDashboard",
+        "title": "📊 Dashboard Qualité",
+        "category": "FunLearning"
+      },
+      {
+        "command": "funlearning.detectPhase",
+        "title": "🎯 Détecter Phase Projet",
+        "category": "FunLearning"
+      },
+      {
+        "command": "funlearning.generateTemplate",
+        "title": "📝 Générer Template",
+        "category": "FunLearning"
+      },
+      {
+        "command": "funlearning.validateEducationalContent",
+        "title": "🎓 Valider Contenu Pédagogique",
+        "category": "FunLearning"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "funlearning.validatePrompt",
+        "key": "ctrl+shift+v",
+        "mac": "cmd+shift+v",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "funlearning.showDashboard",
+        "key": "ctrl+shift+d",
+        "mac": "cmd+shift+d"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "funlearningDashboard",
+          "name": "📊 FunLearning Dashboard",
+          "when": "workspaceContains:**/svelte.config.js"
+        },
+        {
+          "id": "funlearningRoadmap",
+          "name": "🗺️ Progression Roadmap",
+          "when": "workspaceContains:**/package.json"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "funlearning",
+          "title": "FunLearning",
+          "icon": "$(mortar-board)"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "FunLearning CBD",
+      "properties": {
+        "funlearning.autoValidation": {
+          "type": "boolean",
+          "default": true,
+          "description": "Activer validation automatique des prompts CBD"
+        },
+        "funlearning.currentPhase": {
+          "type": "string",
+          "enum": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12"
+          ],
+          "default": "3",
+          "description": "Phase actuelle du projet FunLearning"
+        },
+        "funlearning.educationalLevel": {
+          "type": "string",
+          "enum": [
+            "6eme",
+            "5eme",
+            "4eme",
+            "3eme",
+            "lycee"
+          ],
+          "default": "5eme",
+          "description": "Niveau scolaire cible pour validation contenu"
+        },
+        "funlearning.strictMode": {
+          "type": "boolean",
+          "default": false,
+          "description": "Mode strict - Rejet automatique prompts non conformes"
+        }
+      }
+    },
+    "snippets": [
+      {
+        "language": "svelte",
+        "path": "./snippets/svelte-templates.json"
+      },
+      {
+        "language": "javascript",
+        "path": "./snippets/firebase-templates.json"
+      },
+      {
+        "language": "typescript",
+        "path": "./snippets/pedagogical-templates.json"
+      }
+    ],
+    "languages": [
+      {
+        "id": "cbd-prompt",
+        "aliases": [
+          "CBD Prompt",
+          "cbd"
+        ],
+        "extensions": [
+          ".cbd"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "cbd-prompt",
+        "scopeName": "text.cbd.prompt",
+        "path": "./syntaxes/cbd.tmLanguage.json"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package",
+    "publish": "vsce publish",
+    "install-extension": "code --install-extension ./vscode-funlearning-cbd-*.vsix"
+  },
+  "devDependencies": {
+    "@types/node": "^18.19.123",
+    "@types/vscode": "^1.90.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "@vscode/vsce": "^3.6.0",
+    "eslint": "^8.0.0",
+    "typescript": "^5.9.2",
+    "vsce": "^2.15.0"
+  },
+  "dependencies": {
+    "axios": "^1.5.0",
+    "marked": "^9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geo92fr-dev/Project_Learning.git"
+  },
+  "bugs": {
+    "url": "https://github.com/geo92fr-dev/Project_Learning/issues"
+  },
+  "homepage": "https://github.com/geo92fr-dev/Project_Learning#readme",
+  "license": "MIT",
+  "author": ""
+}

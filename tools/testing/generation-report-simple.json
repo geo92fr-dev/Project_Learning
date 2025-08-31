@@ -1,0 +1,159 @@
+{
+  "timestamp": "2025-08-31T11:42:34.094Z",
+  "summary": {
+    "totalGenerated": 24,
+    "byType": {
+      "component": 12,
+      "utility": 12
+    },
+    "byStatus": {
+      "dry-run": 24
+    }
+  },
+  "details": [
+    {
+      "type": "component",
+      "name": "AuthComplete",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\components\\AuthComplete.test.js",
+      "status": "dry-run"
+    },
+    {
+      "type": "component",
+      "name": "EmailAuth",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\components\\EmailAuth.test.js",
+      "status": "dry-run"
+    },
+    {
+      "type": "component",
+      "name": "GoogleAuth",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\components\\GoogleAuth.test.js",
+      "status": "dry-run"
+    },
+    {
+      "type": "component",
+      "name": "QCMCard",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\components\\QCMCard.test.js",
+      "status": "dry-run"
+    },
+    {
+      "type": "component",
+      "name": "MarkdownRenderer",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\components\\MarkdownRenderer.test.js",
+      "status": "dry-run"
+    },
+    {
+      "type": "utility",
+      "name": "config",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\utils\\config.test.js",
+      "status": "dry-run"
+    },
+    {
+      "type": "utility",
+      "name": "index",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\utils\\index.test.js",
+      "status": "dry-run"
+    },
+    {
+      "type": "utility",
+      "name": "markdown",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\utils\\markdown.test.js",
+      "status": "dry-run"
+    },
+    {
+      "type": "utility",
+      "name": "auth",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\utils\\auth.test.js",
+      "status": "dry-run"
+    },
+    {
+      "type": "utility",
+      "name": "authAdvanced",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\utils\\authAdvanced.test.js",
+      "status": "dry-run"
+    },
+    {
+      "type": "utility",
+      "name": "content",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\utils\\content.test.js",
+      "status": "dry-run"
+    },
+    {
+      "type": "utility",
+      "name": "exercises",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\utils\\exercises.test.js",
+      "status": "dry-run"
+    },
+    {
+      "type": "utility",
+      "name": "auth",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\utils\\auth.test.js",
+      "status": "dry-run"
+    },
+    {
+      "type": "utility",
+      "name": "content",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\utils\\content.test.js",
+      "status": "dry-run"
+    },
+    {
+      "type": "utility",
+      "name": "exercise",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\utils\\exercise.test.js",
+      "status": "dry-run"
+    },
+    {
+      "type": "utility",
+      "name": "progress",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\utils\\progress.test.js",
+      "status": "dry-run"
+    },
+    {
+      "type": "utility",
+      "name": "content",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\utils\\content.test.js",
+      "status": "dry-run"
+    },
+    {
+      "type": "component",
+      "name": "+page",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\components\\+page.test.js",
+      "status": "dry-run"
+    },
+    {
+      "type": "component",
+      "name": "+page",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\components\\+page.test.js",
+      "status": "dry-run"
+    },
+    {
+      "type": "component",
+      "name": "+page",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\components\\+page.test.js",
+      "status": "dry-run"
+    },
+    {
+      "type": "component",
+      "name": "+page",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\components\\+page.test.js",
+      "status": "dry-run"
+    },
+    {
+      "type": "component",
+      "name": "+page",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\components\\+page.test.js",
+      "status": "dry-run"
+    },
+    {
+      "type": "component",
+      "name": "+page",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\components\\+page.test.js",
+      "status": "dry-run"
+    },
+    {
+      "type": "component",
+      "name": "+page",
+      "path": "C:\\Project_Learning\\Projet_Learning\\tests\\auto-generated\\components\\+page.test.js",
+      "status": "dry-run"
+    }
+  ]
+}

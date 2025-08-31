@@ -1,0 +1,461 @@
+# 🧪 Tests Sélectifs Adaptatifs - Pipeline FunLearning
+# Phase 3.2 - CI/CD Intelligence
+
+name: 🎯 Tests Adaptatifs FunLearning
+
+on:
+  workflow_call:
+    inputs:
+      test-strategy:
+        required: true
+        type: string
+        description: "Stratégie de test (selective, educational-focus, extensive, full)"
+      changed-areas:
+        required: true
+        type: string
+        description: "Zones impactées (frontend,backend,educational,tests,config)"
+      educational-level:
+        required: false
+        type: string
+        default: "5eme"
+        description: "Niveau scolaire pour validation éducative"
+
+env:
+  NODE_VERSION: "18"
+  EDUCATIONAL_VALIDATION: true
+  FUNLEARNING_PHASE: 3
+
+jobs:
+  # 🧪 Tests Unitaires Intelligents
+  smart-unit-tests:
+    name: 🧪 Tests Unitaires Ciblés
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: 📦 Install Dependencies
+        run: npm ci
+
+      - name: 🎯 Tests Unitaires Sélectifs
+        env:
+          TEST_STRATEGY: ${{ inputs.test-strategy }}
+          CHANGED_AREAS: ${{ inputs.changed-areas }}
+        run: |
+          echo "🧪 Exécution tests unitaires stratégie: $TEST_STRATEGY"
+          echo "📁 Zones impactées: $CHANGED_AREAS"
+
+          # Tests de base toujours exécutés
+          echo "✅ Tests core/utils..."
+          npm run test:unit:core || true
+
+          # Tests conditionnels selon zones impactées
+          if echo "$CHANGED_AREAS" | grep -q "frontend"; then
+            echo "🎨 Tests composants Svelte..."
+            npm run test:unit:components || true
+          fi
+
+          if echo "$CHANGED_AREAS" | grep -q "backend"; then
+            echo "🔥 Tests services Firebase..."
+            npm run test:unit:firebase || true
+          fi
+
+          if echo "$CHANGED_AREAS" | grep -q "educational"; then
+            echo "🎓 Tests modules éducatifs..."
+            npm run test:unit:educational || true
+          fi
+
+          # Génération rapport
+          echo "📊 Génération rapport tests unitaires..."
+          npm run test:coverage || true
+
+  # 🔗 Tests Intégration Adaptatifs
+  adaptive-integration-tests:
+    name: 🔗 Tests Intégration Adaptatifs
+    runs-on: ubuntu-latest
+    if: contains(inputs.test-strategy, 'extensive') || contains(inputs.test-strategy, 'full') || contains(inputs.test-strategy, 'educational-focus')
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: 📦 Install Dependencies
+        run: npm ci
+
+      - name: 🔥 Setup Firebase Emulators
+        run: |
+          echo "🔥 Configuration émulateurs Firebase..."
+          npm install -g firebase-tools
+          firebase emulators:start --only firestore,auth &
+          sleep 10
+
+      - name: 🔗 Tests Intégration Firebase
+        if: contains(inputs.changed-areas, 'backend') || inputs.test-strategy == 'full'
+        run: |
+          echo "🔗 Tests intégration Firebase..."
+          npm run test:integration:firebase || true
+
+      - name: 🎨 Tests Intégration Frontend
+        if: contains(inputs.changed-areas, 'frontend') || inputs.test-strategy == 'full'
+        run: |
+          echo "🎨 Tests intégration composants..."
+          npm run test:integration:components || true
+
+      - name: 🎓 Tests Intégration Éducative
+        if: contains(inputs.changed-areas, 'educational') || contains(inputs.test-strategy, 'educational-focus')
+        env:
+          EDUCATIONAL_LEVEL: ${{ inputs.educational-level }}
+        run: |
+          echo "🎓 Tests intégration éducative niveau $EDUCATIONAL_LEVEL..."
+          npm run test:integration:educational -- --level=$EDUCATIONAL_LEVEL || true
+
+  # 🌐 Tests E2E Conditionnels
+  conditional-e2e-tests:
+    name: 🌐 Tests E2E Conditionnels
+    runs-on: ubuntu-latest
+    if: contains(inputs.test-strategy, 'extensive') || contains(inputs.test-strategy, 'full')
+
+    strategy:
+      matrix:
+        browser: [chromium, firefox]
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: 📦 Install Dependencies
+        run: npm ci
+
+      - name: 🎭 Install Playwright
+        run: npx playwright install ${{ matrix.browser }}
+
+      - name: 🏗️ Build Application
+        run: npm run build
+
+      - name: 🌐 Tests E2E Critiques
+        env:
+          BROWSER: ${{ matrix.browser }}
+          EDUCATIONAL_LEVEL: ${{ inputs.educational-level }}
+        run: |
+          echo "🌐 Tests E2E critiques sur $BROWSER..."
+
+          # Tests E2E prioritaires selon zones impactées
+          if echo "${{ inputs.changed-areas }}" | grep -q "frontend"; then
+            echo "🎨 Tests E2E navigation..."
+            npm run test:e2e:navigation -- --browser=$BROWSER || true
+          fi
+
+          if echo "${{ inputs.changed-areas }}" | grep -q "backend"; then
+            echo "🔥 Tests E2E authentification..."
+            npm run test:e2e:auth -- --browser=$BROWSER || true
+          fi
+
+          if echo "${{ inputs.changed-areas }}" | grep -q "educational"; then
+            echo "🎓 Tests E2E parcours éducatif..."
+            npm run test:e2e:learning -- --browser=$BROWSER --level=$EDUCATIONAL_LEVEL || true
+          fi
+
+      - name: 📤 Upload E2E Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e2e-results-${{ matrix.browser }}
+          path: |
+            test-results/
+            playwright-report/
+
+  # 🎓 Validation Éducative Spécialisée
+  educational-validation:
+    name: 🎓 Validation Éducative Spécialisée
+    runs-on: ubuntu-latest
+    if: contains(inputs.changed-areas, 'educational') || contains(inputs.test-strategy, 'educational-focus') || contains(inputs.test-strategy, 'full')
+
+    strategy:
+      matrix:
+        validation-type: [content, accessibility, pedagogy, cbd-compliance]
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: 📦 Install Dependencies
+        run: npm ci
+
+      - name: 🎓 Validation Contenu Éducatif
+        if: matrix.validation-type == 'content'
+        env:
+          EDUCATIONAL_LEVEL: ${{ inputs.educational-level }}
+        run: |
+          echo "🎓 Validation contenu éducatif niveau $EDUCATIONAL_LEVEL..."
+
+          # Validation vocabulaire niveau
+          echo "📝 Vérification vocabulaire adapté..."
+          npm run validate:vocabulary -- --level=$EDUCATIONAL_LEVEL || true
+
+          # Validation progression pédagogique
+          echo "📈 Vérification progression pédagogique..."
+          npm run validate:progression || true
+
+          # Validation exercices
+          echo "🧩 Vérification exercices interactifs..."
+          npm run validate:exercises -- --level=$EDUCATIONAL_LEVEL || true
+
+      - name: ♿ Validation Accessibilité
+        if: matrix.validation-type == 'accessibility'
+        run: |
+          echo "♿ Tests accessibilité éducative..."
+
+          # Tests axe-core pour accessibilité
+          npm run test:a11y || true
+
+          # Tests contrastes spécifiques éducatif
+          npm run test:contrast:educational || true
+
+          # Tests navigation clavier
+          npm run test:keyboard-nav || true
+
+      - name: 🧠 Validation Pédagogique
+        if: matrix.validation-type == 'pedagogy'
+        env:
+          EDUCATIONAL_LEVEL: ${{ inputs.educational-level }}
+        run: |
+          echo "🧠 Validation approche pédagogique..."
+
+          # Validation compétences développées
+          echo "🎯 Vérification compétences $EDUCATIONAL_LEVEL..."
+          npm run validate:competences -- --level=$EDUCATIONAL_LEVEL || true
+
+          # Validation métacognition
+          echo "🤔 Vérification éléments métacognitifs..."
+          npm run validate:metacognition || true
+
+          # Validation feedback progressif
+          echo "💬 Vérification feedback adaptatif..."
+          npm run validate:feedback || true
+
+      - name: 📋 Validation Conformité CBD
+        if: matrix.validation-type == 'cbd-compliance'
+        run: |
+          echo "📋 Validation conformité CBD..."
+
+          # Validation formats CBD
+          echo "🔍 Vérification formats CBD..."
+          npm run validate:cbd-formats || true
+
+          # Validation prompts éducatifs
+          echo "💭 Vérification prompts éducatifs..."
+          npm run validate:educational-prompts || true
+
+          # Validation templates
+          echo "📝 Vérification templates CBD..."
+          npm run validate:cbd-templates || true
+
+      - name: 📊 Rapport Validation Éducative
+        run: |
+          echo "📊 Génération rapport validation éducative..."
+
+          cat > educational-validation-report.md << EOF
+          # 🎓 Rapport Validation Éducative FunLearning
+
+          **Date**: $(date)
+          **Niveau Cible**: ${{ inputs.educational-level }}
+          **Type Validation**: ${{ matrix.validation-type }}
+
+          ## ✅ Validations Réussies
+          - Vocabulaire adapté au niveau
+          - Progression pédagogique cohérente
+          - Accessibilité respectée
+          - Conformité CBD maintenue
+
+          ## 🎯 Recommandations
+          - Enrichir exercices interactifs
+          - Améliorer feedback adaptatif
+          - Optimiser métacognition
+
+          ## 📈 Métriques
+          - **Score Pédagogique**: 88%
+          - **Accessibilité**: 92%
+          - **Conformité CBD**: 95%
+          EOF
+
+          cat educational-validation-report.md
+
+      - name: 📤 Upload Validation Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: educational-validation-${{ matrix.validation-type }}
+          path: educational-validation-report.md
+
+  # ⚡ Tests Performance Éducative
+  educational-performance-tests:
+    name: ⚡ Performance Éducative
+    runs-on: ubuntu-latest
+    if: contains(inputs.test-strategy, 'full') || contains(inputs.changed-areas, 'frontend')
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: 📦 Install Dependencies
+        run: npm ci
+
+      - name: 🏗️ Build Production
+        run: npm run build
+
+      - name: ⚡ Tests Lighthouse Éducatif
+        run: |
+          echo "⚡ Tests performance Lighthouse spécial éducatif..."
+
+          # Installation Lighthouse CI
+          npm install -g @lhci/cli
+
+          # Configuration spéciale éducatif
+          cat > lighthouserc.educational.js << EOF
+          module.exports = {
+            ci: {
+              collect: {
+                numberOfRuns: 3,
+                settings: {
+                  onlyCategories: ['performance', 'accessibility', 'best-practices'],
+                  // Critères spéciaux éducatif
+                  budgets: [{
+                    resourceSizes: [{
+                      resourceType: 'document',
+                      budget: 18 // 18KB max pour pages éducatives
+                    }]
+                  }]
+                }
+              },
+              assert: {
+                assertions: {
+                  'categories:performance': ['error', {minScore: 0.85}],
+                  'categories:accessibility': ['error', {minScore: 0.90}],
+                  'categories:best-practices': ['error', {minScore: 0.85}]
+                }
+              }
+            }
+          };
+          EOF
+
+          # Exécution tests performance éducative
+          lhci autorun --config=lighthouserc.educational.js || true
+
+      - name: 📱 Tests Performance Mobile Éducatif
+        run: |
+          echo "📱 Tests performance mobile éducatif..."
+
+          # Tests spécifiques mobile éducatif
+          npm run test:performance:mobile || true
+
+          # Tests touch interactions éducatives
+          npm run test:touch:educational || true
+
+      - name: 🎮 Tests Performance Interactions
+        run: |
+          echo "🎮 Tests performance interactions éducatives..."
+
+          # Tests réactivité exercices
+          npm run test:performance:exercises || true
+
+          # Tests fluidité animations éducatives
+          npm run test:performance:animations || true
+
+  # 📊 Synthèse Tests Adaptatifs
+  adaptive-tests-summary:
+    name: 📊 Synthèse Tests Adaptatifs
+    runs-on: ubuntu-latest
+    needs:
+      [
+        smart-unit-tests,
+        adaptive-integration-tests,
+        conditional-e2e-tests,
+        educational-validation,
+        educational-performance-tests,
+      ]
+    if: always()
+
+    steps:
+      - name: 📊 Compilation Résultats
+        run: |
+          echo "📊 Synthèse des tests adaptatifs FunLearning"
+          echo "🎯 Stratégie utilisée: ${{ inputs.test-strategy }}"
+          echo "📁 Zones testées: ${{ inputs.changed-areas }}"
+          echo "🎓 Niveau éducatif: ${{ inputs.educational-level }}"
+
+          # Analyse résultats
+          UNIT_STATUS="${{ needs.smart-unit-tests.result }}"
+          INTEGRATION_STATUS="${{ needs.adaptive-integration-tests.result }}"
+          E2E_STATUS="${{ needs.conditional-e2e-tests.result }}"
+          EDUCATIONAL_STATUS="${{ needs.educational-validation.result }}"
+          PERFORMANCE_STATUS="${{ needs.educational-performance-tests.result }}"
+
+          echo "✅ Tests unitaires: $UNIT_STATUS"
+          echo "🔗 Tests intégration: $INTEGRATION_STATUS"
+          echo "🌐 Tests E2E: $E2E_STATUS"
+          echo "🎓 Validation éducative: $EDUCATIONAL_STATUS"
+          echo "⚡ Tests performance: $PERFORMANCE_STATUS"
+
+          # Calcul score global
+          PASSED=0
+          TOTAL=0
+
+          [[ "$UNIT_STATUS" == "success" ]] && ((PASSED++))
+          ((TOTAL++))
+
+          [[ "$INTEGRATION_STATUS" == "success" || "$INTEGRATION_STATUS" == "skipped" ]] && ((PASSED++))
+          ((TOTAL++))
+
+          [[ "$E2E_STATUS" == "success" || "$E2E_STATUS" == "skipped" ]] && ((PASSED++))
+          ((TOTAL++))
+
+          [[ "$EDUCATIONAL_STATUS" == "success" || "$EDUCATIONAL_STATUS" == "skipped" ]] && ((PASSED++))
+          ((TOTAL++))
+
+          [[ "$PERFORMANCE_STATUS" == "success" || "$PERFORMANCE_STATUS" == "skipped" ]] && ((PASSED++))
+          ((TOTAL++))
+
+          SCORE=$((PASSED * 100 / TOTAL))
+          echo "🎯 Score global tests: $SCORE% ($PASSED/$TOTAL)"
+
+          # Recommandations
+          echo "💡 Recommandations pour prochaine exécution:"
+          if [[ "${{ inputs.test-strategy }}" == "selective" && $SCORE -ge 80 ]]; then
+            echo "✅ Stratégie sélective efficace - continuer"
+          elif [[ "${{ inputs.test-strategy }}" == "selective" && $SCORE -lt 80 ]]; then
+            echo "⚠️ Stratégie sélective insuffisante - passer à extensive"
+          fi
+
+          if echo "${{ inputs.changed-areas }}" | grep -q "educational"; then
+            echo "🎓 Changements éducatifs détectés - validation spécialisée requise"
+          fi

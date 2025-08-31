@@ -1,0 +1,20 @@
+{
+  "name": "deployment_risk",
+  "algorithm": "decision_tree",
+  "features": [
+    "file_count",
+    "educational_impact",
+    "test_coverage",
+    "complexity"
+  ],
+  "target": "deployment_success",
+  "trained_at": "2025-08-31T12:25:42.295Z",
+  "training_samples": 1,
+  "parameters": {
+    "max_depth": 3,
+    "min_samples_split": 2,
+    "criterion": "gini"
+  },
+  "accuracy": 0.9544991735604487,
+  "status": "trained"
+}

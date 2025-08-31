@@ -1,3 +1,1 @@
-import * as universal from "../../../../src/routes/cours/[slug]/+page.ts";
-export { universal };
-export { default as component } from "../../../../src/routes/cours/[slug]/+page.svelte";
+export { default as component } from "../../../../src/routes/auth-google/+page.svelte";

@@ -1,0 +1,46 @@
+{
+  "timestamp": "2025-08-31T12:25:42.302Z",
+  "model_accuracy": {},
+  "drift_detection": {
+    "deployment_risk": {
+      "severity": 0.09426369664928168,
+      "trend": "stable",
+      "recommendation": "continue_monitoring"
+    },
+    "test_optimization": {
+      "severity": 0.034089612337551416,
+      "trend": "stable",
+      "recommendation": "continue_monitoring"
+    },
+    "educational_prediction": {
+      "severity": 0.35849418891134993,
+      "trend": "increasing",
+      "recommendation": "retrain_immediately"
+    }
+  },
+  "retraining_needed": {
+    "deployment_risk": false,
+    "test_optimization": false,
+    "educational_prediction": true
+  },
+  "performance_trends": {
+    "deployment_risk": {
+      "current_accuracy": 0.9544991735604487,
+      "trend": "improving",
+      "confidence_level": 0.9665100688873491,
+      "last_updated": "2025-08-31T12:25:42.302Z"
+    },
+    "test_optimization": {
+      "current_accuracy": 0.9501574956307961,
+      "trend": "improving",
+      "confidence_level": 0.9982644138115817,
+      "last_updated": "2025-08-31T12:25:42.302Z"
+    },
+    "educational_prediction": {
+      "current_accuracy": 0.9167113809995197,
+      "trend": "improving",
+      "confidence_level": 0.9964420530809858,
+      "last_updated": "2025-08-31T12:25:42.302Z"
+    }
+  }
+}

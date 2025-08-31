@@ -1,12 +1,29 @@
-// 🚀 FunLearning V2.0 - Phase 1 Export Index
-// Configuration centralisée des exports pour la Phase 1 uniquement
+// 🚀 FunLearning V2.0 - Phase 2 Export Index
+// Configuration centralisée des exports pour Phase 2
 
-// === FIREBASE CONFIG ===
-export { auth, db } from "./firebase.js";
+// === LIB EXPORTS ===
+// Exports principaux de la bibliothèque
 
-// === PHASE 1 COMPONENTS ===
-// Note: Les composants avancés seront ajoutés dans les phases ultérieures
-// export { default as LoginForm } from './components/auth/LoginForm.svelte';
+// === UTILITIES ===
+export { default as LoadingSpinner } from "./components/ui/LoadingSpinner.svelte";
+
+// === STORES ===
+// Plus d'authentification pour le moment
+
+// === STORES ===
+export {
+  user,
+  loading,
+  error,
+  isAuthenticated,
+  initAuth,
+  signIn,
+  signUp,
+  signInWithGoogle,
+  signOut,
+  resetPassword,
+  clearError,
+} from "./stores/auth";
 
 // === UTILS ===
 // À enrichir au fur et à mesure des phases

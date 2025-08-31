@@ -7,8 +7,20 @@
     "isEntry": true,
     "src": ".svelte-kit/generated/server/internal.js"
   },
-  "_firebase.js": {
-    "file": "chunks/firebase.js"
+  "_content.js": {
+    "file": "chunks/content.js"
+  },
+  "_content2.js": {
+    "file": "chunks/content2.js",
+    "imports": [
+      "_index.js"
+    ]
+  },
+  "_index.js": {
+    "file": "chunks/index.js",
+    "imports": [
+      "_ssr.js"
+    ]
   },
   "_internal.js": {
     "file": "chunks/internal.js",
@@ -39,41 +51,235 @@
     "file": "index.js",
     "imports": [
       "_internal.js",
-      "_ssr.js"
+      "_index.js"
     ],
     "isEntry": true,
     "src": "node_modules/@sveltejs/kit/src/runtime/server/index.js"
   },
   "src/routes/+page.css": {
-    "file": "_app/immutable/assets/_page.8762ed9c.css",
+    "file": "_app/immutable/assets/_page.9cc64228.css",
     "src": "src/routes/+page.css"
   },
   "src/routes/+page.svelte": {
     "css": [
-      "_app/immutable/assets/_page.8762ed9c.css"
+      "_app/immutable/assets/_page.9cc64228.css"
     ],
     "file": "entries/pages/_page.svelte.js",
     "imports": [
-      "_ssr.js",
-      "_firebase.js"
+      "_ssr.js"
     ],
     "isEntry": true,
     "src": "src/routes/+page.svelte"
   },
-  "src/routes/auth/+page.css": {
-    "file": "_app/immutable/assets/_page.86c8710b.css",
-    "src": "src/routes/auth/+page.css"
-  },
-  "src/routes/auth/+page.svelte": {
-    "css": [
-      "_app/immutable/assets/_page.86c8710b.css"
-    ],
-    "file": "entries/pages/auth/_page.svelte.js",
+  "src/routes/[matiere]/+layout.svelte": {
+    "file": "entries/pages/_matiere_/_layout.svelte.js",
     "imports": [
-      "_ssr.js",
-      "_firebase.js"
+      "_ssr.js"
     ],
     "isEntry": true,
-    "src": "src/routes/auth/+page.svelte"
+    "src": "src/routes/[matiere]/+layout.svelte"
+  },
+  "src/routes/[matiere]/+layout.ts": {
+    "file": "entries/pages/_matiere_/_layout.ts.js",
+    "isEntry": true,
+    "src": "src/routes/[matiere]/+layout.ts"
+  },
+  "src/routes/[matiere]/+page.svelte": {
+    "file": "entries/pages/_matiere_/_page.svelte.js",
+    "imports": [
+      "_ssr.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/[matiere]/+page.svelte"
+  },
+  "src/routes/[matiere]/[niveau]/+layout.svelte": {
+    "file": "entries/pages/_matiere_/_niveau_/_layout.svelte.js",
+    "imports": [
+      "_ssr.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/[matiere]/[niveau]/+layout.svelte"
+  },
+  "src/routes/[matiere]/[niveau]/+layout.ts": {
+    "file": "entries/pages/_matiere_/_niveau_/_layout.ts.js",
+    "isEntry": true,
+    "src": "src/routes/[matiere]/[niveau]/+layout.ts"
+  },
+  "src/routes/[matiere]/[niveau]/+page.svelte": {
+    "file": "entries/pages/_matiere_/_niveau_/_page.svelte.js",
+    "imports": [
+      "_ssr.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/[matiere]/[niveau]/+page.svelte"
+  },
+  "src/routes/[matiere]/[niveau]/[competence]/+layout.svelte": {
+    "file": "entries/pages/_matiere_/_niveau_/_competence_/_layout.svelte.js",
+    "imports": [
+      "_ssr.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/[matiere]/[niveau]/[competence]/+layout.svelte"
+  },
+  "src/routes/[matiere]/[niveau]/[competence]/+layout.ts": {
+    "file": "entries/pages/_matiere_/_niveau_/_competence_/_layout.ts.js",
+    "isEntry": true,
+    "src": "src/routes/[matiere]/[niveau]/[competence]/+layout.ts"
+  },
+  "src/routes/[matiere]/[niveau]/[competence]/+page.svelte": {
+    "file": "entries/pages/_matiere_/_niveau_/_competence_/_page.svelte.js",
+    "imports": [
+      "_ssr.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/[matiere]/[niveau]/[competence]/+page.svelte"
+  },
+  "src/routes/[matiere]/[niveau]/[competence]/[cours]/+page.svelte": {
+    "file": "entries/pages/_matiere_/_niveau_/_competence_/_cours_/_page.svelte.js",
+    "imports": [
+      "_ssr.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/[matiere]/[niveau]/[competence]/[cours]/+page.svelte"
+  },
+  "src/routes/[matiere]/[niveau]/[competence]/[cours]/+page.ts": {
+    "file": "entries/pages/_matiere_/_niveau_/_competence_/_cours_/_page.ts.js",
+    "isEntry": true,
+    "src": "src/routes/[matiere]/[niveau]/[competence]/[cours]/+page.ts"
+  },
+  "src/routes/auth-simple/+page.svelte": {
+    "file": "entries/pages/auth-simple/_page.svelte.js",
+    "imports": [
+      "_ssr.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/auth-simple/+page.svelte"
+  },
+  "src/routes/content/+page.css": {
+    "file": "_app/immutable/assets/_page.2a34025f.css",
+    "src": "src/routes/content/+page.css"
+  },
+  "src/routes/content/+page.svelte": {
+    "css": [
+      "_app/immutable/assets/_page.2a34025f.css"
+    ],
+    "file": "entries/pages/content/_page.svelte.js",
+    "imports": [
+      "_ssr.js",
+      "_content2.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/content/+page.svelte"
+  },
+  "src/routes/cours/+page.svelte": {
+    "file": "entries/pages/cours/_page.svelte.js",
+    "imports": [
+      "_ssr.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/cours/+page.svelte"
+  },
+  "src/routes/cours/[slug]/+page.svelte": {
+    "file": "entries/pages/cours/_slug_/_page.svelte.js",
+    "imports": [
+      "_ssr.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/cours/[slug]/+page.svelte"
+  },
+  "src/routes/cours/[slug]/+page.ts": {
+    "file": "entries/pages/cours/_slug_/_page.ts.js",
+    "isEntry": true,
+    "src": "src/routes/cours/[slug]/+page.ts"
+  },
+  "src/routes/dashboard/+page.svelte": {
+    "file": "entries/pages/dashboard/_page.svelte.js",
+    "imports": [
+      "_ssr.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/dashboard/+page.svelte"
+  },
+  "src/routes/pedagogy/+page.svelte": {
+    "file": "entries/pages/pedagogy/_page.svelte.js",
+    "imports": [
+      "_ssr.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/pedagogy/+page.svelte"
+  },
+  "src/routes/test-content-fixed/+page.css": {
+    "file": "_app/immutable/assets/_page.fb5614c3.css",
+    "src": "src/routes/test-content-fixed/+page.css"
+  },
+  "src/routes/test-content-fixed/+page.svelte": {
+    "css": [
+      "_app/immutable/assets/_page.fb5614c3.css"
+    ],
+    "file": "entries/pages/test-content-fixed/_page.svelte.js",
+    "imports": [
+      "_ssr.js",
+      "_content2.js",
+      "_content.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/test-content-fixed/+page.svelte"
+  },
+  "src/routes/test-content/+page.svelte": {
+    "file": "entries/pages/test-content/_page.svelte.js",
+    "imports": [
+      "_ssr.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/test-content/+page.svelte"
+  },
+  "src/routes/test-exercises/+page.css": {
+    "file": "_app/immutable/assets/_page.65e81189.css",
+    "src": "src/routes/test-exercises/+page.css"
+  },
+  "src/routes/test-exercises/+page.svelte": {
+    "css": [
+      "_app/immutable/assets/_page.65e81189.css"
+    ],
+    "file": "entries/pages/test-exercises/_page.svelte.js",
+    "imports": [
+      "_ssr.js",
+      "_index.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/test-exercises/+page.svelte"
+  },
+  "src/routes/test-firebase-simple/+page.css": {
+    "file": "_app/immutable/assets/_page.239ad4a6.css",
+    "src": "src/routes/test-firebase-simple/+page.css"
+  },
+  "src/routes/test-firebase-simple/+page.svelte": {
+    "css": [
+      "_app/immutable/assets/_page.239ad4a6.css"
+    ],
+    "file": "entries/pages/test-firebase-simple/_page.svelte.js",
+    "imports": [
+      "_ssr.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/test-firebase-simple/+page.svelte"
+  },
+  "src/routes/test-markdown/+page.css": {
+    "file": "_app/immutable/assets/_page.b66159fb.css",
+    "src": "src/routes/test-markdown/+page.css"
+  },
+  "src/routes/test-markdown/+page.svelte": {
+    "css": [
+      "_app/immutable/assets/_page.b66159fb.css"
+    ],
+    "file": "entries/pages/test-markdown/_page.svelte.js",
+    "imports": [
+      "_ssr.js",
+      "_content2.js",
+      "_content.js",
+      "_index.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/test-markdown/+page.svelte"
   }
 }

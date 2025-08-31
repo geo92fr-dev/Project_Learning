@@ -1,8 +1,14 @@
 <script>
-  // 🚀 FunLearning V2.0 - Phase 1 Home Page
+  // 🚀 FunLearnin      <div class="status-card">
+        <h3>✅ Phase 2 - Authentification Google TDD</h3>
+        <p>Authentification Google implémentée avec TDD selon DOC_CoPilot_Practices</p>
+        <div class="quick-actions">
+          <a href="/auth-google" class="btn primary">🔐 Tester l'authentification Google</a>
+        </div>
+      </div>- Phase 1 Home Page
   // Page d'accueil basique conforme roadmap Phase 1
-
-  import { user } from "$lib/stores/auth.js";
+  
+  // Pas d'authentification pour le moment
 </script>
 
 <svelte:head>
@@ -25,14 +31,23 @@
         <p>SvelteKit + TypeScript + Tests configurés</p>
       </div>
 
-      <div class="status-card pending">
-        <h3>⏳ Phase 2 - Auth Firebase</h3>
-        <p>Authentification complète (à venir)</p>
+      <div class="status-card">
+        <h3>🔧 Phase 2 - Interface Simple</h3>
+        <p>Interface de base sans authentification</p>
+        <div class="quick-actions">
+          <a href="/dashboard" class="btn primary">� Voir le dashboard</a>
+        </div>
       </div>
 
-      <div class="status-card pending">
-        <h3>⏳ Phase 3 - Contenus</h3>
-        <p>Structure des cours (à venir)</p>
+      <div class="status-card">
+        <h3>🔄 Phase 3 - Contenus</h3>
+        <p>Structure des cours & Markdown</p>
+        <div class="links">
+          <a href="/test-exercises">🧪 Test Exercices</a>
+          <a href="/test-content">🧪 Test Contenu</a>
+          <a href="/test-markdown">🧪 Test MarkdownRenderer</a>
+          <a href="/content">📚 Explorer Contenu</a>
+        </div>
       </div>
     </div>
   </section>
@@ -83,14 +98,60 @@
     background: #f0fdf4;
   }
 
-  .status-card.pending {
+  /* .status-card.pending {
     border-color: #f59e0b;
     background: #fffbeb;
+  } */
+
+  .links {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .links a {
+    background: #3b82f6;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    text-align: center;
+    transition: background 0.3s ease;
+  }
+
+  .links a:hover {
+    background: #2563eb;
   }
 
   .status-card h3 {
     margin: 0 0 0.5rem 0;
     font-size: 1.2rem;
+  }
+
+  .quick-actions {
+    margin-top: 1rem;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+    text-align: center;
+  }
+
+  .btn.primary {
+    background: #3b82f6;
+    color: white;
+  }
+
+  .btn.primary:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
   }
 
   footer {

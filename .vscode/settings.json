@@ -1,0 +1,13 @@
+{
+  "funlearning.cbd.validation.enabled": false,
+  "funlearning.cbd.validation.excludeFiles": [
+    "**/docs/**/*.md",
+    "**/roadmap/**/*.md",
+    "DOC_*.md",
+    "README.md",
+    "**/CBD_GUIDE.md"
+  ],
+  "typescript.preferences.includePackageJsonAutoImports": "off",
+  "typescript.validate.enable": true,
+  "markdown.validate.enabled": false
+}

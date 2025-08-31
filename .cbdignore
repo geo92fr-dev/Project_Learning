@@ -1,0 +1,14 @@
+# Ignorer les fichiers de documentation pour la validation CBD
+docs/**/*.md
+roadmap/**/*.md
+DOC_*.md
+README.md
+CBD_GUIDE.md
+CHANGELOG.md
+LOG_POSTMORTEM.md
+
+# Fichiers générés
+.svelte-kit/
+node_modules/
+build/
+coverage/

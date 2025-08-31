@@ -1,0 +1,27 @@
+{
+  "timestamp": "2025-08-31T12:20:56.520Z",
+  "environment": "development",
+  "commit_hash": "5625094a293dced4bfbebdf8c064a9c67d60a838",
+  "deployment_strategy": "blue_green",
+  "health_status": {
+    "overall": "healthy",
+    "endpoints": {
+      "/health": {
+        "status": "healthy",
+        "response_time": 146
+      },
+      "/api/educational/status": {
+        "status": "healthy",
+        "response_time": 72
+      },
+      "/api/firebase/health": {
+        "status": "healthy",
+        "response_time": 140
+      },
+      "/api/metrics": {
+        "status": "healthy",
+        "response_time": 131
+      }
+    }
+  }
+}

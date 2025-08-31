@@ -26,6 +26,12 @@
  * ```
  */
 declare module '$env/static/private' {
+	export const VITE_FIREBASE_API_KEY: string;
+	export const VITE_FIREBASE_AUTH_DOMAIN: string;
+	export const VITE_FIREBASE_PROJECT_ID: string;
+	export const VITE_FIREBASE_STORAGE_BUCKET: string;
+	export const VITE_FIREBASE_MESSAGING_SENDER_ID: string;
+	export const VITE_FIREBASE_APP_ID: string;
 	export const ALLUSERSPROFILE: string;
 	export const APPDATA: string;
 	export const BASE_URL: string;
@@ -63,8 +69,6 @@ declare module '$env/static/private' {
 	export const NEXTHINK: string;
 	export const NODE: string;
 	export const NODE_ENV: string;
-	export const NODE_EXE: string;
-	export const NPM_CLI_JS: string;
 	export const npm_command: string;
 	export const npm_config_cache: string;
 	export const npm_config_globalconfig: string;
@@ -84,8 +88,6 @@ declare module '$env/static/private' {
 	export const npm_package_json: string;
 	export const npm_package_name: string;
 	export const npm_package_version: string;
-	export const NPM_PREFIX_JS: string;
-	export const NPM_PREFIX_NPM_CLI_JS: string;
 	export const NUMBER_OF_PROCESSORS: string;
 	export const OneDrive: string;
 	export const OneDriveCommercial: string;
@@ -155,6 +157,12 @@ declare module '$env/static/public' {
  */
 declare module '$env/dynamic/private' {
 	export const env: {
+		VITE_FIREBASE_API_KEY: string;
+		VITE_FIREBASE_AUTH_DOMAIN: string;
+		VITE_FIREBASE_PROJECT_ID: string;
+		VITE_FIREBASE_STORAGE_BUCKET: string;
+		VITE_FIREBASE_MESSAGING_SENDER_ID: string;
+		VITE_FIREBASE_APP_ID: string;
 		ALLUSERSPROFILE: string;
 		APPDATA: string;
 		BASE_URL: string;
@@ -192,8 +200,6 @@ declare module '$env/dynamic/private' {
 		NEXTHINK: string;
 		NODE: string;
 		NODE_ENV: string;
-		NODE_EXE: string;
-		NPM_CLI_JS: string;
 		npm_command: string;
 		npm_config_cache: string;
 		npm_config_globalconfig: string;
@@ -213,8 +219,6 @@ declare module '$env/dynamic/private' {
 		npm_package_json: string;
 		npm_package_name: string;
 		npm_package_version: string;
-		NPM_PREFIX_JS: string;
-		NPM_PREFIX_NPM_CLI_JS: string;
 		NUMBER_OF_PROCESSORS: string;
 		OneDrive: string;
 		OneDriveCommercial: string;
