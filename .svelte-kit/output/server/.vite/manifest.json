@@ -7,33 +7,8 @@
     "isEntry": true,
     "src": ".svelte-kit/generated/server/internal.js"
   },
-  "Breadcrumbs.css": {
-    "file": "_app/immutable/assets/Breadcrumbs.76d623a8.css",
-    "src": "Breadcrumbs.css"
-  },
-  "_Breadcrumbs.js": {
-    "css": [
-      "_app/immutable/assets/Breadcrumbs.76d623a8.css"
-    ],
-    "file": "chunks/Breadcrumbs.js",
-    "imports": [
-      "_ssr.js"
-    ]
-  },
-  "_content.js": {
-    "file": "chunks/content.js",
-    "imports": [
-      "_index2.js"
-    ]
-  },
-  "_index.js": {
-    "file": "chunks/index.js"
-  },
-  "_index2.js": {
-    "file": "chunks/index2.js",
-    "imports": [
-      "_utils.js"
-    ]
+  "_firebase.js": {
+    "file": "chunks/firebase.js"
   },
   "_internal.js": {
     "file": "chunks/internal.js",
@@ -41,33 +16,13 @@
       "_ssr.js"
     ]
   },
-  "_navigation.js": {
-    "file": "chunks/navigation.js",
-    "imports": [
-      "_index2.js"
-    ]
-  },
   "_ssr.js": {
-    "file": "chunks/ssr.js",
-    "imports": [
-      "_utils.js"
-    ]
-  },
-  "_stores.js": {
-    "file": "chunks/stores.js",
-    "imports": [
-      "_ssr.js"
-    ]
-  },
-  "_utils.js": {
-    "file": "chunks/utils.js"
+    "file": "chunks/ssr.js"
   },
   "node_modules/@sveltejs/kit/src/runtime/components/error.svelte": {
     "file": "entries/fallbacks/error.svelte.js",
     "imports": [
-      "_utils.js",
-      "_ssr.js",
-      "_stores.js"
+      "_ssr.js"
     ],
     "isEntry": true,
     "src": "node_modules/@sveltejs/kit/src/runtime/components/error.svelte"
@@ -84,264 +39,41 @@
     "file": "index.js",
     "imports": [
       "_internal.js",
-      "_index.js",
-      "_index2.js"
+      "_ssr.js"
     ],
     "isEntry": true,
     "src": "node_modules/@sveltejs/kit/src/runtime/server/index.js"
   },
   "src/routes/+page.css": {
-    "file": "_app/immutable/assets/_page.cf422693.css",
+    "file": "_app/immutable/assets/_page.8762ed9c.css",
     "src": "src/routes/+page.css"
   },
   "src/routes/+page.svelte": {
     "css": [
-      "_app/immutable/assets/_page.cf422693.css"
+      "_app/immutable/assets/_page.8762ed9c.css"
     ],
     "file": "entries/pages/_page.svelte.js",
     "imports": [
-      "_ssr.js"
+      "_ssr.js",
+      "_firebase.js"
     ],
     "isEntry": true,
     "src": "src/routes/+page.svelte"
   },
-  "src/routes/[matiere]/+layout.css": {
-    "file": "_app/immutable/assets/_layout.e6ec9f9a.css",
-    "src": "src/routes/[matiere]/+layout.css"
-  },
-  "src/routes/[matiere]/+layout.svelte": {
-    "css": [
-      "_app/immutable/assets/_layout.e6ec9f9a.css"
-    ],
-    "file": "entries/pages/_matiere_/_layout.svelte.js",
-    "imports": [
-      "_utils.js",
-      "_ssr.js",
-      "_stores.js",
-      "_Breadcrumbs.js"
-    ],
-    "isEntry": true,
-    "src": "src/routes/[matiere]/+layout.svelte"
-  },
-  "src/routes/[matiere]/+layout.ts": {
-    "file": "entries/pages/_matiere_/_layout.ts.js",
-    "imports": [
-      "_index.js"
-    ],
-    "isEntry": true,
-    "src": "src/routes/[matiere]/+layout.ts"
-  },
-  "src/routes/[matiere]/+page.css": {
-    "file": "_app/immutable/assets/_page.0b692621.css",
-    "src": "src/routes/[matiere]/+page.css"
-  },
-  "src/routes/[matiere]/+page.svelte": {
-    "css": [
-      "_app/immutable/assets/_page.0b692621.css"
-    ],
-    "file": "entries/pages/_matiere_/_page.svelte.js",
-    "imports": [
-      "_ssr.js"
-    ],
-    "isEntry": true,
-    "src": "src/routes/[matiere]/+page.svelte"
-  },
-  "src/routes/[matiere]/[niveau]/+layout.css": {
-    "file": "_app/immutable/assets/_layout.de3ba056.css",
-    "src": "src/routes/[matiere]/[niveau]/+layout.css"
-  },
-  "src/routes/[matiere]/[niveau]/+layout.svelte": {
-    "css": [
-      "_app/immutable/assets/_layout.de3ba056.css"
-    ],
-    "file": "entries/pages/_matiere_/_niveau_/_layout.svelte.js",
-    "imports": [
-      "_utils.js",
-      "_ssr.js",
-      "_stores.js",
-      "_Breadcrumbs.js"
-    ],
-    "isEntry": true,
-    "src": "src/routes/[matiere]/[niveau]/+layout.svelte"
-  },
-  "src/routes/[matiere]/[niveau]/+layout.ts": {
-    "file": "entries/pages/_matiere_/_niveau_/_layout.ts.js",
-    "imports": [
-      "_index.js"
-    ],
-    "isEntry": true,
-    "src": "src/routes/[matiere]/[niveau]/+layout.ts"
-  },
-  "src/routes/[matiere]/[niveau]/+page.css": {
-    "file": "_app/immutable/assets/_page.594cf453.css",
-    "src": "src/routes/[matiere]/[niveau]/+page.css"
-  },
-  "src/routes/[matiere]/[niveau]/+page.svelte": {
-    "css": [
-      "_app/immutable/assets/_page.594cf453.css"
-    ],
-    "file": "entries/pages/_matiere_/_niveau_/_page.svelte.js",
-    "imports": [
-      "_ssr.js"
-    ],
-    "isEntry": true,
-    "src": "src/routes/[matiere]/[niveau]/+page.svelte"
-  },
-  "src/routes/[matiere]/[niveau]/[competence]/+layout.css": {
-    "file": "_app/immutable/assets/_layout.a883690c.css",
-    "src": "src/routes/[matiere]/[niveau]/[competence]/+layout.css"
-  },
-  "src/routes/[matiere]/[niveau]/[competence]/+layout.svelte": {
-    "css": [
-      "_app/immutable/assets/_layout.a883690c.css"
-    ],
-    "file": "entries/pages/_matiere_/_niveau_/_competence_/_layout.svelte.js",
-    "imports": [
-      "_ssr.js",
-      "_Breadcrumbs.js"
-    ],
-    "isEntry": true,
-    "src": "src/routes/[matiere]/[niveau]/[competence]/+layout.svelte"
-  },
-  "src/routes/[matiere]/[niveau]/[competence]/+layout.ts": {
-    "file": "entries/pages/_matiere_/_niveau_/_competence_/_layout.ts.js",
-    "imports": [
-      "_index.js"
-    ],
-    "isEntry": true,
-    "src": "src/routes/[matiere]/[niveau]/[competence]/+layout.ts"
-  },
-  "src/routes/[matiere]/[niveau]/[competence]/+page.css": {
-    "file": "_app/immutable/assets/_page.dc63069e.css",
-    "src": "src/routes/[matiere]/[niveau]/[competence]/+page.css"
-  },
-  "src/routes/[matiere]/[niveau]/[competence]/+page.svelte": {
-    "css": [
-      "_app/immutable/assets/_page.dc63069e.css"
-    ],
-    "file": "entries/pages/_matiere_/_niveau_/_competence_/_page.svelte.js",
-    "imports": [
-      "_ssr.js"
-    ],
-    "isEntry": true,
-    "src": "src/routes/[matiere]/[niveau]/[competence]/+page.svelte"
-  },
-  "src/routes/[matiere]/[niveau]/[competence]/[cours]/+page.css": {
-    "file": "_app/immutable/assets/_page.e15a7402.css",
-    "src": "src/routes/[matiere]/[niveau]/[competence]/[cours]/+page.css"
-  },
-  "src/routes/[matiere]/[niveau]/[competence]/[cours]/+page.svelte": {
-    "css": [
-      "_app/immutable/assets/_page.e15a7402.css"
-    ],
-    "file": "entries/pages/_matiere_/_niveau_/_competence_/_cours_/_page.svelte.js",
-    "imports": [
-      "_ssr.js",
-      "_Breadcrumbs.js"
-    ],
-    "isEntry": true,
-    "src": "src/routes/[matiere]/[niveau]/[competence]/[cours]/+page.svelte"
-  },
-  "src/routes/[matiere]/[niveau]/[competence]/[cours]/+page.ts": {
-    "file": "entries/pages/_matiere_/_niveau_/_competence_/_cours_/_page.ts.js",
-    "imports": [
-      "_index.js"
-    ],
-    "isEntry": true,
-    "src": "src/routes/[matiere]/[niveau]/[competence]/[cours]/+page.ts"
-  },
   "src/routes/auth/+page.css": {
-    "file": "_app/immutable/assets/_page.d2595b0a.css",
+    "file": "_app/immutable/assets/_page.86c8710b.css",
     "src": "src/routes/auth/+page.css"
   },
   "src/routes/auth/+page.svelte": {
     "css": [
-      "_app/immutable/assets/_page.d2595b0a.css"
+      "_app/immutable/assets/_page.86c8710b.css"
     ],
     "file": "entries/pages/auth/_page.svelte.js",
     "imports": [
-      "_utils.js",
       "_ssr.js",
-      "_navigation.js"
+      "_firebase.js"
     ],
     "isEntry": true,
     "src": "src/routes/auth/+page.svelte"
-  },
-  "src/routes/cours/+page.css": {
-    "file": "_app/immutable/assets/_page.474686d9.css",
-    "src": "src/routes/cours/+page.css"
-  },
-  "src/routes/cours/+page.svelte": {
-    "css": [
-      "_app/immutable/assets/_page.474686d9.css"
-    ],
-    "file": "entries/pages/cours/_page.svelte.js",
-    "imports": [
-      "_utils.js",
-      "_ssr.js",
-      "_content.js"
-    ],
-    "isEntry": true,
-    "src": "src/routes/cours/+page.svelte"
-  },
-  "src/routes/cours/[slug]/+page.css": {
-    "file": "_app/immutable/assets/_page.45ccf26d.css",
-    "src": "src/routes/cours/[slug]/+page.css"
-  },
-  "src/routes/cours/[slug]/+page.svelte": {
-    "css": [
-      "_app/immutable/assets/_page.45ccf26d.css"
-    ],
-    "file": "entries/pages/cours/_slug_/_page.svelte.js",
-    "imports": [
-      "_utils.js",
-      "_ssr.js",
-      "_stores.js",
-      "_content.js"
-    ],
-    "isEntry": true,
-    "src": "src/routes/cours/[slug]/+page.svelte"
-  },
-  "src/routes/cours/[slug]/+page.ts": {
-    "file": "entries/pages/cours/_slug_/_page.ts.js",
-    "imports": [
-      "_content.js"
-    ],
-    "isEntry": true,
-    "src": "src/routes/cours/[slug]/+page.ts"
-  },
-  "src/routes/dashboard/+page.css": {
-    "file": "_app/immutable/assets/_page.5deba8a5.css",
-    "src": "src/routes/dashboard/+page.css"
-  },
-  "src/routes/dashboard/+page.svelte": {
-    "css": [
-      "_app/immutable/assets/_page.5deba8a5.css"
-    ],
-    "file": "entries/pages/dashboard/_page.svelte.js",
-    "imports": [
-      "_utils.js",
-      "_ssr.js",
-      "_navigation.js"
-    ],
-    "isEntry": true,
-    "src": "src/routes/dashboard/+page.svelte"
-  },
-  "src/routes/pedagogy/+page.css": {
-    "file": "_app/immutable/assets/_page.353d629f.css",
-    "src": "src/routes/pedagogy/+page.css"
-  },
-  "src/routes/pedagogy/+page.svelte": {
-    "css": [
-      "_app/immutable/assets/_page.353d629f.css"
-    ],
-    "file": "entries/pages/pedagogy/_page.svelte.js",
-    "imports": [
-      "_utils.js",
-      "_ssr.js",
-      "_index2.js"
-    ],
-    "isEntry": true,
-    "src": "src/routes/pedagogy/+page.svelte"
   }
 }

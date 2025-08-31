@@ -1,137 +1,103 @@
 <script>
-  import { version, phase } from "$lib/index.js";
+  // 🚀 FunLearning V2.0 - Phase 1 Home Page
+  // Page d'accueil basique conforme roadmap Phase 1
+
+  import { user } from "$lib/stores/auth.js";
 </script>
 
 <svelte:head>
-  <title>FunLearning - {phase}</title>
-  <meta name="description" content="Application d'apprentissage interactive" />
+  <title>FunLearning V2.0 - Plateforme Éducative</title>
+  <meta name="description" content="Plateforme d'apprentissage personnalisée" />
 </svelte:head>
 
-<main>
-  <h1>🎓 FunLearning</h1>
+<main class="container">
+  <header class="hero">
+    <h1>🚀 FunLearning V2.0</h1>
+    <p>Plateforme d'apprentissage personnalisée et adaptive</p>
+    <p class="phase-status">📋 Phase 1 : Setup & Architecture ✅</p>
+  </header>
 
-  <div class="status">
-    <h2>Statut du Projet</h2>
-    <p><strong>Version:</strong> {version}</p>
-    <p><strong>Phase actuelle:</strong> Phase 2 - Contenu & Markdown</p>
-    <p>
-      <strong>Statut:</strong> ✅ Authentification + Système de cours opérationnels
-    </p>
-  </div>
+  <section class="status">
+    <h2>🏗️ État du Projet</h2>
+    <div class="status-grid">
+      <div class="status-card">
+        <h3>✅ Phase 1 - Setup</h3>
+        <p>SvelteKit + TypeScript + Tests configurés</p>
+      </div>
 
-  <div class="actions">
-    <h3>Découvrir FunLearning</h3>
-    <div class="buttons">
-      <a href="/cours" class="btn primary">📚 Voir les cours</a>
-      <a href="/auth" class="btn secondary">🔐 Se connecter</a>
-      <a href="/dashboard" class="btn secondary">📊 Dashboard</a>
-      <a href="/pedagogy" class="btn featured">🧠 Démo Pédagogie 2.5</a>
+      <div class="status-card pending">
+        <h3>⏳ Phase 2 - Auth Firebase</h3>
+        <p>Authentification complète (à venir)</p>
+      </div>
+
+      <div class="status-card pending">
+        <h3>⏳ Phase 3 - Contenus</h3>
+        <p>Structure des cours (à venir)</p>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <div class="info">
-    <h3>Fonctionnalités disponibles</h3>
-    <ul>
-      <li>✅ Authentification Firebase</li>
-      <li>✅ Système de cours Markdown</li>
-      <li>✅ Routes dynamiques</li>
-      <li>✅ Coloration syntaxique</li>
-      <li>✅ Interface responsive</li>
-      <li>🚀 Phase 2.5 : Pédagogie avancée (Nouveau !)</li>
-    </ul>
-  </div>
+  <footer>
+    <p>🎯 Développement méthodique selon roadmap 12 phases</p>
+  </footer>
 </main>
 
 <style>
-  main {
-    text-align: center;
-    padding: 2rem;
-    max-width: 800px;
+  .container {
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 2rem;
   }
 
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 2.5rem;
-    font-weight: 100;
-    margin-bottom: 2rem;
+  .hero {
+    text-align: center;
+    margin-bottom: 3rem;
   }
 
-  .info {
-    background: #f9f9f9;
-    padding: 1.5rem;
-    border-radius: 8px;
-    margin-top: 2rem;
+  .hero h1 {
+    font-size: 3rem;
+    color: #2563eb;
+    margin-bottom: 1rem;
   }
 
-  .info p {
-    margin: 0.5rem 0;
-  }
-
-  .actions {
-    margin: 2rem 0;
-  }
-
-  .buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .btn {
-    padding: 0.75rem 1.5rem;
-    text-decoration: none;
+  .phase-status {
+    background: #10b981;
+    color: white;
+    padding: 0.5rem 1rem;
     border-radius: 6px;
-    font-weight: 600;
-    transition: all 0.2s;
+    display: inline-block;
+    margin-top: 1rem;
   }
 
-  .btn.primary {
-    background: #ff3e00;
-    color: white;
+  .status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
   }
 
-  .btn.primary:hover {
-    background: #e63900;
+  .status-card {
+    border: 2px solid #10b981;
+    border-radius: 8px;
+    padding: 1.5rem;
+    background: #f0fdf4;
   }
 
-  .btn.secondary {
-    background: #ffffff;
-    color: #333;
-    border: 2px solid #ddd;
+  .status-card.pending {
+    border-color: #f59e0b;
+    background: #fffbeb;
   }
 
-  .btn.secondary:hover {
-    border-color: #ff3e00;
-    color: #ff3e00;
-  }
-
-  .btn.featured {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .btn.featured:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-  }
-
-  .btn.featured::before {
-    content: "✨";
-    position: absolute;
-    top: -5px;
-    right: -5px;
+  .status-card h3 {
+    margin: 0 0 0.5rem 0;
     font-size: 1.2rem;
-    animation: sparkle 2s infinite;
   }
 
-  @keyframes sparkle {
-    0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.7; }
-    50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
+  footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e5e7eb;
+    color: #6b7280;
   }
 </style>

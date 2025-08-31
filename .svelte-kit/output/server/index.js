@@ -1,7 +1,6 @@
 import { b as base, a as assets, r as reset, p as public_env, o as options, s as set_private_env, c as set_public_env, g as get_hooks } from "./chunks/internal.js";
-import { t as text, H as HttpError, j as json, N as NotFound, R as Redirect, e as error, A as ActionFailure } from "./chunks/index.js";
 import * as devalue from "devalue";
-import { r as readable, w as writable } from "./chunks/index2.js";
+import { n as noop, s as safe_not_equal } from "./chunks/ssr.js";
 import { parse, serialize } from "cookie";
 import * as set_cookie_parser from "set-cookie-parser";
 const BROWSER = false;
@@ -55,6 +54,55 @@ function is_form_content_type(request) {
     "text/plain"
   );
 }
+class HttpError {
+  /**
+   * @param {number} status
+   * @param {{message: string} extends App.Error ? (App.Error | string | undefined) : App.Error} body
+   */
+  constructor(status, body) {
+    this.status = status;
+    if (typeof body === "string") {
+      this.body = { message: body };
+    } else if (body) {
+      this.body = body;
+    } else {
+      this.body = { message: `Error: ${status}` };
+    }
+  }
+  toString() {
+    return JSON.stringify(this.body);
+  }
+}
+class Redirect {
+  /**
+   * @param {300 | 301 | 302 | 303 | 304 | 305 | 306 | 307 | 308} status
+   * @param {string} location
+   */
+  constructor(status, location) {
+    this.status = status;
+    this.location = location;
+  }
+}
+class NotFound extends Error {
+  /**
+   * @param {string} pathname
+   */
+  constructor(pathname) {
+    super();
+    this.status = 404;
+    this.message = `Not found: ${pathname}`;
+  }
+}
+class ActionFailure {
+  /**
+   * @param {number} status
+   * @param {T} [data]
+   */
+  constructor(status, data) {
+    this.status = status;
+    this.data = data;
+  }
+}
 function exec(match, params, matchers) {
   const result = {};
   const values = match.slice(1);
@@ -93,6 +141,42 @@ function exec(match, params, matchers) {
   if (buffered)
     return;
   return result;
+}
+function error(status, body) {
+  if (isNaN(status) || status < 400 || status > 599) {
+    throw new Error(`HTTP error status codes must be between 400 and 599 — ${status} is invalid`);
+  }
+  return new HttpError(status, body);
+}
+function json(data, init2) {
+  const body = JSON.stringify(data);
+  const headers = new Headers(init2?.headers);
+  if (!headers.has("content-length")) {
+    headers.set("content-length", encoder$3.encode(body).byteLength.toString());
+  }
+  if (!headers.has("content-type")) {
+    headers.set("content-type", "application/json");
+  }
+  return new Response(body, {
+    ...init2,
+    headers
+  });
+}
+const encoder$3 = new TextEncoder();
+function text(body, init2) {
+  const headers = new Headers(init2?.headers);
+  if (!headers.has("content-length")) {
+    const encoded = encoder$3.encode(body);
+    headers.set("content-length", encoded.byteLength.toString());
+    return new Response(encoded, {
+      ...init2,
+      headers
+    });
+  }
+  return new Response(body, {
+    ...init2,
+    headers
+  });
 }
 function coalesce_to_error(err) {
   return err instanceof Error || err && /** @type {any} */
@@ -813,6 +897,53 @@ async function stream_to_string(stream) {
     result += decoder.decode(value);
   }
   return result;
+}
+const subscriber_queue = [];
+function readable(value, start) {
+  return {
+    subscribe: writable(value, start).subscribe
+  };
+}
+function writable(value, start = noop) {
+  let stop;
+  const subscribers = /* @__PURE__ */ new Set();
+  function set(new_value) {
+    if (safe_not_equal(value, new_value)) {
+      value = new_value;
+      if (stop) {
+        const run_queue = !subscriber_queue.length;
+        for (const subscriber of subscribers) {
+          subscriber[1]();
+          subscriber_queue.push(subscriber, value);
+        }
+        if (run_queue) {
+          for (let i = 0; i < subscriber_queue.length; i += 2) {
+            subscriber_queue[i][0](subscriber_queue[i + 1]);
+          }
+          subscriber_queue.length = 0;
+        }
+      }
+    }
+  }
+  function update(fn) {
+    set(fn(value));
+  }
+  function subscribe(run, invalidate = noop) {
+    const subscriber = [run, invalidate];
+    subscribers.add(subscriber);
+    if (subscribers.size === 1) {
+      stop = start(set, update) || noop;
+    }
+    run(value);
+    return () => {
+      subscribers.delete(subscriber);
+      if (subscribers.size === 0 && stop) {
+        stop();
+        stop = null;
+      }
+    };
+  }
+  return { set, update, subscribe };
 }
 function hash(...values) {
   let hash2 = 5381;

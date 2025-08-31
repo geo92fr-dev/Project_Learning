@@ -1,10 +1,8 @@
-import * as universal from '../entries/pages/_matiere_/_niveau_/_layout.ts.js';
+
 
 export const index = 3;
 let component_cache;
-export const component = async () => component_cache ??= (await import('../entries/pages/_matiere_/_niveau_/_layout.svelte.js')).default;
-export { universal };
-export const universal_id = "src/routes/[matiere]/[niveau]/+layout.ts";
-export const imports = ["_app/immutable/nodes/3.e806fe7d.js","_app/immutable/chunks/Breadcrumbs.f9e2e585.js","_app/immutable/chunks/control.c2cf8273.js","_app/immutable/chunks/scheduler.53ef06e3.js","_app/immutable/chunks/each.e59479a4.js","_app/immutable/chunks/index.aeab89ec.js","_app/immutable/chunks/paths.21f781d0.js","_app/immutable/chunks/stores.ecd3eba0.js","_app/immutable/chunks/singletons.034d086d.js","_app/immutable/chunks/index.2202404a.js"];
-export const stylesheets = ["_app/immutable/assets/3.fc97342a.css","_app/immutable/assets/Breadcrumbs.2c5d7ce3.css"];
+export const component = async () => component_cache ??= (await import('../entries/pages/auth/_page.svelte.js')).default;
+export const imports = ["_app/immutable/nodes/3.f3601ac7.js","_app/immutable/chunks/scheduler.e108d1fd.js","_app/immutable/chunks/index.6a6d9526.js","_app/immutable/chunks/firebase.d43fb313.js"];
+export const stylesheets = ["_app/immutable/assets/3.86c8710b.css"];
 export const fonts = [];

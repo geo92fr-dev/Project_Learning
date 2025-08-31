@@ -7,25 +7,30 @@
 ## 🚀 **État Actuel du Projet - 29 Août 2025**
 
 ### ✅ **Phases Terminées**
+
 - **✅ Phase 1** : Firebase & Auth Google - Authentification opérationnelle
-- **✅ Phase 2.9** : Curriculum & Génération - 120+ compétences générées 
+- **✅ Phase 2.9** : Curriculum & Génération - 120+ compétences générées
 - **✅ Phase 2.10** : Interface Dynamique Firebase - Tuiles automatiques depuis base
 
 ### 🎯 **Dernière Réalisation (Phase 2.10)**
-**Interface entièrement dynamique** : 
+
+**Interface entièrement dynamique** :
+
 - ✅ Service Firebase `subjects.ts` avec requêtes temps réel
-- ✅ Homepage avec chargement dynamique et statistiques 
+- ✅ Homepage avec chargement dynamique et statistiques
 - ✅ États de chargement (spinner) et fallbacks
 - ✅ Tuiles générées automatiquement depuis Firestore
 - ✅ **Résultat** : Plus de données hardcodées, interface réactive aux données Firebase
 
 ### 📈 **Métriques Actuelles**
+
 - **2 matières** en base (Mathématiques, Français)
 - **7 compétences** avec contenu détaillé
 - **3 cours** structurés par niveau
 - **Interface 100% dynamique** - données Firebase en temps réel
 
 ### 🎯 **Prochaine Étape : Phase 3**
+
 **Exercices & Progression** - Transformer le contenu en quiz interactifs avec suivi utilisateur
 
 ---
@@ -33,12 +38,14 @@
 ## 🎯 Guide d'utilisation avec Assistant IA
 
 ### 📋 Syntaxe des commandes
+
 - **[CMD]** : Commande terminal à exécuter
 - **[FILE]** : Fichier à créer/modifier avec chemin exact
 - **[TEST]** : Test de validation à lancer
 - **[CHECK]** : Point de contrôle obligatoire
 
 ### 🔄 Processus de validation
+
 1. **Confirmer** chaque étape avant de passer à la suivante
 2. **Copier-coller** les erreurs pour débogage assisté
 3. **Valider** les tests avant progression
@@ -47,27 +54,29 @@
 
 ## 📅 Vue d'ensemble
 
-| Phase | Durée | Objectif | Validation |
-|-------|-------|----------|------------|
-| **P0** | 3 jours | Setup & Architecture | `npm run dev` + déploiement |
-| **P1** | ✅ 1 semaine | Firebase & Auth Google | ✅ Tests auth passants |
+| Phase  | Durée        | Objectif                                 | Validation                      |
+| ------ | ------------ | ---------------------------------------- | ------------------------------- |
+| **P0** | 3 jours      | Setup & Architecture                     | `npm run dev` + déploiement     |
+| **P1** | ✅ 1 semaine | Firebase & Auth Google                   | ✅ Tests auth passants          |
 | **P2** | ✅ 1 semaine | Contenu & Markdown + Interface Dynamique | ✅ Affichage dynamique Firebase |
-| **P3** | 1 semaine | Exercices & Progression | QCM interactifs OK |
-| **P4** | 1 semaine | PWA & Offline | App installable |
-| **P5** | 1 semaine | Admin & Import | Interface admin fonctionnelle |
-| **P6** | 1 semaine | Polish & Performance | Lighthouse > 90 |
+| **P3** | 1 semaine    | Exercices & Progression                  | QCM interactifs OK              |
+| **P4** | 1 semaine    | PWA & Offline                            | App installable                 |
+| **P5** | 1 semaine    | Admin & Import                           | Interface admin fonctionnelle   |
+| **P6** | 1 semaine    | Polish & Performance                     | Lighthouse > 90                 |
 
 ---
 
 ## 🚀 Phase 0 : Setup & Architecture (3 jours)
 
 ### 🎯 Contexte IA
+
 **Objectif** : Initialiser un projet SvelteKit avec TypeScript, tests, et déploiement automatique.
 **Pré-requis** : Node.js 18+, Git configuré, compte Vercel.
 
 ### 📝 Instructions granulaires
 
 #### Étape 0.1 : Initialisation SvelteKit
+
 ```bash
 [CMD] npm create svelte@latest funrevis-v3 -- --template skeleton --types typescript
 [CMD] cd funrevis-v3
@@ -77,6 +86,7 @@
 **[CHECK]** Confirmer que le projet démarre avec `npm run dev` sur http://localhost:5173
 
 #### Étape 0.2 : Structure de dossiers
+
 ```bash
 [CMD] mkdir -p src/lib/components src/lib/stores src/lib/utils src/lib/firebase
 [CMD] mkdir -p src/routes/auth src/routes/admin src/routes/dashboard
@@ -84,79 +94,84 @@
 ```
 
 **[FILE]** Créer `src/lib/index.js` :
+
 ```js
 // Exports centralisés
-export { default as Header } from './components/Header.svelte';
-export { default as Footer } from './components/Footer.svelte';
+export { default as Header } from "./components/Header.svelte";
+export { default as Footer } from "./components/Footer.svelte";
 ```
 
 #### Étape 0.3 : Configuration développement centralisée
+
 ```bash
 [CMD] npm install -D vitest @vitest/ui jsdom @testing-library/svelte @testing-library/jest-dom
 [CMD] mkdir -p config
 ```
 
 **[FILE]** Créer `config/vitest.config.js` :
+
 ```js
-import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vitest/config';
+import { sveltekit } from "@sveltejs/kit/vite";
+import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   plugins: [sveltekit()],
   test: {
-    include: ['src/**/*.{test,spec}.{js,ts}'],
-    environment: 'jsdom',
-    setupFiles: ['./src/test-setup.js'],
+    include: ["src/**/*.{test,spec}.{js,ts}"],
+    environment: "jsdom",
+    setupFiles: ["./src/test-setup.js"],
     coverage: {
-      reporter: ['text', 'html', 'lcov'],
-      exclude: ['node_modules/', 'src/test-setup.js']
-    }
-  }
+      reporter: ["text", "html", "lcov"],
+      exclude: ["node_modules/", "src/test-setup.js"],
+    },
+  },
 });
 ```
 
 **[FILE]** Créer `config/.eslintrc.cjs` :
+
 ```js
 module.exports = {
   root: true,
   extends: [
-    'eslint:recommended',
-    '@typescript-eslint/recommended',
-    'plugin:svelte/recommended'
+    "eslint:recommended",
+    "@typescript-eslint/recommended",
+    "plugin:svelte/recommended",
   ],
-  parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
+  parser: "@typescript-eslint/parser",
+  plugins: ["@typescript-eslint"],
   parserOptions: {
-    sourceType: 'module',
+    sourceType: "module",
     ecmaVersion: 2020,
-    extraFileExtensions: ['.svelte']
+    extraFileExtensions: [".svelte"],
   },
   env: {
     browser: true,
     es2017: true,
-    node: true
+    node: true,
   },
   overrides: [
     {
-      files: ['*.svelte'],
-      parser: 'svelte-eslint-parser',
+      files: ["*.svelte"],
+      parser: "svelte-eslint-parser",
       parserOptions: {
-        parser: '@typescript-eslint/parser'
-      }
-    }
+        parser: "@typescript-eslint/parser",
+      },
+    },
   ],
   rules: {
     // Règles strictes pour la qualité
-    '@typescript-eslint/no-unused-vars': 'error',
-    '@typescript-eslint/explicit-function-return-type': 'warn',
-    'svelte/no-at-html-tags': 'error',
-    'svelte/accessibility-label-has-associated-control': 'error',
-    'svelte/accessibility-missing-attribute': 'error'
-  }
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/explicit-function-return-type": "warn",
+    "svelte/no-at-html-tags": "error",
+    "svelte/accessibility-label-has-associated-control": "error",
+    "svelte/accessibility-missing-attribute": "error",
+  },
 };
 ```
 
 **[FILE]** Créer `config/.prettierrc` :
+
 ```json
 {
   "useTabs": false,
@@ -165,19 +180,20 @@ module.exports = {
   "printWidth": 100,
   "plugins": ["prettier-plugin-svelte"],
   "overrides": [
-    { 
-      "files": "*.svelte", 
-      "options": { 
+    {
+      "files": "*.svelte",
+      "options": {
         "parser": "svelte",
         "svelteStrictMode": true,
         "svelteAllowShorthand": false
-      } 
+      }
     }
   ]
 }
 ```
 
 **[FILE]** Modifier `package.json` pour pointer vers les configs :
+
 ```json
 {
   "scripts": {
@@ -199,62 +215,64 @@ module.exports = {
 #### Étape 0.4 : Hooks de sécurité SvelteKit
 
 **[FILE]** Créer `src/hooks.server.ts` pour la protection serveur :
-```ts
-import type { Handle } from '@sveltejs/kit';
-import { adminAuth } from '$lib/firebase/admin';
 
-const protectedRoutes = ['/dashboard', '/admin', '/cours'];
+```ts
+import type { Handle } from "@sveltejs/kit";
+import { adminAuth } from "$lib/firebase/admin";
+
+const protectedRoutes = ["/dashboard", "/admin", "/cours"];
 
 export const handle: Handle = async ({ event, resolve }) => {
   const { url, cookies } = event;
-  
+
   // Vérifier si la route nécessite une authentification
-  const isProtectedRoute = protectedRoutes.some(route => 
+  const isProtectedRoute = protectedRoutes.some((route) =>
     url.pathname.startsWith(route)
   );
-  
+
   if (isProtectedRoute) {
-    const sessionCookie = cookies.get('session');
-    
+    const sessionCookie = cookies.get("session");
+
     if (!sessionCookie) {
       return new Response(null, {
         status: 302,
-        headers: { Location: '/auth/login' }
+        headers: { Location: "/auth/login" },
       });
     }
-    
+
     try {
       // Vérifier le token côté serveur
       const decodedToken = await adminAuth.verifySessionCookie(sessionCookie);
       event.locals.user = {
         uid: decodedToken.uid,
         email: decodedToken.email,
-        role: decodedToken.role || 'student'
+        role: decodedToken.role || "student",
       };
     } catch (error) {
-      console.error('Session invalide:', error);
-      cookies.delete('session');
+      console.error("Session invalide:", error);
+      cookies.delete("session");
       return new Response(null, {
         status: 302,
-        headers: { Location: '/auth/login' }
+        headers: { Location: "/auth/login" },
       });
     }
   }
-  
+
   return resolve(event);
 };
 ```
 
 **[FILE]** Créer `src/lib/firebase/admin.ts` :
+
 ```ts
-import { getAuth } from 'firebase-admin/auth';
-import { initializeApp, getApps, cert } from 'firebase-admin/app';
-import { FIREBASE_ADMIN_SDK_KEY } from '$env/static/private';
+import { getAuth } from "firebase-admin/auth";
+import { initializeApp, getApps, cert } from "firebase-admin/app";
+import { FIREBASE_ADMIN_SDK_KEY } from "$env/static/private";
 
 // Initialiser Firebase Admin si pas déjà fait
 if (!getApps().length) {
   initializeApp({
-    credential: cert(JSON.parse(FIREBASE_ADMIN_SDK_KEY))
+    credential: cert(JSON.parse(FIREBASE_ADMIN_SDK_KEY)),
   });
 }
 
@@ -262,6 +280,7 @@ export const adminAuth = getAuth();
 ```
 
 **[FILE]** Créer `src/app.d.ts` pour typer les locals :
+
 ```ts
 declare global {
   namespace App {
@@ -282,60 +301,64 @@ export {};
 ```
 
 #### Étape 0.5 : Configuration Playwright
+
 ```bash
 [CMD] npm install -D @playwright/test
 [CMD] npx playwright install
 ```
 
 **[FILE]** Créer `playwright.config.ts` :
+
 ```ts
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
-  testDir: './tests/e2e',
+  testDir: "./tests/e2e",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  reporter: "html",
   use: {
-    baseURL: 'http://localhost:5173',
-    trace: 'on-first-retry',
+    baseURL: "http://localhost:5173",
+    trace: "on-first-retry",
   },
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
     },
   ],
   webServer: {
-    command: 'npm run build && npm run preview',
+    command: "npm run build && npm run preview",
     port: 5173,
   },
 });
 ```
 
 #### Étape 0.6 : Script de validation centralisé
+
 ```bash
 [CMD] mkdir scripts
 ```
 
 **[FILE]** Créer `scripts/validate-phase.js` - script unique avec paramètre :
+
 ```js
-import { exec } from 'child_process';
-import { promisify } from 'util';
-import { readFileSync } from 'fs';
+import { exec } from "child_process";
+import { promisify } from "util";
+import { readFileSync } from "fs";
 
 const execAsync = promisify(exec);
 
 const PHASE_VALIDATIONS = {
-  '0': ['lint', 'build', 'test'],
-  '1': ['lint', 'build', 'test', 'test:auth'],
-  '2': ['lint', 'build', 'test', 'test:content', 'test:security'],
-  '3': ['lint', 'build', 'test', 'test:exercises', 'test:performance'],
-  '4': ['lint', 'build', 'test', 'test:pwa', 'test:offline'],
-  '5': ['lint', 'build', 'test', 'test:admin', 'test:e2e'],
-  '6': ['lint', 'build', 'test', 'test:e2e', 'test:lighthouse']
+  0: ["lint", "build", "test"],
+  1: ["lint", "build", "test", "test:auth"],
+  2: ["lint", "build", "test", "test:content", "test:security"],
+  3: ["lint", "build", "test", "test:exercises", "test:performance"],
+  4: ["lint", "build", "test", "test:pwa", "test:offline"],
+  5: ["lint", "build", "test", "test:admin", "test:e2e"],
+  6: ["lint", "build", "test", "test:e2e", "test:lighthouse"],
 };
 
 async function runCommand(command, description) {
@@ -352,21 +375,21 @@ async function runCommand(command, description) {
 
 async function validatePhase(phase) {
   console.log(`🚀 Validation Phase ${phase} - FunRevis V3`);
-  console.log('='.repeat(50));
-  
+  console.log("=".repeat(50));
+
   const validations = PHASE_VALIDATIONS[phase];
   if (!validations) {
     console.error(`❌ Phase ${phase} non reconnue`);
     process.exit(1);
   }
-  
+
   let success = true;
-  
+
   for (const validation of validations) {
-    const result = await runCommand(validation, validation.replace(':', ' '));
+    const result = await runCommand(validation, validation.replace(":", " "));
     if (!result) success = false;
   }
-  
+
   if (success) {
     console.log(`🎉 Phase ${phase} validée avec succès !`);
     console.log(`📊 ${validations.length} vérifications passées`);
@@ -376,12 +399,14 @@ async function validatePhase(phase) {
   }
 }
 
-const phase = process.argv[2] || '0';
+const phase = process.argv[2] || "0";
 validatePhase(phase);
 ```
 
 #### Étape 0.7 : Configuration package.json
+
 **[FILE]** Modifier complètement `package.json` section scripts avec configurations centralisées :
+
 ```json
 {
   "scripts": {
@@ -410,9 +435,11 @@ validatePhase(phase);
 ```
 
 #### Étape 0.8 : Test de base avec setup
+
 **[FILE]** Créer `src/test-setup.js` :
+
 ```js
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 
 // Configuration globale pour les tests
 global.ResizeObserver = class ResizeObserver {
@@ -425,9 +452,9 @@ global.ResizeObserver = class ResizeObserver {
 };
 
 // Mock des APIs du navigateur
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
   writable: true,
-  value: vi.fn().mockImplementation(query => ({
+  value: vi.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -441,36 +468,41 @@ Object.defineProperty(window, 'matchMedia', {
 ```
 
 **[FILE]** Créer `src/lib/utils/helpers.test.ts` :
+
 ```ts
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect } from "vitest";
 
 // Fonction utilitaire simple pour tester
 export function formatDate(date: Date): string {
-  return date.toLocaleDateString('fr-FR');
+  return date.toLocaleDateString("fr-FR");
 }
 
-describe('helpers', () => {
-  it('should format date correctly', () => {
-    const date = new Date('2024-01-15');
-    expect(formatDate(date)).toBe('15/01/2024');
+describe("helpers", () => {
+  it("should format date correctly", () => {
+    const date = new Date("2024-01-15");
+    expect(formatDate(date)).toBe("15/01/2024");
   });
 });
 ```
 
 #### Étape 0.8 : Test E2E de base
-**[FILE]** Créer `tests/e2e/basic.spec.ts` :
-```ts
-import { test, expect } from '@playwright/test';
 
-test('homepage loads correctly', async ({ page }) => {
-  await page.goto('/');
+**[FILE]** Créer `tests/e2e/basic.spec.ts` :
+
+```ts
+import { test, expect } from "@playwright/test";
+
+test("homepage loads correctly", async ({ page }) => {
+  await page.goto("/");
   await expect(page).toHaveTitle(/Welcome to SvelteKit/);
-  await expect(page.locator('h1')).toBeVisible();
+  await expect(page.locator("h1")).toBeVisible();
 });
 ```
 
 #### Étape 0.9 : Configuration Vercel
+
 **[FILE]** Créer `vercel.json` :
+
 ```json
 {
   "buildCommand": "npm run build",
@@ -480,23 +512,29 @@ test('homepage loads correctly', async ({ page }) => {
 ```
 
 **[CMD]** Installer Vercel CLI et déployer :
+
 ```bash
 [CMD] npm install -g vercel
 [CMD] vercel --prod
 ```
 
 #### Étape 0.10 : Documentation
+
 **[FILE]** Créer `README.md` :
-```md
+
+````md
 # FunRevis V3
 
 ## Installation
+
 ```bash
 npm install
 npm run dev
 ```
+````
 
 ## Tests
+
 ```bash
 npm run test        # Tests unitaires
 npm run test:e2e    # Tests E2E
@@ -504,11 +542,13 @@ npm run lint        # Linting
 ```
 
 ## Déploiement
+
 ```bash
 npm run build
 vercel --prod
 ```
-```
+
+````
 
 ### 🧪 Tests de validation Phase 0
 ```bash
@@ -516,9 +556,10 @@ vercel --prod
 [TEST] npm run lint          # Aucune erreur
 [TEST] npm run build         # Build réussi
 [TEST] npm run test:e2e      # E2E passent
-```
+````
 
 ### ✅ Critères de validation obligatoires
+
 - [ ] **[CHECK]** `npm run dev` démarre sur localhost:5173
 - [ ] **[CHECK]** `npm run test` : 1+ test passe
 - [ ] **[CHECK]** `npm run lint` : 0 erreur
@@ -531,24 +572,29 @@ vercel --prod
 ---
 
 ## 🔐 Phase 1 : Firebase & Authentification ✅ COMPLÈTE
-*Durée réelle : 1 semaine - Migration Google Auth*
+
+_Durée réelle : 1 semaine - Migration Google Auth_
 
 > **📝 ADDENDUM :** [Migration vers Google Auth Uniquement](./funrevis-v3/DOC_ADDENDUM_GOOGLE_AUTH.md)
 
 ### 🎯 Contexte IA
+
 **Objectif** : ✅ Authentification Google OAuth avec popup moderne et protection des routes.
 **Résultat** : ✅ Système d'authentification simplifié et sécurisé opérationnel.
 
 ### 📝 Instructions granulaires
 
 #### Étape 1.1 : Installation dépendances Firebase
+
 ```bash
 [CMD] npm install firebase
 [CMD] npm install -D @types/node
 ```
 
 #### Étape 1.2 : Configuration environnement
+
 **[FILE]** Créer `.env.local` :
+
 ```env
 VITE_FIREBASE_API_KEY=your_api_key_here
 VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
@@ -559,17 +605,20 @@ VITE_FIREBASE_APP_ID=your_app_id
 ```
 
 **[FILE]** Ajouter à `.gitignore` :
+
 ```
 .env.local
 .env
 ```
 
 #### Étape 1.3 : Configuration Firebase client
+
 **[FILE]** Créer `src/lib/firebase/client.ts` :
+
 ```ts
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -577,7 +626,7 @@ const firebaseConfig = {
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 export const app = initializeApp(firebaseConfig);
@@ -586,12 +635,14 @@ export const db = getFirestore(app);
 ```
 
 #### Étape 1.4 : Store d'authentification
+
 **[FILE]** Créer `src/lib/stores/auth.ts` :
+
 ```ts
-import { writable } from 'svelte/store';
-import { auth } from '$lib/firebase/client';
-import { onAuthStateChanged, type User } from 'firebase/auth';
-import { browser } from '$app/environment';
+import { writable } from "svelte/store";
+import { auth } from "$lib/firebase/client";
+import { onAuthStateChanged, type User } from "firebase/auth";
+import { browser } from "$app/environment";
 
 interface AuthStore {
   user: User | null;
@@ -603,26 +654,26 @@ const createAuthStore = () => {
   const { subscribe, set, update } = writable<AuthStore>({
     user: null,
     loading: true,
-    initialized: false
+    initialized: false,
   });
 
   return {
     subscribe,
     init: () => {
       if (!browser) return;
-      
+
       onAuthStateChanged(auth, (user) => {
-        update(store => ({
+        update((store) => ({
           user,
           loading: false,
-          initialized: true
+          initialized: true,
         }));
       });
     },
     signOut: async () => {
-      const { signOut } = await import('firebase/auth');
+      const { signOut } = await import("firebase/auth");
       await signOut(auth);
-    }
+    },
   };
 };
 
@@ -630,184 +681,213 @@ export const authStore = createAuthStore();
 ```
 
 **[FILE]** Créer `src/lib/firebase/auth.ts` avec gestion d'erreurs robuste :
+
 ```ts
-import { 
-  signInWithEmailAndPassword, 
+import {
+  signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   type User,
-  type AuthError
-} from 'firebase/auth';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
-import { auth, db } from './client';
-import { adminAuth } from './admin';
+  type AuthError,
+} from "firebase/auth";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { auth, db } from "./client";
+import { adminAuth } from "./admin";
 
 export interface UserData {
   email: string;
-  role: 'admin' | 'student';
+  role: "admin" | "student";
   createdAt: string;
   lastLogin: string;
 }
 
 // Codes d'erreur Firebase avec messages personnalisés
 const AUTH_ERROR_MESSAGES: Record<string, string> = {
-  'auth/invalid-email': 'Adresse email invalide',
-  'auth/weak-password': 'Le mot de passe doit contenir au moins 6 caractères',
-  'auth/email-already-in-use': 'Cette adresse email est déjà utilisée',
-  'auth/user-not-found': 'Aucun compte trouvé avec cette adresse email',
-  'auth/wrong-password': 'Mot de passe incorrect',
-  'auth/invalid-credential': 'Identifiants invalides',
-  'auth/too-many-requests': 'Trop de tentatives. Réessayez plus tard',
-  'auth/network-request-failed': 'Erreur de connexion. Vérifiez votre internet',
-  'auth/requires-recent-login': 'Reconnectez-vous pour continuer'
+  "auth/invalid-email": "Adresse email invalide",
+  "auth/weak-password": "Le mot de passe doit contenir au moins 6 caractères",
+  "auth/email-already-in-use": "Cette adresse email est déjà utilisée",
+  "auth/user-not-found": "Aucun compte trouvé avec cette adresse email",
+  "auth/wrong-password": "Mot de passe incorrect",
+  "auth/invalid-credential": "Identifiants invalides",
+  "auth/too-many-requests": "Trop de tentatives. Réessayez plus tard",
+  "auth/network-request-failed": "Erreur de connexion. Vérifiez votre internet",
+  "auth/requires-recent-login": "Reconnectez-vous pour continuer",
 };
 
 export function getAuthErrorMessage(error: AuthError): string {
-  return AUTH_ERROR_MESSAGES[error.code] || 'Une erreur est survenue';
+  return AUTH_ERROR_MESSAGES[error.code] || "Une erreur est survenue";
 }
 
-export const loginUser = async (email: string, password: string): Promise<User> => {
+export const loginUser = async (
+  email: string,
+  password: string
+): Promise<User> => {
   try {
     const { user } = await signInWithEmailAndPassword(auth, email, password);
-    
+
     // Créer session côté serveur avec Custom Claims
     const idToken = await user.getIdToken();
-    
+
     // Appel API pour créer session cookie
-    const response = await fetch('/api/auth/session', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ idToken })
+    const response = await fetch("/api/auth/session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ idToken }),
     });
-    
+
     if (!response.ok) {
-      throw new Error('Échec de création de session');
+      throw new Error("Échec de création de session");
     }
-    
+
     // Mettre à jour lastLogin
-    await setDoc(doc(db, 'users', user.uid), {
-      lastLogin: new Date().toISOString()
-    }, { merge: true });
-    
+    await setDoc(
+      doc(db, "users", user.uid),
+      {
+        lastLogin: new Date().toISOString(),
+      },
+      { merge: true }
+    );
+
     return user;
   } catch (error) {
     throw new Error(getAuthErrorMessage(error as AuthError));
   }
 };
 
-export const registerUser = async (email: string, password: string): Promise<User> => {
+export const registerUser = async (
+  email: string,
+  password: string
+): Promise<User> => {
   try {
-    const { user } = await createUserWithEmailAndPassword(auth, email, password);
-    
+    const { user } = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
     // Créer profil utilisateur
     const userData: UserData = {
       email: user.email!,
-      role: 'student',
+      role: "student",
       createdAt: new Date().toISOString(),
-      lastLogin: new Date().toISOString()
+      lastLogin: new Date().toISOString(),
     };
-    
-    await setDoc(doc(db, 'users', user.uid), userData);
-    
+
+    await setDoc(doc(db, "users", user.uid), userData);
+
     // Définir Custom Claims via Firebase Admin
-    await adminAuth.setCustomUserClaims(user.uid, { role: 'student' });
-    
+    await adminAuth.setCustomUserClaims(user.uid, { role: "student" });
+
     return user;
   } catch (error) {
     throw new Error(getAuthErrorMessage(error as AuthError));
   }
 };
 
-export const getUserRole = async (uid: string): Promise<'admin' | 'student'> => {
+export const getUserRole = async (
+  uid: string
+): Promise<"admin" | "student"> => {
   try {
     // Récupérer depuis Custom Claims d'abord
     const user = await adminAuth.getUser(uid);
     if (user.customClaims?.role) {
       return user.customClaims.role;
     }
-    
+
     // Fallback Firestore
-    const docRef = doc(db, 'users', uid);
+    const docRef = doc(db, "users", uid);
     const docSnap = await getDoc(docRef);
-    
+
     if (docSnap.exists()) {
       return docSnap.data().role;
     }
-    
-    return 'student';
+
+    return "student";
   } catch (error) {
-    console.error('Erreur récupération rôle:', error);
-    return 'student';
+    console.error("Erreur récupération rôle:", error);
+    return "student";
   }
 };
 ```
 
 **[FILE]** Créer `src/routes/api/auth/session/+server.ts` :
+
 ```ts
-import type { RequestHandler } from './$types';
-import { adminAuth } from '$lib/firebase/admin';
-import { error } from '@sveltejs/kit';
+import type { RequestHandler } from "./$types";
+import { adminAuth } from "$lib/firebase/admin";
+import { error } from "@sveltejs/kit";
 
 export const POST: RequestHandler = async ({ request, cookies }) => {
   try {
     const { idToken } = await request.json();
-    
+
     // Vérifier le token
     const decodedToken = await adminAuth.verifyIdToken(idToken);
-    
+
     // Créer session cookie (5 jours)
     const expiresIn = 60 * 60 * 24 * 5 * 1000;
-    const sessionCookie = await adminAuth.createSessionCookie(idToken, { expiresIn });
-    
+    const sessionCookie = await adminAuth.createSessionCookie(idToken, {
+      expiresIn,
+    });
+
     // Définir cookie sécurisé
-    cookies.set('session', sessionCookie, {
+    cookies.set("session", sessionCookie, {
       maxAge: expiresIn,
       httpOnly: true,
       secure: true,
-      sameSite: 'strict',
-      path: '/'
+      sameSite: "strict",
+      path: "/",
     });
-    
+
     return new Response(JSON.stringify({ success: true }));
   } catch (err) {
-    console.error('Erreur création session:', err);
-    throw error(401, 'Token invalide');
+    console.error("Erreur création session:", err);
+    throw error(401, "Token invalide");
   }
 };
 
 export const DELETE: RequestHandler = async ({ cookies }) => {
-  cookies.delete('session');
+  cookies.delete("session");
   return new Response(JSON.stringify({ success: true }));
 };
 ```
 
 #### Étape 1.6 : Hook d'authentification
+
 **[FILE]** Créer `src/hooks.client.ts` :
+
 ```ts
-import { authStore } from '$lib/stores/auth';
+import { authStore } from "$lib/stores/auth";
 
 authStore.init();
 ```
 
 **[FILE]** Créer `src/routes/+layout.svelte` avec loading fluide et transitions :
+
 ```svelte
 <script lang="ts">
-  import { authStore } from '$lib/stores/auth';
-  import { page } from '$app/stores';
-  import { goto } from '$app/navigation';
-  import { onMount } from 'svelte';
-  import { fade, slide } from 'svelte/transition';
-  
-  // Composants réutilisables
-  import LoadingSkeleton from '$lib/components/ui/LoadingSkeleton.svelte';
-  import ErrorBoundary from '$lib/components/ui/ErrorBoundary.svelte';
+  import { authStore } from "$lib/stores/auth";
+  import { page } from "$app/stores";
+  import { goto } from "$app/navigation";
+  import { onMount } from "svelte";
+  import { fade, slide } from "svelte/transition";
 
-  $: if ($authStore.initialized && !$authStore.user && $page.route.id?.startsWith('/dashboard')) {
-    goto('/auth/login');
+  // Composants réutilisables
+  import LoadingSkeleton from "$lib/components/ui/LoadingSkeleton.svelte";
+  import ErrorBoundary from "$lib/components/ui/ErrorBoundary.svelte";
+
+  $: if (
+    $authStore.initialized &&
+    !$authStore.user &&
+    $page.route.id?.startsWith("/dashboard")
+  ) {
+    goto("/auth/login");
   }
-  
+
   // États de chargement plus granulaires
-  $: isAuthPage = $page.route.id?.startsWith('/auth');
-  $: isProtectedPage = $page.route.id?.startsWith('/dashboard') || $page.route.id?.startsWith('/admin');
+  $: isAuthPage = $page.route.id?.startsWith("/auth");
+  $: isProtectedPage =
+    $page.route.id?.startsWith("/dashboard") ||
+    $page.route.id?.startsWith("/admin");
 </script>
 
 <ErrorBoundary>
@@ -830,7 +910,7 @@ authStore.init();
     display: flex;
     flex-direction: column;
   }
-  
+
   .loading-container {
     display: flex;
     justify-content: center;
@@ -838,12 +918,12 @@ authStore.init();
     height: 100vh;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   }
-  
+
   .content {
     flex: 1;
     width: 100%;
   }
-  
+
   @media (prefers-reduced-motion: reduce) {
     * {
       transition-duration: 0.01ms !important;
@@ -854,6 +934,7 @@ authStore.init();
 ```
 
 **[FILE]** Créer `src/lib/components/ui/LoadingSkeleton.svelte` :
+
 ```svelte
 <script lang="ts">
   export let lines: number = 3;
@@ -862,15 +943,15 @@ authStore.init();
 
 <div class="skeleton-container">
   {#if avatar}
-    <div class="skeleton-avatar"></div>
+    <div class="skeleton-avatar" />
   {/if}
-  
+
   <div class="skeleton-content">
     {#each Array(lines) as _, i}
-      <div 
-        class="skeleton-line" 
-        style="width: {100 - (i * 10)}%; animation-delay: {i * 0.1}s"
-      ></div>
+      <div
+        class="skeleton-line"
+        style="width: {100 - i * 10}%; animation-delay: {i * 0.1}s"
+      />
     {/each}
   </div>
 </div>
@@ -882,10 +963,10 @@ authStore.init();
     padding: 1rem;
     background: white;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     max-width: 400px;
   }
-  
+
   .skeleton-avatar {
     width: 48px;
     height: 48px;
@@ -894,14 +975,14 @@ authStore.init();
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;
   }
-  
+
   .skeleton-content {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
   }
-  
+
   .skeleton-line {
     height: 16px;
     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
@@ -909,44 +990,49 @@ authStore.init();
     border-radius: 4px;
     animation: shimmer 1.5s infinite;
   }
-  
+
   @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
   }
 </style>
 ```
 
 **[FILE]** Créer `src/lib/components/ui/ErrorBoundary.svelte` :
+
 ```svelte
 <script lang="ts">
-  import { onMount } from 'svelte';
-  
+  import { onMount } from "svelte";
+
   let hasError = false;
-  let errorMessage = '';
-  
+  let errorMessage = "";
+
   onMount(() => {
     const handleError = (event: ErrorEvent) => {
       hasError = true;
-      errorMessage = event.message || 'Une erreur inattendue est survenue';
-      console.error('Erreur capturée:', event);
+      errorMessage = event.message || "Une erreur inattendue est survenue";
+      console.error("Erreur capturée:", event);
     };
-    
-    window.addEventListener('error', handleError);
-    window.addEventListener('unhandledrejection', (event) => {
+
+    window.addEventListener("error", handleError);
+    window.addEventListener("unhandledrejection", (event) => {
       hasError = true;
-      errorMessage = event.reason?.message || 'Erreur de promesse non gérée';
-      console.error('Promise rejetée:', event);
+      errorMessage = event.reason?.message || "Erreur de promesse non gérée";
+      console.error("Promise rejetée:", event);
     });
-    
+
     return () => {
-      window.removeEventListener('error', handleError);
+      window.removeEventListener("error", handleError);
     };
   });
-  
+
   function resetError() {
     hasError = false;
-    errorMessage = '';
+    errorMessage = "";
   }
 </script>
 
@@ -955,9 +1041,7 @@ authStore.init();
     <div class="error-content">
       <h2>Oops ! Une erreur est survenue</h2>
       <p>{errorMessage}</p>
-      <button on:click={resetError} class="retry-btn">
-        Réessayer
-      </button>
+      <button on:click={resetError} class="retry-btn"> Réessayer </button>
     </div>
   </div>
 {:else}
@@ -973,16 +1057,16 @@ authStore.init();
     background: #f8f9fa;
     padding: 2rem;
   }
-  
+
   .error-content {
     text-align: center;
     max-width: 400px;
     background: white;
     padding: 2rem;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
-  
+
   .retry-btn {
     background: #007bff;
     color: white;
@@ -993,7 +1077,7 @@ authStore.init();
     margin-top: 1rem;
     transition: background-color 0.2s;
   }
-  
+
   .retry-btn:hover {
     background: #0056b3;
   }
@@ -1001,40 +1085,43 @@ authStore.init();
 ```
 
 #### Étape 1.8 : Page de connexion
+
 **[FILE]** Créer `src/routes/auth/login/+page.svelte` :
+
 ```svelte
 <script lang="ts">
-  import { loginUser } from '$lib/firebase/auth';
-  import { goto } from '$app/navigation';
-  import { authStore } from '$lib/stores/auth';
+  import { loginUser } from "$lib/firebase/auth";
+  import { goto } from "$app/navigation";
+  import { authStore } from "$lib/stores/auth";
 
-  let email = '';
-  let password = '';
+  let email = "";
+  let password = "";
   let loading = false;
-  let error = '';
+  let error = "";
 
   $: if ($authStore.user) {
-    goto('/dashboard');
+    goto("/dashboard");
   }
 
   const handleSubmit = async () => {
     if (!email || !password) {
-      error = 'Veuillez remplir tous les champs';
+      error = "Veuillez remplir tous les champs";
       return;
     }
 
     loading = true;
-    error = '';
+    error = "";
 
     try {
       await loginUser(email, password);
-      goto('/dashboard');
+      goto("/dashboard");
     } catch (err: any) {
-      error = err.message === 'Firebase: Error (auth/user-not-found).' 
-        ? 'Utilisateur non trouvé'
-        : err.message === 'Firebase: Error (auth/wrong-password).'
-        ? 'Mot de passe incorrect'
-        : 'Erreur de connexion';
+      error =
+        err.message === "Firebase: Error (auth/user-not-found)."
+          ? "Utilisateur non trouvé"
+          : err.message === "Firebase: Error (auth/wrong-password)."
+          ? "Mot de passe incorrect"
+          : "Erreur de connexion";
     } finally {
       loading = false;
     }
@@ -1048,39 +1135,33 @@ authStore.init();
 <div class="auth-container">
   <form on:submit|preventDefault={handleSubmit} class="auth-form">
     <h1>Connexion</h1>
-    
+
     {#if error}
       <div class="error">{error}</div>
     {/if}
 
     <div class="field">
       <label for="email">Email</label>
-      <input 
-        id="email"
-        name="email"
-        type="email" 
-        bind:value={email} 
-        required 
-      />
+      <input id="email" name="email" type="email" bind:value={email} required />
     </div>
 
     <div class="field">
       <label for="password">Mot de passe</label>
-      <input 
+      <input
         id="password"
         name="password"
-        type="password" 
-        bind:value={password} 
-        required 
+        type="password"
+        bind:value={password}
+        required
       />
     </div>
 
     <button type="submit" disabled={loading}>
-      {loading ? 'Connexion...' : 'Se connecter'}
+      {loading ? "Connexion..." : "Se connecter"}
     </button>
 
     <p>
-      Pas de compte ? 
+      Pas de compte ?
       <a href="/auth/register">S'inscrire</a>
     </p>
   </form>
@@ -1149,49 +1230,52 @@ authStore.init();
 ```
 
 #### Étape 1.9 : Page d'inscription
+
 **[FILE]** Créer `src/routes/auth/register/+page.svelte` :
+
 ```svelte
 <script lang="ts">
-  import { registerUser } from '$lib/firebase/auth';
-  import { goto } from '$app/navigation';
-  import { authStore } from '$lib/stores/auth';
+  import { registerUser } from "$lib/firebase/auth";
+  import { goto } from "$app/navigation";
+  import { authStore } from "$lib/stores/auth";
 
-  let email = '';
-  let password = '';
-  let confirmPassword = '';
+  let email = "";
+  let password = "";
+  let confirmPassword = "";
   let loading = false;
-  let error = '';
+  let error = "";
 
   $: if ($authStore.user) {
-    goto('/dashboard');
+    goto("/dashboard");
   }
 
   const handleSubmit = async () => {
     if (!email || !password || !confirmPassword) {
-      error = 'Veuillez remplir tous les champs';
+      error = "Veuillez remplir tous les champs";
       return;
     }
 
     if (password !== confirmPassword) {
-      error = 'Les mots de passe ne correspondent pas';
+      error = "Les mots de passe ne correspondent pas";
       return;
     }
 
     if (password.length < 6) {
-      error = 'Le mot de passe doit contenir au moins 6 caractères';
+      error = "Le mot de passe doit contenir au moins 6 caractères";
       return;
     }
 
     loading = true;
-    error = '';
+    error = "";
 
     try {
       await registerUser(email, password);
-      goto('/dashboard');
+      goto("/dashboard");
     } catch (err: any) {
-      error = err.message === 'Firebase: Error (auth/email-already-in-use).'
-        ? 'Cet email est déjà utilisé'
-        : 'Erreur lors de l\'inscription';
+      error =
+        err.message === "Firebase: Error (auth/email-already-in-use)."
+          ? "Cet email est déjà utilisé"
+          : "Erreur lors de l'inscription";
     } finally {
       loading = false;
     }
@@ -1205,50 +1289,44 @@ authStore.init();
 <div class="auth-container">
   <form on:submit|preventDefault={handleSubmit} class="auth-form">
     <h1>Inscription</h1>
-    
+
     {#if error}
       <div class="error">{error}</div>
     {/if}
 
     <div class="field">
       <label for="email">Email</label>
-      <input 
-        id="email"
-        name="email"
-        type="email" 
-        bind:value={email} 
-        required 
-      />
+      <input id="email" name="email" type="email" bind:value={email} required />
     </div>
 
     <div class="field">
       <label for="password">Mot de passe</label>
-      <input 
+      <input
         id="password"
         name="password"
-        type="password" 
-        bind:value={password} 
-        required 
+        type="password"
+        bind:value={password}
+        required
       />
     </div>
 
     <div class="field">
       <label for="confirmPassword">Confirmer le mot de passe</label>
-      <input 
+      <input
         id="confirmPassword"
         name="confirmPassword"
-        type="password" 
-        bind:value={confirmPassword} 
-        required 
+        type="password"
+        bind:value={confirmPassword}
+        required
       />
     </div>
 
     <button type="submit" disabled={loading}>
-      {loading ? 'Inscription...' : 'S\'inscrire'}
+      {loading ? "Inscription..." : "S'inscrire"}
     </button>
 
     <p>
-      Déjà un compte ? 
+      Déjà un compte ?
       <a href="/auth/login">Se connecter</a>
     </p>
   </form>
@@ -1318,15 +1396,17 @@ authStore.init();
 ```
 
 #### Étape 1.10 : Dashboard protégé
+
 **[FILE]** Créer `src/routes/dashboard/+page.svelte` :
+
 ```svelte
 <script lang="ts">
-  import { authStore } from '$lib/stores/auth';
-  import { goto } from '$app/navigation';
+  import { authStore } from "$lib/stores/auth";
+  import { goto } from "$app/navigation";
 
   const handleLogout = async () => {
     await authStore.signOut();
-    goto('/');
+    goto("/");
   };
 </script>
 
@@ -1399,114 +1479,123 @@ authStore.init();
 ```
 
 #### Étape 1.11 : Tests d'authentification
+
 **[FILE]** Créer `src/lib/firebase/auth.test.ts` :
+
 ```ts
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { loginUser, registerUser } from './auth';
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { loginUser, registerUser } from "./auth";
 
 // Mock Firebase
-vi.mock('firebase/auth', () => ({
+vi.mock("firebase/auth", () => ({
   signInWithEmailAndPassword: vi.fn(),
   createUserWithEmailAndPassword: vi.fn(),
-  getAuth: vi.fn()
+  getAuth: vi.fn(),
 }));
 
-vi.mock('firebase/firestore', () => ({
+vi.mock("firebase/firestore", () => ({
   doc: vi.fn(),
   setDoc: vi.fn(),
   getDoc: vi.fn(),
-  getFirestore: vi.fn()
+  getFirestore: vi.fn(),
 }));
 
-describe('Authentication', () => {
+describe("Authentication", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  it('should login with valid credentials', async () => {
-    const { signInWithEmailAndPassword } = await import('firebase/auth');
-    const { setDoc } = await import('firebase/firestore');
-    
-    const mockUser = { uid: '123', email: 'test@example.com' };
-    vi.mocked(signInWithEmailAndPassword).mockResolvedValue({ user: mockUser } as any);
+  it("should login with valid credentials", async () => {
+    const { signInWithEmailAndPassword } = await import("firebase/auth");
+    const { setDoc } = await import("firebase/firestore");
+
+    const mockUser = { uid: "123", email: "test@example.com" };
+    vi.mocked(signInWithEmailAndPassword).mockResolvedValue({
+      user: mockUser,
+    } as any);
     vi.mocked(setDoc).mockResolvedValue(undefined);
-    
-    const result = await loginUser('test@example.com', 'password');
-    expect(result.uid).toBe('123');
+
+    const result = await loginUser("test@example.com", "password");
+    expect(result.uid).toBe("123");
     expect(signInWithEmailAndPassword).toHaveBeenCalledWith(
       expect.anything(),
-      'test@example.com',
-      'password'
+      "test@example.com",
+      "password"
     );
   });
 
-  it('should register new user', async () => {
-    const { createUserWithEmailAndPassword } = await import('firebase/auth');
-    const { setDoc } = await import('firebase/firestore');
-    
-    const mockUser = { uid: '456', email: 'new@example.com' };
-    vi.mocked(createUserWithEmailAndPassword).mockResolvedValue({ user: mockUser } as any);
+  it("should register new user", async () => {
+    const { createUserWithEmailAndPassword } = await import("firebase/auth");
+    const { setDoc } = await import("firebase/firestore");
+
+    const mockUser = { uid: "456", email: "new@example.com" };
+    vi.mocked(createUserWithEmailAndPassword).mockResolvedValue({
+      user: mockUser,
+    } as any);
     vi.mocked(setDoc).mockResolvedValue(undefined);
-    
-    const result = await registerUser('new@example.com', 'password');
-    expect(result.uid).toBe('456');
+
+    const result = await registerUser("new@example.com", "password");
+    expect(result.uid).toBe("456");
     expect(setDoc).toHaveBeenCalled();
   });
 });
 ```
 
 #### Étape 1.12 : Tests E2E authentification
-**[FILE]** Créer `tests/e2e/auth.spec.ts` :
-```ts
-import { test, expect } from '@playwright/test';
 
-test.describe('Authentication', () => {
-  test('should register and login user', async ({ page }) => {
+**[FILE]** Créer `tests/e2e/auth.spec.ts` :
+
+```ts
+import { test, expect } from "@playwright/test";
+
+test.describe("Authentication", () => {
+  test("should register and login user", async ({ page }) => {
     const testEmail = `test-${Date.now()}@example.com`;
-    const testPassword = 'password123';
+    const testPassword = "password123";
 
     // Test registration
-    await page.goto('/auth/register');
+    await page.goto("/auth/register");
     await page.fill('input[name="email"]', testEmail);
     await page.fill('input[name="password"]', testPassword);
     await page.fill('input[name="confirmPassword"]', testPassword);
     await page.click('button[type="submit"]');
-    
+
     // Should redirect to dashboard
-    await expect(page).toHaveURL('/dashboard');
-    await expect(page.locator('h1')).toContainText('Tableau de bord');
-    
+    await expect(page).toHaveURL("/dashboard");
+    await expect(page.locator("h1")).toContainText("Tableau de bord");
+
     // Test logout
     await page.click('[data-testid="logout-button"]');
-    await expect(page).toHaveURL('/');
-    
+    await expect(page).toHaveURL("/");
+
     // Test login
-    await page.goto('/auth/login');
+    await page.goto("/auth/login");
     await page.fill('input[name="email"]', testEmail);
     await page.fill('input[name="password"]', testPassword);
     await page.click('button[type="submit"]');
-    
-    await expect(page).toHaveURL('/dashboard');
+
+    await expect(page).toHaveURL("/dashboard");
   });
 
-  test('should protect dashboard route', async ({ page }) => {
-    await page.goto('/dashboard');
+  test("should protect dashboard route", async ({ page }) => {
+    await page.goto("/dashboard");
     // Should redirect to login if not authenticated
-    await expect(page).toHaveURL('/auth/login');
+    await expect(page).toHaveURL("/auth/login");
   });
 
-  test('should show error for invalid credentials', async ({ page }) => {
-    await page.goto('/auth/login');
-    await page.fill('input[name="email"]', 'invalid@example.com');
-    await page.fill('input[name="password"]', 'wrongpassword');
+  test("should show error for invalid credentials", async ({ page }) => {
+    await page.goto("/auth/login");
+    await page.fill('input[name="email"]', "invalid@example.com");
+    await page.fill('input[name="password"]', "wrongpassword");
     await page.click('button[type="submit"]');
-    
-    await expect(page.locator('.error')).toBeVisible();
+
+    await expect(page.locator(".error")).toBeVisible();
   });
 });
 ```
 
 ### 🧪 Tests de validation Phase 1
+
 ```bash
 [TEST] npm run test                    # Tests unitaires passent
 [TEST] npm run test:e2e               # Tests E2E auth passent
@@ -1514,6 +1603,7 @@ test.describe('Authentication', () => {
 ```
 
 ### ✅ Critères de validation obligatoires
+
 - [ ] **[CHECK]** Page `/auth/login` accessible et fonctionnelle
 - [ ] **[CHECK]** Page `/auth/register` accessible et fonctionnelle
 - [ ] **[CHECK]** Route `/dashboard` protégée (redirection si non connecté)
@@ -1528,24 +1618,28 @@ test.describe('Authentication', () => {
 ## 📚 Phase 2 : Contenu & Markdown (1 semaine)
 
 ### 🎯 Contexte IA
+
 **Objectif** : Système de contenu Markdown avec conversion HTML sécurisée et routes dynamiques.
 **Pré-requis** : Firebase configuré, auth fonctionnelle.
 
 ### 📝 Instructions granulaires
 
 #### Étape 2.1 : Installation dépendances Markdown
+
 ```bash
 [CMD] npm install marked isomorphic-dompurify
 [CMD] npm install -D @types/marked
 ```
 
 #### Étape 2.2 : Utilitaires Markdown avec sécurité renforcée
+
 ```bash
 [CMD] npm install marked dompurify
 [CMD] npm install -D @types/marked @types/dompurify
 ```
 
 **[FILE]** Créer `src/lib/utils/markdown.ts` avec sécurité avancée :
+
 ```ts
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
@@ -1583,7 +1677,7 @@ renderer.link = (href: string, title: string | null | undefined, text: string): 
     isExternal ? 'target="_blank" rel="noopener noreferrer"' : '',
     isExternal ? 'aria-label="Lien externe"' : ''
   ].filter(Boolean).join(' ');
-  
+
   return `<a ${attrs}>${text}${isExternal ? ' <span aria-hidden="true">↗</span>' : ''}</a>`;
 };
 
@@ -1596,7 +1690,7 @@ renderer.image = (src: string, title: string | null | undefined, alt: string): s
     'loading="lazy"',
     'style="max-width: 100%; height: auto;"'
   ].filter(Boolean).join(' ');
-  
+
   return `<img ${attrs}>`;
 };
 
@@ -1628,14 +1722,14 @@ marked.setOptions({
 
 export const markdownToHtml = (markdown: string): string => {
   if (!markdown) return '';
-  
+
   try {
     // 1. Parser avec marked
     const rawHtml = marked(markdown);
-    
+
     // 2. Nettoyer avec DOMPurify
     const cleanHtml = DOMPurify.sanitize(rawHtml, PURIFY_CONFIG);
-    
+
     // 3. Ajouter les améliorations d'accessibilité
     return enhanceAccessibility(cleanHtml);
   } catch (error) {
@@ -1651,11 +1745,11 @@ function enhanceAccessibility(html: string): string {
     counter++;
     return `<h${level} id="section-${counter}" tabindex="-1">`;
   });
-  
+
   // Améliorer les tableaux
   html = html.replace(/<table>/g, '<div class="table-container" role="region" aria-label="Tableau de données" tabindex="0"><table>');
   html = html.replace(/<\/table>/g, '</table></div>');
-  
+
   return html;
 }
   }
@@ -1663,7 +1757,7 @@ function enhanceAccessibility(html: string): string {
 
 export const getMarkdownSummary = (markdown: string, maxLength: number = 150): string => {
   if (!markdown) return '';
-  
+
   // Extraire le texte brut (sans les marqueurs Markdown)
   const plainText = markdown
     .replace(/^#{1,6}\s+/gm, '') // Titres
@@ -1673,8 +1767,8 @@ export const getMarkdownSummary = (markdown: string, maxLength: number = 150): s
     .replace(/\[(.*?)\]\(.*?\)/g, '$1') // Liens
     .replace(/\n+/g, ' ') // Sauts de ligne
     .trim();
-  
-  return plainText.length > maxLength 
+
+  return plainText.length > maxLength
     ? plainText.substring(0, maxLength) + '...'
     : plainText;
 };
@@ -1686,19 +1780,21 @@ export const extractMarkdownTitle = (markdown: string): string => {
 ```
 
 #### Étape 2.3 : Types TypeScript
+
 **[FILE]** Créer `src/lib/types/content.ts` :
+
 ```ts
 export interface Competence {
   id: string;
   titre: string;
   description: string;
   contenu: string; // Markdown
-  niveau: '6eme' | '5eme' | '4eme' | '3eme';
-  matiere: 'mathematiques' | 'francais' | 'histoire' | 'sciences';
+  niveau: "6eme" | "5eme" | "4eme" | "3eme";
+  matiere: "mathematiques" | "francais" | "histoire" | "sciences";
   tags: string[];
   ordre: number;
   dureeEstimee: number; // en minutes
-  difficulte: 'facile' | 'moyen' | 'difficile';
+  difficulte: "facile" | "moyen" | "difficile";
   prerequis: string[];
   exercices: Exercise[];
   createdAt: string;
@@ -1708,7 +1804,7 @@ export interface Competence {
 export interface Exercise {
   id: string;
   question: string;
-  type: 'qcm' | 'text' | 'number';
+  type: "qcm" | "text" | "number";
   options?: string[];
   correct: number | string;
   explanation?: string;
@@ -1719,8 +1815,8 @@ export interface Course {
   id: string;
   titre: string;
   description: string;
-  niveau: '6eme' | '5eme' | '4eme' | '3eme';
-  matiere: 'mathematiques' | 'francais' | 'histoire' | 'sciences';
+  niveau: "6eme" | "5eme" | "4eme" | "3eme";
+  matiere: "mathematiques" | "francais" | "histoire" | "sciences";
   competenceIds: string[];
   ordre: number;
   published: boolean;
@@ -1730,19 +1826,20 @@ export interface Course {
 ```
 
 **[FILE]** Créer `src/lib/firebase/content.ts` avec optimisations et cache :
+
 ```ts
-import { 
-  collection, 
-  doc, 
-  getDoc, 
-  getDocs, 
-  query, 
-  where, 
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
   orderBy,
   limit,
   startAfter,
   type DocumentData,
-  type QueryConstraint 
+  type QueryConstraint
 } from 'firebase/firestore';
 import { db } from './client';
 import type { Competence, Course } from '$lib/types/content';
@@ -1763,12 +1860,12 @@ class ContentCache {
   get(key: string): any | null {
     const cached = this.cache.get(key);
     if (!cached) return null;
-    
+
     if (Date.now() - cached.timestamp > cached.ttl) {
       this.cache.delete(key);
       return null;
     }
-    
+
     return cached.data;
   }
 
@@ -1781,26 +1878,26 @@ const contentCache = new ContentCache();
 
 // Utilitaire pour construire des requêtes dynamiques
 function buildQuery(
-  collectionName: string, 
+  collectionName: string,
   filters: Array<{ field: string; operator: string; value: any }> = [],
   orderByFields: Array<{ field: string; direction?: 'asc' | 'desc' }> = [],
   pageSize = 20
 ): query {
   const constraints: QueryConstraint[] = [];
-  
+
   // Ajouter les filtres
   filters.forEach(filter => {
     constraints.push(where(filter.field, filter.operator as any, filter.value));
   });
-  
+
   // Ajouter l'ordre
   orderByFields.forEach(order => {
     constraints.push(orderBy(order.field, order.direction || 'asc'));
   });
-  
+
   // Limite de pagination
   constraints.push(limit(pageSize));
-  
+
   return query(collection(db, collectionName), ...constraints);
 }
 
@@ -1812,13 +1909,13 @@ export const getCompetence = async (id: string): Promise<Competence | null> => {
   try {
     const docRef = doc(db, 'competences', id);
     const docSnap = await getDoc(docRef);
-    
+
     if (docSnap.exists()) {
       const competence = { id: docSnap.id, ...docSnap.data() } as Competence;
       contentCache.set(cacheKey, competence);
       return competence;
     }
-    
+
     return null;
   } catch (error) {
     console.error('Erreur récupération compétence:', error);
@@ -1837,13 +1934,13 @@ export const getCompetencesByNiveau = async (niveau: string): Promise<Competence
       [{ field: 'niveau', operator: '==', value: niveau }],
       [{ field: 'ordre', direction: 'asc' }]
     );
-    
+
     const querySnapshot = await getDocs(q);
     const competences = querySnapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data()
     })) as Competence[];
-    
+
     contentCache.set(cacheKey, competences);
     return competences;
   } catch (error) {
@@ -1853,13 +1950,13 @@ export const getCompetencesByNiveau = async (niveau: string): Promise<Competence
 };
 
 export const getCoursesByMatiere = async (
-  matiere: string, 
+  matiere: string,
   niveau?: string,
   pageSize = 20,
   lastDoc?: any
 ): Promise<{ courses: Course[]; hasMore: boolean; lastDoc?: any }> => {
   const cacheKey = `courses:${matiere}:${niveau || 'all'}:${pageSize}`;
-  
+
   // Cache seulement la première page
   if (!lastDoc) {
     const cached = contentCache.get(cacheKey);
@@ -1871,42 +1968,42 @@ export const getCoursesByMatiere = async (
       { field: 'matiere', operator: '==', value: matiere },
       { field: 'published', operator: '==', value: true }
     ];
-    
+
     if (niveau) {
       filters.push({ field: 'niveau', operator: '==', value: niveau });
     }
-    
+
     let q = buildQuery(
       'courses',
       filters,
       [{ field: 'ordre', direction: 'asc' }],
       pageSize + 1 // +1 pour détecter s'il y a plus de résultats
     );
-    
+
     if (lastDoc) {
       q = query(q, startAfter(lastDoc));
     }
-    
+
     const querySnapshot = await getDocs(q);
     const docs = querySnapshot.docs;
-    
+
     const hasMore = docs.length > pageSize;
     const courses = docs.slice(0, pageSize).map(doc => ({
       id: doc.id,
       ...doc.data()
     })) as Course[];
-    
+
     const result = {
       courses,
       hasMore,
       lastDoc: courses.length > 0 ? docs[courses.length - 1] : undefined
     };
-    
+
     // Cache seulement la première page
     if (!lastDoc) {
       contentCache.set(cacheKey, result);
     }
-    
+
     return result;
   } catch (error) {
     console.error('Erreur récupération cours:', error);
@@ -1919,11 +2016,11 @@ export const getCourse = async (id: string): Promise<Course | null> => {
   try {
     const docRef = doc(db, 'courses', id);
     const docSnap = await getDoc(docRef);
-    
+
     if (docSnap.exists()) {
       return { id: docSnap.id, ...docSnap.data() } as Course;
     }
-    
+
     return null;
   } catch (error) {
     console.error('Erreur récupération cours:', error);
@@ -1933,32 +2030,34 @@ export const getCourse = async (id: string): Promise<Course | null> => {
 ```
 
 #### Étape 2.5 : Composants modulaires avec accessibilité
+
 **[FILE]** Créer `src/lib/components/ui/Loader.svelte` :
+
 ```svelte
 <script lang="ts">
-  export let size: 'small' | 'medium' | 'large' = 'medium';
-  export let text = 'Chargement...';
-  export let variant: 'spinner' | 'skeleton' | 'dots' = 'spinner';
+  export let size: "small" | "medium" | "large" = "medium";
+  export let text = "Chargement...";
+  export let variant: "spinner" | "skeleton" | "dots" = "spinner";
 </script>
 
 <div class="loader loader-{size}" role="status" aria-label={text}>
-  {#if variant === 'spinner'}
-    <div class="spinner" aria-hidden="true"></div>
-  {:else if variant === 'skeleton'}
+  {#if variant === "spinner"}
+    <div class="spinner" aria-hidden="true" />
+  {:else if variant === "skeleton"}
     <div class="skeleton-loader" aria-hidden="true">
-      <div class="skeleton-line skeleton-title"></div>
-      <div class="skeleton-line"></div>
-      <div class="skeleton-line"></div>
-      <div class="skeleton-line skeleton-short"></div>
+      <div class="skeleton-line skeleton-title" />
+      <div class="skeleton-line" />
+      <div class="skeleton-line" />
+      <div class="skeleton-line skeleton-short" />
     </div>
-  {:else if variant === 'dots'}
+  {:else if variant === "dots"}
     <div class="dots-loader" aria-hidden="true">
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
+      <div class="dot" />
+      <div class="dot" />
+      <div class="dot" />
     </div>
   {/if}
-  
+
   <span class="sr-only">{text}</span>
 </div>
 
@@ -1970,11 +2069,17 @@ export const getCourse = async (id: string): Promise<Course | null> => {
     justify-content: center;
     gap: 1rem;
   }
-  
-  .loader-small { min-height: 4rem; }
-  .loader-medium { min-height: 8rem; }
-  .loader-large { min-height: 12rem; }
-  
+
+  .loader-small {
+    min-height: 4rem;
+  }
+  .loader-medium {
+    min-height: 8rem;
+  }
+  .loader-large {
+    min-height: 12rem;
+  }
+
   .spinner {
     width: 2rem;
     height: 2rem;
@@ -1983,12 +2088,12 @@ export const getCourse = async (id: string): Promise<Course | null> => {
     border-radius: 50%;
     animation: spin 1s linear infinite;
   }
-  
+
   .skeleton-loader {
     width: 100%;
     max-width: 400px;
   }
-  
+
   .skeleton-line {
     height: 1rem;
     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
@@ -1997,15 +2102,20 @@ export const getCourse = async (id: string): Promise<Course | null> => {
     margin-bottom: 0.5rem;
     animation: shimmer 1.5s infinite;
   }
-  
-  .skeleton-title { height: 1.5rem; width: 70%; }
-  .skeleton-short { width: 40%; }
-  
+
+  .skeleton-title {
+    height: 1.5rem;
+    width: 70%;
+  }
+  .skeleton-short {
+    width: 40%;
+  }
+
   .dots-loader {
     display: flex;
     gap: 0.5rem;
   }
-  
+
   .dot {
     width: 0.5rem;
     height: 0.5rem;
@@ -2013,10 +2123,14 @@ export const getCourse = async (id: string): Promise<Course | null> => {
     border-radius: 50%;
     animation: bounce 1.4s ease-in-out infinite both;
   }
-  
-  .dot:nth-child(1) { animation-delay: -0.32s; }
-  .dot:nth-child(2) { animation-delay: -0.16s; }
-  
+
+  .dot:nth-child(1) {
+    animation-delay: -0.32s;
+  }
+  .dot:nth-child(2) {
+    animation-delay: -0.16s;
+  }
+
   .sr-only {
     position: absolute;
     width: 1px;
@@ -2028,24 +2142,40 @@ export const getCourse = async (id: string): Promise<Course | null> => {
     white-space: nowrap;
     border: 0;
   }
-  
+
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
-  
+
   @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
   }
-  
+
   @keyframes bounce {
-    0%, 80%, 100% { transform: scale(0); }
-    40% { transform: scale(1); }
+    0%,
+    80%,
+    100% {
+      transform: scale(0);
+    }
+    40% {
+      transform: scale(1);
+    }
   }
-  
+
   @media (prefers-reduced-motion: reduce) {
-    .spinner, .skeleton-line, .dot {
+    .spinner,
+    .skeleton-line,
+    .dot {
       animation: none;
     }
   }
@@ -2053,11 +2183,12 @@ export const getCourse = async (id: string): Promise<Course | null> => {
 ```
 
 **[FILE]** Créer `src/lib/components/ui/ErrorDisplay.svelte` :
+
 ```svelte
 <script lang="ts">
-  export let title = 'Une erreur est survenue';
-  export let message = '';
-  export let type: 'error' | 'warning' | 'info' = 'error';
+  export let title = "Une erreur est survenue";
+  export let message = "";
+  export let type: "error" | "warning" | "info" = "error";
   export let retryAction: (() => void) | null = null;
   export let showIcon = true;
 </script>
@@ -2065,25 +2196,25 @@ export const getCourse = async (id: string): Promise<Course | null> => {
 <div class="error-display error-{type}" role="alert">
   {#if showIcon}
     <div class="error-icon" aria-hidden="true">
-      {#if type === 'error'}
+      {#if type === "error"}
         ⚠️
-      {:else if type === 'warning'}
+      {:else if type === "warning"}
         ⚡
       {:else}
         ℹ️
       {/if}
     </div>
   {/if}
-  
+
   <div class="error-content">
     <h3 class="error-title">{title}</h3>
     {#if message}
       <p class="error-message">{message}</p>
     {/if}
-    
+
     {#if retryAction}
-      <button 
-        class="retry-button" 
+      <button
+        class="retry-button"
         on:click={retryAction}
         aria-label="Réessayer l'opération"
       >
@@ -2101,46 +2232,46 @@ export const getCourse = async (id: string): Promise<Course | null> => {
     border-radius: 8px;
     border-left: 4px solid;
     background: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     margin: 1rem 0;
   }
-  
+
   .error-error {
     border-left-color: #dc3545;
     background: #fff5f5;
   }
-  
+
   .error-warning {
     border-left-color: #ffc107;
     background: #fffbf0;
   }
-  
+
   .error-info {
     border-left-color: #17a2b8;
     background: #f0f9ff;
   }
-  
+
   .error-icon {
     font-size: 1.5rem;
     flex-shrink: 0;
   }
-  
+
   .error-content {
     flex: 1;
   }
-  
+
   .error-title {
     margin: 0 0 0.5rem 0;
     font-size: 1.1rem;
     font-weight: 600;
   }
-  
+
   .error-message {
     margin: 0 0 1rem 0;
     color: #666;
     line-height: 1.4;
   }
-  
+
   .retry-button {
     background: #007bff;
     color: white;
@@ -2151,11 +2282,11 @@ export const getCourse = async (id: string): Promise<Course | null> => {
     transition: background-color 0.2s;
     font-size: 0.9rem;
   }
-  
+
   .retry-button:hover {
     background: #0056b3;
   }
-  
+
   .retry-button:focus {
     outline: 2px solid #007bff;
     outline-offset: 2px;
@@ -2164,19 +2295,20 @@ export const getCourse = async (id: string): Promise<Course | null> => {
 ```
 
 **[FILE]** Créer `src/lib/components/CourseContent.svelte` avec design modulaire :
+
 ```svelte
 <script lang="ts">
   import { onMount } from 'svelte';
   import { markdownToHtml } from '$lib/utils/markdown';
   import type { Competence } from '$lib/types/content';
   import { getCompetence } from '$lib/firebase/content';
-  
+
   // Composants modulaires
   import Loader from '$lib/components/ui/Loader.svelte';
   import ErrorDisplay from '$lib/components/ui/ErrorDisplay.svelte';
 
   export let competenceId: string;
-  
+
   let competence: Competence | null = null;
   let loading = true;
   let error = '';
@@ -2189,7 +2321,7 @@ export const getCourse = async (id: string): Promise<Course | null> => {
   async function loadCompetence() {
     loading = true;
     error = '';
-    
+
     try {
       competence = await getCompetence(competenceId);
       if (!competence) {
@@ -2210,7 +2342,7 @@ export const getCourse = async (id: string): Promise<Course | null> => {
   {#if loading}
     <Loader variant="skeleton" text="Chargement du contenu..." />
   {:else if error}
-    <ErrorDisplay 
+    <ErrorDisplay
       title="Impossible de charger le contenu"
       message={error}
       retryAction={loadCompetence}
@@ -2219,7 +2351,7 @@ export const getCourse = async (id: string): Promise<Course | null> => {
     <article class="course-content" itemscope itemtype="http://schema.org/LearningResource">
       <header class="course-header">
         <h1 itemprop="name">{competence.titre}</h1>
-        
+
         <div class="course-meta" role="group" aria-label="Informations du cours">
           <span class="meta-item niveau" aria-label="Niveau">
             <span aria-hidden="true">📚</span>
@@ -2233,15 +2365,15 @@ export const getCourse = async (id: string): Promise<Course | null> => {
             <span aria-hidden="true">⏱️</span>
             {competence.dureeEstimee} min
           </span>
-          <span 
-            class="meta-item difficulte difficulte-{competence.difficulte}" 
+          <span
+            class="meta-item difficulte difficulte-{competence.difficulte}"
             aria-label="Niveau de difficulté: {competence.difficulte}"
           >
             <span aria-hidden="true">⭐</span>
             {competence.difficulte}
           </span>
         </div>
-        
+
         <p class="description" itemprop="description">{competence.description}</p>
       </header>
 
@@ -2252,29 +2384,29 @@ export const getCourse = async (id: string): Promise<Course | null> => {
       {#if competence.exercices && competence.exercices.length > 0}
         <section class="exercises" aria-labelledby="exercises-title">
           <h2 id="exercises-title">Exercices pratiques</h2>
-          
+
           {#each competence.exercices as exercise, index}
-            <div 
-              class="exercise" 
+            <div
+              class="exercise"
               data-exercise-id={exercise.id}
               role="group"
               aria-labelledby="exercise-{index}-title"
             >
               <h3 id="exercise-{index}-title">
-                Exercice {index + 1} 
+                Exercice {index + 1}
                 <span class="points" aria-label="{exercise.points} points">({exercise.points} pts)</span>
               </h3>
-              
+
               <p class="question">{exercise.question}</p>
-              
+
               {#if exercise.type === 'qcm' && exercise.options}
                 <fieldset class="options">
                   <legend class="sr-only">Choisissez votre réponse</legend>
                   {#each exercise.options as option, optionIndex}
                     <label class="option">
-                      <input 
-                        type="radio" 
-                        name="exercise-{exercise.id}" 
+                      <input
+                        type="radio"
+                        name="exercise-{exercise.id}"
                         value={optionIndex}
                         aria-describedby="exercise-{index}-question"
                       />
@@ -2287,7 +2419,7 @@ export const getCourse = async (id: string): Promise<Course | null> => {
                   <label for="exercise-{exercise.id}-input" class="sr-only">
                     Votre réponse pour l'exercice {index + 1}
                   </label>
-                  <textarea 
+                  <textarea
                     id="exercise-{exercise.id}-input"
                     placeholder="Tapez votre réponse ici..."
                     rows="4"
@@ -2299,15 +2431,15 @@ export const getCourse = async (id: string): Promise<Course | null> => {
                   <label for="exercise-{exercise.id}-number" class="sr-only">
                     Valeur numérique pour l'exercice {index + 1}
                   </label>
-                  <input 
-                    type="number" 
+                  <input
+                    type="number"
                     id="exercise-{exercise.id}-number"
                     placeholder="Entrez un nombre"
                     aria-describedby="exercise-{index}-question"
                   />
                 </div>
               {/if}
-              
+
               {#if exercise.explanation}
                 <details class="explanation">
                   <summary>Voir l'explication</summary>
@@ -2328,34 +2460,34 @@ export const getCourse = async (id: string): Promise<Course | null> => {
     margin: 0 auto;
     padding: 1rem;
   }
-  
+
   .course-content {
     background: white;
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
   }
-  
+
   .course-header {
     padding: 2rem;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
   }
-  
+
   .course-header h1 {
     margin: 0 0 1rem 0;
     font-size: 2rem;
     font-weight: 700;
     line-height: 1.2;
   }
-  
+
   .course-meta {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
     margin-bottom: 1rem;
   }
-  
+
   .meta-item {
     display: flex;
     align-items: center;
@@ -2366,40 +2498,40 @@ export const getCourse = async (id: string): Promise<Course | null> => {
     font-size: 0.9rem;
     font-weight: 500;
   }
-  
+
   .difficulte-facile { background-color: rgba(40, 167, 69, 0.3); }
   .difficulte-moyen { background-color: rgba(255, 193, 7, 0.3); }
   .difficulte-difficile { background-color: rgba(220, 53, 69, 0.3); }
-  
+
   .description {
     font-size: 1.1rem;
     line-height: 1.6;
     opacity: 0.95;
     margin: 0;
   }
-  
+
   .markdown-content {
     padding: 2rem;
     line-height: 1.7;
     font-size: 1rem;
   }
-  
+
   /* Styles markdown */
   :global(.markdown-content h1, .markdown-content h2, .markdown-content h3) {
     color: #2c3e50;
     margin-top: 2rem;
     margin-bottom: 1rem;
   }
-  
+
   :global(.markdown-content h1) { font-size: 1.8rem; }
   :global(.markdown-content h2) { font-size: 1.5rem; }
   :global(.markdown-content h3) { font-size: 1.3rem; }
-  
+
   :global(.markdown-content p) {
     margin-bottom: 1rem;
     text-align: justify;
   }
-  
+
   :global(.markdown-content code) {
     background: #f8f9fa;
     padding: 0.2rem 0.4rem;
@@ -2407,7 +2539,7 @@ export const getCourse = async (id: string): Promise<Course | null> => {
     font-family: 'Courier New', monospace;
     font-size: 0.9rem;
   }
-  
+
   :global(.markdown-content pre) {
     background: #f8f9fa;
     padding: 1rem;
@@ -2415,7 +2547,7 @@ export const getCourse = async (id: string): Promise<Course | null> => {
     overflow-x: auto;
     margin: 1rem 0;
   }
-  
+
   :global(.markdown-content blockquote) {
     border-left: 4px solid #007bff;
     padding-left: 1rem;
@@ -2423,19 +2555,19 @@ export const getCourse = async (id: string): Promise<Course | null> => {
     font-style: italic;
     color: #666;
   }
-  
+
   .exercises {
     padding: 2rem;
     background: #f8f9fa;
     border-top: 1px solid #e9ecef;
   }
-  
+
   .exercises h2 {
     margin: 0 0 1.5rem 0;
     color: #2c3e50;
     font-size: 1.5rem;
   }
-  
+
   .exercise {
     background: white;
     padding: 1.5rem;
@@ -2443,7 +2575,7 @@ export const getCourse = async (id: string): Promise<Course | null> => {
     margin-bottom: 1.5rem;
     border: 1px solid #e9ecef;
   }
-  
+
   .exercise h3 {
     margin: 0 0 1rem 0;
     color: #495057;
@@ -2451,13 +2583,13 @@ export const getCourse = async (id: string): Promise<Course | null> => {
     align-items: center;
     justify-content: space-between;
   }
-  
+
   .points {
     font-size: 0.9rem;
     color: #007bff;
     font-weight: normal;
   }
-  
+
   .question {
     font-weight: 500;
     margin-bottom: 1rem;
@@ -2465,13 +2597,13 @@ export const getCourse = async (id: string): Promise<Course | null> => {
     background: #f8f9fa;
     border-radius: 6px;
   }
-  
+
   .options {
     border: none;
     padding: 0;
     margin: 0;
   }
-  
+
   .option {
     display: flex;
     align-items: center;
@@ -2484,17 +2616,17 @@ export const getCourse = async (id: string): Promise<Course | null> => {
     cursor: pointer;
     transition: all 0.2s;
   }
-  
+
   .option:hover {
     border-color: #007bff;
     background: #f8f9ff;
   }
-  
+
   .option input[type="radio"]:checked + .option-text {
     font-weight: 600;
     color: #007bff;
   }
-  
+
   .text-input textarea,
   .number-input input {
     width: 100%;
@@ -2506,20 +2638,20 @@ export const getCourse = async (id: string): Promise<Course | null> => {
     resize: vertical;
     transition: border-color 0.2s;
   }
-  
+
   .text-input textarea:focus,
   .number-input input:focus {
     outline: none;
     border-color: #007bff;
     box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
   }
-  
+
   .explanation {
     margin-top: 1rem;
     border: 1px solid #dee2e6;
     border-radius: 6px;
   }
-  
+
   .explanation summary {
     padding: 0.75rem;
     background: #f8f9fa;
@@ -2528,18 +2660,18 @@ export const getCourse = async (id: string): Promise<Course | null> => {
     font-weight: 500;
     color: #495057;
   }
-  
+
   .explanation summary:hover {
     background: #e9ecef;
   }
-  
+
   .explanation p {
     padding: 1rem;
     margin: 0;
     border-top: 1px solid #dee2e6;
     background: #fff;
   }
-  
+
   .sr-only {
     position: absolute;
     width: 1px;
@@ -2551,58 +2683,58 @@ export const getCourse = async (id: string): Promise<Course | null> => {
     white-space: nowrap;
     border: 0;
   }
-  
+
   /* Responsive */
   @media (max-width: 768px) {
     .course-container {
       padding: 0.5rem;
     }
-    
+
     .course-header,
     .markdown-content,
     .exercises {
       padding: 1rem;
     }
-    
+
     .course-header h1 {
       font-size: 1.5rem;
     }
-    
+
     .course-meta {
       flex-direction: column;
       gap: 0.5rem;
     }
-    
+
     .meta-item {
       justify-content: center;
     }
   }
-  
+
   /* Mode sombre */
   @media (prefers-color-scheme: dark) {
     .course-content {
       background: #2c3e50;
       color: #ecf0f1;
     }
-    
+
     .markdown-content {
       background: #34495e;
     }
-    
+
     :global(.markdown-content h1, .markdown-content h2, .markdown-content h3) {
       color: #ecf0f1;
     }
-    
+
     .exercises {
       background: #34495e;
     }
-    
+
     .exercise {
       background: #2c3e50;
       border-color: #4a5c6a;
     }
   }
-  
+
   /* Focus visible */
   @media (any-hover: none) {
     .option:hover {
@@ -2610,18 +2742,18 @@ export const getCourse = async (id: string): Promise<Course | null> => {
       background: #fff;
     }
   }
-  
+
   /* High contrast */
   @media (prefers-contrast: high) {
     .course-header {
       background: #000;
       color: #fff;
     }
-    
+
     .option {
       border-color: #000;
     }
-    
+
     .option:hover,
     .option:focus-within {
       border-color: #0066cc;
@@ -2631,9 +2763,9 @@ export const getCourse = async (id: string): Promise<Course | null> => {
 </style>
                 {#each exercise.options as option, optionIndex}
                   <label class="option">
-                    <input 
-                      type="radio" 
-                      name="exercise-{exercise.id}" 
+                    <input
+                      type="radio"
+                      name="exercise-{exercise.id}"
                       value={optionIndex}
                     />
                     <span>{option}</span>
@@ -2641,7 +2773,7 @@ export const getCourse = async (id: string): Promise<Course | null> => {
                 {/each}
               </div>
             {/if}
-            
+
             <button class="validate-btn" type="button">
               Valider
             </button>
@@ -2845,16 +2977,18 @@ export const getCourse = async (id: string): Promise<Course | null> => {
 ```
 
 #### Étape 2.6 : Routes dynamiques
+
 **[FILE]** Créer `src/routes/[matiere]/+page.svelte` :
+
 ```svelte
 <script lang="ts">
-  import { page } from '$app/stores';
-  import { onMount } from 'svelte';
-  import { getCoursesByMatiere } from '$lib/firebase/content';
-  import type { Course } from '$lib/types/content';
+  import { page } from "$app/stores";
+  import { onMount } from "svelte";
+  import { getCoursesByMatiere } from "$lib/firebase/content";
+  import type { Course } from "$lib/types/content";
 
   $: matiere = $page.params.matiere;
-  
+
   let courses: Course[] = [];
   let loading = true;
 
@@ -2888,7 +3022,9 @@ export const getCourse = async (id: string): Promise<Course | null> => {
           <p>{course.description}</p>
           <div class="course-meta">
             <span class="niveau">{course.niveau}</span>
-            <span class="competences">{course.competenceIds.length} compétences</span>
+            <span class="competences"
+              >{course.competenceIds.length} compétences</span
+            >
           </div>
         </a>
       {/each}
@@ -2932,7 +3068,7 @@ export const getCourse = async (id: string): Promise<Course | null> => {
 
   .course-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
 
   .course-meta {
@@ -2948,7 +3084,8 @@ export const getCourse = async (id: string): Promise<Course | null> => {
     background: #f0f0f0;
   }
 
-  .loading, .empty {
+  .loading,
+  .empty {
     text-align: center;
     padding: 3rem;
     color: #666;
@@ -2957,10 +3094,11 @@ export const getCourse = async (id: string): Promise<Course | null> => {
 ```
 
 **[FILE]** Créer `src/routes/[matiere]/[niveau]/[competence]/+page.svelte` :
+
 ```svelte
 <script lang="ts">
-  import { page } from '$app/stores';
-  import CourseContent from '$lib/components/CourseContent.svelte';
+  import { page } from "$app/stores";
+  import CourseContent from "$lib/components/CourseContent.svelte";
 
   $: competenceId = $page.params.competence;
   $: matiere = $page.params.matiere;
@@ -3014,120 +3152,130 @@ export const getCourse = async (id: string): Promise<Course | null> => {
 ```
 
 #### Étape 2.7 : Tests Markdown
-**[FILE]** Créer `src/lib/utils/markdown.test.ts` :
-```ts
-import { describe, it, expect } from 'vitest';
-import { markdownToHtml, getMarkdownSummary, extractMarkdownTitle } from './markdown';
 
-describe('Markdown utilities', () => {
-  it('should convert markdown to HTML', () => {
-    const markdown = '# Hello\n\nThis is **bold** text.';
+**[FILE]** Créer `src/lib/utils/markdown.test.ts` :
+
+```ts
+import { describe, it, expect } from "vitest";
+import {
+  markdownToHtml,
+  getMarkdownSummary,
+  extractMarkdownTitle,
+} from "./markdown";
+
+describe("Markdown utilities", () => {
+  it("should convert markdown to HTML", () => {
+    const markdown = "# Hello\n\nThis is **bold** text.";
     const html = markdownToHtml(markdown);
-    
+
     expect(html).toContain('<h1 id="hello">Hello</h1>');
-    expect(html).toContain('<strong>bold</strong>');
+    expect(html).toContain("<strong>bold</strong>");
   });
 
-  it('should sanitize dangerous HTML', () => {
+  it("should sanitize dangerous HTML", () => {
     const markdown = '<script>alert("xss")</script>\n\nSafe content';
     const html = markdownToHtml(markdown);
-    
-    expect(html).not.toContain('<script>');
-    expect(html).toContain('Safe content');
+
+    expect(html).not.toContain("<script>");
+    expect(html).toContain("Safe content");
   });
 
-  it('should handle empty markdown', () => {
-    const html = markdownToHtml('');
-    expect(html).toBe('');
+  it("should handle empty markdown", () => {
+    const html = markdownToHtml("");
+    expect(html).toBe("");
   });
 
-  it('should generate summary', () => {
-    const markdown = '# Title\n\nLong content here for testing...';
+  it("should generate summary", () => {
+    const markdown = "# Title\n\nLong content here for testing...";
     const summary = getMarkdownSummary(markdown, 20);
-    
-    expect(summary).toBe('Long content here...');
+
+    expect(summary).toBe("Long content here...");
   });
 
-  it('should extract title from markdown', () => {
-    const markdown = '# Main Title\n\nContent here';
+  it("should extract title from markdown", () => {
+    const markdown = "# Main Title\n\nContent here";
     const title = extractMarkdownTitle(markdown);
-    
-    expect(title).toBe('Main Title');
+
+    expect(title).toBe("Main Title");
   });
 
-  it('should handle markdown without title', () => {
-    const markdown = 'Content without title';
+  it("should handle markdown without title", () => {
+    const markdown = "Content without title";
     const title = extractMarkdownTitle(markdown);
-    
-    expect(title).toBe('Sans titre');
+
+    expect(title).toBe("Sans titre");
   });
 });
 ```
 
 #### Étape 2.8 : Tests E2E contenu
-**[FILE]** Créer `tests/e2e/content.spec.ts` :
-```ts
-import { test, expect } from '@playwright/test';
 
-test.describe('Content display', () => {
+**[FILE]** Créer `tests/e2e/content.spec.ts` :
+
+```ts
+import { test, expect } from "@playwright/test";
+
+test.describe("Content display", () => {
   test.beforeEach(async ({ page }) => {
     // Login first (assuming auth works from Phase 1)
-    await page.goto('/auth/login');
-    await page.fill('input[name="email"]', 'test@example.com');
-    await page.fill('input[name="password"]', 'password123');
+    await page.goto("/auth/login");
+    await page.fill('input[name="email"]', "test@example.com");
+    await page.fill('input[name="password"]', "password123");
     await page.click('button[type="submit"]');
-    await expect(page).toHaveURL('/dashboard');
+    await expect(page).toHaveURL("/dashboard");
   });
 
-  test('should display course content', async ({ page }) => {
+  test("should display course content", async ({ page }) => {
     // Assuming we have test data with this route
-    await page.goto('/mathematiques/5eme/test-competence');
-    
+    await page.goto("/mathematiques/5eme/test-competence");
+
     // Check loading state first
-    await expect(page.locator('.skeleton, .course-content')).toBeVisible();
-    
+    await expect(page.locator(".skeleton, .course-content")).toBeVisible();
+
     // Wait for content to load
-    await page.waitForSelector('.course-content', { timeout: 10000 });
-    
+    await page.waitForSelector(".course-content", { timeout: 10000 });
+
     // Check course elements
-    await expect(page.locator('h1')).toBeVisible();
-    await expect(page.locator('.markdown-content')).toBeVisible();
-    await expect(page.locator('.course-meta')).toBeVisible();
+    await expect(page.locator("h1")).toBeVisible();
+    await expect(page.locator(".markdown-content")).toBeVisible();
+    await expect(page.locator(".course-meta")).toBeVisible();
   });
 
-  test('should show error for non-existent course', async ({ page }) => {
-    await page.goto('/mathematiques/5eme/non-existent');
-    
-    await expect(page.locator('.error')).toBeVisible();
-    await expect(page.locator('.error')).toContainText('non trouvée');
+  test("should show error for non-existent course", async ({ page }) => {
+    await page.goto("/mathematiques/5eme/non-existent");
+
+    await expect(page.locator(".error")).toBeVisible();
+    await expect(page.locator(".error")).toContainText("non trouvée");
   });
 
-  test('should be responsive', async ({ page }) => {
-    await page.goto('/mathematiques/5eme/test-competence');
-    
+  test("should be responsive", async ({ page }) => {
+    await page.goto("/mathematiques/5eme/test-competence");
+
     // Test mobile viewport
     await page.setViewportSize({ width: 375, height: 667 });
-    await expect(page.locator('.course-content')).toBeVisible();
-    
+    await expect(page.locator(".course-content")).toBeVisible();
+
     // Test desktop viewport
     await page.setViewportSize({ width: 1200, height: 800 });
-    await expect(page.locator('.course-content')).toBeVisible();
+    await expect(page.locator(".course-content")).toBeVisible();
   });
 
-  test('should display matiere overview', async ({ page }) => {
-    await page.goto('/mathematiques');
-    
-    await expect(page.locator('h1')).toContainText('mathematiques');
-    await expect(page.locator('.courses-grid')).toBeVisible();
+  test("should display matiere overview", async ({ page }) => {
+    await page.goto("/mathematiques");
+
+    await expect(page.locator("h1")).toContainText("mathematiques");
+    await expect(page.locator(".courses-grid")).toBeVisible();
   });
 });
 ```
 
 #### Étape 2.9 : Données de test
+
 **[FILE]** Créer `scripts/import-test-data.js` :
+
 ```js
-import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 
 // Configuration Firebase (utiliser vos vraies clés)
 const firebaseConfig = {
@@ -3138,8 +3286,8 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const testCompetence = {
-  titre: 'Les fractions',
-  description: 'Comprendre et manipuler les fractions',
+  titre: "Les fractions",
+  description: "Comprendre et manipuler les fractions",
   contenu: `# Les fractions
 
 ## Introduction
@@ -3163,34 +3311,34 @@ Pour additionner des fractions :
 3. Simplifier si possible
 
 **Exemple :** 1/3 + 1/6 = 2/6 + 1/6 = 3/6 = 1/2`,
-  niveau: '5eme',
-  matiere: 'mathematiques',
-  tags: ['fractions', 'arithmétique'],
+  niveau: "5eme",
+  matiere: "mathematiques",
+  tags: ["fractions", "arithmétique"],
   ordre: 1,
   dureeEstimee: 30,
-  difficulte: 'moyen',
-  prerequis: ['nombres-decimaux'],
+  difficulte: "moyen",
+  prerequis: ["nombres-decimaux"],
   exercices: [
     {
-      id: 'frac-ex-1',
-      question: 'Quelle est la valeur de 1/2 + 1/4 ?',
-      type: 'qcm',
-      options: ['1/6', '3/4', '2/6', '1/3'],
+      id: "frac-ex-1",
+      question: "Quelle est la valeur de 1/2 + 1/4 ?",
+      type: "qcm",
+      options: ["1/6", "3/4", "2/6", "1/3"],
       correct: 1,
-      explanation: '1/2 = 2/4, donc 2/4 + 1/4 = 3/4',
-      points: 5
-    }
+      explanation: "1/2 = 2/4, donc 2/4 + 1/4 = 3/4",
+      points: 5,
+    },
   ],
   createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString()
+  updatedAt: new Date().toISOString(),
 };
 
 async function importTestData() {
   try {
-    const docRef = await addDoc(collection(db, 'competences'), testCompetence);
-    console.log('Document ajouté avec ID:', docRef.id);
+    const docRef = await addDoc(collection(db, "competences"), testCompetence);
+    console.log("Document ajouté avec ID:", docRef.id);
   } catch (error) {
-    console.error('Erreur:', error);
+    console.error("Erreur:", error);
   }
 }
 
@@ -3202,14 +3350,16 @@ importTestData();
 #### Étape 2.9 : Création d'un jeu de données complet (6ème → 3ème)
 
 ### 🎯 **Mini-Roadmap : Contenu Éducatif Complet**
-*Objectif : Créer un premier jeu de données structuré couvrant le curriculum de collège*
+
+_Objectif : Créer un premier jeu de données structuré couvrant le curriculum de collège_
 
 #### 📚 **Phase 2.9.1 : Structure du curriculum (2h)**
 
 **[FILE]** Créer `scripts/curriculum-structure.ts` :
+
 ```ts
 interface ProgrammeNiveau {
-  niveau: '6eme' | '5eme' | '4eme' | '3eme';
+  niveau: "6eme" | "5eme" | "4eme" | "3eme";
   matieres: {
     [key: string]: {
       themes: CurriculumTheme[];
@@ -3244,278 +3394,281 @@ interface CurriculumCompetence {
 
 // Programme officiel Éducation Nationale par niveau
 export const PROGRAMME_6EME: ProgrammeNiveau = {
-  niveau: '6eme',
+  niveau: "6eme",
   matieres: {
     mathematiques: {
       themes: [
         {
-          id: 'nombres-entiers',
-          titre: 'Nombres entiers et décimaux',
-          description: 'Découverte et manipulation des nombres entiers et décimaux',
+          id: "nombres-entiers",
+          titre: "Nombres entiers et décimaux",
+          description:
+            "Découverte et manipulation des nombres entiers et décimaux",
           dureeEstimee: 25,
           periode: 1,
           competences: [
             // Sera détaillé dans l'étape suivante
-          ]
+          ],
         },
         {
-          id: 'geometrie-plane',
-          titre: 'Géométrie plane',
-          description: 'Figures géométriques de base et constructions',
+          id: "geometrie-plane",
+          titre: "Géométrie plane",
+          description: "Figures géométriques de base et constructions",
           dureeEstimee: 20,
           periode: 2,
-          competences: []
+          competences: [],
         },
         {
-          id: 'proportionnalite',
-          titre: 'Proportionnalité',
-          description: 'Introduction à la proportionnalité et pourcentages',
+          id: "proportionnalite",
+          titre: "Proportionnalité",
+          description: "Introduction à la proportionnalité et pourcentages",
           dureeEstimee: 15,
           periode: 3,
-          competences: []
-        }
+          competences: [],
+        },
       ],
       competencesTransversales: [
-        'Raisonnement mathématique',
-        'Communication en mathématiques',
-        'Résolution de problèmes'
-      ]
+        "Raisonnement mathématique",
+        "Communication en mathématiques",
+        "Résolution de problèmes",
+      ],
     },
     francais: {
       themes: [
         {
-          id: 'recits-antiquite',
-          titre: 'Récits d\'aventures et monde antique',
-          description: 'Découverte des récits d\'aventures et de l\'Antiquité',
+          id: "recits-antiquite",
+          titre: "Récits d'aventures et monde antique",
+          description: "Découverte des récits d'aventures et de l'Antiquité",
           dureeEstimee: 30,
           periode: 1,
-          competences: []
+          competences: [],
         },
         {
-          id: 'poesie-renaissance',
-          titre: 'Poésie de la Renaissance',
-          description: 'Étude de la poésie Renaissance et jeux de langage',
+          id: "poesie-renaissance",
+          titre: "Poésie de la Renaissance",
+          description: "Étude de la poésie Renaissance et jeux de langage",
           dureeEstimee: 25,
           periode: 2,
-          competences: []
+          competences: [],
         },
         {
-          id: 'theatre-comedie',
-          titre: 'Théâtre et comédie',
-          description: 'Initiation au théâtre et à la comédie classique',
+          id: "theatre-comedie",
+          titre: "Théâtre et comédie",
+          description: "Initiation au théâtre et à la comédie classique",
           dureeEstimee: 20,
           periode: 3,
-          competences: []
-        }
+          competences: [],
+        },
       ],
       competencesTransversales: [
-        'Maîtrise de la langue française',
-        'Expression écrite et orale',
-        'Culture littéraire et artistique'
-      ]
+        "Maîtrise de la langue française",
+        "Expression écrite et orale",
+        "Culture littéraire et artistique",
+      ],
     },
     histoire: {
       themes: [
         {
-          id: 'prehistoire-antiquite',
-          titre: 'De la Préhistoire à l\'Antiquité',
-          description: 'Les débuts de l\'humanité et les premières civilisations',
+          id: "prehistoire-antiquite",
+          titre: "De la Préhistoire à l'Antiquité",
+          description:
+            "Les débuts de l'humanité et les premières civilisations",
           dureeEstimee: 35,
           periode: 1,
-          competences: []
+          competences: [],
         },
         {
-          id: 'empire-romain',
-          titre: 'L\'Empire romain',
-          description: 'Naissance, expansion et déclin de l\'Empire romain',
+          id: "empire-romain",
+          titre: "L'Empire romain",
+          description: "Naissance, expansion et déclin de l'Empire romain",
           dureeEstimee: 30,
           periode: 2,
-          competences: []
+          competences: [],
         },
         {
-          id: 'naissance-monotheisme',
-          titre: 'Naissance des monothéismes',
-          description: 'Judaïsme et christianisme dans l\'Antiquité',
+          id: "naissance-monotheisme",
+          titre: "Naissance des monothéismes",
+          description: "Judaïsme et christianisme dans l'Antiquité",
           dureeEstimee: 20,
           periode: 3,
-          competences: []
-        }
+          competences: [],
+        },
       ],
       competencesTransversales: [
-        'Se repérer dans le temps',
-        'Se repérer dans l\'espace',
-        'Raisonner et analyser'
-      ]
+        "Se repérer dans le temps",
+        "Se repérer dans l'espace",
+        "Raisonner et analyser",
+      ],
     },
     geographie: {
       themes: [
         {
-          id: 'habiter-metropole',
-          titre: 'Habiter une métropole',
-          description: 'Découverte des métropoles mondiales et de leurs habitants',
+          id: "habiter-metropole",
+          titre: "Habiter une métropole",
+          description:
+            "Découverte des métropoles mondiales et de leurs habitants",
           dureeEstimee: 25,
           periode: 1,
-          competences: []
+          competences: [],
         },
         {
-          id: 'habiter-espace-rural',
-          titre: 'Habiter un espace rural',
-          description: 'Diversité des espaces ruraux et de leurs dynamiques',
+          id: "habiter-espace-rural",
+          titre: "Habiter un espace rural",
+          description: "Diversité des espaces ruraux et de leurs dynamiques",
           dureeEstimee: 20,
           periode: 2,
-          competences: []
+          competences: [],
         },
         {
-          id: 'habiter-littoraux',
-          titre: 'Habiter les littoraux',
-          description: 'Aménagement et protection des littoraux',
+          id: "habiter-littoraux",
+          titre: "Habiter les littoraux",
+          description: "Aménagement et protection des littoraux",
           dureeEstimee: 20,
           periode: 3,
-          competences: []
-        }
+          competences: [],
+        },
       ],
       competencesTransversales: [
-        'Se repérer dans l\'espace',
-        'Analyser et comprendre un document',
-        'Pratiquer différents langages'
-      ]
+        "Se repérer dans l'espace",
+        "Analyser et comprendre un document",
+        "Pratiquer différents langages",
+      ],
     },
     sciences: {
       themes: [
         {
-          id: 'matiere-mouvement',
-          titre: 'Matière, mouvement, énergie',
-          description: 'États et constitution de la matière, mouvements',
+          id: "matiere-mouvement",
+          titre: "Matière, mouvement, énergie",
+          description: "États et constitution de la matière, mouvements",
           dureeEstimee: 30,
           periode: 1,
-          competences: []
+          competences: [],
         },
         {
-          id: 'vivant-evolution',
-          titre: 'Le vivant et son évolution',
-          description: 'Classification et évolution du monde vivant',
+          id: "vivant-evolution",
+          titre: "Le vivant et son évolution",
+          description: "Classification et évolution du monde vivant",
           dureeEstimee: 35,
           periode: 2,
-          competences: []
+          competences: [],
         },
         {
-          id: 'planete-terre',
-          titre: 'La planète Terre',
-          description: 'Caractéristiques de la Terre et système solaire',
+          id: "planete-terre",
+          titre: "La planète Terre",
+          description: "Caractéristiques de la Terre et système solaire",
           dureeEstimee: 20,
           periode: 3,
-          competences: []
-        }
+          competences: [],
+        },
       ],
       competencesTransversales: [
-        'Démarche scientifique',
-        'Observation et expérimentation',
-        'Communication scientifique'
-      ]
+        "Démarche scientifique",
+        "Observation et expérimentation",
+        "Communication scientifique",
+      ],
     },
     anglais: {
       themes: [
         {
-          id: 'se-presenter',
-          titre: 'Se présenter et faire connaissance',
-          description: 'Vocabulaire de base et expressions de politesse',
+          id: "se-presenter",
+          titre: "Se présenter et faire connaissance",
+          description: "Vocabulaire de base et expressions de politesse",
           dureeEstimee: 20,
           periode: 1,
-          competences: []
+          competences: [],
         },
         {
-          id: 'ecole-loisirs',
-          titre: 'École et loisirs',
-          description: 'Décrire son quotidien scolaire et ses activités',
+          id: "ecole-loisirs",
+          titre: "École et loisirs",
+          description: "Décrire son quotidien scolaire et ses activités",
           dureeEstimee: 25,
           periode: 2,
-          competences: []
+          competences: [],
         },
         {
-          id: 'famille-maison',
-          titre: 'Famille et maison',
-          description: 'Présenter sa famille et décrire son logement',
+          id: "famille-maison",
+          titre: "Famille et maison",
+          description: "Présenter sa famille et décrire son logement",
           dureeEstimee: 20,
           periode: 3,
-          competences: []
-        }
+          competences: [],
+        },
       ],
       competencesTransversales: [
-        'Compréhension orale',
-        'Expression orale en continu',
-        'Interaction orale',
-        'Compréhension écrite',
-        'Expression écrite'
-      ]
-    }
-  }
+        "Compréhension orale",
+        "Expression orale en continu",
+        "Interaction orale",
+        "Compréhension écrite",
+        "Expression écrite",
+      ],
+    },
+  },
 };
 
 // Structure similaire pour 5ème, 4ème, 3ème...
 export const PROGRAMME_5EME: ProgrammeNiveau = {
-  niveau: '5eme',
+  niveau: "5eme",
   matieres: {
     mathematiques: {
       themes: [
         {
-          id: 'nombres-relatifs',
-          titre: 'Nombres relatifs',
-          description: 'Introduction aux nombres relatifs et opérations',
+          id: "nombres-relatifs",
+          titre: "Nombres relatifs",
+          description: "Introduction aux nombres relatifs et opérations",
           dureeEstimee: 20,
           periode: 1,
-          competences: []
+          competences: [],
         },
         {
-          id: 'fractions',
-          titre: 'Fractions et nombres décimaux',
-          description: 'Opérations sur les fractions et décimaux',
+          id: "fractions",
+          titre: "Fractions et nombres décimaux",
+          description: "Opérations sur les fractions et décimaux",
           dureeEstimee: 25,
           periode: 2,
-          competences: []
+          competences: [],
         },
         {
-          id: 'triangles-quadrilateres',
-          titre: 'Triangles et quadrilatères',
-          description: 'Propriétés et constructions géométriques',
+          id: "triangles-quadrilateres",
+          titre: "Triangles et quadrilatères",
+          description: "Propriétés et constructions géométriques",
           dureeEstimee: 20,
           periode: 3,
-          competences: []
-        }
+          competences: [],
+        },
       ],
       competencesTransversales: [
-        'Raisonnement mathématique',
-        'Communication en mathématiques',
-        'Résolution de problèmes'
-      ]
-    }
+        "Raisonnement mathématique",
+        "Communication en mathématiques",
+        "Résolution de problèmes",
+      ],
+    },
     // ... autres matières
-  }
+  },
 };
 
 // Patterns pour automatiser la génération
 export const PATTERNS_COMPETENCES = {
   mathematiques: {
     templates: [
-      'Comprendre et utiliser {concept}',
-      'Résoudre des problèmes avec {concept}',
-      'Construire et représenter {concept}',
-      'Calculer avec {concept}'
+      "Comprendre et utiliser {concept}",
+      "Résoudre des problèmes avec {concept}",
+      "Construire et représenter {concept}",
+      "Calculer avec {concept}",
     ],
     niveauxDifficulte: {
-      '6eme': 'introduction',
-      '5eme': 'approfondissement',
-      '4eme': 'maîtrise',
-      '3eme': 'expertise'
-    }
+      "6eme": "introduction",
+      "5eme": "approfondissement",
+      "4eme": "maîtrise",
+      "3eme": "expertise",
+    },
   },
   francais: {
     templates: [
-      'Analyser {genre_litteraire}',
-      'Rédiger {type_production}',
-      'Étudier {element_langue}',
-      'Comprendre {contexte_historique}'
-    ]
-  }
+      "Analyser {genre_litteraire}",
+      "Rédiger {type_production}",
+      "Étudier {element_langue}",
+      "Comprendre {contexte_historique}",
+    ],
+  },
   // ... autres matières
 };
 ```
@@ -3523,8 +3676,13 @@ export const PATTERNS_COMPETENCES = {
 #### 📝 **Phase 2.9.2 : Générateur de contenu éducatif (3h)**
 
 **[FILE]** Créer `scripts/generate-educational-content.ts` :
+
 ```ts
-import { PROGRAMME_6EME, PROGRAMME_5EME, PATTERNS_COMPETENCES } from './curriculum-structure';
+import {
+  PROGRAMME_6EME,
+  PROGRAMME_5EME,
+  PATTERNS_COMPETENCES,
+} from "./curriculum-structure";
 
 interface ContentTemplate {
   introduction: string;
@@ -3535,16 +3693,14 @@ interface ContentTemplate {
 }
 
 class ContentGenerator {
-  
   // Générateur de contenu Markdown basé sur templates
   generateCompetenceContent(
-    theme: string, 
-    competence: string, 
+    theme: string,
+    competence: string,
     niveau: string
   ): string {
-    
     const template = this.getContentTemplate(theme, niveau);
-    
+
     return `# ${competence}
 
 ## 🎯 Objectifs d'apprentissage
@@ -3556,18 +3712,30 @@ ${this.generateObjectives(competence, niveau)}
 ${template.introduction}
 
 ### Théorie
-${template.theorie.map(section => `#### ${section.title}
-${section.content}`).join('\n\n')}
+${template.theorie
+  .map(
+    (section) => `#### ${section.title}
+${section.content}`
+  )
+  .join("\n\n")}
 
 ### Exemples pratiques
-${template.exemples.map((exemple, idx) => `#### Exemple ${idx + 1}
-${exemple}`).join('\n\n')}
+${template.exemples
+  .map(
+    (exemple, idx) => `#### Exemple ${idx + 1}
+${exemple}`
+  )
+  .join("\n\n")}
 
 ## 🏃‍♀️ Exercices
 
 ### Exercices d'application
-${template.exercices.map((exercice, idx) => `#### Exercice ${idx + 1}
-${exercice}`).join('\n\n')}
+${template.exercices
+  .map(
+    (exercice, idx) => `#### Exercice ${idx + 1}
+${exercice}`
+  )
+  .join("\n\n")}
 
 ## ✅ Points clés à retenir
 ${this.generateKeyPoints(competence, niveau)}
@@ -3580,7 +3748,7 @@ ${this.generateNextSteps(competence, niveau)}
   // Templates de contenu par matière et niveau
   private getContentTemplate(theme: string, niveau: string): ContentTemplate {
     const templates = {
-      'mathematiques-6eme-nombres-entiers': {
+      "mathematiques-6eme-nombres-entiers": {
         introduction: `Les nombres entiers sont les nombres que nous utilisons pour compter : 0, 1, 2, 3, 4, 5...
         
 En 6ème, nous allons apprendre à :
@@ -3590,7 +3758,7 @@ En 6ème, nous allons apprendre à :
 
         theorie: [
           {
-            title: 'Qu\'est-ce qu\'un nombre entier ?',
+            title: "Qu'est-ce qu'un nombre entier ?",
             content: `Un nombre entier est un nombre sans partie décimale.
 
 **Exemples :** 
@@ -3599,10 +3767,10 @@ En 6ème, nous allons apprendre à :
 
 **Attention :** 
 - 1,5 n'est PAS un nombre entier (c'est un nombre décimal)
-- 3/4 n'est PAS un nombre entier (c'est une fraction)`
+- 3/4 n'est PAS un nombre entier (c'est une fraction)`,
           },
           {
-            title: 'Écriture et lecture des grands nombres',
+            title: "Écriture et lecture des grands nombres",
             content: `Pour les grands nombres, on sépare les chiffres par groupes de 3 :
 
 - 1 234 se lit "mille deux cent trente-quatre"
@@ -3616,8 +3784,8 @@ En 6ème, nous allons apprendre à :
 Exemple : 1 234 567
 - 1 million
 - 234 milliers  
-- 567 unités`
-          }
+- 567 unités`,
+          },
         ],
 
         exemples: [
@@ -3636,7 +3804,7 @@ Ranger du plus petit au plus grand : 15, 3, 127, 8, 1
 
 **Réponse :** 1 < 3 < 8 < 15 < 127
 
-**Méthode :** On compare d'abord le nombre de chiffres, puis chiffre par chiffre de gauche à droite.`
+**Méthode :** On compare d'abord le nombre de chiffres, puis chiffre par chiffre de gauche à droite.`,
         ],
 
         exercices: [
@@ -3658,19 +3826,19 @@ c) 2 304 ... 2 304
 
 **Exercice 4 - Rangement**
 Range dans l'ordre croissant :
-2 570 ; 257 ; 25 700 ; 2 057 ; 25`
+2 570 ; 257 ; 25 700 ; 2 057 ; 25`,
         ],
 
         evaluation: [
-          'Reconnaître un nombre entier parmi différents types de nombres',
-          'Écrire un nombre entier en lettres et en chiffres',
-          'Comparer et ranger des nombres entiers',
-          'Résoudre des problèmes simples avec des nombres entiers'
-        ]
+          "Reconnaître un nombre entier parmi différents types de nombres",
+          "Écrire un nombre entier en lettres et en chiffres",
+          "Comparer et ranger des nombres entiers",
+          "Résoudre des problèmes simples avec des nombres entiers",
+        ],
       },
-      
+
       // Template pour français 6ème
-      'francais-6eme-recits-aventures': {
+      "francais-6eme-recits-aventures": {
         introduction: `Les récits d'aventures nous font voyager dans des mondes extraordinaires !
 
 En 6ème, nous allons découvrir :
@@ -3680,7 +3848,7 @@ En 6ème, nous allons découvrir :
 
         theorie: [
           {
-            title: 'Qu\'est-ce qu\'un récit d\'aventures ?',
+            title: "Qu'est-ce qu'un récit d'aventures ?",
             content: `Un récit d'aventures raconte les péripéties d'un héros face à des obstacles.
 
 **Caractéristiques :**
@@ -3688,8 +3856,8 @@ En 6ème, nous allons découvrir :
 - Des épreuves à surmonter
 - Un voyage ou une quête
 - Du suspense et de l'action
-- Une fin heureuse (généralement)`
-          }
+- Une fin heureuse (généralement)`,
+          },
         ],
 
         exemples: [
@@ -3700,7 +3868,7 @@ Ulysse, roi d'Ithaque, tente de rentrer chez lui après la guerre de Troie. Il a
 - La magicienne Circé
 - De nombreuses tempêtes
 
-Son voyage dure 10 ans !`
+Son voyage dure 10 ans !`,
         ],
 
         exercices: [
@@ -3708,16 +3876,16 @@ Son voyage dure 10 ans !`
 Identifie dans ce passage :
 - Le héros
 - L'obstacle qu'il rencontre
-- Comment il le surmonte`
+- Comment il le surmonte`,
         ],
 
         evaluation: [
-          'Identifier les caractéristiques d\'un récit d\'aventures',
-          'Reconnaître le schéma narratif',
-          'Analyser le portrait d\'un héros'
-        ]
-      }
-      
+          "Identifier les caractéristiques d'un récit d'aventures",
+          "Reconnaître le schéma narratif",
+          "Analyser le portrait d'un héros",
+        ],
+      },
+
       // ... autres templates
     };
 
@@ -3729,10 +3897,10 @@ Identifie dans ce passage :
     const objectifs = [
       `À la fin de cette leçon, tu seras capable de ${competence.toLowerCase()}`,
       `Tu maîtriseras les notions essentielles pour ton niveau ${niveau}`,
-      `Tu pourras résoudre des exercices pratiques en autonomie`
+      `Tu pourras résoudre des exercices pratiques en autonomie`,
     ];
-    
-    return objectifs.map(obj => `- ${obj}`).join('\n');
+
+    return objectifs.map((obj) => `- ${obj}`).join("\n");
   }
 
   // Génération de points clés
@@ -3754,12 +3922,12 @@ Identifie dans ce passage :
 
   private getNextLevel(niveau: string): string {
     const progression = {
-      '6eme': '5ème',
-      '5eme': '4ème', 
-      '4eme': '3ème',
-      '3eme': 'Seconde'
+      "6eme": "5ème",
+      "5eme": "4ème",
+      "4eme": "3ème",
+      "3eme": "Seconde",
     };
-    return progression[niveau] || 'niveau supérieur';
+    return progression[niveau] || "niveau supérieur";
   }
 }
 
@@ -3769,65 +3937,73 @@ export const contentGenerator = new ContentGenerator();
 #### 🗄️ **Phase 2.9.3 : Script de peuplement massif (2h)**
 
 **[FILE]** Créer `scripts/populate-complete-curriculum.ts` :
+
 ```ts
-import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, setDoc, writeBatch } from 'firebase/firestore';
-import { PROGRAMME_6EME, PROGRAMME_5EME } from './curriculum-structure';
-import { contentGenerator } from './generate-educational-content';
+import { initializeApp } from "firebase/app";
+import {
+  getFirestore,
+  collection,
+  doc,
+  setDoc,
+  writeBatch,
+} from "firebase/firestore";
+import { PROGRAMME_6EME, PROGRAMME_5EME } from "./curriculum-structure";
+import { contentGenerator } from "./generate-educational-content";
 
 // Configuration Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyA3Mq1EgBB3gDzbzBRIB7WAO9UaHK9UV0Y",
-  authDomain: "revision-a7a12.firebaseapp.com", 
+  authDomain: "revision-a7a12.firebaseapp.com",
   projectId: "revision-a7a12",
   storageBucket: "revision-a7a12.firebasestorage.app",
   messagingSenderId: "140539996338",
-  appId: "1:140539996338:web:23dfd4c91dcd6d8d3dc1ab"
+  appId: "1:140539996338:web:23dfd4c91dcd6d8d3dc1ab",
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 class CurriculumPopulator {
-  
   async populateCompleteProgram() {
-    console.log('🚀 Démarrage du peuplement complet du curriculum...\n');
-    
+    console.log("🚀 Démarrage du peuplement complet du curriculum...\n");
+
     const stats = {
       matieres: 0,
       competences: 0,
       exercices: 0,
-      niveaux: ['6eme', '5eme', '4eme', '3eme']
+      niveaux: ["6eme", "5eme", "4eme", "3eme"],
     };
 
     try {
       // 1. Générer le contenu pour chaque niveau
       for (const niveau of stats.niveaux) {
         console.log(`📚 Génération du contenu ${niveau.toUpperCase()}...`);
-        
+
         const programme = this.getProgrammeByLevel(niveau);
-        
+
         // 2. Pour chaque matière du niveau
-        for (const [matiereId, matiereData] of Object.entries(programme.matieres)) {
+        for (const [matiereId, matiereData] of Object.entries(
+          programme.matieres
+        )) {
           console.log(`  📖 Matière: ${matiereId}`);
-          
+
           // 3. Pour chaque thème de la matière
           for (const theme of matiereData.themes) {
             console.log(`    📝 Thème: ${theme.titre}`);
-            
+
             // 4. Générer les compétences du thème
             const competences = await this.generateThemeCompetences(
-              matiereId, 
-              theme, 
+              matiereId,
+              theme,
               niveau
             );
-            
+
             // 5. Sauvegarder en batch pour performance
             await this.saveBatch(competences);
-            
+
             stats.competences += competences.length;
           }
-          
+
           stats.matieres++;
         }
       }
@@ -3835,43 +4011,42 @@ class CurriculumPopulator {
       // 6. Créer des parcours pédagogiques
       await this.createLearningPaths(stats.niveaux);
 
-      console.log('\n✅ Peuplement terminé avec succès !');
+      console.log("\n✅ Peuplement terminé avec succès !");
       console.log(`📊 Statistiques finales :`);
       console.log(`- ${stats.matieres} matières créées`);
       console.log(`- ${stats.competences} compétences générées`);
       console.log(`- ${stats.exercices} exercices créés`);
       console.log(`- ${stats.niveaux.length} niveaux couverts`);
-
     } catch (error) {
-      console.error('❌ Erreur lors du peuplement:', error);
+      console.error("❌ Erreur lors du peuplement:", error);
       throw error;
     }
   }
 
   private getProgrammeByLevel(niveau: string) {
     const programmes = {
-      '6eme': PROGRAMME_6EME,
-      '5eme': PROGRAMME_5EME,
+      "6eme": PROGRAMME_6EME,
+      "5eme": PROGRAMME_5EME,
       // '4eme': PROGRAMME_4EME, // À développer
       // '3eme': PROGRAMME_3EME  // À développer
     };
-    
+
     return programmes[niveau] || this.generateBasicProgram(niveau);
   }
 
   private async generateThemeCompetences(
-    matiereId: string, 
-    theme: any, 
+    matiereId: string,
+    theme: any,
     niveau: string
   ) {
     const competences = [];
-    
+
     // Génération intelligente basée sur le thème
     const competenceCount = this.getCompetenceCount(theme.dureeEstimee);
-    
+
     for (let i = 0; i < competenceCount; i++) {
       const competenceId = `${matiereId}-${niveau}-${theme.id}-${i + 1}`;
-      
+
       const competence = {
         id: competenceId,
         matiere: matiereId,
@@ -3880,24 +4055,24 @@ class CurriculumPopulator {
         titre: this.generateCompetenceTitle(theme, i + 1),
         description: this.generateCompetenceDescription(theme, i + 1),
         contenu: contentGenerator.generateCompetenceContent(
-          `${matiereId}-${theme.id}`, 
+          `${matiereId}-${theme.id}`,
           this.generateCompetenceTitle(theme, i + 1),
           niveau
         ),
         difficulte: this.calculateDifficulty(niveau, i + 1),
-        dureeEstimee: Math.round(theme.dureeEstimee / competenceCount * 60), // en minutes
+        dureeEstimee: Math.round((theme.dureeEstimee / competenceCount) * 60), // en minutes
         ordre: i + 1,
         tags: this.generateTags(matiereId, theme, niveau),
         prerequis: this.calculatePrerequisites(niveau, i),
         objectifs: this.generateObjectives(theme, i + 1),
         exercices: await this.generateExercises(matiereId, theme, i + 1),
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       };
-      
+
       competences.push(competence);
     }
-    
+
     return competences;
   }
 
@@ -3908,105 +4083,110 @@ class CurriculumPopulator {
 
   private generateCompetenceTitle(theme: any, index: number): string {
     const titles = {
-      'nombres-entiers': [
-        'Reconnaître et écrire les nombres entiers',
-        'Comparer et ranger les nombres entiers', 
-        'Calculs avec les nombres entiers'
+      "nombres-entiers": [
+        "Reconnaître et écrire les nombres entiers",
+        "Comparer et ranger les nombres entiers",
+        "Calculs avec les nombres entiers",
       ],
-      'recits-antiquite': [
-        'Les héros de l\'Antiquité',
-        'Structure du récit d\'aventures',
-        'Vocabulaire de l\'épopée'
+      "recits-antiquite": [
+        "Les héros de l'Antiquité",
+        "Structure du récit d'aventures",
+        "Vocabulaire de l'épopée",
       ],
-      'prehistoire-antiquite': [
-        'Les premiers hommes',
-        'Naissance de l\'agriculture',
-        'Les premières civilisations'
-      ]
+      "prehistoire-antiquite": [
+        "Les premiers hommes",
+        "Naissance de l'agriculture",
+        "Les premières civilisations",
+      ],
       // ... autres thèmes
     };
-    
+
     return titles[theme.id]?.[index - 1] || `${theme.titre} - Partie ${index}`;
   }
 
   private calculateDifficulty(niveau: string, index: number): string {
     const difficulties = {
-      '6eme': index === 1 ? 'facile' : 'moyen',
-      '5eme': index <= 2 ? 'moyen' : 'difficile',
-      '4eme': 'difficile',
-      '3eme': 'difficile'
+      "6eme": index === 1 ? "facile" : "moyen",
+      "5eme": index <= 2 ? "moyen" : "difficile",
+      "4eme": "difficile",
+      "3eme": "difficile",
     };
-    
-    return difficulties[niveau] || 'moyen';
+
+    return difficulties[niveau] || "moyen";
   }
 
-  private async generateExercises(matiere: string, theme: any, competenceIndex: number) {
+  private async generateExercises(
+    matiere: string,
+    theme: any,
+    competenceIndex: number
+  ) {
     // Génération d'exercices typiques par matière
     const exerciseGenerators = {
       mathematiques: () => [
         {
           id: `ex-${Date.now()}-1`,
-          question: 'Résoudre le calcul suivant : 15 + 27 = ?',
-          type: 'number',
+          question: "Résoudre le calcul suivant : 15 + 27 = ?",
+          type: "number",
           correct: 42,
           points: 1,
-          explanation: '15 + 27 = 42'
+          explanation: "15 + 27 = 42",
         },
         {
-          id: `ex-${Date.now()}-2`, 
-          question: 'Quel est le plus grand nombre ?',
-          type: 'qcm',
-          options: ['156', '165', '151', '160'],
+          id: `ex-${Date.now()}-2`,
+          question: "Quel est le plus grand nombre ?",
+          type: "qcm",
+          options: ["156", "165", "151", "160"],
           correct: 1, // index de la bonne réponse
           points: 1,
-          explanation: '165 est le plus grand car 165 > 160 > 156 > 151'
-        }
+          explanation: "165 est le plus grand car 165 > 160 > 156 > 151",
+        },
       ],
-      
+
       francais: () => [
         {
           id: `ex-${Date.now()}-1`,
-          question: 'Quel est le héros principal de l\'Odyssée ?',
-          type: 'qcm',
-          options: ['Achille', 'Ulysse', 'Hector', 'Ménélas'],
+          question: "Quel est le héros principal de l'Odyssée ?",
+          type: "qcm",
+          options: ["Achille", "Ulysse", "Hector", "Ménélas"],
           correct: 1,
           points: 1,
-          explanation: 'Ulysse est le héros de l\'Odyssée d\'Homère'
-        }
+          explanation: "Ulysse est le héros de l'Odyssée d'Homère",
+        },
       ],
-      
+
       histoire: () => [
         {
           id: `ex-${Date.now()}-1`,
-          question: 'En quelle période a vécu l\'Homo sapiens ?',
-          type: 'qcm', 
-          options: ['Paléolithique', 'Néolithique', 'Antiquité', 'Moyen Âge'],
+          question: "En quelle période a vécu l'Homo sapiens ?",
+          type: "qcm",
+          options: ["Paléolithique", "Néolithique", "Antiquité", "Moyen Âge"],
           correct: 0,
-          points: 1
-        }
-      ]
+          points: 1,
+        },
+      ],
     };
-    
-    const generator = exerciseGenerators[matiere] || exerciseGenerators.mathematiques;
+
+    const generator =
+      exerciseGenerators[matiere] || exerciseGenerators.mathematiques;
     return generator();
   }
 
   private async saveBatch(competences: any[]) {
     const batch = writeBatch(db);
-    
-    competences.forEach(competence => {
-      const docRef = doc(collection(db, 'competences'), competence.id);
+
+    competences.forEach((competence) => {
+      const docRef = doc(collection(db, "competences"), competence.id);
       batch.set(docRef, competence);
     });
-    
+
     await batch.commit();
     console.log(`    ✅ ${competences.length} compétences sauvegardées`);
   }
 
   // Création de parcours pédagogiques optimisés
   private async createLearningPaths(niveaux: string[]) {
-    console.log('\n📍 Création des parcours pédagogiques...');
-    
+    console.log("\n📍 Création des parcours pédagogiques...");
+
     for (const niveau of niveaux) {
       const parcours = {
         id: `parcours-${niveau}`,
@@ -4018,10 +4198,10 @@ class CurriculumPopulator {
         prerequisNiveau: this.getPrerequisiteLevel(niveau),
         objectifsFinaux: this.getFinalObjectives(niveau),
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       };
-      
-      await setDoc(doc(collection(db, 'parcours'), parcours.id), parcours);
+
+      await setDoc(doc(collection(db, "parcours"), parcours.id), parcours);
       console.log(`  ✅ Parcours ${niveau} créé`);
     }
   }
@@ -4043,11 +4223,11 @@ async function populateCompleteDatabase() {
 if (require.main === module) {
   populateCompleteDatabase()
     .then(() => {
-      console.log('\n🎉 Base de données éducative complète prête !');
+      console.log("\n🎉 Base de données éducative complète prête !");
       process.exit(0);
     })
     .catch((error) => {
-      console.error('💥 Erreur fatale:', error);
+      console.error("💥 Erreur fatale:", error);
       process.exit(1);
     });
 }
@@ -4056,6 +4236,7 @@ if (require.main === module) {
 #### 📋 **Phase 2.9.4 : Commandes et validation (1h)**
 
 **[FILE]** Ajouter dans `package.json` :
+
 ```json
 {
   "scripts": {
@@ -4068,73 +4249,93 @@ if (require.main === module) {
 ```
 
 **[FILE]** Créer `scripts/validate-curriculum.ts` :
+
 ```ts
-import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, query, where } from 'firebase/firestore';
+import { initializeApp } from "firebase/app";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 
 class CurriculumValidator {
-  
   async validateCompleteProgram() {
-    console.log('🔍 Validation du curriculum complet...\n');
-    
+    console.log("🔍 Validation du curriculum complet...\n");
+
     const validation = {
       niveaux: await this.validateLevels(),
-      matieres: await this.validateSubjects(), 
+      matieres: await this.validateSubjects(),
       competences: await this.validateCompetences(),
       progression: await this.validateProgression(),
-      qualite: await this.validateQuality()
+      qualite: await this.validateQuality(),
     };
-    
+
     this.displayValidationReport(validation);
     return validation;
   }
 
   private async validateLevels() {
-    const expectedLevels = ['6eme', '5eme', '4eme', '3eme'];
+    const expectedLevels = ["6eme", "5eme", "4eme", "3eme"];
     const foundLevels = new Set();
-    
-    const competencesRef = collection(db, 'competences');
+
+    const competencesRef = collection(db, "competences");
     const snapshot = await getDocs(competencesRef);
-    
-    snapshot.forEach(doc => {
+
+    snapshot.forEach((doc) => {
       foundLevels.add(doc.data().niveau);
     });
-    
+
     return {
       expected: expectedLevels.length,
       found: foundLevels.size,
-      missing: expectedLevels.filter(level => !foundLevels.has(level)),
-      isValid: expectedLevels.length === foundLevels.size
+      missing: expectedLevels.filter((level) => !foundLevels.has(level)),
+      isValid: expectedLevels.length === foundLevels.size,
     };
   }
 
   private async validateSubjects() {
-    const expectedSubjects = ['mathematiques', 'francais', 'histoire', 'geographie', 'sciences', 'anglais'];
+    const expectedSubjects = [
+      "mathematiques",
+      "francais",
+      "histoire",
+      "geographie",
+      "sciences",
+      "anglais",
+    ];
     const subjectStats = {};
-    
+
     for (const subject of expectedSubjects) {
       const q = query(
-        collection(db, 'competences'), 
-        where('matiere', '==', subject)
+        collection(db, "competences"),
+        where("matiere", "==", subject)
       );
       const snapshot = await getDocs(q);
       subjectStats[subject] = snapshot.size;
     }
-    
+
     return {
       subjects: subjectStats,
       totalCompetences: Object.values(subjectStats).reduce((a, b) => a + b, 0),
-      coverage: Object.keys(subjectStats).length / expectedSubjects.length * 100
+      coverage:
+        (Object.keys(subjectStats).length / expectedSubjects.length) * 100,
     };
   }
 
   private displayValidationReport(validation: any) {
-    console.log('📊 RAPPORT DE VALIDATION\n');
-    console.log('✅ Niveaux:', validation.niveaux.isValid ? 'COMPLET' : 'INCOMPLET');
-    console.log('📚 Matières:', `${validation.matieres.coverage}% couvertes`);
-    console.log('🎯 Compétences:', `${validation.competences.total} créées`);
-    console.log('📈 Progression:', validation.progression.isCoherent ? 'COHÉRENTE' : 'À REVOIR');
-    console.log('⭐ Qualité:', `${validation.qualite.score}/100`);
+    console.log("📊 RAPPORT DE VALIDATION\n");
+    console.log(
+      "✅ Niveaux:",
+      validation.niveaux.isValid ? "COMPLET" : "INCOMPLET"
+    );
+    console.log("📚 Matières:", `${validation.matieres.coverage}% couvertes`);
+    console.log("🎯 Compétences:", `${validation.competences.total} créées`);
+    console.log(
+      "📈 Progression:",
+      validation.progression.isCoherent ? "COHÉRENTE" : "À REVOIR"
+    );
+    console.log("⭐ Qualité:", `${validation.qualite.score}/100`);
   }
 }
 
@@ -4144,16 +4345,18 @@ export const curriculumValidator = new CurriculumValidator();
 ### 🧪 **Phase 2.9.5 : Tests et métriques (1h)**
 
 **[CMD]** Tests de validation :
+
 ```bash
 npm run populate:curriculum        # Génération complète
-npm run validate:curriculum       # Validation structure  
+npm run validate:curriculum       # Validation structure
 npm run stats:content            # Statistiques détaillées
 npm run test:e2e                 # Tests navigation étendue
 ```
 
 ### ✅ **Critères de validation Phase 2.9**
+
 - [ ] **[CHECK]** 6 matières principales couvertes (Math, Français, Histoire, Géo, Sciences, Anglais)
-- [ ] **[CHECK]** 4 niveaux complets (6ème, 5ème, 4ème, 3ème)  
+- [ ] **[CHECK]** 4 niveaux complets (6ème, 5ème, 4ème, 3ème)
 - [ ] **[CHECK]** Minimum 5 compétences par matière par niveau (120+ compétences total)
 - [ ] **[CHECK]** Contenu Markdown structuré et pédagogique
 - [ ] **[CHECK]** Exercices variés (QCM, calcul, rédaction)
@@ -4162,6 +4365,7 @@ npm run test:e2e                 # Tests navigation étendue
 - [ ] **[CHECK]** Performance acceptable avec la base élargie
 
 ### 📊 **Objectifs quantitatifs**
+
 - **120+ compétences** (5 par matière × 6 matières × 4 niveaux)
 - **300+ exercices** (moyenne 2,5 exercices par compétence)
 - **6 matières** complètes avec progression
@@ -4172,6 +4376,7 @@ npm run test:e2e                 # Tests navigation étendue
 ---
 
 ### 🧪 Tests de validation Phase 2
+
 ```bash
 [TEST] npm run test                    # Tests markdown passent
 [TEST] npm run test:e2e               # Tests contenu passent
@@ -4181,6 +4386,7 @@ npm run test:e2e                 # Tests navigation étendue
 ```
 
 ### ✅ Critères de validation obligatoires
+
 - [x] **[CHECK]** Markdown converti en HTML sécurisé ✅
 - [x] **[CHECK]** Route `/[matiere]/[niveau]/[competence]` fonctionnelle ✅
 - [x] **[CHECK]** Composant CourseContent affiche le contenu ✅
@@ -4203,17 +4409,20 @@ npm run test:e2e                 # Tests navigation étendue
 ## 🔄 Phase 2.10 : Interface Dynamique Firebase (2h)
 
 ### 🎯 Contexte IA
+
 **Objectif** : Transformer l'interface statique en interface dynamique connectée à Firebase, remplacer les données hardcodées par des requêtes en temps réel.
 **Pré-requis** : Firebase Firestore configuré et peuplé (Phase 2.9), curriculum généré avec données de test.
 
 ### 📝 Instructions granulaires
 
 #### Étape 2.10.1 : Service de données Firebase (45min)
+
 **[FILE]** Créer `src/lib/services/subjects.ts` :
+
 ```typescript
-import { db } from '$lib/firebase/client';
-import { collection, getDocs, query, orderBy } from 'firebase/firestore';
-import type { Subject, Competence, Course } from '$lib/types/content';
+import { db } from "$lib/firebase/client";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import type { Subject, Competence, Course } from "$lib/types/content";
 
 interface SubjectStats {
   competences: number;
@@ -4230,62 +4439,62 @@ interface GlobalStats {
 export async function getSubjects(): Promise<Subject[]> {
   // Vérification SSR - Firebase n'est disponible que côté client
   if (!db) {
-    console.warn('⚠️ Firebase non disponible (SSR ou erreur config)');
+    console.warn("⚠️ Firebase non disponible (SSR ou erreur config)");
     return [];
   }
 
   try {
-    const subjectsRef = collection(db, 'subjects');
-    const q = query(subjectsRef, orderBy('ordre', 'asc'));
+    const subjectsRef = collection(db, "subjects");
+    const q = query(subjectsRef, orderBy("ordre", "asc"));
     const snapshot = await getDocs(q);
-    
+
     const subjects: Subject[] = [];
     snapshot.forEach((doc) => {
       subjects.push({ id: doc.id, ...doc.data() } as Subject);
     });
-    
-    console.log('✅ Matières chargées depuis Firebase:', subjects.length);
+
+    console.log("✅ Matières chargées depuis Firebase:", subjects.length);
     return subjects;
   } catch (error) {
-    console.error('❌ Erreur chargement matières:', error);
+    console.error("❌ Erreur chargement matières:", error);
     return [];
   }
 }
 
 export async function getCompetences(): Promise<Competence[]> {
   if (!db) return [];
-  
+
   try {
-    const competencesRef = collection(db, 'competences');
+    const competencesRef = collection(db, "competences");
     const snapshot = await getDocs(competencesRef);
-    
+
     const competences: Competence[] = [];
     snapshot.forEach((doc) => {
       competences.push({ id: doc.id, ...doc.data() } as Competence);
     });
-    
+
     return competences;
   } catch (error) {
-    console.error('❌ Erreur chargement compétences:', error);
+    console.error("❌ Erreur chargement compétences:", error);
     return [];
   }
 }
 
 export async function getCourses(): Promise<Course[]> {
   if (!db) return [];
-  
+
   try {
-    const coursesRef = collection(db, 'courses');
+    const coursesRef = collection(db, "courses");
     const snapshot = await getDocs(coursesRef);
-    
+
     const courses: Course[] = [];
     snapshot.forEach((doc) => {
       courses.push({ id: doc.id, ...doc.data() } as Course);
     });
-    
+
     return courses;
   } catch (error) {
-    console.error('❌ Erreur chargement cours:', error);
+    console.error("❌ Erreur chargement cours:", error);
     return [];
   }
 }
@@ -4293,20 +4502,22 @@ export async function getCourses(): Promise<Course[]> {
 export async function calculateStats(): Promise<GlobalStats> {
   const [subjects, competences, courses] = await Promise.all([
     getSubjects(),
-    getCompetences(), 
-    getCourses()
+    getCompetences(),
+    getCourses(),
   ]);
 
   const bySubject: Record<string, SubjectStats> = {};
-  
+
   // Calculer stats par matière
-  subjects.forEach(subject => {
-    const subjectCompetences = competences.filter(c => c.matiereId === subject.id);
-    const subjectCourses = courses.filter(c => c.matiereId === subject.id);
-    
+  subjects.forEach((subject) => {
+    const subjectCompetences = competences.filter(
+      (c) => c.matiereId === subject.id
+    );
+    const subjectCourses = courses.filter((c) => c.matiereId === subject.id);
+
     bySubject[subject.id] = {
       competences: subjectCompetences.length,
-      courses: subjectCourses.length
+      courses: subjectCourses.length,
     };
   });
 
@@ -4314,20 +4525,22 @@ export async function calculateStats(): Promise<GlobalStats> {
     totalSubjects: subjects.length,
     totalCompetences: competences.length,
     totalCourses: courses.length,
-    bySubject
+    bySubject,
   };
 }
 ```
 
 #### Étape 2.10.2 : Interface dynamique homepage (45min)
+
 **[FILE]** Modifier `src/routes/+page.svelte` - Remplacer la section TypeScript :
+
 ```typescript
 <script lang="ts">
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import { authStore } from '$lib/stores/auth';
   import { getSubjects, calculateStats } from '$lib/services/subjects';
-  
+
   interface MatiereDisplay {
     id: string;
     nom: string;
@@ -4372,7 +4585,7 @@ export async function calculateStats(): Promise<GlobalStats> {
   // Fonction de chargement des données dynamiques
   async function loadDynamicData() {
     console.log('🔄 Chargement des données depuis Firebase...');
-    
+
     try {
       // Charger les matières et statistiques depuis Firebase
       const [subjects, statistiques] = await Promise.all([
@@ -4392,14 +4605,14 @@ export async function calculateStats(): Promise<GlobalStats> {
           competences: statistiques?.bySubject[subject.id]?.competences || 0,
           courses: statistiques?.bySubject[subject.id]?.courses || 0
         }));
-        
+
         stats = statistiques;
         console.log('✅ Matières mises à jour:', matieres.length);
       } else {
         console.log('⚠️ Aucune matière trouvée dans Firebase, utilisation des données par défaut');
         matieres = defaultMatieres;
       }
-      
+
     } catch (error) {
       console.error('❌ Erreur lors du chargement des données:', error);
       console.log('🔄 Utilisation des données par défaut');
@@ -4411,7 +4624,7 @@ export async function calculateStats(): Promise<GlobalStats> {
 
   onMount(async () => {
     isUserAuthenticated = !!$authStore.user;
-    
+
     // Charger les données dynamiques depuis Firebase
     await loadDynamicData();
   });
@@ -4427,64 +4640,67 @@ export async function calculateStats(): Promise<GlobalStats> {
 ```
 
 **[FILE]** Modifier `src/routes/+page.svelte` - Section template avec état de chargement :
+
 ```svelte
-  <main class="main-content">
-    <section class="matieres-section">
-      <div class="container">
-        <h2 class="section-title">Explorez nos matières</h2>
-        <p class="section-description">
-          Chaque matière propose des cours interactifs adaptés à votre niveau
-        </p>
-        
-        {#if stats}
-          <div class="stats-summary">
-            <div class="stat-item">
-              <span class="stat-number">{stats.totalSubjects}</span>
-              <span class="stat-label">Matières</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-number">{stats.totalCompetences}</span>
-              <span class="stat-label">Compétences</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-number">{stats.totalCourses}</span>
-              <span class="stat-label">Cours</span>
-            </div>
+<main class="main-content">
+  <section class="matieres-section">
+    <div class="container">
+      <h2 class="section-title">Explorez nos matières</h2>
+      <p class="section-description">
+        Chaque matière propose des cours interactifs adaptés à votre niveau
+      </p>
+
+      {#if stats}
+        <div class="stats-summary">
+          <div class="stat-item">
+            <span class="stat-number">{stats.totalSubjects}</span>
+            <span class="stat-label">Matières</span>
           </div>
-        {/if}
-        
-        {#if isLoading}
-          <div class="loading-container">
-            <div class="loading-spinner"></div>
-            <p>Chargement des matières...</p>
+          <div class="stat-item">
+            <span class="stat-number">{stats.totalCompetences}</span>
+            <span class="stat-label">Compétences</span>
           </div>
-        {:else}
-          <div class="matieres-grid">
-            {#each matieres as matiere (matiere.id)}
-              <div class="matiere-card" style="--gradient: {matiere.color}">
-                <!-- Contenu existant de la carte -->
-                <div class="matiere-stats">
-                  <span class="stat">
-                    <i class="fas fa-graduation-cap"></i>
-                    {matiere.competences} compétences
-                  </span>
-                  <span class="stat">
-                    <i class="fas fa-book"></i>
-                    {matiere.courses} cours
-                  </span>
-                </div>
-                <!-- Suite du contenu existant -->
+          <div class="stat-item">
+            <span class="stat-number">{stats.totalCourses}</span>
+            <span class="stat-label">Cours</span>
+          </div>
+        </div>
+      {/if}
+
+      {#if isLoading}
+        <div class="loading-container">
+          <div class="loading-spinner" />
+          <p>Chargement des matières...</p>
+        </div>
+      {:else}
+        <div class="matieres-grid">
+          {#each matieres as matiere (matiere.id)}
+            <div class="matiere-card" style="--gradient: {matiere.color}">
+              <!-- Contenu existant de la carte -->
+              <div class="matiere-stats">
+                <span class="stat">
+                  <i class="fas fa-graduation-cap" />
+                  {matiere.competences} compétences
+                </span>
+                <span class="stat">
+                  <i class="fas fa-book" />
+                  {matiere.courses} cours
+                </span>
               </div>
-            {/each}
-          </div>
-        {/if}
-      </div>
-    </section>
-  </main>
+              <!-- Suite du contenu existant -->
+            </div>
+          {/each}
+        </div>
+      {/if}
+    </div>
+  </section>
+</main>
 ```
 
 #### Étape 2.10.3 : Styles CSS pour états dynamiques (15min)
+
 **[FILE]** Ajouter dans `src/routes/+page.svelte` - Section style :
+
 ```css
 /* Loading state styles */
 .loading-container {
@@ -4507,8 +4723,12 @@ export async function calculateStats(): Promise<GlobalStats> {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Statistics summary styles */
@@ -4567,17 +4787,20 @@ export async function calculateStats(): Promise<GlobalStats> {
 ```
 
 #### Étape 2.10.4 : Tests de validation (15min)
+
 **[CMD]** Tests de l'interface dynamique :
+
 ```bash
 npm run dev                           # Démarrer l'app
 # Vérifier dans le navigateur :
 # - État de chargement affiché au démarrage
-# - Tuiles remplacées par données Firebase  
+# - Tuiles remplacées par données Firebase
 # - Statistiques globales affichées en haut
 # - Console devtools : logs de chargement Firebase
 ```
 
 ### ✅ **Critères de validation Phase 2.10**
+
 - [ ] **[CHECK]** Service `subjects.ts` créé avec fonctions CRUD Firebase
 - [ ] **[CHECK]** Interface dynamique remplace les données statiques
 - [ ] **[CHECK]** États de chargement (spinner) affiché pendant requêtes
@@ -4590,6 +4813,7 @@ npm run dev                           # Démarrer l'app
 - [ ] **[CHECK]** Responsive : fonctionne sur mobile/desktop
 
 ### 📊 **Objectifs quantitatifs Phase 2.10**
+
 - **Temps de chargement initial** < 3 secondes
 - **Tuiles affichées** = nombre de subjects dans Firebase
 - **Statistiques exactes** : données cohérentes avec Firestore
@@ -4597,6 +4821,7 @@ npm run dev                           # Démarrer l'app
 - **Fallback** : affichage par défaut si connexion échoue
 
 ### 🧪 **Tests de validation spécifiques**
+
 ```bash
 [TEST] npm run dev                    # Interface charge correctement
 [TEST] # Ouvrir console navigateur -> logs Firebase OK
@@ -4606,8 +4831,9 @@ npm run dev                           # Démarrer l'app
 ```
 
 ### 🎯 **Résultats attendus**
+
 - ✅ **Interface entièrement dynamique** : Plus de données hardcodées
-- ✅ **Chargement en temps réel** : Données actualisées à chaque visite  
+- ✅ **Chargement en temps réel** : Données actualisées à chaque visite
 - ✅ **États visuels** : Loading, succès, erreur gérés
 - ✅ **Performance optimisée** : Requêtes Firebase efficaces
 - ✅ **UX améliorée** : Feedback utilisateur pendant chargement
@@ -4621,13 +4847,16 @@ npm run dev                           # Démarrer l'app
 ## 🎯 Phase 3 : Exercices & Progression (1 semaine)
 
 ### 🎯 Contexte IA
+
 **Objectif** : Mettre en place un système de quiz interactif, suivre la progression de l'utilisateur et afficher les statistiques sur un tableau de bord.
 **Pré-requis** : Firestore configuré avec les collections `competences`, `courses` et les données de test, auth fonctionnelle.
 
 ### 📝 Instructions granulaires
 
 #### Étape 3.1 : Composant Exercise
+
 **[FILE]** Créer `src/lib/components/Exercise.svelte` :
+
 ```svelte
 <script lang="ts">
   import type { Exercise as ExerciseType } from '$lib/types/content';
@@ -4652,7 +4881,7 @@ npm run dev                           # Démarrer l'app
 
 <div class="exercise">
   <p class="question">{exercise.question}</p>
-  
+
   {#if exercise.type === 'qcm' && exercise.options}
     <div class="options-container">
       {#each exercise.options as option, index}
@@ -4700,21 +4929,21 @@ npm run dev                           # Démarrer l'app
     margin-bottom: 2rem;
     background: white;
   }
-  
+
   .question {
     font-weight: bold;
     font-size: 1.1rem;
     margin-bottom: 1rem;
     color: #333;
   }
-  
+
   .options-container {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     margin: 1rem 0;
   }
-  
+
   .option {
     display: flex;
     align-items: center;
@@ -4725,24 +4954,24 @@ npm run dev                           # Démarrer l'app
     transition: all 0.2s;
     gap: 0.75rem;
   }
-  
+
   .option:hover:not(.correct):not(.incorrect) {
     background-color: #f5f5f5;
     border-color: #007bff;
   }
-  
+
   .option.correct {
     background-color: #d4edda;
     border-color: #c3e6cb;
     color: #155724;
   }
-  
+
   .option.incorrect {
     background-color: #f8d7da;
     border-color: #f5c6cb;
     color: #721c24;
   }
-  
+
   button {
     margin-top: 1rem;
     padding: 0.75rem 1.5rem;
@@ -4753,31 +4982,31 @@ npm run dev                           # Démarrer l'app
     cursor: pointer;
     font-weight: 500;
   }
-  
+
   button:disabled {
     background: #6c757d;
     cursor: not-allowed;
   }
-  
+
   .feedback {
     margin-top: 1rem;
     padding: 1rem;
     border-radius: 4px;
     background: #f8f9fa;
   }
-  
+
   .correct {
     color: #155724;
     font-weight: bold;
     margin-bottom: 0.5rem;
   }
-  
+
   .incorrect {
     color: #721c24;
     font-weight: bold;
     margin-bottom: 0.5rem;
   }
-  
+
   .explanation {
     color: #666;
     font-style: italic;
@@ -4787,18 +5016,20 @@ npm run dev                           # Démarrer l'app
 ```
 
 #### Étape 3.2 : Service de progression
+
 **[FILE]** Créer `src/lib/firebase/progress.ts` :
+
 ```ts
-import { 
-  doc, 
-  setDoc, 
-  getDoc, 
+import {
+  doc,
+  setDoc,
+  getDoc,
   collection,
   query,
   getDocs,
-  where
-} from 'firebase/firestore';
-import { db } from './client';
+  where,
+} from "firebase/firestore";
+import { db } from "./client";
 
 export interface ProgressData {
   competenceId: string;
@@ -4820,48 +5051,54 @@ export interface UserStats {
 export const saveUserProgress = async (
   userId: string,
   competenceId: string,
-  progress: Omit<ProgressData, 'competenceId'>
+  progress: Omit<ProgressData, "competenceId">
 ): Promise<void> => {
   try {
-    const docRef = doc(db, 'users', userId, 'progress', competenceId);
-    await setDoc(docRef, {
-      ...progress,
-      competenceId,
-      updatedAt: new Date().toISOString()
-    }, { merge: true });
+    const docRef = doc(db, "users", userId, "progress", competenceId);
+    await setDoc(
+      docRef,
+      {
+        ...progress,
+        competenceId,
+        updatedAt: new Date().toISOString(),
+      },
+      { merge: true }
+    );
   } catch (error) {
-    console.error('Erreur sauvegarde progression:', error);
+    console.error("Erreur sauvegarde progression:", error);
     throw error;
   }
 };
 
 export const getUserProgress = async (
-  userId: string, 
+  userId: string,
   competenceId: string
 ): Promise<ProgressData | null> => {
   try {
-    const docRef = doc(db, 'users', userId, 'progress', competenceId);
+    const docRef = doc(db, "users", userId, "progress", competenceId);
     const docSnap = await getDoc(docRef);
-    
+
     if (docSnap.exists()) {
       return docSnap.data() as ProgressData;
     }
-    
+
     return null;
   } catch (error) {
-    console.error('Erreur récupération progression:', error);
+    console.error("Erreur récupération progression:", error);
     return null;
   }
 };
 
-export const getAllUserProgress = async (userId: string): Promise<ProgressData[]> => {
+export const getAllUserProgress = async (
+  userId: string
+): Promise<ProgressData[]> => {
   try {
-    const q = query(collection(db, 'users', userId, 'progress'));
+    const q = query(collection(db, "users", userId, "progress"));
     const querySnapshot = await getDocs(q);
-    
-    return querySnapshot.docs.map(doc => doc.data() as ProgressData);
+
+    return querySnapshot.docs.map((doc) => doc.data() as ProgressData);
   } catch (error) {
-    console.error('Erreur récupération progression complète:', error);
+    console.error("Erreur récupération progression complète:", error);
     return [];
   }
 };
@@ -4869,44 +5106,52 @@ export const getAllUserProgress = async (userId: string): Promise<ProgressData[]
 export const getUserStats = async (userId: string): Promise<UserStats> => {
   try {
     const progressList = await getAllUserProgress(userId);
-    
+
     if (progressList.length === 0) {
       return {
         totalCompetences: 0,
         completedCompetences: 0,
         averageScore: 0,
-        totalTimeSpent: 0
+        totalTimeSpent: 0,
       };
     }
-    
-    const completedCompetences = progressList.filter(p => p.score >= 80).length;
-    const averageScore = progressList.reduce((sum, p) => sum + p.score, 0) / progressList.length;
-    const totalTimeSpent = progressList.reduce((sum, p) => sum + p.timeSpent, 0);
-    
+
+    const completedCompetences = progressList.filter(
+      (p) => p.score >= 80
+    ).length;
+    const averageScore =
+      progressList.reduce((sum, p) => sum + p.score, 0) / progressList.length;
+    const totalTimeSpent = progressList.reduce(
+      (sum, p) => sum + p.timeSpent,
+      0
+    );
+
     return {
       totalCompetences: progressList.length,
       completedCompetences,
       averageScore: Math.round(averageScore),
-      totalTimeSpent
+      totalTimeSpent,
     };
   } catch (error) {
-    console.error('Erreur calcul statistiques:', error);
+    console.error("Erreur calcul statistiques:", error);
     return {
       totalCompetences: 0,
       completedCompetences: 0,
       averageScore: 0,
-      totalTimeSpent: 0
+      totalTimeSpent: 0,
     };
   }
 };
 ```
 
 #### Étape 3.3 : Mise à jour CourseContent avec progression
+
 **[FILE]** Modifier `src/lib/components/CourseContent.svelte` - Ajouter après les imports existants :
+
 ```ts
-import Exercise from './Exercise.svelte';
-import { authStore } from '$lib/stores/auth';
-import { saveUserProgress } from '$lib/firebase/progress';
+import Exercise from "./Exercise.svelte";
+import { authStore } from "$lib/stores/auth";
+import { saveUserProgress } from "$lib/firebase/progress";
 
 let answeredExercises = 0;
 let correctAnswers = 0;
@@ -4914,21 +5159,23 @@ let startTime = Date.now();
 ```
 
 **[FILE]** Modifier `src/lib/components/CourseContent.svelte` - Remplacer la section exercises :
+
 ```svelte
 {#if competence.exercices && competence.exercices.length > 0}
   <section class="exercises">
     <h2>Exercices ({answeredExercises}/{competence.exercices.length})</h2>
     <div class="progress-bar">
-      <div 
-        class="progress-fill" 
-        style="width: {(answeredExercises / competence.exercices.length) * 100}%"
-      ></div>
+      <div
+        class="progress-fill"
+        style="width: {(answeredExercises / competence.exercices.length) *
+          100}%"
+      />
     </div>
-    
+
     {#each competence.exercices as exercise}
       <Exercise {exercise} on:answered={handleAnswered} />
     {/each}
-    
+
     {#if answeredExercises === competence.exercices.length}
       <div class="completion-summary">
         <h3>Exercices terminés ! 🎉</h3>
@@ -4942,8 +5189,11 @@ let startTime = Date.now();
 ```
 
 **[FILE]** Modifier `src/lib/components/CourseContent.svelte` - Ajouter la fonction handleAnswered :
+
 ```ts
-const handleAnswered = async (event: CustomEvent<{ isCorrect: boolean; exerciseId: string }>) => {
+const handleAnswered = async (
+  event: CustomEvent<{ isCorrect: boolean; exerciseId: string }>
+) => {
   answeredExercises++;
   if (event.detail.isCorrect) {
     correctAnswers++;
@@ -4953,24 +5203,25 @@ const handleAnswered = async (event: CustomEvent<{ isCorrect: boolean; exerciseI
   if (answeredExercises === competence?.exercices?.length && $authStore.user) {
     const timeSpent = Math.round((Date.now() - startTime) / 1000);
     const score = Math.round((correctAnswers / answeredExercises) * 100);
-    
+
     try {
       await saveUserProgress($authStore.user.uid, competenceId, {
         score,
-        completedExercises: competence.exercices.map(e => e.id),
+        completedExercises: competence.exercices.map((e) => e.id),
         lastAttempt: new Date().toISOString(),
         totalExercises: competence.exercices.length,
         correctAnswers,
-        timeSpent
+        timeSpent,
       });
     } catch (error) {
-      console.error('Erreur sauvegarde:', error);
+      console.error("Erreur sauvegarde:", error);
     }
   }
 };
 ```
 
 **[FILE]** Modifier `src/lib/components/CourseContent.svelte` - Ajouter les styles CSS :
+
 ```css
 .progress-bar {
   width: 100%;
@@ -5014,17 +5265,24 @@ const handleAnswered = async (event: CustomEvent<{ isCorrect: boolean; exerciseI
 ```
 
 #### Étape 3.4 : Dashboard avec statistiques
+
 **[FILE]** Modifier `src/routes/dashboard/+page.svelte` :
+
 ```svelte
 <script lang="ts">
-  import { authStore } from '$lib/stores/auth';
-  import { goto } from '$app/navigation';
-  import { onMount } from 'svelte';
-  import { getAllUserProgress, getUserStats, type ProgressData, type UserStats } from '$lib/firebase/progress';
+  import { authStore } from "$lib/stores/auth";
+  import { goto } from "$app/navigation";
+  import { onMount } from "svelte";
+  import {
+    getAllUserProgress,
+    getUserStats,
+    type ProgressData,
+    type UserStats,
+  } from "$lib/firebase/progress";
 
   const handleLogout = async () => {
     await authStore.signOut();
-    goto('/');
+    goto("/");
   };
 
   let userProgress: ProgressData[] = [];
@@ -5032,10 +5290,10 @@ const handleAnswered = async (event: CustomEvent<{ isCorrect: boolean; exerciseI
     totalCompetences: 0,
     completedCompetences: 0,
     averageScore: 0,
-    totalTimeSpent: 0
+    totalTimeSpent: 0,
   };
   let loading = true;
-  let error = '';
+  let error = "";
 
   const formatTime = (seconds: number): string => {
     const hours = Math.floor(seconds / 3600);
@@ -5051,12 +5309,12 @@ const handleAnswered = async (event: CustomEvent<{ isCorrect: boolean; exerciseI
       try {
         const [progress, stats] = await Promise.all([
           getAllUserProgress($authStore.user.uid),
-          getUserStats($authStore.user.uid)
+          getUserStats($authStore.user.uid),
         ]);
         userProgress = progress;
         userStats = stats;
       } catch (err) {
-        error = 'Erreur lors du chargement de la progression.';
+        error = "Erreur lors du chargement de la progression.";
         console.error(err);
       } finally {
         loading = false;
@@ -5100,11 +5358,15 @@ const handleAnswered = async (event: CustomEvent<{ isCorrect: boolean; exerciseI
               <div class="stat-label">Compétences maîtrisées</div>
             </div>
             <div class="stat-card">
-              <div class="stat-number" data-testid="average-score">{userStats.averageScore}%</div>
+              <div class="stat-number" data-testid="average-score">
+                {userStats.averageScore}%
+              </div>
               <div class="stat-label">Score moyen</div>
             </div>
             <div class="stat-card">
-              <div class="stat-number">{formatTime(userStats.totalTimeSpent)}</div>
+              <div class="stat-number">
+                {formatTime(userStats.totalTimeSpent)}
+              </div>
               <div class="stat-label">Temps d'étude</div>
             </div>
           </div>
@@ -5119,11 +5381,12 @@ const handleAnswered = async (event: CustomEvent<{ isCorrect: boolean; exerciseI
                 <div class="progress-card" data-testid="progress-card">
                   <div class="progress-header">
                     <h3>{progress.competenceId}</h3>
-                    <span 
+                    <span
                       class="score-badge"
                       class:excellent={progress.score >= 90}
                       class:good={progress.score >= 80 && progress.score < 90}
-                      class:average={progress.score >= 60 && progress.score < 80}
+                      class:average={progress.score >= 60 &&
+                        progress.score < 80}
                       class:needs-work={progress.score < 60}
                       data-testid="score"
                     >
@@ -5131,12 +5394,22 @@ const handleAnswered = async (event: CustomEvent<{ isCorrect: boolean; exerciseI
                     </span>
                   </div>
                   <div class="progress-details">
-                    <p>✅ {progress.correctAnswers}/{progress.totalExercises} exercices réussis</p>
+                    <p>
+                      ✅ {progress.correctAnswers}/{progress.totalExercises} exercices
+                      réussis
+                    </p>
                     <p>⏱️ Temps : {formatTime(progress.timeSpent)}</p>
-                    <p>📅 Dernière fois : {new Date(progress.lastAttempt).toLocaleDateString('fr-FR')}</p>
+                    <p>
+                      📅 Dernière fois : {new Date(
+                        progress.lastAttempt
+                      ).toLocaleDateString("fr-FR")}
+                    </p>
                   </div>
                   <div class="progress-bar">
-                    <div class="progress-fill" style="width: {progress.score}%"></div>
+                    <div
+                      class="progress-fill"
+                      style="width: {progress.score}%"
+                    />
                   </div>
                 </div>
               {/each}
@@ -5144,7 +5417,9 @@ const handleAnswered = async (event: CustomEvent<{ isCorrect: boolean; exerciseI
           {:else}
             <div class="empty-state">
               <p>🎯 Commencez un cours pour voir votre progression ici !</p>
-              <a href="/mathematiques" class="start-learning-btn">Commencer à apprendre</a>
+              <a href="/mathematiques" class="start-learning-btn"
+                >Commencer à apprendre</a
+              >
             </div>
           {/if}
         </section>
@@ -5198,7 +5473,7 @@ const handleAnswered = async (event: CustomEvent<{ isCorrect: boolean; exerciseI
     padding: 2rem;
     border-radius: 12px;
     text-align: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
   .stat-number {
@@ -5224,7 +5499,7 @@ const handleAnswered = async (event: CustomEvent<{ isCorrect: boolean; exerciseI
     background: white;
     padding: 1.5rem;
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
   .progress-header {
@@ -5318,7 +5593,8 @@ const handleAnswered = async (event: CustomEvent<{ isCorrect: boolean; exerciseI
     cursor: pointer;
   }
 
-  .loading, .error {
+  .loading,
+  .error {
     text-align: center;
     padding: 3rem;
     color: #666;
@@ -5335,11 +5611,11 @@ const handleAnswered = async (event: CustomEvent<{ isCorrect: boolean; exerciseI
       gap: 1rem;
       text-align: center;
     }
-    
+
     .stats-grid {
       grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .progress-list {
       grid-template-columns: 1fr;
     }
@@ -5348,219 +5624,249 @@ const handleAnswered = async (event: CustomEvent<{ isCorrect: boolean; exerciseI
 ```
 
 #### Étape 3.5 : Tests unitaires Exercise
+
 **[FILE]** Créer `src/lib/components/Exercise.test.ts` :
+
 ```ts
-import { render, screen, fireEvent } from '@testing-library/svelte';
-import { vi } from 'vitest';
-import Exercise from './Exercise.svelte';
-import type { Exercise as ExerciseType } from '$lib/types/content';
+import { render, screen, fireEvent } from "@testing-library/svelte";
+import { vi } from "vitest";
+import Exercise from "./Exercise.svelte";
+import type { Exercise as ExerciseType } from "$lib/types/content";
 
 const mockExercise: ExerciseType = {
-  id: 'ex1',
-  question: 'Que vaut 1+1 ?',
-  type: 'qcm',
-  options: ['1', '2', '3'],
+  id: "ex1",
+  question: "Que vaut 1+1 ?",
+  type: "qcm",
+  options: ["1", "2", "3"],
   correct: 1,
-  explanation: '1+1 égale 2',
-  points: 10
+  explanation: "1+1 égale 2",
+  points: 10,
 };
 
-describe('Exercise component', () => {
-  test('should render question and options', () => {
+describe("Exercise component", () => {
+  test("should render question and options", () => {
     render(Exercise, { exercise: mockExercise });
-    
-    expect(screen.getByText('Que vaut 1+1 ?')).toBeInTheDocument();
-    expect(screen.getByLabelText('1')).toBeInTheDocument();
-    expect(screen.getByLabelText('2')).toBeInTheDocument();
-    expect(screen.getByLabelText('3')).toBeInTheDocument();
+
+    expect(screen.getByText("Que vaut 1+1 ?")).toBeInTheDocument();
+    expect(screen.getByLabelText("1")).toBeInTheDocument();
+    expect(screen.getByLabelText("2")).toBeInTheDocument();
+    expect(screen.getByLabelText("3")).toBeInTheDocument();
   });
 
-  test('should show correct feedback on correct answer', async () => {
+  test("should show correct feedback on correct answer", async () => {
     const { component } = render(Exercise, { exercise: mockExercise });
-    
+
     let answeredEvent = null;
-    component.$on('answered', (event) => {
+    component.$on("answered", (event) => {
       answeredEvent = event.detail;
     });
-    
+
     // Select the correct answer (index 1)
-    const correctOption = screen.getByLabelText('2');
+    const correctOption = screen.getByLabelText("2");
     await fireEvent.click(correctOption);
-    
+
     // Submit
-    const submitBtn = screen.getByText('Valider');
+    const submitBtn = screen.getByText("Valider");
     await fireEvent.click(submitBtn);
 
     // Check for correct feedback
-    expect(screen.getByText('Bonne réponse ! 🎉')).toBeInTheDocument();
-    expect(screen.getByText('1+1 égale 2')).toBeInTheDocument();
-    
+    expect(screen.getByText("Bonne réponse ! 🎉")).toBeInTheDocument();
+    expect(screen.getByText("1+1 égale 2")).toBeInTheDocument();
+
     // Check event was dispatched
     expect(answeredEvent).toEqual({
       isCorrect: true,
-      exerciseId: 'ex1'
+      exerciseId: "ex1",
     });
   });
 
-  test('should show incorrect feedback on wrong answer', async () => {
+  test("should show incorrect feedback on wrong answer", async () => {
     const { component } = render(Exercise, { exercise: mockExercise });
-    
+
     let answeredEvent = null;
-    component.$on('answered', (event) => {
+    component.$on("answered", (event) => {
       answeredEvent = event.detail;
     });
-    
+
     // Select wrong answer (index 0)
-    const wrongOption = screen.getByLabelText('1');
+    const wrongOption = screen.getByLabelText("1");
     await fireEvent.click(wrongOption);
-    
+
     // Submit
-    const submitBtn = screen.getByText('Valider');
+    const submitBtn = screen.getByText("Valider");
     await fireEvent.click(submitBtn);
 
     // Check for incorrect feedback
     expect(screen.getByText(/Mauvaise réponse/)).toBeInTheDocument();
     expect(screen.getByText(/La bonne réponse était : 2/)).toBeInTheDocument();
-    
+
     // Check event was dispatched
     expect(answeredEvent).toEqual({
       isCorrect: false,
-      exerciseId: 'ex1'
+      exerciseId: "ex1",
     });
   });
 
-  test('should disable submit button when no answer selected', () => {
+  test("should disable submit button when no answer selected", () => {
     render(Exercise, { exercise: mockExercise });
-    
-    const submitBtn = screen.getByText('Valider');
+
+    const submitBtn = screen.getByText("Valider");
     expect(submitBtn).toBeDisabled();
   });
 });
 ```
 
 #### Étape 3.6 : Tests E2E progression
-**[FILE]** Créer `tests/e2e/exercises.spec.ts` :
-```ts
-import { test, expect } from '@playwright/test';
 
-test.describe('Exercise and Progression', () => {
+**[FILE]** Créer `tests/e2e/exercises.spec.ts` :
+
+```ts
+import { test, expect } from "@playwright/test";
+
+test.describe("Exercise and Progression", () => {
   test.beforeEach(async ({ page }) => {
     // Login before each test
-    await page.goto('/auth/login');
-    await page.fill('input[name="email"]', 'test@example.com');
-    await page.fill('input[name="password"]', 'password123');
+    await page.goto("/auth/login");
+    await page.fill('input[name="email"]', "test@example.com");
+    await page.fill('input[name="password"]', "password123");
     await page.click('button[type="submit"]');
-    await expect(page).toHaveURL('/dashboard');
+    await expect(page).toHaveURL("/dashboard");
   });
 
-  test('should complete exercise and show feedback', async ({ page }) => {
+  test("should complete exercise and show feedback", async ({ page }) => {
     // Navigate to course with exercises
-    await page.goto('/mathematiques/5eme/test-competence');
-    
+    await page.goto("/mathematiques/5eme/test-competence");
+
     // Wait for course content to load
-    await page.waitForSelector('.exercise', { timeout: 10000 });
-    
+    await page.waitForSelector(".exercise", { timeout: 10000 });
+
     // Find first exercise
-    const exercise = page.locator('.exercise').first();
-    
+    const exercise = page.locator(".exercise").first();
+
     // Select first option
-    await exercise.locator('.option').first().locator('input[type="radio"]').check();
-    
+    await exercise
+      .locator(".option")
+      .first()
+      .locator('input[type="radio"]')
+      .check();
+
     // Submit answer
     await exercise.locator('button:has-text("Valider")').click();
-    
+
     // Check feedback appears
-    await expect(exercise.locator('.feedback')).toBeVisible();
-    
+    await expect(exercise.locator(".feedback")).toBeVisible();
+
     // Check that one of the feedback messages appears
-    const feedbackText = await exercise.locator('.feedback').textContent();
+    const feedbackText = await exercise.locator(".feedback").textContent();
     expect(feedbackText).toMatch(/(Bonne réponse|Mauvaise réponse)/);
   });
 
-  test('should update progress bar as exercises are completed', async ({ page }) => {
-    await page.goto('/mathematiques/5eme/test-competence');
-    
+  test("should update progress bar as exercises are completed", async ({
+    page,
+  }) => {
+    await page.goto("/mathematiques/5eme/test-competence");
+
     // Wait for exercises to load
-    await page.waitForSelector('.exercise', { timeout: 10000 });
-    
+    await page.waitForSelector(".exercise", { timeout: 10000 });
+
     // Check initial progress bar
-    const progressBar = page.locator('.progress-bar .progress-fill');
-    const initialWidth = await progressBar.getAttribute('style');
-    
+    const progressBar = page.locator(".progress-bar .progress-fill");
+    const initialWidth = await progressBar.getAttribute("style");
+
     // Complete first exercise
-    const firstExercise = page.locator('.exercise').first();
-    await firstExercise.locator('.option').first().locator('input[type="radio"]').check();
+    const firstExercise = page.locator(".exercise").first();
+    await firstExercise
+      .locator(".option")
+      .first()
+      .locator('input[type="radio"]')
+      .check();
     await firstExercise.locator('button:has-text("Valider")').click();
-    
+
     // Wait for progress bar to update
     await page.waitForTimeout(500);
-    
+
     // Check progress bar has changed
-    const updatedWidth = await progressBar.getAttribute('style');
+    const updatedWidth = await progressBar.getAttribute("style");
     expect(updatedWidth).not.toBe(initialWidth);
   });
 
-  test('should show completion summary when all exercises done', async ({ page }) => {
-    await page.goto('/mathematiques/5eme/test-competence');
-    
+  test("should show completion summary when all exercises done", async ({
+    page,
+  }) => {
+    await page.goto("/mathematiques/5eme/test-competence");
+
     // Complete all exercises (assuming there's at least one)
-    const exercises = page.locator('.exercise');
+    const exercises = page.locator(".exercise");
     const exerciseCount = await exercises.count();
-    
+
     for (let i = 0; i < exerciseCount; i++) {
       const exercise = exercises.nth(i);
-      await exercise.locator('.option').first().locator('input[type="radio"]').check();
+      await exercise
+        .locator(".option")
+        .first()
+        .locator('input[type="radio"]')
+        .check();
       await exercise.locator('button:has-text("Valider")').click();
       await page.waitForTimeout(300); // Small delay between exercises
     }
-    
+
     // Check completion summary appears
-    await expect(page.locator('.completion-summary')).toBeVisible();
-    await expect(page.locator('.completion-summary h3')).toContainText('Exercices terminés');
+    await expect(page.locator(".completion-summary")).toBeVisible();
+    await expect(page.locator(".completion-summary h3")).toContainText(
+      "Exercices terminés"
+    );
   });
 
-  test('should update dashboard with progress', async ({ page }) => {
+  test("should update dashboard with progress", async ({ page }) => {
     // Complete exercises first
-    await page.goto('/mathematiques/5eme/test-competence');
-    await page.waitForSelector('.exercise', { timeout: 10000 });
-    
-    const exercises = page.locator('.exercise');
+    await page.goto("/mathematiques/5eme/test-competence");
+    await page.waitForSelector(".exercise", { timeout: 10000 });
+
+    const exercises = page.locator(".exercise");
     const exerciseCount = await exercises.count();
-    
+
     // Complete all exercises
     for (let i = 0; i < exerciseCount; i++) {
       const exercise = exercises.nth(i);
-      await exercise.locator('.option').first().locator('input[type="radio"]').check();
+      await exercise
+        .locator(".option")
+        .first()
+        .locator('input[type="radio"]')
+        .check();
       await exercise.locator('button:has-text("Valider")').click();
       await page.waitForTimeout(300);
     }
-    
+
     // Navigate to dashboard
-    await page.goto('/dashboard');
-    
+    await page.goto("/dashboard");
+
     // Check that progress is displayed
     await expect(page.locator('[data-testid="progress-list"]')).toBeVisible();
-    await expect(page.locator('[data-testid="progress-card"]')).toHaveCount.greaterThanOrEqual(1);
+    await expect(
+      page.locator('[data-testid="progress-card"]')
+    ).toHaveCount.greaterThanOrEqual(1);
     await expect(page.locator('[data-testid="score"]')).toBeVisible();
     await expect(page.locator('[data-testid="average-score"]')).toBeVisible();
   });
 
-  test('should handle exercise without options gracefully', async ({ page }) => {
+  test("should handle exercise without options gracefully", async ({
+    page,
+  }) => {
     // This test ensures the component doesn't break with different exercise types
-    await page.goto('/mathematiques/5eme/test-competence');
-    
+    await page.goto("/mathematiques/5eme/test-competence");
+
     // Wait for content load
-    await page.waitForSelector('.course-content', { timeout: 10000 });
-    
+    await page.waitForSelector(".course-content", { timeout: 10000 });
+
     // Should not show any JavaScript errors
     const errors = [];
-    page.on('pageerror', (error) => {
+    page.on("pageerror", (error) => {
       errors.push(error.message);
     });
-    
+
     // Interact with page
     await page.waitForTimeout(1000);
-    
+
     // Check no errors occurred
     expect(errors).toHaveLength(0);
   });
@@ -5568,6 +5874,7 @@ test.describe('Exercise and Progression', () => {
 ```
 
 ### 🧪 Tests de validation Phase 3
+
 ```bash
 [TEST] npm run test                    # Tests unitaires passent
 [TEST] npm run test:e2e               # Tests E2E passent
@@ -5576,6 +5883,7 @@ test.describe('Exercise and Progression', () => {
 ```
 
 ### ✅ Critères de validation obligatoires
+
 - [ ] **[CHECK]** Composant Exercise affiche feedback correct/incorrect
 - [ ] **[CHECK]** Progression sauvegardée dans Firestore après exercices
 - [ ] **[CHECK]** Dashboard affiche statistiques utilisateur complètes
@@ -5590,104 +5898,117 @@ test.describe('Exercise and Progression', () => {
 ## 📱 Phase 4 : PWA & Offline (1 semaine)
 
 ### 🎯 Contexte IA
+
 **Objectif** : Transformer l'application en PWA installable avec fonctionnement offline et synchronisation automatique.
 **Pré-requis** : Application fonctionnelle avec auth, contenu et exercices.
 
 ### 📝 Instructions granulaires
 
 #### Étape 4.1 : Configuration PWA
+
 ```bash
 [CMD] npm install -D @vite-pwa/sveltekit
 [CMD] npm install workbox-window
 ```
 
 **[FILE]** Modifier `vite.config.js` :
+
 ```js
-import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
-import { SvelteKitPWA } from '@vite-pwa/sveltekit';
+import { sveltekit } from "@sveltejs/kit/vite";
+import { defineConfig } from "vite";
+import { SvelteKitPWA } from "@vite-pwa/sveltekit";
 
 export default defineConfig({
   plugins: [
     sveltekit(),
     SvelteKitPWA({
-      strategies: 'injectManifest',
-      srcDir: './src',
-      filename: 'sw.ts',
-      registerType: 'autoUpdate',
+      strategies: "injectManifest",
+      srcDir: "./src",
+      filename: "sw.ts",
+      registerType: "autoUpdate",
       manifest: {
-        short_name: 'FunRevis',
-        name: 'FunRevis - Révisions scolaires',
-        start_url: '/',
-        scope: '/',
-        display: 'standalone',
-        theme_color: '#007bff',
-        background_color: '#ffffff',
-        description: 'Application de révisions scolaires pour collégiens',
-        categories: ['education', 'learning'],
+        short_name: "FunRevis",
+        name: "FunRevis - Révisions scolaires",
+        start_url: "/",
+        scope: "/",
+        display: "standalone",
+        theme_color: "#007bff",
+        background_color: "#ffffff",
+        description: "Application de révisions scolaires pour collégiens",
+        categories: ["education", "learning"],
         icons: [
           {
-            src: '/icons/icon-72x72.png',
-            sizes: '72x72',
-            type: 'image/png'
+            src: "/icons/icon-72x72.png",
+            sizes: "72x72",
+            type: "image/png",
           },
           {
-            src: '/icons/icon-96x96.png',
-            sizes: '96x96',
-            type: 'image/png'
+            src: "/icons/icon-96x96.png",
+            sizes: "96x96",
+            type: "image/png",
           },
           {
-            src: '/icons/icon-128x128.png',
-            sizes: '128x128',
-            type: 'image/png'
+            src: "/icons/icon-128x128.png",
+            sizes: "128x128",
+            type: "image/png",
           },
           {
-            src: '/icons/icon-144x144.png',
-            sizes: '144x144',
-            type: 'image/png'
+            src: "/icons/icon-144x144.png",
+            sizes: "144x144",
+            type: "image/png",
           },
           {
-            src: '/icons/icon-152x152.png',
-            sizes: '152x152',
-            type: 'image/png'
+            src: "/icons/icon-152x152.png",
+            sizes: "152x152",
+            type: "image/png",
           },
           {
-            src: '/icons/icon-192x192.png',
-            sizes: '192x192',
-            type: 'image/png'
+            src: "/icons/icon-192x192.png",
+            sizes: "192x192",
+            type: "image/png",
           },
           {
-            src: '/icons/icon-384x384.png',
-            sizes: '384x384',
-            type: 'image/png'
+            src: "/icons/icon-384x384.png",
+            sizes: "384x384",
+            type: "image/png",
           },
           {
-            src: '/icons/icon-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any maskable'
-          }
-        ]
+            src: "/icons/icon-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "any maskable",
+          },
+        ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,png,ico,woff2}']
+        globPatterns: ["**/*.{js,css,html,svg,png,ico,woff2}"],
       },
       devOptions: {
         enabled: true,
-        type: 'module'
-      }
-    })
-  ]
+        type: "module",
+      },
+    }),
+  ],
 });
 ```
 
 #### Étape 4.2 : Service Worker
+
 **[FILE]** Créer `src/sw.ts` :
+
 ```ts
-import { precacheAndRoute, cleanupOutdatedCaches, createHandlerBoundToURL } from 'workbox-precaching';
-import { NavigationRoute, registerRoute } from 'workbox-routing';
-import { StaleWhileRevalidate, CacheFirst, NetworkFirst } from 'workbox-strategies';
-import { ExpirationPlugin } from 'workbox-expiration';
+import {
+  precacheAndRoute,
+  cleanupOutdatedCaches,
+  createHandlerBoundToURL,
+} from "workbox-precaching";
+import { NavigationRoute, registerRoute } from "workbox-routing";
+import {
+  StaleWhileRevalidate,
+  CacheFirst,
+  NetworkFirst,
+} from "workbox-strategies";
+import { ExpirationPlugin } from "workbox-expiration";
 
 declare let self: ServiceWorkerGlobalScope;
 
@@ -5698,58 +6019,59 @@ cleanupOutdatedCaches();
 precacheAndRoute(self.__WB_MANIFEST);
 
 // Route pour les pages (SPA fallback)
-const handler = createHandlerBoundToURL('/');
+const handler = createHandlerBoundToURL("/");
 const navigationRoute = new NavigationRoute(handler, {
-  denylist: [/^\/_/, /\/[^/?]+\.[^/]+$/]
+  denylist: [/^\/_/, /\/[^/?]+\.[^/]+$/],
 });
 registerRoute(navigationRoute);
 
 // Cache des API Firestore avec stratégie Network First
 registerRoute(
-  ({ url }) => url.hostname === 'firestore.googleapis.com',
+  ({ url }) => url.hostname === "firestore.googleapis.com",
   new NetworkFirst({
-    cacheName: 'firestore-api',
+    cacheName: "firestore-api",
     plugins: [
       new ExpirationPlugin({
         maxEntries: 50,
-        maxAgeSeconds: 60 * 60 * 24 // 24 heures
-      })
-    ]
+        maxAgeSeconds: 60 * 60 * 24, // 24 heures
+      }),
+    ],
   })
 );
 
 // Cache des ressources statiques avec stratégie Cache First
 registerRoute(
-  ({ request }) => request.destination === 'image',
+  ({ request }) => request.destination === "image",
   new CacheFirst({
-    cacheName: 'images',
+    cacheName: "images",
     plugins: [
       new ExpirationPlugin({
         maxEntries: 60,
-        maxAgeSeconds: 60 * 60 * 24 * 30 // 30 jours
-      })
-    ]
+        maxAgeSeconds: 60 * 60 * 24 * 30, // 30 jours
+      }),
+    ],
   })
 );
 
 // Cache des polices et CSS
 registerRoute(
-  ({ request }) => request.destination === 'style' || request.destination === 'font',
+  ({ request }) =>
+    request.destination === "style" || request.destination === "font",
   new StaleWhileRevalidate({
-    cacheName: 'static-resources'
+    cacheName: "static-resources",
   })
 );
 
 // Messages entre SW et client
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") {
     self.skipWaiting();
   }
 });
 
 // Synchronisation en arrière-plan
-self.addEventListener('sync', (event) => {
-  if (event.tag === 'progress-sync') {
+self.addEventListener("sync", (event) => {
+  if (event.tag === "progress-sync") {
     event.waitUntil(syncProgress());
   }
 });
@@ -5758,28 +6080,28 @@ async function syncProgress() {
   try {
     // Récupérer les données en attente de synchronisation
     const pendingData = await getStoredSyncData();
-    
+
     if (pendingData.length > 0) {
       // Envoyer les données à Firestore
       for (const data of pendingData) {
         await sendProgressToFirestore(data);
       }
-      
+
       // Nettoyer les données synchronisées
       await clearSyncData();
-      
+
       // Notifier le client
-      self.clients.matchAll().then(clients => {
-        clients.forEach(client => {
+      self.clients.matchAll().then((clients) => {
+        clients.forEach((client) => {
           client.postMessage({
-            type: 'SYNC_SUCCESS',
-            count: pendingData.length
+            type: "SYNC_SUCCESS",
+            count: pendingData.length,
           });
         });
       });
     }
   } catch (error) {
-    console.error('Erreur synchronisation:', error);
+    console.error("Erreur synchronisation:", error);
   }
 }
 
@@ -5798,10 +6120,12 @@ async function clearSyncData(): Promise<void> {
 ```
 
 #### Étape 4.3 : Utilitaires offline
+
 **[FILE]** Créer `src/lib/utils/offline.ts` :
+
 ```ts
-import { writable } from 'svelte/store';
-import { browser } from '$app/environment';
+import { writable } from "svelte/store";
+import { browser } from "$app/environment";
 
 // Store pour le statut réseau
 export const isOnline = writable(true);
@@ -5809,7 +6133,7 @@ export const isOnline = writable(true);
 // Interface pour les données en attente de sync
 export interface SyncData {
   id: string;
-  type: 'progress' | 'user-data';
+  type: "progress" | "user-data";
   data: any;
   timestamp: number;
   userId: string;
@@ -5821,17 +6145,21 @@ if (browser) {
     isOnline.set(navigator.onLine);
   };
 
-  window.addEventListener('online', updateOnlineStatus);
-  window.addEventListener('offline', updateOnlineStatus);
-  
+  window.addEventListener("online", updateOnlineStatus);
+  window.addEventListener("offline", updateOnlineStatus);
+
   // État initial
   updateOnlineStatus();
 }
 
 // Gestion de la queue de synchronisation
-const SYNC_QUEUE_KEY = 'funrevis-sync-queue';
+const SYNC_QUEUE_KEY = "funrevis-sync-queue";
 
-export const queueForSync = (type: SyncData['type'], data: any, userId: string): void => {
+export const queueForSync = (
+  type: SyncData["type"],
+  data: any,
+  userId: string
+): void => {
   if (!browser) return;
 
   const syncItem: SyncData = {
@@ -5839,7 +6167,7 @@ export const queueForSync = (type: SyncData['type'], data: any, userId: string):
     type,
     data,
     timestamp: Date.now(),
-    userId
+    userId,
   };
 
   const queue = getSyncQueue();
@@ -5847,16 +6175,18 @@ export const queueForSync = (type: SyncData['type'], data: any, userId: string):
   localStorage.setItem(SYNC_QUEUE_KEY, JSON.stringify(queue));
 
   // Déclencher la synchronisation si en ligne
-  if (navigator.onLine && 'serviceWorker' in navigator) {
-    navigator.serviceWorker.ready.then(registration => {
-      return registration.sync.register('progress-sync');
-    }).catch(console.error);
+  if (navigator.onLine && "serviceWorker" in navigator) {
+    navigator.serviceWorker.ready
+      .then((registration) => {
+        return registration.sync.register("progress-sync");
+      })
+      .catch(console.error);
   }
 };
 
 export const getSyncQueue = (): SyncData[] => {
   if (!browser) return [];
-  
+
   try {
     const stored = localStorage.getItem(SYNC_QUEUE_KEY);
     return stored ? JSON.parse(stored) : [];
@@ -5880,45 +6210,51 @@ export const getOfflineCapabilities = () => {
 
   return {
     supported: true,
-    serviceWorker: 'serviceWorker' in navigator,
-    localStorage: 'localStorage' in window,
-    indexedDB: 'indexedDB' in window,
-    backgroundSync: 'serviceWorker' in navigator && 'sync' in window.ServiceWorkerRegistration.prototype
+    serviceWorker: "serviceWorker" in navigator,
+    localStorage: "localStorage" in window,
+    indexedDB: "indexedDB" in window,
+    backgroundSync:
+      "serviceWorker" in navigator &&
+      "sync" in window.ServiceWorkerRegistration.prototype,
   };
 };
 
 // Hook pour les notifications de statut réseau
 export const createNetworkNotifier = () => {
-  const notifications = writable<{ type: 'online' | 'offline' | 'sync'; message: string } | null>(null);
+  const notifications = writable<{
+    type: "online" | "offline" | "sync";
+    message: string;
+  } | null>(null);
 
   if (browser) {
     // Écouter les changements de statut réseau
-    isOnline.subscribe(online => {
+    isOnline.subscribe((online) => {
       if (online) {
         notifications.set({
-          type: 'online',
-          message: 'Connexion rétablie'
+          type: "online",
+          message: "Connexion rétablie",
         });
-        
+
         // Effacer la notification après 3 secondes
         setTimeout(() => notifications.set(null), 3000);
       } else {
         notifications.set({
-          type: 'offline',
-          message: 'Mode hors ligne - Vos données seront synchronisées à la reconnexion'
+          type: "offline",
+          message:
+            "Mode hors ligne - Vos données seront synchronisées à la reconnexion",
         });
       }
     });
 
     // Écouter les messages du Service Worker
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.addEventListener('message', (event) => {
-        if (event.data.type === 'SYNC_SUCCESS') {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.addEventListener("message", (event) => {
+        if (event.data.type === "SYNC_SUCCESS") {
           notifications.set({
-            type: 'sync',
-            message: `${event.data.count} élément(s) synchronisé(s)`
+            type: "sync",
+            message: `${event.data.count} élément(s) synchronisé(s)`,
           });
-          
+
           setTimeout(() => notifications.set(null), 5000);
         }
       });
@@ -5930,27 +6266,29 @@ export const createNetworkNotifier = () => {
 ```
 
 #### Étape 4.4 : Modification service progression offline
+
 **[FILE]** Modifier `src/lib/firebase/progress.ts` - Ajouter support offline :
+
 ```ts
-import { queueForSync, isOnline } from '$lib/utils/offline';
-import { get } from 'svelte/store';
+import { queueForSync, isOnline } from "$lib/utils/offline";
+import { get } from "svelte/store";
 
 // Modifier la fonction saveUserProgress existante
 export const saveUserProgress = async (
   userId: string,
   competenceId: string,
-  progress: Omit<ProgressData, 'competenceId'>
+  progress: Omit<ProgressData, "competenceId">
 ): Promise<void> => {
   const data = {
     ...progress,
     competenceId,
-    updatedAt: new Date().toISOString()
+    updatedAt: new Date().toISOString(),
   };
 
   // Si hors ligne, ajouter à la queue
   if (!get(isOnline)) {
-    queueForSync('progress', { competenceId, ...data }, userId);
-    
+    queueForSync("progress", { competenceId, ...data }, userId);
+
     // Sauvegarder localement aussi
     saveProgressLocally(userId, competenceId, data);
     return;
@@ -5958,48 +6296,55 @@ export const saveUserProgress = async (
 
   try {
     // Essayer de sauvegarder en ligne
-    const docRef = doc(db, 'users', userId, 'progress', competenceId);
+    const docRef = doc(db, "users", userId, "progress", competenceId);
     await setDoc(docRef, data, { merge: true });
-    
+
     // Si succès, supprimer de la sauvegarde locale
     removeLocalProgress(userId, competenceId);
   } catch (error) {
-    console.error('Erreur sauvegarde en ligne, basculement offline:', error);
-    
+    console.error("Erreur sauvegarde en ligne, basculement offline:", error);
+
     // Fallback: sauvegarder localement et ajouter à la queue
-    queueForSync('progress', { competenceId, ...data }, userId);
+    queueForSync("progress", { competenceId, ...data }, userId);
     saveProgressLocally(userId, competenceId, data);
   }
 };
 
 // Nouvelles fonctions pour la gestion locale
-const LOCAL_PROGRESS_KEY = 'funrevis-local-progress';
+const LOCAL_PROGRESS_KEY = "funrevis-local-progress";
 
-const saveProgressLocally = (userId: string, competenceId: string, data: any): void => {
-  if (typeof window === 'undefined') return;
+const saveProgressLocally = (
+  userId: string,
+  competenceId: string,
+  data: any
+): void => {
+  if (typeof window === "undefined") return;
 
   try {
     const stored = localStorage.getItem(LOCAL_PROGRESS_KEY);
     const localData = stored ? JSON.parse(stored) : {};
-    
+
     if (!localData[userId]) {
       localData[userId] = {};
     }
-    
+
     localData[userId][competenceId] = data;
     localStorage.setItem(LOCAL_PROGRESS_KEY, JSON.stringify(localData));
   } catch (error) {
-    console.error('Erreur sauvegarde locale:', error);
+    console.error("Erreur sauvegarde locale:", error);
   }
 };
 
-const getLocalProgress = (userId: string, competenceId: string): ProgressData | null => {
-  if (typeof window === 'undefined') return null;
+const getLocalProgress = (
+  userId: string,
+  competenceId: string
+): ProgressData | null => {
+  if (typeof window === "undefined") return null;
 
   try {
     const stored = localStorage.getItem(LOCAL_PROGRESS_KEY);
     const localData = stored ? JSON.parse(stored) : {};
-    
+
     return localData[userId]?.[competenceId] || null;
   } catch {
     return null;
@@ -6007,56 +6352,62 @@ const getLocalProgress = (userId: string, competenceId: string): ProgressData | 
 };
 
 const removeLocalProgress = (userId: string, competenceId: string): void => {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
 
   try {
     const stored = localStorage.getItem(LOCAL_PROGRESS_KEY);
     const localData = stored ? JSON.parse(stored) : {};
-    
+
     if (localData[userId]?.[competenceId]) {
       delete localData[userId][competenceId];
       localStorage.setItem(LOCAL_PROGRESS_KEY, JSON.stringify(localData));
     }
   } catch (error) {
-    console.error('Erreur suppression locale:', error);
+    console.error("Erreur suppression locale:", error);
   }
 };
 
 // Modifier getUserProgress pour inclure les données locales
 export const getUserProgress = async (
-  userId: string, 
+  userId: string,
   competenceId: string
 ): Promise<ProgressData | null> => {
   // Essayer d'abord les données en ligne
   if (get(isOnline)) {
     try {
-      const docRef = doc(db, 'users', userId, 'progress', competenceId);
+      const docRef = doc(db, "users", userId, "progress", competenceId);
       const docSnap = await getDoc(docRef);
-      
+
       if (docSnap.exists()) {
         return docSnap.data() as ProgressData;
       }
     } catch (error) {
-      console.error('Erreur récupération en ligne:', error);
+      console.error("Erreur récupération en ligne:", error);
     }
   }
-  
+
   // Fallback sur les données locales
   return getLocalProgress(userId, competenceId);
 };
 ```
 
 #### Étape 4.5 : Composant de statut réseau
+
 **[FILE]** Créer `src/lib/components/NetworkStatus.svelte` :
+
 ```svelte
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { isOnline, getSyncQueueSize, createNetworkNotifier } from '$lib/utils/offline';
-  
+  import { onMount } from "svelte";
+  import {
+    isOnline,
+    getSyncQueueSize,
+    createNetworkNotifier,
+  } from "$lib/utils/offline";
+
   let syncQueueSize = 0;
   let showInstallPrompt = false;
   let deferredPrompt: any = null;
-  
+
   const notifications = createNetworkNotifier();
 
   // Mettre à jour la taille de la queue périodiquement
@@ -6075,11 +6426,14 @@ export const getUserProgress = async (
       showInstallPrompt = true;
     };
 
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
 
     return () => {
       clearInterval(interval);
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt
+      );
     };
   });
 
@@ -6087,11 +6441,11 @@ export const getUserProgress = async (
     if (deferredPrompt) {
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
-      
-      if (outcome === 'accepted') {
+
+      if (outcome === "accepted") {
         showInstallPrompt = false;
       }
-      
+
       deferredPrompt = null;
     }
   };
@@ -6104,17 +6458,17 @@ export const getUserProgress = async (
 
 <!-- Notification de statut réseau -->
 {#if $notifications}
-  <div 
+  <div
     class="network-notification"
-    class:online={$notifications.type === 'online'}
-    class:offline={$notifications.type === 'offline'}
-    class:sync={$notifications.type === 'sync'}
+    class:online={$notifications.type === "online"}
+    class:offline={$notifications.type === "offline"}
+    class:sync={$notifications.type === "sync"}
   >
     <div class="notification-content">
       <span class="notification-icon">
-        {#if $notifications.type === 'online'}🟢{/if}
-        {#if $notifications.type === 'offline'}🔴{/if}
-        {#if $notifications.type === 'sync'}🔄{/if}
+        {#if $notifications.type === "online"}🟢{/if}
+        {#if $notifications.type === "offline"}🔴{/if}
+        {#if $notifications.type === "sync"}🔄{/if}
       </span>
       <span class="notification-message">{$notifications.message}</span>
     </div>
@@ -6123,10 +6477,14 @@ export const getUserProgress = async (
 
 <!-- Indicateur permanent de statut -->
 <div class="status-bar">
-  <div class="status-indicator" class:online={$isOnline} class:offline={!$isOnline}>
-    <span class="status-dot"></span>
+  <div
+    class="status-indicator"
+    class:online={$isOnline}
+    class:offline={!$isOnline}
+  >
+    <span class="status-dot" />
     <span class="status-text">
-      {$isOnline ? 'En ligne' : 'Hors ligne'}
+      {$isOnline ? "En ligne" : "Hors ligne"}
     </span>
     {#if syncQueueSize > 0}
       <span class="sync-badge">{syncQueueSize}</span>
@@ -6142,7 +6500,9 @@ export const getUserProgress = async (
       <p>Installez l'application pour un accès rapide et hors ligne</p>
       <div class="install-actions">
         <button on:click={installPWA} class="install-btn">Installer</button>
-        <button on:click={dismissInstallPrompt} class="dismiss-btn">Plus tard</button>
+        <button on:click={dismissInstallPrompt} class="dismiss-btn"
+          >Plus tard</button
+        >
       </div>
     </div>
   </div>
@@ -6157,7 +6517,7 @@ export const getUserProgress = async (
     max-width: 300px;
     padding: 1rem;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     animation: slideIn 0.3s ease-out;
   }
 
@@ -6208,7 +6568,7 @@ export const getUserProgress = async (
     padding: 0.5rem 1rem;
     background: white;
     border-radius: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     border: 1px solid #ddd;
   }
 
@@ -6250,7 +6610,7 @@ export const getUserProgress = async (
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -6341,28 +6701,35 @@ export const getUserProgress = async (
 ```
 
 #### Étape 4.6 : Intégration dans layout principal
+
 **[FILE]** Modifier `src/routes/+layout.svelte` - Ajouter NetworkStatus :
+
 ```svelte
 <script lang="ts">
-  import { authStore } from '$lib/stores/auth';
-  import { page } from '$app/stores';
-  import { goto } from '$app/navigation';
-  import { onMount } from 'svelte';
-  import NetworkStatus from '$lib/components/NetworkStatus.svelte';
+  import { authStore } from "$lib/stores/auth";
+  import { page } from "$app/stores";
+  import { goto } from "$app/navigation";
+  import { onMount } from "svelte";
+  import NetworkStatus from "$lib/components/NetworkStatus.svelte";
 
-  $: if ($authStore.initialized && !$authStore.user && $page.route.id?.startsWith('/dashboard')) {
-    goto('/auth/login');
+  $: if (
+    $authStore.initialized &&
+    !$authStore.user &&
+    $page.route.id?.startsWith("/dashboard")
+  ) {
+    goto("/auth/login");
   }
 
   // Enregistrer le Service Worker
   onMount(() => {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
-        .then(registration => {
-          console.log('SW enregistré:', registration);
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then((registration) => {
+          console.log("SW enregistré:", registration);
         })
-        .catch(error => {
-          console.error('Erreur SW:', error);
+        .catch((error) => {
+          console.error("Erreur SW:", error);
         });
     }
   });
@@ -6391,23 +6758,26 @@ export const getUserProgress = async (
 ```
 
 #### Étape 4.7 : Icônes PWA
+
 **[CMD]** Créer le dossier et ajouter les icônes :
+
 ```bash
 [CMD] mkdir -p static/icons
 ```
 
 **[FILE]** Créer `scripts/generate-icons.js` :
+
 ```js
 // Script pour générer les icônes PWA à partir d'une image source
 // Utilise sharp pour redimensionner automatiquement
 
-import sharp from 'sharp';
-import fs from 'fs';
-import path from 'path';
+import sharp from "sharp";
+import fs from "fs";
+import path from "path";
 
 const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
-const sourceIcon = './src/lib/assets/icon-source.png'; // Image source haute résolution
-const outputDir = './static/icons';
+const sourceIcon = "./src/lib/assets/icon-source.png"; // Image source haute résolution
+const outputDir = "./static/icons";
 
 // Créer le dossier de sortie s'il n'existe pas
 if (!fs.existsSync(outputDir)) {
@@ -6417,52 +6787,57 @@ if (!fs.existsSync(outputDir)) {
 async function generateIcons() {
   // Créer une icône temporaire si pas d'image source
   if (!fs.existsSync(sourceIcon)) {
-    console.log('Création d\'une icône par défaut...');
+    console.log("Création d'une icône par défaut...");
     await sharp({
       create: {
         width: 512,
         height: 512,
         channels: 4,
-        background: { r: 0, g: 123, b: 255, alpha: 1 }
-      }
+        background: { r: 0, g: 123, b: 255, alpha: 1 },
+      },
     })
-    .png()
-    .toFile('./static/icons/icon-512x512.png');
-    
-    console.log('Icône par défaut créée');
+      .png()
+      .toFile("./static/icons/icon-512x512.png");
+
+    console.log("Icône par défaut créée");
     return;
   }
 
-  console.log('Génération des icônes PWA...');
-  
+  console.log("Génération des icônes PWA...");
+
   for (const size of sizes) {
     const outputFile = path.join(outputDir, `icon-${size}x${size}.png`);
-    
-    await sharp(sourceIcon)
-      .resize(size, size)
-      .png()
-      .toFile(outputFile);
-    
+
+    await sharp(sourceIcon).resize(size, size).png().toFile(outputFile);
+
     console.log(`✓ Icône ${size}x${size} générée`);
   }
-  
-  console.log('Toutes les icônes ont été générées !');
+
+  console.log("Toutes les icônes ont été générées !");
 }
 
 generateIcons().catch(console.error);
 ```
 
 **[CMD]** Installer sharp et générer les icônes :
+
 ```bash
 [CMD] npm install -D sharp
 [CMD] node scripts/generate-icons.js
 ```
 
 #### Étape 4.8 : Tests offline
+
 **[FILE]** Créer `src/lib/utils/offline.test.ts` :
+
 ```ts
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { queueForSync, getSyncQueue, clearSyncQueue, getSyncQueueSize } from './offline';
+import { describe, it, expect, beforeEach, vi } from "vitest";
+import {
+  queueForSync,
+  getSyncQueue,
+  clearSyncQueue,
+  getSyncQueueSize,
+} from "./offline";
 
 // Mock localStorage
 const localStorageMock = {
@@ -6472,54 +6847,68 @@ const localStorageMock = {
   clear: vi.fn(),
 };
 
-Object.defineProperty(window, 'localStorage', {
-  value: localStorageMock
+Object.defineProperty(window, "localStorage", {
+  value: localStorageMock,
 });
 
 // Mock navigator.onLine
-Object.defineProperty(navigator, 'onLine', {
+Object.defineProperty(navigator, "onLine", {
   writable: true,
-  value: true
+  value: true,
 });
 
-describe('Offline utilities', () => {
+describe("Offline utilities", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     localStorageMock.getItem.mockReturnValue(null);
   });
 
-  it('should queue data for sync', () => {
-    const testData = { competenceId: 'test', score: 80 };
-    
-    queueForSync('progress', testData, 'user123');
-    
+  it("should queue data for sync", () => {
+    const testData = { competenceId: "test", score: 80 };
+
+    queueForSync("progress", testData, "user123");
+
     expect(localStorageMock.setItem).toHaveBeenCalledWith(
-      'funrevis-sync-queue',
+      "funrevis-sync-queue",
       expect.stringContaining('"type":"progress"')
     );
   });
 
-  it('should get sync queue size', () => {
+  it("should get sync queue size", () => {
     const mockQueue = [
-      { id: '1', type: 'progress', data: {}, timestamp: Date.now(), userId: 'user1' },
-      { id: '2', type: 'progress', data: {}, timestamp: Date.now(), userId: 'user1' }
+      {
+        id: "1",
+        type: "progress",
+        data: {},
+        timestamp: Date.now(),
+        userId: "user1",
+      },
+      {
+        id: "2",
+        type: "progress",
+        data: {},
+        timestamp: Date.now(),
+        userId: "user1",
+      },
     ];
-    
+
     localStorageMock.getItem.mockReturnValue(JSON.stringify(mockQueue));
-    
+
     const size = getSyncQueueSize();
     expect(size).toBe(2);
   });
 
-  it('should clear sync queue', () => {
+  it("should clear sync queue", () => {
     clearSyncQueue();
-    
-    expect(localStorageMock.removeItem).toHaveBeenCalledWith('funrevis-sync-queue');
+
+    expect(localStorageMock.removeItem).toHaveBeenCalledWith(
+      "funrevis-sync-queue"
+    );
   });
 
-  it('should handle corrupted localStorage gracefully', () => {
-    localStorageMock.getItem.mockReturnValue('invalid-json');
-    
+  it("should handle corrupted localStorage gracefully", () => {
+    localStorageMock.getItem.mockReturnValue("invalid-json");
+
     const queue = getSyncQueue();
     expect(queue).toEqual([]);
   });
@@ -6527,123 +6916,135 @@ describe('Offline utilities', () => {
 ```
 
 #### Étape 4.9 : Tests E2E PWA
-**[FILE]** Créer `tests/e2e/pwa.spec.ts` :
-```ts
-import { test, expect } from '@playwright/test';
 
-test.describe('PWA Functionality', () => {
-  test('should register service worker', async ({ page }) => {
-    await page.goto('/');
-    
+**[FILE]** Créer `tests/e2e/pwa.spec.ts` :
+
+```ts
+import { test, expect } from "@playwright/test";
+
+test.describe("PWA Functionality", () => {
+  test("should register service worker", async ({ page }) => {
+    await page.goto("/");
+
     // Vérifier que le SW est enregistré
     const swRegistered = await page.evaluate(() => {
-      return 'serviceWorker' in navigator;
+      return "serviceWorker" in navigator;
     });
-    
+
     expect(swRegistered).toBe(true);
-    
+
     // Attendre l'enregistrement du SW
     await page.waitForFunction(() => {
       return navigator.serviceWorker.controller !== null;
     });
   });
 
-  test('should show offline indicator when network is down', async ({ page, context }) => {
-    await page.goto('/');
-    
+  test("should show offline indicator when network is down", async ({
+    page,
+    context,
+  }) => {
+    await page.goto("/");
+
     // Passer en mode offline
     await context.setOffline(true);
-    
+
     // Attendre que l'indicateur offline apparaisse
-    await expect(page.locator('.status-indicator.offline')).toBeVisible();
-    await expect(page.locator('.status-text')).toContainText('Hors ligne');
+    await expect(page.locator(".status-indicator.offline")).toBeVisible();
+    await expect(page.locator(".status-text")).toContainText("Hors ligne");
   });
 
-  test('should work offline after initial load', async ({ page, context }) => {
+  test("should work offline after initial load", async ({ page, context }) => {
     // Charger la page en ligne d'abord
-    await page.goto('/');
-    await page.waitForLoadState('networkidle');
-    
+    await page.goto("/");
+    await page.waitForLoadState("networkidle");
+
     // Aller vers la page de login pour la mettre en cache
-    await page.goto('/auth/login');
-    await page.waitForLoadState('networkidle');
-    
+    await page.goto("/auth/login");
+    await page.waitForLoadState("networkidle");
+
     // Passer offline
     await context.setOffline(true);
-    
+
     // Recharger la page - devrait fonctionner depuis le cache
     await page.reload();
-    await expect(page.locator('h1')).toContainText('Connexion');
+    await expect(page.locator("h1")).toContainText("Connexion");
   });
 
-  test('should show sync queue indicator', async ({ page }) => {
+  test("should show sync queue indicator", async ({ page }) => {
     // Se connecter d'abord
-    await page.goto('/auth/login');
-    await page.fill('input[name="email"]', 'test@example.com');
-    await page.fill('input[name="password"]', 'password123');
+    await page.goto("/auth/login");
+    await page.fill('input[name="email"]', "test@example.com");
+    await page.fill('input[name="password"]', "password123");
     await page.click('button[type="submit"]');
-    
+
     // Aller sur un cours
-    await page.goto('/mathematiques/5eme/test-competence');
-    
+    await page.goto("/mathematiques/5eme/test-competence");
+
     // Passer offline
     await page.context().setOffline(true);
-    
+
     // Faire un exercice (qui sera mis en queue)
-    const exercise = page.locator('.exercise').first();
+    const exercise = page.locator(".exercise").first();
     if (await exercise.isVisible()) {
-      await exercise.locator('.option').first().locator('input[type="radio"]').check();
+      await exercise
+        .locator(".option")
+        .first()
+        .locator('input[type="radio"]')
+        .check();
       await exercise.locator('button:has-text("Valider")').click();
-      
+
       // Attendre que l'indicateur de sync apparaisse
-      await expect(page.locator('.sync-badge')).toBeVisible();
+      await expect(page.locator(".sync-badge")).toBeVisible();
     }
   });
 
-  test('should have manifest.json accessible', async ({ page }) => {
-    const response = await page.goto('/manifest.json');
+  test("should have manifest.json accessible", async ({ page }) => {
+    const response = await page.goto("/manifest.json");
     expect(response?.status()).toBe(200);
-    
+
     const manifest = await response?.json();
-    expect(manifest.name).toBe('FunRevis - Révisions scolaires');
-    expect(manifest.short_name).toBe('FunRevis');
-    expect(manifest.start_url).toBe('/');
+    expect(manifest.name).toBe("FunRevis - Révisions scolaires");
+    expect(manifest.short_name).toBe("FunRevis");
+    expect(manifest.start_url).toBe("/");
   });
 
-  test('should have all required PWA icons', async ({ page }) => {
+  test("should have all required PWA icons", async ({ page }) => {
     const iconSizes = [72, 96, 128, 144, 152, 192, 384, 512];
-    
+
     for (const size of iconSizes) {
       const response = await page.goto(`/icons/icon-${size}x${size}.png`);
       expect(response?.status()).toBe(200);
     }
   });
 
-  test('should cache and serve static assets offline', async ({ page, context }) => {
+  test("should cache and serve static assets offline", async ({
+    page,
+    context,
+  }) => {
     // Charger la page pour mettre en cache
-    await page.goto('/');
-    await page.waitForLoadState('networkidle');
-    
+    await page.goto("/");
+    await page.waitForLoadState("networkidle");
+
     // Vérifier qu'une image ou CSS est chargée
     const hasStaticAssets = await page.evaluate(() => {
       const links = document.querySelectorAll('link[rel="stylesheet"]');
       return links.length > 0;
     });
-    
+
     if (hasStaticAssets) {
       // Passer offline
       await context.setOffline(true);
-      
+
       // Recharger - les assets devraient être servis depuis le cache
       await page.reload();
-      
+
       // La page devrait toujours être stylée
       const bodyHasStyles = await page.evaluate(() => {
         const body = document.body;
         const computed = window.getComputedStyle(body);
-        return computed.margin !== '' || computed.padding !== '';
+        return computed.margin !== "" || computed.padding !== "";
       });
-      
+
       expect(bodyHasStyles).toBe(true);
     }
   });
@@ -6651,6 +7052,7 @@ test.describe('PWA Functionality', () => {
 ```
 
 ### 🧪 Tests de validation Phase 4
+
 ```bash
 [TEST] npm run test                    # Tests unitaires passent
 [TEST] npm run test:e2e               # Tests E2E passent
@@ -6660,6 +7062,7 @@ test.describe('PWA Functionality', () => {
 ```
 
 ### ✅ Critères de validation obligatoires
+
 - [ ] **[CHECK]** Application installable comme PWA
 - [ ] **[CHECK]** Service Worker enregistré et fonctionnel
 - [ ] **[CHECK]** Indicateur de statut réseau visible
@@ -6674,31 +7077,34 @@ test.describe('PWA Functionality', () => {
 ## ⚙️ Phase 5 : Admin & Import (1 semaine)
 
 ### 📋 Objectifs
+
 - Interface d'administration
 - Import/export de contenu
 - Gestion utilisateurs
 - Outils de maintenance
 
 ### 📝 Tâches
-| Tâche | Durée | Responsable | Critères d'acceptation |
-|-------|-------|-------------|------------------------|
-| Page admin | 4h | Dev | Interface gestion contenu |
-| Import CSV/Markdown | 4h | Dev | Upload et traitement fichiers |
-| Gestion utilisateurs | 3h | Dev | Liste, rôles, stats |
-| Export données | 2h | Dev | Backup progression |
-| Tests admin | 3h | Dev | Tests interface admin |
-| Documentation admin | 2h | Dev | Guide utilisation |
+
+| Tâche                | Durée | Responsable | Critères d'acceptation        |
+| -------------------- | ----- | ----------- | ----------------------------- |
+| Page admin           | 4h    | Dev         | Interface gestion contenu     |
+| Import CSV/Markdown  | 4h    | Dev         | Upload et traitement fichiers |
+| Gestion utilisateurs | 3h    | Dev         | Liste, rôles, stats           |
+| Export données       | 2h    | Dev         | Backup progression            |
+| Tests admin          | 3h    | Dev         | Tests interface admin         |
+| Documentation admin  | 2h    | Dev         | Guide utilisation             |
 
 ### 🧪 Tests Phase 5
 
 #### Tests unitaires
+
 ```js
 // src/lib/utils/import.test.js
-import { describe, it, expect } from 'vitest';
-import { parseMarkdownFile, validateCourseData } from './import';
+import { describe, it, expect } from "vitest";
+import { parseMarkdownFile, validateCourseData } from "./import";
 
-describe('Import utilities', () => {
-  it('should parse markdown file', () => {
+describe("Import utilities", () => {
+  it("should parse markdown file", () => {
     const markdownContent = `---
 titre: Les Fractions
 niveau: 5eme
@@ -6710,67 +7116,76 @@ matiere: mathematiques
 Contenu du cours...`;
 
     const parsed = parseMarkdownFile(markdownContent);
-    
-    expect(parsed.metadata.titre).toBe('Les Fractions');
-    expect(parsed.content).toContain('# Introduction');
+
+    expect(parsed.metadata.titre).toBe("Les Fractions");
+    expect(parsed.content).toContain("# Introduction");
   });
 
-  it('should validate course data', () => {
+  it("should validate course data", () => {
     const validData = {
-      titre: 'Test',
-      niveau: '5eme',
-      matiere: 'mathematiques'
+      titre: "Test",
+      niveau: "5eme",
+      matiere: "mathematiques",
     };
-    
+
     expect(() => validateCourseData(validData)).not.toThrow();
-    
-    const invalidData = { titre: 'Test' };
+
+    const invalidData = { titre: "Test" };
     expect(() => validateCourseData(invalidData)).toThrow();
   });
 });
 ```
 
 #### Tests E2E admin
+
 ```js
 // tests/e2e/admin.spec.js
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test('Admin interface', async ({ page }) => {
+test("Admin interface", async ({ page }) => {
   // Login as admin
-  await page.goto('/auth/login');
-  await page.fill('input[name="email"]', 'admin@example.com');
-  await page.fill('input[name="password"]', 'admin123');
+  await page.goto("/auth/login");
+  await page.fill('input[name="email"]', "admin@example.com");
+  await page.fill('input[name="password"]', "admin123");
   await page.click('button[type="submit"]');
-  
+
   // Navigate to admin
-  await page.goto('/admin');
-  
+  await page.goto("/admin");
+
   // Check admin panels
-  await expect(page.locator('[data-testid="content-management"]')).toBeVisible();
+  await expect(
+    page.locator('[data-testid="content-management"]')
+  ).toBeVisible();
   await expect(page.locator('[data-testid="user-management"]')).toBeVisible();
-  
+
   // Test file import
-  await page.locator('input[type="file"]').setInputFiles('./test-files/sample-course.md');
+  await page
+    .locator('input[type="file"]')
+    .setInputFiles("./test-files/sample-course.md");
   await page.click('button:has-text("Importer")');
-  
-  await expect(page.locator('.success-message')).toBeVisible();
+
+  await expect(page.locator(".success-message")).toBeVisible();
 });
 
-test('User management', async ({ page }) => {
-  await page.goto('/admin/users');
-  
+test("User management", async ({ page }) => {
+  await page.goto("/admin/users");
+
   // Check user list
   await expect(page.locator('[data-testid="user-list"]')).toBeVisible();
-  
+
   // Change user role
-  await page.locator('[data-testid="user-role-select"]').first().selectOption('admin');
+  await page
+    .locator('[data-testid="user-role-select"]')
+    .first()
+    .selectOption("admin");
   await page.click('button:has-text("Sauvegarder")');
-  
-  await expect(page.locator('.success-message')).toBeVisible();
+
+  await expect(page.locator(".success-message")).toBeVisible();
 });
 ```
 
 ### ✅ Critères de validation
+
 - [ ] Interface admin accessible aux administrateurs
 - [ ] Import de fichiers Markdown fonctionnel
 - [ ] Gestion des rôles utilisateur
@@ -6783,91 +7198,100 @@ test('User management', async ({ page }) => {
 ## ✨ Phase 6 : Polish & Performance (1 semaine)
 
 ### 📋 Objectifs
+
 - Optimisation performance
 - Amélioration UX/UI
 - Monitoring production
 - Documentation finale
 
 ### 📝 Tâches
-| Tâche | Durée | Responsable | Critères d'acceptation |
-|-------|-------|-------------|------------------------|
-| Optimisation bundles | 3h | Dev | Lazy loading, code splitting |
-| Amélioration UI | 4h | Dev | Animations, polish visuel |
-| Setup Sentry | 2h | Dev | Monitoring erreurs production |
-| Tests performance | 3h | Dev | Lighthouse, Core Web Vitals |
-| Documentation utilisateur | 4h | Dev | Guide complet utilisation |
-| Tests finaux | 2h | Dev | Suite complète tests |
+
+| Tâche                     | Durée | Responsable | Critères d'acceptation        |
+| ------------------------- | ----- | ----------- | ----------------------------- |
+| Optimisation bundles      | 3h    | Dev         | Lazy loading, code splitting  |
+| Amélioration UI           | 4h    | Dev         | Animations, polish visuel     |
+| Setup Sentry              | 2h    | Dev         | Monitoring erreurs production |
+| Tests performance         | 3h    | Dev         | Lighthouse, Core Web Vitals   |
+| Documentation utilisateur | 4h    | Dev         | Guide complet utilisation     |
+| Tests finaux              | 2h    | Dev         | Suite complète tests          |
 
 ### 🧪 Tests Phase 6
 
 #### Tests performance
+
 ```js
 // tests/e2e/performance.spec.js
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test('Performance metrics', async ({ page }) => {
-  await page.goto('/');
-  
+test("Performance metrics", async ({ page }) => {
+  await page.goto("/");
+
   // Measure First Contentful Paint
   const fcp = await page.evaluate(() => {
     return new Promise((resolve) => {
       new PerformanceObserver((entryList) => {
         const entries = entryList.getEntries();
-        const fcpEntry = entries.find(entry => entry.name === 'first-contentful-paint');
+        const fcpEntry = entries.find(
+          (entry) => entry.name === "first-contentful-paint"
+        );
         if (fcpEntry) {
           resolve(fcpEntry.startTime);
         }
-      }).observe({ entryTypes: ['paint'] });
+      }).observe({ entryTypes: ["paint"] });
     });
   });
-  
+
   expect(fcp).toBeLessThan(2000); // FCP < 2s
 });
 
-test('Bundle size check', async ({ page }) => {
-  const response = await page.goto('/');
-  const transferSize = response?.request().response()?.headers()['content-length'];
-  
+test("Bundle size check", async ({ page }) => {
+  const response = await page.goto("/");
+  const transferSize = response?.request().response()?.headers()[
+    "content-length"
+  ];
+
   // Main bundle should be < 200KB
-  expect(parseInt(transferSize || '0')).toBeLessThan(200000);
+  expect(parseInt(transferSize || "0")).toBeLessThan(200000);
 });
 ```
 
 #### Tests finaux E2E
+
 ```js
 // tests/e2e/full-flow.spec.js
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test('Complete user journey', async ({ page }) => {
+test("Complete user journey", async ({ page }) => {
   // Registration
-  await page.goto('/auth/register');
-  await page.fill('input[name="email"]', 'student@example.com');
-  await page.fill('input[name="password"]', 'student123');
+  await page.goto("/auth/register");
+  await page.fill('input[name="email"]', "student@example.com");
+  await page.fill('input[name="password"]', "student123");
   await page.click('button[type="submit"]');
-  
+
   // Dashboard
-  await expect(page).toHaveURL('/dashboard');
-  
+  await expect(page).toHaveURL("/dashboard");
+
   // Course navigation
   await page.click('[data-testid="course-card"]:first-child');
-  await expect(page.locator('h1')).toBeVisible();
-  
+  await expect(page.locator("h1")).toBeVisible();
+
   // Exercise completion
   await page.locator('input[type="radio"]').first().click();
   await page.click('button:has-text("Valider")');
-  await expect(page.locator('.correct, .incorrect')).toBeVisible();
-  
+  await expect(page.locator(".correct, .incorrect")).toBeVisible();
+
   // Progress tracking
-  await page.goto('/dashboard');
+  await page.goto("/dashboard");
   await expect(page.locator('[data-testid="progress-updated"]')).toBeVisible();
-  
+
   // Logout
   await page.click('[data-testid="logout-button"]');
-  await expect(page).toHaveURL('/');
+  await expect(page).toHaveURL("/");
 });
 ```
 
 ### ✅ Critères de validation
+
 - [ ] Score Lighthouse > 90 sur toutes les métriques
 - [ ] Bundle size optimisé
 - [ ] Monitoring Sentry configuré
@@ -6880,14 +7304,16 @@ test('Complete user journey', async ({ page }) => {
 ## 📊 Métriques de Qualité Continue
 
 ### 🎯 Objectifs par phase
-| Métrique | P0 | P1 | P2 | P3 | P4 | P5 | P6 |
-|----------|----|----|----|----|----|----|-----|
-| Couverture tests | 80% | 85% | 90% | 90% | 85% | 90% | 95% |
-| Lighthouse Performance | - | - | 80 | 85 | 90 | 90 | 95 |
-| Bundle size (KB) | <100 | <150 | <200 | <250 | <200 | <250 | <200 |
-| Tests E2E | 1 | 3 | 5 | 8 | 10 | 12 | 15 |
+
+| Métrique               | P0   | P1   | P2   | P3   | P4   | P5   | P6   |
+| ---------------------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| Couverture tests       | 80%  | 85%  | 90%  | 90%  | 85%  | 90%  | 95%  |
+| Lighthouse Performance | -    | -    | 80   | 85   | 90   | 90   | 95   |
+| Bundle size (KB)       | <100 | <150 | <200 | <250 | <200 | <250 | <200 |
+| Tests E2E              | 1    | 3    | 5    | 8    | 10   | 12   | 15   |
 
 ### 🔍 Outils de monitoring
+
 ```bash
 [CMD] npm install -D lighthouse-ci
 [CMD] npm install -D @bundlewatch/cli
@@ -6895,29 +7321,31 @@ test('Complete user journey', async ({ page }) => {
 ```
 
 **[FILE]** Créer `.lighthouserc.js` :
+
 ```js
 module.exports = {
   ci: {
     collect: {
-      url: ['http://localhost:5173'],
-      startServerCommand: 'npm run preview',
+      url: ["http://localhost:5173"],
+      startServerCommand: "npm run preview",
     },
     assert: {
       assertions: {
-        'categories:performance': ['error', { minScore: 0.8 }],
-        'categories:accessibility': ['error', { minScore: 0.9 }],
-        'categories:best-practices': ['error', { minScore: 0.9 }],
-        'categories:seo': ['error', { minScore: 0.8 }],
+        "categories:performance": ["error", { minScore: 0.8 }],
+        "categories:accessibility": ["error", { minScore: 0.9 }],
+        "categories:best-practices": ["error", { minScore: 0.9 }],
+        "categories:seo": ["error", { minScore: 0.8 }],
       },
     },
     upload: {
-      target: 'temporary-public-storage',
+      target: "temporary-public-storage",
     },
   },
 };
 ```
 
 ### 📈 Processus qualité automatisé
+
 1. **[CMD]** `npm run test:coverage` - Coverage > seuil
 2. **[CMD]** `npm run test:e2e` - Tests E2E passants
 3. **[CMD]** `npx lhci collect` - Métriques Lighthouse
@@ -6928,7 +7356,9 @@ module.exports = {
 ## 🚀 Déploiement Continu
 
 ### 🔄 Pipeline CI/CD optimisé
+
 **[FILE]** Créer `.github/workflows/ci-cd.yml` :
+
 ```yaml
 name: CI/CD Pipeline IA-Optimisée
 
@@ -6939,7 +7369,7 @@ on:
     branches: [main]
 
 env:
-  NODE_VERSION: '18'
+  NODE_VERSION: "18"
 
 jobs:
   lint-and-format:
@@ -6947,19 +7377,19 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-      
+          cache: "npm"
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Lint code
         run: npm run lint
-      
+
       - name: Check formatting
         run: npm run format -- --check
 
@@ -6968,19 +7398,19 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-      
+          cache: "npm"
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Run unit tests
         run: npm run test:coverage
-      
+
       - name: Upload coverage reports
         uses: codecov/codecov-action@v3
 
@@ -6989,22 +7419,22 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-      
+          cache: "npm"
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
-      
+
       - name: Run E2E tests
         run: npm run test:e2e
-      
+
       - name: Upload test results
         uses: actions/upload-artifact@v3
         if: failure()
@@ -7018,19 +7448,19 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-      
+          cache: "npm"
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Build project
         run: npm run build
-      
+
       - name: Run Lighthouse CI
         run: npx lhci collect --upload.target=temporary-public-storage
 
@@ -7041,36 +7471,37 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-      
+          cache: "npm"
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Build project
         run: npm run build
-      
+
       - name: Deploy to Vercel
         uses: vercel/action@v1
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.ORG_ID }}
           vercel-project-id: ${{ secrets.PROJECT_ID }}
-          vercel-args: '--prod'
+          vercel-args: "--prod"
 ```
 
 ### 📋 Checklist validation IA-assistée
 
 **[FILE]** Créer `scripts/validate-phase.js` :
+
 ```js
 #!/usr/bin/env node
 
-import { exec } from 'child_process';
-import { promisify } from 'util';
+import { exec } from "child_process";
+import { promisify } from "util";
 
 const execAsync = promisify(exec);
 
@@ -7089,36 +7520,43 @@ async function runCommand(command, description) {
 
 async function validatePhase(phase) {
   console.log(`\n🎯 Validation Phase ${phase}\n`);
-  
+
   const checks = [];
-  
+
   // Tests de base
-  checks.push(await runCommand('npm run lint', 'Linting code'));
-  checks.push(await runCommand('npm run test', 'Unit tests'));
-  checks.push(await runCommand('npm run build', 'Build production'));
-  
+  checks.push(await runCommand("npm run lint", "Linting code"));
+  checks.push(await runCommand("npm run test", "Unit tests"));
+  checks.push(await runCommand("npm run build", "Build production"));
+
   if (phase >= 1) {
-    checks.push(await runCommand('npm run test:e2e -- --grep="auth"', 'E2E Auth tests'));
+    checks.push(
+      await runCommand('npm run test:e2e -- --grep="auth"', "E2E Auth tests")
+    );
   }
-  
+
   if (phase >= 2) {
-    checks.push(await runCommand('npm run test:e2e -- --grep="content"', 'E2E Content tests'));
+    checks.push(
+      await runCommand(
+        'npm run test:e2e -- --grep="content"',
+        "E2E Content tests"
+      )
+    );
   }
-  
+
   if (phase >= 4) {
-    checks.push(await runCommand('npx lhci collect', 'Lighthouse performance'));
+    checks.push(await runCommand("npx lhci collect", "Lighthouse performance"));
   }
-  
-  const allPassed = checks.every(check => check);
-  
+
+  const allPassed = checks.every((check) => check);
+
   if (allPassed) {
     console.log(`\n🎉 Phase ${phase} validation completed successfully!`);
-    console.log('✅ Ready to proceed to next phase.');
+    console.log("✅ Ready to proceed to next phase.");
   } else {
     console.log(`\n🚫 Phase ${phase} validation failed!`);
-    console.log('❌ Fix issues before proceeding.');
+    console.log("❌ Fix issues before proceeding.");
   }
-  
+
   return allPassed;
 }
 
@@ -7128,36 +7566,45 @@ validatePhase(phase);
 ```
 
 **[CMD]** Ajouter au package.json :
+
 #### Étape 5.4 : Page d'import de contenu
+
 **[FILE]** Créer `src/routes/admin/import/+page.svelte` :
+
 ```svelte
 <script lang="ts">
-  import { ContentImporter, type ImportResult, type ImportProgress } from '$lib/services/import';
-  import { goto } from '$app/navigation';
-  
-  let importType: 'json' | 'markdown' = 'json';
+  import {
+    ContentImporter,
+    type ImportResult,
+    type ImportProgress,
+  } from "$lib/services/import";
+  import { goto } from "$app/navigation";
+
+  let importType: "json" | "markdown" = "json";
   let files: FileList | null = null;
   let importing = false;
   let progress: ImportProgress | null = null;
   let result: ImportResult | null = null;
   let dragOver = false;
-  
+
   async function handleImport() {
     if (!files || files.length === 0) return;
-    
+
     importing = true;
     result = null;
-    
+
     try {
-      const importer = new ContentImporter((p) => progress = p);
-      
-      if (importType === 'json') {
+      const importer = new ContentImporter((p) => (progress = p));
+
+      if (importType === "json") {
         const jsonFile = files[0];
         const content = await jsonFile.text();
         const jsonData = JSON.parse(content);
         result = await importer.importFromJSON(jsonData);
       } else {
-        const markdownFiles = Array.from(files).filter(f => f.name.endsWith('.md'));
+        const markdownFiles = Array.from(files).filter((f) =>
+          f.name.endsWith(".md")
+        );
         result = await importer.importFromMarkdown(markdownFiles);
       }
     } catch (error) {
@@ -7165,25 +7612,25 @@ validatePhase(phase);
         success: false,
         imported: 0,
         errors: [`Erreur: ${error.message}`],
-        warnings: []
+        warnings: [],
       };
     } finally {
       importing = false;
       progress = null;
     }
   }
-  
+
   function handleDrop(event: DragEvent) {
     event.preventDefault();
     dragOver = false;
     files = event.dataTransfer?.files || null;
   }
-  
+
   function handleDragOver(event: DragEvent) {
     event.preventDefault();
     dragOver = true;
   }
-  
+
   function handleDragLeave() {
     dragOver = false;
   }
@@ -7198,20 +7645,24 @@ validatePhase(phase);
     <h1>Import de contenu</h1>
     <p>Importer des compétences et cours depuis fichiers JSON ou Markdown</p>
   </header>
-  
+
   <div class="import-container">
     <div class="import-options">
       <h2>Type d'import</h2>
-      
+
       <div class="option-group">
         <label class="option">
           <input type="radio" bind:group={importType} value="json" />
           <div class="option-content">
             <h3>📄 JSON</h3>
-            <p>Importer depuis un fichier JSON structuré avec compétences et cours</p>
+            <p>
+              Importer depuis un fichier JSON structuré avec compétences et
+              cours
+            </p>
             <details class="format-details">
               <summary>Voir format attendu</summary>
-              <pre><code>{`{
+              <pre><code
+                  >{`{
   "competences": [
     {
       "titre": "Les fractions",
@@ -7230,20 +7681,26 @@ validatePhase(phase);
       "matiere": "mathematiques"
     }
   ]
-}`}</code></pre>
+}`}</code
+                ></pre>
             </details>
           </div>
         </label>
-        
+
         <label class="option">
           <input type="radio" bind:group={importType} value="markdown" />
           <div class="option-content">
             <h3>📝 Markdown</h3>
-            <p>Importer plusieurs fichiers .md qui seront convertis en compétences</p>
+            <p>
+              Importer plusieurs fichiers .md qui seront convertis en
+              compétences
+            </p>
             <details class="format-details">
               <summary>Convention de nommage</summary>
               <ul>
-                <li><code>math-6eme-fractions.md</code> → Mathématiques 6ème</li>
+                <li>
+                  <code>math-6eme-fractions.md</code> → Mathématiques 6ème
+                </li>
                 <li><code>francais-5eme-grammaire.md</code> → Français 5ème</li>
                 <li>Le niveau et matière sont détectés automatiquement</li>
               </ul>
@@ -7252,24 +7709,25 @@ validatePhase(phase);
         </label>
       </div>
     </div>
-    
-    <div class="upload-zone"
-         class:drag-over={dragOver}
-         on:drop={handleDrop}
-         on:dragover={handleDragOver}
-         on:dragleave={handleDragLeave}
-         role="button"
-         tabindex="0">
-      
-      <input 
-        type="file" 
+
+    <div
+      class="upload-zone"
+      class:drag-over={dragOver}
+      on:drop={handleDrop}
+      on:dragover={handleDragOver}
+      on:dragleave={handleDragLeave}
+      role="button"
+      tabindex="0"
+    >
+      <input
+        type="file"
         bind:files
-        accept={importType === 'json' ? '.json' : '.md'}
-        multiple={importType === 'markdown'}
+        accept={importType === "json" ? ".json" : ".md"}
+        multiple={importType === "markdown"}
         id="file-input"
         class="file-input"
       />
-      
+
       <div class="upload-content">
         {#if files && files.length > 0}
           <div class="selected-files">
@@ -7284,9 +7742,13 @@ validatePhase(phase);
           <div class="upload-prompt">
             <div class="upload-icon">📤</div>
             <h3>Glissez vos fichiers ici</h3>
-            <p>ou <label for="file-input" class="file-button">choisissez des fichiers</label></p>
+            <p>
+              ou <label for="file-input" class="file-button"
+                >choisissez des fichiers</label
+              >
+            </p>
             <p class="file-types">
-              {#if importType === 'json'}
+              {#if importType === "json"}
                 Types acceptés: .json
               {:else}
                 Types acceptés: .md (plusieurs fichiers)
@@ -7296,33 +7758,33 @@ validatePhase(phase);
         {/if}
       </div>
     </div>
-    
+
     {#if files && files.length > 0 && !importing}
       <div class="import-actions">
         <button class="import-button" on:click={handleImport}>
           🚀 Lancer l'import
         </button>
-        <button class="clear-button" on:click={() => files = null}>
+        <button class="clear-button" on:click={() => (files = null)}>
           🗑️ Effacer
         </button>
       </div>
     {/if}
-    
+
     {#if importing && progress}
       <div class="progress-section">
         <h3>Import en cours...</h3>
         <div class="progress-bar">
-          <div 
-            class="progress-fill" 
+          <div
+            class="progress-fill"
             style="width: {(progress.current / progress.total) * 100}%"
-          ></div>
+          />
         </div>
         <p class="progress-text">
           {progress.status} ({progress.current}/{progress.total})
         </p>
       </div>
     {/if}
-    
+
     {#if result}
       <div class="result-section">
         <div class="result-header">
@@ -7335,7 +7797,7 @@ validatePhase(phase);
           </h3>
           <p>{result.imported} élément(s) importé(s)</p>
         </div>
-        
+
         {#if result.errors.length > 0}
           <div class="result-errors">
             <h4>Erreurs</h4>
@@ -7346,7 +7808,7 @@ validatePhase(phase);
             </ul>
           </div>
         {/if}
-        
+
         {#if result.warnings.length > 0}
           <div class="result-warnings">
             <h4>Avertissements</h4>
@@ -7357,10 +7819,13 @@ validatePhase(phase);
             </ul>
           </div>
         {/if}
-        
+
         {#if result.success && result.imported > 0}
           <div class="result-actions">
-            <button on:click={() => goto('/admin/content')} class="view-content-btn">
+            <button
+              on:click={() => goto("/admin/content")}
+              class="view-content-btn"
+            >
               👀 Voir le contenu importé
             </button>
           </div>
@@ -7375,49 +7840,49 @@ validatePhase(phase);
     max-width: 1000px;
     margin: 0 auto;
   }
-  
+
   .page-header {
     margin-bottom: 2rem;
   }
-  
+
   .page-header h1 {
     margin: 0 0 0.5rem 0;
     color: #2c3e50;
   }
-  
+
   .page-header p {
     margin: 0;
     color: #6c757d;
     font-size: 1.1rem;
   }
-  
+
   .import-container {
     background: white;
     border-radius: 12px;
     padding: 2rem;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
-  
+
   .import-options h2 {
     margin: 0 0 1.5rem 0;
     color: #495057;
   }
-  
+
   .option-group {
     display: grid;
     gap: 1rem;
     margin-bottom: 2rem;
   }
-  
+
   .option {
     display: block;
     cursor: pointer;
   }
-  
+
   .option input[type="radio"] {
     display: none;
   }
-  
+
   .option-content {
     padding: 1.5rem;
     border: 2px solid #e9ecef;
@@ -7425,34 +7890,34 @@ validatePhase(phase);
     transition: all 0.2s;
     background: #f8f9fa;
   }
-  
+
   .option input[type="radio"]:checked + .option-content {
     border-color: #007bff;
     background: #f0f8ff;
   }
-  
+
   .option-content h3 {
     margin: 0 0 0.5rem 0;
     color: #495057;
     font-size: 1.1rem;
   }
-  
+
   .option-content p {
     margin: 0;
     color: #6c757d;
     line-height: 1.4;
   }
-  
+
   .format-details {
     margin-top: 1rem;
   }
-  
+
   .format-details summary {
     cursor: pointer;
     color: #007bff;
     font-weight: 500;
   }
-  
+
   .format-details pre {
     background: #2d3748;
     color: #e2e8f0;
@@ -7462,19 +7927,19 @@ validatePhase(phase);
     font-size: 0.9rem;
     margin: 0.5rem 0 0 0;
   }
-  
+
   .format-details ul {
     margin: 0.5rem 0 0 0;
     padding-left: 1.5rem;
   }
-  
+
   .format-details code {
     background: #e9ecef;
     padding: 0.2rem 0.4rem;
     border-radius: 3px;
     font-family: monospace;
   }
-  
+
   .upload-zone {
     border: 3px dashed #dee2e6;
     border-radius: 12px;
@@ -7484,50 +7949,50 @@ validatePhase(phase);
     margin-bottom: 1.5rem;
     position: relative;
   }
-  
+
   .upload-zone.drag-over {
     border-color: #007bff;
     background: #f0f8ff;
   }
-  
+
   .file-input {
     position: absolute;
     opacity: 0;
     pointer-events: none;
   }
-  
+
   .upload-icon {
     font-size: 3rem;
     margin-bottom: 1rem;
   }
-  
+
   .upload-content h3 {
     margin: 0 0 0.5rem 0;
     color: #495057;
   }
-  
+
   .file-button {
     color: #007bff;
     text-decoration: underline;
     cursor: pointer;
     font-weight: 500;
   }
-  
+
   .file-types {
     margin-top: 0.5rem;
     color: #6c757d;
     font-size: 0.9rem;
   }
-  
+
   .selected-files {
     text-align: left;
   }
-  
+
   .selected-files h3 {
     text-align: center;
     margin-bottom: 1rem;
   }
-  
+
   .selected-files ul {
     list-style: none;
     padding: 0;
@@ -7536,22 +8001,22 @@ validatePhase(phase);
     border-radius: 8px;
     padding: 1rem;
   }
-  
+
   .selected-files li {
     padding: 0.5rem 0;
     border-bottom: 1px solid #e9ecef;
   }
-  
+
   .selected-files li:last-child {
     border-bottom: none;
   }
-  
+
   .import-actions {
     display: flex;
     gap: 1rem;
     justify-content: center;
   }
-  
+
   .import-button {
     background: #28a745;
     color: white;
@@ -7563,11 +8028,11 @@ validatePhase(phase);
     cursor: pointer;
     transition: background-color 0.2s;
   }
-  
+
   .import-button:hover {
     background: #218838;
   }
-  
+
   .clear-button {
     background: #6c757d;
     color: white;
@@ -7578,16 +8043,16 @@ validatePhase(phase);
     cursor: pointer;
     transition: background-color 0.2s;
   }
-  
+
   .clear-button:hover {
     background: #5a6268;
   }
-  
+
   .progress-section {
     margin: 2rem 0;
     text-align: center;
   }
-  
+
   .progress-bar {
     width: 100%;
     height: 20px;
@@ -7596,29 +8061,29 @@ validatePhase(phase);
     overflow: hidden;
     margin: 1rem 0;
   }
-  
+
   .progress-fill {
     height: 100%;
     background: linear-gradient(90deg, #007bff, #0056b3);
     transition: width 0.3s ease;
   }
-  
+
   .progress-text {
     color: #6c757d;
     font-weight: 500;
   }
-  
+
   .result-section {
     margin-top: 2rem;
     padding: 1.5rem;
     border-radius: 8px;
     border: 1px solid #e9ecef;
   }
-  
+
   .result-header h3 {
     margin: 0 0 0.5rem 0;
   }
-  
+
   .result-errors {
     margin: 1rem 0;
     padding: 1rem;
@@ -7626,7 +8091,7 @@ validatePhase(phase);
     border: 1px solid #f5c6cb;
     border-radius: 6px;
   }
-  
+
   .result-warnings {
     margin: 1rem 0;
     padding: 1rem;
@@ -7634,24 +8099,24 @@ validatePhase(phase);
     border: 1px solid #ffeaa7;
     border-radius: 6px;
   }
-  
+
   .result-errors h4,
   .result-warnings h4 {
     margin: 0 0 0.5rem 0;
     font-size: 1rem;
   }
-  
+
   .result-errors ul,
   .result-warnings ul {
     margin: 0;
     padding-left: 1.5rem;
   }
-  
+
   .result-actions {
     margin-top: 1.5rem;
     text-align: center;
   }
-  
+
   .view-content-btn {
     background: #007bff;
     color: white;
@@ -7662,25 +8127,25 @@ validatePhase(phase);
     cursor: pointer;
     transition: background-color 0.2s;
   }
-  
+
   .view-content-btn:hover {
     background: #0056b3;
   }
-  
+
   /* Responsive */
   @media (max-width: 768px) {
     .import-container {
       padding: 1rem;
     }
-    
+
     .upload-zone {
       padding: 2rem 1rem;
     }
-    
+
     .import-actions {
       flex-direction: column;
     }
-    
+
     .option-group {
       grid-template-columns: 1fr;
     }
@@ -7693,74 +8158,77 @@ validatePhase(phase);
 ## 🎨 Phase 6 : Optimisation & Polish (1 semaine)
 
 ### 🎯 Contexte IA
+
 **Objectif** : Finalisation avec optimisations de performance, audit complet et déploiement.
 **Pré-requis** : Interface admin fonctionnelle, système d'import opérationnel.
 
 ### 📝 Instructions granulaires
 
 #### Étape 6.1 : Optimisations de performance
+
 **[FILE]** Créer `src/lib/utils/performance.ts` :
+
 ```ts
 // Utilitaires de monitoring et optimisation des performances
 
 export class PerformanceMonitor {
   private metrics: Map<string, number[]> = new Map();
-  
+
   startTiming(label: string): () => void {
     const start = performance.now();
-    
+
     return () => {
       const duration = performance.now() - start;
       this.recordMetric(label, duration);
     };
   }
-  
+
   recordMetric(label: string, value: number): void {
     if (!this.metrics.has(label)) {
       this.metrics.set(label, []);
     }
-    
+
     const values = this.metrics.get(label)!;
     values.push(value);
-    
+
     // Garder seulement les 100 dernières mesures
     if (values.length > 100) {
       values.shift();
     }
   }
-  
+
   getMetricStats(label: string) {
     const values = this.metrics.get(label);
     if (!values || values.length === 0) return null;
-    
+
     const sorted = [...values].sort((a, b) => a - b);
     const sum = values.reduce((a, b) => a + b, 0);
-    
+
     return {
       count: values.length,
       min: sorted[0],
       max: sorted[sorted.length - 1],
       avg: sum / values.length,
       p50: sorted[Math.floor(sorted.length * 0.5)],
-      p95: sorted[Math.floor(sorted.length * 0.95)]
+      p95: sorted[Math.floor(sorted.length * 0.95)],
     };
   }
-  
+
   reportToConsole(): void {
-    console.group('🚀 Performance Metrics');
-    
+    console.group("🚀 Performance Metrics");
+
     for (const [label, _] of this.metrics) {
       const stats = this.getMetricStats(label);
       if (stats) {
         console.log(`${label}:`, {
-          'Moyenne': `${stats.avg.toFixed(2)}ms`,
-          'P95': `${stats.p95.toFixed(2)}ms`,
-          'Min/Max': `${stats.min.toFixed(2)}/${stats.max.toFixed(2)}ms`,
-          'Échantillons': stats.count
+          Moyenne: `${stats.avg.toFixed(2)}ms`,
+          P95: `${stats.p95.toFixed(2)}ms`,
+          "Min/Max": `${stats.min.toFixed(2)}/${stats.max.toFixed(2)}ms`,
+          Échantillons: stats.count,
         });
       }
     }
-    
+
     console.groupEnd();
   }
 }
@@ -7770,13 +8238,17 @@ export const perfMonitor = new PerformanceMonitor();
 
 // Decorator pour mesurer automatiquement les fonctions
 export function measurePerformance(label?: string) {
-  return function(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+  return function (
+    target: any,
+    propertyKey: string,
+    descriptor: PropertyDescriptor
+  ) {
     const originalMethod = descriptor.value;
     const metricLabel = label || `${target.constructor.name}.${propertyKey}`;
-    
-    descriptor.value = async function(...args: any[]) {
+
+    descriptor.value = async function (...args: any[]) {
       const endTiming = perfMonitor.startTiming(metricLabel);
-      
+
       try {
         const result = await originalMethod.apply(this, args);
         return result;
@@ -7784,7 +8256,7 @@ export function measurePerformance(label?: string) {
         endTiming();
       }
     };
-    
+
     return descriptor;
   };
 }
@@ -7796,33 +8268,33 @@ export function createLazyLoader(
 ): IntersectionObserver {
   const defaultOptions: IntersectionObserverInit = {
     root: null,
-    rootMargin: '50px',
+    rootMargin: "50px",
     threshold: 0.1,
-    ...options
+    ...options,
   };
-  
+
   return new IntersectionObserver(callback, defaultOptions);
 }
 
 // Lazy loading d'images
 export function setupImageLazyLoading(): void {
   const imageObserver = createLazyLoader((entries) => {
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const img = entry.target as HTMLImageElement;
         const src = img.dataset.src;
-        
+
         if (src) {
           img.src = src;
-          img.removeAttribute('data-src');
+          img.removeAttribute("data-src");
           imageObserver.unobserve(img);
         }
       }
     });
   });
-  
+
   // Observer toutes les images avec data-src
-  document.querySelectorAll('img[data-src]').forEach(img => {
+  document.querySelectorAll("img[data-src]").forEach((img) => {
     imageObserver.observe(img);
   });
 }
@@ -7833,7 +8305,7 @@ export function debounce<T extends (...args: any[]) => void>(
   wait: number
 ): (...args: Parameters<T>) => void {
   let timeout: NodeJS.Timeout;
-  
+
   return (...args: Parameters<T>) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);
@@ -7846,20 +8318,20 @@ export function throttle<T extends (...args: any[]) => void>(
   limit: number
 ): (...args: Parameters<T>) => void {
   let inThrottle: boolean;
-  
+
   return (...args: Parameters<T>) => {
     if (!inThrottle) {
       func(...args);
       inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
+      setTimeout(() => (inThrottle = false), limit);
     }
   };
 }
 
 // Preload des ressources critiques
 export function preloadResource(href: string, as: string): void {
-  const link = document.createElement('link');
-  link.rel = 'preload';
+  const link = document.createElement("link");
+  link.rel = "preload";
   link.href = href;
   link.as = as;
   document.head.appendChild(link);
@@ -7868,139 +8340,151 @@ export function preloadResource(href: string, as: string): void {
 // Monitoring des Web Vitals
 export async function reportWebVitals(): Promise<void> {
   try {
-    const { getCLS, getFID, getFCP, getLCP, getTTFB } = await import('web-vitals');
-    
+    const { getCLS, getFID, getFCP, getLCP, getTTFB } = await import(
+      "web-vitals"
+    );
+
     getCLS(console.log);
     getFID(console.log);
     getFCP(console.log);
     getLCP(console.log);
     getTTFB(console.log);
   } catch (error) {
-    console.warn('Web Vitals non disponibles:', error);
+    console.warn("Web Vitals non disponibles:", error);
   }
 }
 ```
 
 #### Étape 6.2 : Configuration Lighthouse CI
+
 ```bash
 [CMD] npm install -D @lhci/cli
 ```
 
 **[FILE]** Créer `lighthouserc.js` :
+
 ```js
 module.exports = {
   ci: {
     collect: {
-      url: ['http://localhost:5173', 'http://localhost:5173/dashboard'],
-      startServerCommand: 'npm run build && npm run preview',
-      numberOfRuns: 3
+      url: ["http://localhost:5173", "http://localhost:5173/dashboard"],
+      startServerCommand: "npm run build && npm run preview",
+      numberOfRuns: 3,
     },
     assert: {
       assertions: {
-        'categories:performance': ['warn', { minScore: 0.8 }],
-        'categories:accessibility': ['error', { minScore: 0.9 }],
-        'categories:best-practices': ['warn', { minScore: 0.85 }],
-        'categories:seo': ['warn', { minScore: 0.8 }],
-        'categories:pwa': ['warn', { minScore: 0.8 }]
-      }
+        "categories:performance": ["warn", { minScore: 0.8 }],
+        "categories:accessibility": ["error", { minScore: 0.9 }],
+        "categories:best-practices": ["warn", { minScore: 0.85 }],
+        "categories:seo": ["warn", { minScore: 0.8 }],
+        "categories:pwa": ["warn", { minScore: 0.8 }],
+      },
     },
     upload: {
-      target: 'filesystem',
-      outputDir: './lighthouse-reports'
-    }
-  }
+      target: "filesystem",
+      outputDir: "./lighthouse-reports",
+    },
+  },
 };
 ```
 
 **[FILE]** Créer `scripts/lighthouse-audit.js` :
-```js
-import { execSync } from 'child_process';
-import fs from 'fs';
 
-console.log('🔍 Lancement de l\'audit Lighthouse...');
+```js
+import { execSync } from "child_process";
+import fs from "fs";
+
+console.log("🔍 Lancement de l'audit Lighthouse...");
 
 try {
   // Build et preview
-  console.log('📦 Build de l\'application...');
-  execSync('npm run build', { stdio: 'inherit' });
-  
+  console.log("📦 Build de l'application...");
+  execSync("npm run build", { stdio: "inherit" });
+
   // Audit Lighthouse
-  console.log('🚀 Audit en cours...');
-  execSync('npx lhci autorun', { stdio: 'inherit' });
-  
+  console.log("🚀 Audit en cours...");
+  execSync("npx lhci autorun", { stdio: "inherit" });
+
   // Résumé des résultats
-  const reportDir = './lighthouse-reports';
+  const reportDir = "./lighthouse-reports";
   if (fs.existsSync(reportDir)) {
     const files = fs.readdirSync(reportDir);
-    const htmlReports = files.filter(f => f.endsWith('.html'));
-    
-    console.log('📊 Rapports générés:');
-    htmlReports.forEach(report => {
+    const htmlReports = files.filter((f) => f.endsWith(".html"));
+
+    console.log("📊 Rapports générés:");
+    htmlReports.forEach((report) => {
       console.log(`   - ${reportDir}/${report}`);
     });
-    
+
     if (htmlReports.length > 0) {
-      console.log(`\n🌐 Ouvrir le rapport: file://${process.cwd()}/${reportDir}/${htmlReports[0]}`);
+      console.log(
+        `\n🌐 Ouvrir le rapport: file://${process.cwd()}/${reportDir}/${
+          htmlReports[0]
+        }`
+      );
     }
   }
-  
-  console.log('✅ Audit Lighthouse terminé !');
+
+  console.log("✅ Audit Lighthouse terminé !");
 } catch (error) {
-  console.error('❌ Erreur audit Lighthouse:', error.message);
+  console.error("❌ Erreur audit Lighthouse:", error.message);
   process.exit(1);
 }
 ```
 
 #### Étape 6.3 : Tests de régression visuels
+
 ```bash
 [CMD] npm install -D @playwright/test
 ```
 
 **[FILE]** Créer `tests/e2e/visual.spec.ts` :
+
 ```ts
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test.describe('Tests de régression visuelle', () => {
-  test('Page d\'accueil', async ({ page }) => {
-    await page.goto('/');
-    await page.waitForLoadState('networkidle');
-    await expect(page).toHaveScreenshot('homepage.png');
+test.describe("Tests de régression visuelle", () => {
+  test("Page d'accueil", async ({ page }) => {
+    await page.goto("/");
+    await page.waitForLoadState("networkidle");
+    await expect(page).toHaveScreenshot("homepage.png");
   });
 
-  test('Page de connexion', async ({ page }) => {
-    await page.goto('/auth/login');
-    await page.waitForLoadState('networkidle');
-    await expect(page).toHaveScreenshot('login.png');
+  test("Page de connexion", async ({ page }) => {
+    await page.goto("/auth/login");
+    await page.waitForLoadState("networkidle");
+    await expect(page).toHaveScreenshot("login.png");
   });
 
-  test('Dashboard étudiant', async ({ page }) => {
+  test("Dashboard étudiant", async ({ page }) => {
     // Se connecter d'abord
-    await page.goto('/auth/login');
-    await page.fill('input[name="email"]', 'test@example.com');
-    await page.fill('input[name="password"]', 'password123');
+    await page.goto("/auth/login");
+    await page.fill('input[name="email"]', "test@example.com");
+    await page.fill('input[name="password"]', "password123");
     await page.click('button[type="submit"]');
-    
-    await page.waitForURL('/dashboard');
-    await page.waitForLoadState('networkidle');
-    await expect(page).toHaveScreenshot('dashboard.png');
+
+    await page.waitForURL("/dashboard");
+    await page.waitForLoadState("networkidle");
+    await expect(page).toHaveScreenshot("dashboard.png");
   });
 
-  test('Page de cours', async ({ page }) => {
-    await page.goto('/cours/mathematiques');
-    await page.waitForLoadState('networkidle');
-    await expect(page).toHaveScreenshot('cours-math.png');
+  test("Page de cours", async ({ page }) => {
+    await page.goto("/cours/mathematiques");
+    await page.waitForLoadState("networkidle");
+    await expect(page).toHaveScreenshot("cours-math.png");
   });
 
-  test('Responsive mobile', async ({ page }) => {
+  test("Responsive mobile", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto('/dashboard');
-    await page.waitForLoadState('networkidle');
-    await expect(page).toHaveScreenshot('dashboard-mobile.png');
+    await page.goto("/dashboard");
+    await page.waitForLoadState("networkidle");
+    await expect(page).toHaveScreenshot("dashboard-mobile.png");
   });
 });
 ```
 
 ### 🧪 Tests de validation Phase 5 & 6
+
 ```bash
 [TEST] npm run test                    # Tests unitaires
 [TEST] npm run test:e2e               # Tests E2E complets
@@ -8009,6 +8493,7 @@ test.describe('Tests de régression visuelle', () => {
 ```
 
 ### ✅ Critères de validation obligatoires Phase 5
+
 - [ ] **[CHECK]** Interface admin accessible à `/admin`
 - [ ] **[CHECK]** Import JSON et Markdown fonctionnel
 - [ ] **[CHECK]** Gestion des utilisateurs opérationnelle
@@ -8016,6 +8501,7 @@ test.describe('Tests de régression visuelle', () => {
 - [ ] **[CHECK]** Tests admin passent
 
 ### ✅ Critères de validation obligatoires Phase 6
+
 - [ ] **[CHECK]** Score Lighthouse Performance > 80
 - [ ] **[CHECK]** Score Lighthouse Accessibilité > 90
 - [ ] **[CHECK]** Score Lighthouse PWA > 80

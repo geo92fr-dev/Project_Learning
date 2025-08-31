@@ -14,13 +14,15 @@
 ### 🚀 **Production Infrastructure**
 
 **Architecture Cloud :**
+
 - **Container Orchestration** : Docker + Kubernetes pour scalabilité
-- **CDN Global** : Distribution contenu géographique optimisée  
+- **CDN Global** : Distribution contenu géographique optimisée
 - **Load Balancing** : Répartition charge avec failover automatique
 - **Database Scaling** : Réplication maître-esclave avec sharding
 - **Microservices** : Services découplés pour haute disponibilité
 
 **DevOps Pipeline :**
+
 - **CI/CD Automatisé** : GitLab CI/GitHub Actions avec tests intégrés
 - **Infrastructure as Code** : Terraform pour provisioning reproductible
 - **Container Registry** : Images Docker sécurisées et versionnées
@@ -30,6 +32,7 @@
 ### 📊 **Monitoring & Observability**
 
 **Application Monitoring :**
+
 - **Real-time Metrics** : Performance, erreurs, usage en temps réel
 - **Distributed Tracing** : Suivi requêtes cross-services
 - **Log Aggregation** : Centralisation logs avec recherche avancée
@@ -37,6 +40,7 @@
 - **Health Checks** : Vérifications automatiques de santé services
 
 **Business Intelligence :**
+
 - **Usage Analytics** : Métriques utilisateur et engagement
 - **Performance KPIs** : Indicateurs business temps réel
 - **Cost Optimization** : Analyse coûts infrastructure et optimisation
@@ -46,6 +50,7 @@
 ### 🔒 **Security & Compliance**
 
 **Production Security :**
+
 - **SSL/TLS Termination** : Chiffrement end-to-end avec certificats auto-renouvelés
 - **WAF Integration** : Web Application Firewall contre attaques
 - **DDoS Protection** : Mitigation attaques distribuées
@@ -53,6 +58,7 @@
 - **Network Security** : VPC, security groups, et segmentation réseau
 
 **Compliance & Governance :**
+
 - **GDPR Compliance** : Gestion données personnelles conforme
 - **Data Backup** : Sauvegardes automatiques cross-région
 - **Audit Logging** : Traçabilité complète actions critiques
@@ -62,6 +68,7 @@
 ### ⚡ **Performance & Scalability**
 
 **Optimization Strategy :**
+
 - **Auto-scaling** : Adaptation automatique charge
 - **Caching Layers** : Redis/Memcached multi-niveau
 - **Database Optimization** : Indexation, partitioning, read replicas
@@ -73,12 +80,14 @@
 ## 📚 **Références Modulaires**
 
 ### **[REF]** Production Infrastructure : **[production-infrastructure.md](../references/production/infrastructure.md)**
+
 - ✅ Configuration Docker/Kubernetes complète
 - ✅ Terraform infrastructure as code
 - ✅ CI/CD pipelines optimisés
 - ✅ Monitoring et alerting avancés
 
 ### **[REF]** Security & Compliance : **[security-compliance.md](../references/production/security.md)**
+
 - ✅ Sécurité production robuste
 - ✅ Compliance GDPR automatisée
 - ✅ Disaster recovery planifié
@@ -155,14 +164,14 @@ CMD ["node", "build"]
 **[FILE]** Créer `health-check.js` :
 
 ```javascript
-const http = require('http');
+const http = require("http");
 
 const options = {
-  host: 'localhost',
+  host: "localhost",
   port: process.env.PORT || 3000,
-  path: '/health',
+  path: "/health",
   timeout: 2000,
-  method: 'GET'
+  method: "GET",
 };
 
 const request = http.request(options, (res) => {
@@ -174,13 +183,13 @@ const request = http.request(options, (res) => {
   }
 });
 
-request.on('error', (err) => {
-  console.error('Health check failed:', err);
+request.on("error", (err) => {
+  console.error("Health check failed:", err);
   process.exit(1);
 });
 
-request.on('timeout', () => {
-  console.error('Health check timeout');
+request.on("timeout", () => {
+  console.error("Health check timeout");
   request.destroy();
   process.exit(1);
 });
@@ -268,85 +277,85 @@ spec:
         runAsUser: 1001
         fsGroup: 1001
       containers:
-      - name: funlearning
-        image: funlearning/app:${IMAGE_TAG}
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 3000
-          name: http
-          protocol: TCP
-        env:
-        - name: POD_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
-        - name: POD_NAMESPACE
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.namespace
-        envFrom:
-        - configMapRef:
-            name: funlearning-config
-        - secretRef:
-            name: funlearning-secrets
-        resources:
-          requests:
-            memory: "256Mi"
-            cpu: "100m"
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: http
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          timeoutSeconds: 5
-          failureThreshold: 3
-        readinessProbe:
-          httpGet:
-            path: /ready
-            port: http
-          initialDelaySeconds: 5
-          periodSeconds: 5
-          timeoutSeconds: 3
-          failureThreshold: 3
-        startupProbe:
-          httpGet:
-            path: /health
-            port: http
-          initialDelaySeconds: 10
-          periodSeconds: 10
-          timeoutSeconds: 5
-          failureThreshold: 30
-        volumeMounts:
-        - name: tmp
-          mountPath: /tmp
-        - name: app-logs
-          mountPath: /app/logs
+        - name: funlearning
+          image: funlearning/app:${IMAGE_TAG}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+              name: http
+              protocol: TCP
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          envFrom:
+            - configMapRef:
+                name: funlearning-config
+            - secretRef:
+                name: funlearning-secrets
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+          startupProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 30
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            - name: app-logs
+              mountPath: /app/logs
       volumes:
-      - name: tmp
-        emptyDir: {}
-      - name: app-logs
-        emptyDir: {}
+        - name: tmp
+          emptyDir: {}
+        - name: app-logs
+          emptyDir: {}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - funlearning
-              topologyKey: kubernetes.io/hostname
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - funlearning
+                topologyKey: kubernetes.io/hostname
       tolerations:
-      - key: "app"
-        operator: "Equal"
-        value: "funlearning"
-        effect: "NoSchedule"
+        - key: "app"
+          operator: "Equal"
+          value: "funlearning"
+          effect: "NoSchedule"
 ---
 apiVersion: v1
 kind: Service
@@ -359,10 +368,10 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-  - port: 80
-    targetPort: http
-    protocol: TCP
-    name: http
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
   selector:
     app: funlearning
     component: web
@@ -381,31 +390,31 @@ metadata:
     nginx.ingress.kubernetes.io/rate-limit-window: "1m"
 spec:
   tls:
-  - hosts:
-    - app.funlearning.com
-    - api.funlearning.com
-    secretName: funlearning-tls
+    - hosts:
+        - app.funlearning.com
+        - api.funlearning.com
+      secretName: funlearning-tls
   rules:
-  - host: app.funlearning.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: funlearning-service
-            port:
-              number: 80
-  - host: api.funlearning.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: funlearning-service
-            port:
-              number: 80
+    - host: app.funlearning.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: funlearning-service
+                port:
+                  number: 80
+    - host: api.funlearning.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: funlearning-service
+                port:
+                  number: 80
 ```
 
 ### 🏗️ **Étape 12.3 : Infrastructure as Code**
@@ -426,7 +435,7 @@ terraform {
       version = "~> 2.20"
     }
   }
-  
+
   backend "s3" {
     bucket         = "funlearning-terraform-state"
     key            = "production/terraform.tfstate"
@@ -438,7 +447,7 @@ terraform {
 
 provider "aws" {
   region = var.aws_region
-  
+
   default_tags {
     tags = {
       Environment = var.environment
@@ -503,7 +512,7 @@ resource "aws_vpc" "main" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
   enable_dns_support   = true
-  
+
   tags = {
     Name = "${var.cluster_name}-vpc"
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
@@ -512,7 +521,7 @@ resource "aws_vpc" "main" {
 
 resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
-  
+
   tags = {
     Name = "${var.cluster_name}-igw"
   }
@@ -521,12 +530,12 @@ resource "aws_internet_gateway" "main" {
 # Subnets publics
 resource "aws_subnet" "public" {
   count = 2
-  
+
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.${count.index + 1}.0/24"
   availability_zone       = data.aws_availability_zones.available.names[count.index]
   map_public_ip_on_launch = true
-  
+
   tags = {
     Name = "${var.cluster_name}-public-${count.index + 1}"
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
@@ -537,11 +546,11 @@ resource "aws_subnet" "public" {
 # Subnets privés
 resource "aws_subnet" "private" {
   count = 2
-  
+
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.${count.index + 10}.0/24"
   availability_zone = data.aws_availability_zones.available.names[count.index]
-  
+
   tags = {
     Name = "${var.cluster_name}-private-${count.index + 1}"
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
@@ -553,7 +562,7 @@ resource "aws_subnet" "private" {
 resource "aws_eip" "nat" {
   count  = 2
   domain = "vpc"
-  
+
   tags = {
     Name = "${var.cluster_name}-nat-${count.index + 1}"
   }
@@ -561,26 +570,26 @@ resource "aws_eip" "nat" {
 
 resource "aws_nat_gateway" "main" {
   count = 2
-  
+
   allocation_id = aws_eip.nat[count.index].id
   subnet_id     = aws_subnet.public[count.index].id
-  
+
   tags = {
     Name = "${var.cluster_name}-nat-${count.index + 1}"
   }
-  
+
   depends_on = [aws_internet_gateway.main]
 }
 
 # Route tables
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
-  
+
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.main.id
   }
-  
+
   tags = {
     Name = "${var.cluster_name}-public-rt"
   }
@@ -589,12 +598,12 @@ resource "aws_route_table" "public" {
 resource "aws_route_table" "private" {
   count  = 2
   vpc_id = aws_vpc.main.id
-  
+
   route {
     cidr_block     = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.main[count.index].id
   }
-  
+
   tags = {
     Name = "${var.cluster_name}-private-rt-${count.index + 1}"
   }
@@ -603,14 +612,14 @@ resource "aws_route_table" "private" {
 # Route table associations
 resource "aws_route_table_association" "public" {
   count = 2
-  
+
   subnet_id      = aws_subnet.public[count.index].id
   route_table_id = aws_route_table.public.id
 }
 
 resource "aws_route_table_association" "private" {
   count = 2
-  
+
   subnet_id      = aws_subnet.private[count.index].id
   route_table_id = aws_route_table.private[count.index].id
 }
@@ -618,7 +627,7 @@ resource "aws_route_table_association" "private" {
 # ===== EKS CLUSTER =====
 resource "aws_iam_role" "cluster" {
   name = "${var.cluster_name}-cluster-role"
-  
+
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -641,7 +650,7 @@ resource "aws_iam_role_policy_attachment" "cluster_amazon_eks_cluster_policy" {
 resource "aws_security_group" "cluster" {
   name_prefix = "${var.cluster_name}-cluster-sg"
   vpc_id      = aws_vpc.main.id
-  
+
   ingress {
     description = "HTTPS"
     from_port   = 443
@@ -649,14 +658,14 @@ resource "aws_security_group" "cluster" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  
+
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  
+
   tags = {
     Name = "${var.cluster_name}-cluster-sg"
   }
@@ -666,7 +675,7 @@ resource "aws_eks_cluster" "main" {
   name     = var.cluster_name
   role_arn = aws_iam_role.cluster.arn
   version  = "1.27"
-  
+
   vpc_config {
     subnet_ids              = concat(aws_subnet.public[*].id, aws_subnet.private[*].id)
     security_group_ids      = [aws_security_group.cluster.id]
@@ -674,14 +683,14 @@ resource "aws_eks_cluster" "main" {
     endpoint_public_access  = true
     public_access_cidrs     = ["0.0.0.0/0"]
   }
-  
+
   enabled_cluster_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
-  
+
   depends_on = [
     aws_iam_role_policy_attachment.cluster_amazon_eks_cluster_policy,
     aws_cloudwatch_log_group.cluster
   ]
-  
+
   tags = {
     Name = var.cluster_name
   }
@@ -691,7 +700,7 @@ resource "aws_eks_cluster" "main" {
 resource "aws_cloudwatch_log_group" "cluster" {
   name              = "/aws/eks/${var.cluster_name}/cluster"
   retention_in_days = 7
-  
+
   tags = {
     Name = "${var.cluster_name}-logs"
   }
@@ -700,7 +709,7 @@ resource "aws_cloudwatch_log_group" "cluster" {
 # ===== EKS NODE GROUP =====
 resource "aws_iam_role" "node_group" {
   name = "${var.cluster_name}-node-group-role"
-  
+
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -736,27 +745,27 @@ resource "aws_eks_node_group" "main" {
   node_role_arn   = aws_iam_role.node_group.arn
   subnet_ids      = aws_subnet.private[*].id
   instance_types  = [var.node_instance_type]
-  
+
   scaling_config {
     desired_size = var.desired_size
     max_size     = var.max_size
     min_size     = var.min_size
   }
-  
+
   update_config {
     max_unavailable = 1
   }
-  
+
   remote_access {
     ec2_ssh_key = aws_key_pair.worker_nodes.key_name
   }
-  
+
   depends_on = [
     aws_iam_role_policy_attachment.node_group_amazon_eks_worker_node_policy,
     aws_iam_role_policy_attachment.node_group_amazon_eks_cni_policy,
     aws_iam_role_policy_attachment.node_group_amazon_ec2_container_registry_read_only,
   ]
-  
+
   tags = {
     Name = "${var.cluster_name}-workers"
   }
@@ -766,7 +775,7 @@ resource "aws_eks_node_group" "main" {
 resource "aws_key_pair" "worker_nodes" {
   key_name   = "${var.cluster_name}-workers"
   public_key = file("${path.module}/keys/workers.pub")
-  
+
   tags = {
     Name = "${var.cluster_name}-workers"
   }
@@ -776,7 +785,7 @@ resource "aws_key_pair" "worker_nodes" {
 resource "aws_db_subnet_group" "main" {
   name       = "${var.cluster_name}-db-subnet-group"
   subnet_ids = aws_subnet.private[*].id
-  
+
   tags = {
     Name = "${var.cluster_name}-db-subnet-group"
   }
@@ -785,7 +794,7 @@ resource "aws_db_subnet_group" "main" {
 resource "aws_security_group" "rds" {
   name_prefix = "${var.cluster_name}-rds-sg"
   vpc_id      = aws_vpc.main.id
-  
+
   ingress {
     description     = "PostgreSQL"
     from_port       = 5432
@@ -793,7 +802,7 @@ resource "aws_security_group" "rds" {
     protocol        = "tcp"
     security_groups = [aws_security_group.cluster.id]
   }
-  
+
   tags = {
     Name = "${var.cluster_name}-rds-sg"
   }
@@ -804,25 +813,25 @@ resource "aws_db_instance" "main" {
   engine         = "postgres"
   engine_version = "15.3"
   instance_class = "db.t3.micro"
-  
+
   allocated_storage     = 20
   max_allocated_storage = 100
   storage_encrypted     = true
-  
+
   db_name  = "funlearning"
   username = "postgres"
   password = random_password.db_password.result
-  
+
   vpc_security_group_ids = [aws_security_group.rds.id]
   db_subnet_group_name   = aws_db_subnet_group.main.name
-  
+
   backup_retention_period = 7
   backup_window          = "03:00-04:00"
   maintenance_window     = "sun:04:00-sun:05:00"
-  
+
   skip_final_snapshot = false
   final_snapshot_identifier = "${var.cluster_name}-final-snapshot-${formatdate("YYYY-MM-DD-hhmm", timestamp())}"
-  
+
   tags = {
     Name = "${var.cluster_name}-postgres"
   }
@@ -842,7 +851,7 @@ resource "aws_elasticache_subnet_group" "main" {
 resource "aws_security_group" "redis" {
   name_prefix = "${var.cluster_name}-redis-sg"
   vpc_id      = aws_vpc.main.id
-  
+
   ingress {
     description     = "Redis"
     from_port       = 6379
@@ -850,7 +859,7 @@ resource "aws_security_group" "redis" {
     protocol        = "tcp"
     security_groups = [aws_security_group.cluster.id]
   }
-  
+
   tags = {
     Name = "${var.cluster_name}-redis-sg"
   }
@@ -859,22 +868,22 @@ resource "aws_security_group" "redis" {
 resource "aws_elasticache_replication_group" "main" {
   replication_group_id         = "${var.cluster_name}-redis"
   description                  = "Redis cluster for FunLearning"
-  
+
   port                         = 6379
   parameter_group_name         = "default.redis7"
   node_type                    = "cache.t3.micro"
   num_cache_clusters           = 2
-  
+
   subnet_group_name            = aws_elasticache_subnet_group.main.name
   security_group_ids           = [aws_security_group.redis.id]
-  
+
   at_rest_encryption_enabled   = true
   transit_encryption_enabled   = true
   auth_token                   = random_password.redis_password.result
-  
+
   automatic_failover_enabled   = true
   multi_az_enabled             = true
-  
+
   tags = {
     Name = "${var.cluster_name}-redis"
   }
@@ -931,7 +940,7 @@ name: Production Deployment
 on:
   push:
     branches: [main]
-    tags: ['v*']
+    tags: ["v*"]
   pull_request:
     branches: [main]
 
@@ -944,57 +953,57 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
 
-    - name: Install dependencies
-      run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Run linting
-      run: npm run lint
+      - name: Run linting
+        run: npm run lint
 
-    - name: Run type checking
-      run: npm run type-check
+      - name: Run type checking
+        run: npm run type-check
 
-    - name: Run unit tests
-      run: npm run test:unit
+      - name: Run unit tests
+        run: npm run test:unit
 
-    - name: Run integration tests
-      run: npm run test:integration
+      - name: Run integration tests
+        run: npm run test:integration
 
-    - name: Upload coverage
-      uses: codecov/codecov-action@v3
-      with:
-        files: ./coverage/lcov.info
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/lcov.info
 
   # ===== SECURITY =====
   security:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Run security audit
-      run: npm audit --audit-level=moderate
+      - name: Run security audit
+        run: npm audit --audit-level=moderate
 
-    - name: Run Trivy vulnerability scanner
-      uses: aquasecurity/trivy-action@master
-      with:
-        scan-type: 'fs'
-        scan-ref: '.'
-        format: 'sarif'
-        output: 'trivy-results.sarif'
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: "fs"
+          scan-ref: "."
+          format: "sarif"
+          output: "trivy-results.sarif"
 
-    - name: Upload Trivy scan results
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        sarif_file: 'trivy-results.sarif'
+      - name: Upload Trivy scan results
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: "trivy-results.sarif"
 
   # ===== BUILD =====
   build:
@@ -1007,47 +1016,47 @@ jobs:
       image: ${{ steps.image.outputs.image }}
       digest: ${{ steps.build.outputs.digest }}
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Setup Docker Buildx
-      uses: docker/setup-buildx-action@v3
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-    - name: Login to Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ${{ env.REGISTRY }}
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Login to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Extract metadata
-      id: meta
-      uses: docker/metadata-action@v5
-      with:
-        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-        tags: |
-          type=ref,event=branch
-          type=ref,event=pr
-          type=semver,pattern={{version}}
-          type=semver,pattern={{major}}.{{minor}}
-          type=sha,prefix={{branch}}-
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha,prefix={{branch}}-
 
-    - name: Build and push
-      id: build
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        platforms: linux/amd64,linux/arm64
-        push: true
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
+      - name: Build and push
+        id: build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
-    - name: Output image
-      id: image
-      run: |
-        echo "image=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.version }}" >> $GITHUB_OUTPUT
+      - name: Output image
+        id: image
+        run: |
+          echo "image=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.version }}" >> $GITHUB_OUTPUT
 
   # ===== DEPLOY STAGING =====
   deploy-staging:
@@ -1056,32 +1065,32 @@ jobs:
     runs-on: ubuntu-latest
     environment: staging
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: eu-west-1
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
 
-    - name: Update kubeconfig
-      run: |
-        aws eks update-kubeconfig --name funlearning-staging --region eu-west-1
+      - name: Update kubeconfig
+        run: |
+          aws eks update-kubeconfig --name funlearning-staging --region eu-west-1
 
-    - name: Deploy to staging
-      run: |
-        envsubst < k8s/deployment.yaml | kubectl apply -f -
-        kubectl rollout status deployment/funlearning-app -n funlearning-staging --timeout=300s
-      env:
-        IMAGE_TAG: ${{ needs.build.outputs.digest }}
-        ENVIRONMENT: staging
+      - name: Deploy to staging
+        run: |
+          envsubst < k8s/deployment.yaml | kubectl apply -f -
+          kubectl rollout status deployment/funlearning-app -n funlearning-staging --timeout=300s
+        env:
+          IMAGE_TAG: ${{ needs.build.outputs.digest }}
+          ENVIRONMENT: staging
 
-    - name: Run smoke tests
-      run: |
-        kubectl run smoke-test --image=curlimages/curl --rm -i --restart=Never -- \
-          curl -f http://funlearning-service.funlearning-staging.svc.cluster.local/health
+      - name: Run smoke tests
+        run: |
+          kubectl run smoke-test --image=curlimages/curl --rm -i --restart=Never -- \
+            curl -f http://funlearning-service.funlearning-staging.svc.cluster.local/health
 
   # ===== DEPLOY PRODUCTION =====
   deploy-production:
@@ -1090,41 +1099,41 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: eu-west-1
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
 
-    - name: Update kubeconfig
-      run: |
-        aws eks update-kubeconfig --name funlearning-prod --region eu-west-1
+      - name: Update kubeconfig
+        run: |
+          aws eks update-kubeconfig --name funlearning-prod --region eu-west-1
 
-    - name: Deploy to production
-      run: |
-        envsubst < k8s/deployment.yaml | kubectl apply -f -
-        kubectl rollout status deployment/funlearning-app -n funlearning --timeout=600s
-      env:
-        IMAGE_TAG: ${{ needs.build.outputs.digest }}
-        ENVIRONMENT: production
+      - name: Deploy to production
+        run: |
+          envsubst < k8s/deployment.yaml | kubectl apply -f -
+          kubectl rollout status deployment/funlearning-app -n funlearning --timeout=600s
+        env:
+          IMAGE_TAG: ${{ needs.build.outputs.digest }}
+          ENVIRONMENT: production
 
-    - name: Run production health checks
-      run: |
-        kubectl run health-check --image=curlimages/curl --rm -i --restart=Never -- \
-          curl -f http://funlearning-service.funlearning.svc.cluster.local/health
+      - name: Run production health checks
+        run: |
+          kubectl run health-check --image=curlimages/curl --rm -i --restart=Never -- \
+            curl -f http://funlearning-service.funlearning.svc.cluster.local/health
 
-    - name: Notify deployment
-      uses: 8398a7/action-slack@v3
-      with:
-        status: ${{ job.status }}
-        channel: '#deployments'
-        text: 'Production deployment completed successfully! 🚀'
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+      - name: Notify deployment
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          channel: "#deployments"
+          text: "Production deployment completed successfully! 🚀"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
 
   # ===== ROLLBACK =====
   rollback:
@@ -1133,30 +1142,30 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: eu-west-1
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
 
-    - name: Update kubeconfig
-      run: |
-        aws eks update-kubeconfig --name funlearning-prod --region eu-west-1
+      - name: Update kubeconfig
+        run: |
+          aws eks update-kubeconfig --name funlearning-prod --region eu-west-1
 
-    - name: Rollback deployment
-      run: |
-        kubectl rollout undo deployment/funlearning-app -n funlearning
-        kubectl rollout status deployment/funlearning-app -n funlearning --timeout=300s
+      - name: Rollback deployment
+        run: |
+          kubectl rollout undo deployment/funlearning-app -n funlearning
+          kubectl rollout status deployment/funlearning-app -n funlearning --timeout=300s
 
-    - name: Notify rollback
-      uses: 8398a7/action-slack@v3
-      with:
-        status: 'warning'
-        channel: '#alerts'
-        text: 'Production deployment failed - automatic rollback executed! ⚠️'
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+      - name: Notify rollback
+        uses: 8398a7/action-slack@v3
+        with:
+          status: "warning"
+          channel: "#alerts"
+          text: "Production deployment failed - automatic rollback executed! ⚠️"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
 ```
 
 ### 📊 **Étape 12.5 : Monitoring & Observability**
@@ -1164,27 +1173,29 @@ jobs:
 **[FILE]** Créer `src/routes/health/+server.ts` :
 
 ```ts
-import { json } from '@sveltejs/kit';
-import type { RequestHandler } from './$types';
+import { json } from "@sveltejs/kit";
+import type { RequestHandler } from "./$types";
 
 // Health check endpoint pour Kubernetes
 export const GET: RequestHandler = async ({ url }) => {
   const checks = await runHealthChecks();
-  const isHealthy = Object.values(checks).every(check => check.status === 'healthy');
+  const isHealthy = Object.values(checks).every(
+    (check) => check.status === "healthy"
+  );
 
   return json(
     {
-      status: isHealthy ? 'healthy' : 'unhealthy',
+      status: isHealthy ? "healthy" : "unhealthy",
       timestamp: new Date().toISOString(),
-      version: process.env.npm_package_version || 'unknown',
-      environment: process.env.NODE_ENV || 'development',
-      checks
+      version: process.env.npm_package_version || "unknown",
+      environment: process.env.NODE_ENV || "development",
+      checks,
     },
-    { 
+    {
       status: isHealthy ? 200 : 503,
       headers: {
-        'Cache-Control': 'no-cache, no-store, must-revalidate'
-      }
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+      },
     }
   );
 };
@@ -1194,16 +1205,16 @@ async function runHealthChecks() {
 
   // Database check
   checks.database = await checkDatabase();
-  
+
   // Redis check
   checks.redis = await checkRedis();
-  
+
   // External APIs check
   checks.external_apis = await checkExternalAPIs();
-  
+
   // Memory check
   checks.memory = checkMemory();
-  
+
   // Disk space check
   checks.disk = await checkDiskSpace();
 
@@ -1211,7 +1222,7 @@ async function runHealthChecks() {
 }
 
 interface HealthCheck {
-  status: 'healthy' | 'unhealthy' | 'degraded';
+  status: "healthy" | "unhealthy" | "degraded";
   message?: string;
   responseTime?: number;
   details?: Record<string, unknown>;
@@ -1219,102 +1230,102 @@ interface HealthCheck {
 
 async function checkDatabase(): Promise<HealthCheck> {
   const start = performance.now();
-  
+
   try {
     // Simulation check database
-    await new Promise(resolve => setTimeout(resolve, 10));
-    
+    await new Promise((resolve) => setTimeout(resolve, 10));
+
     const responseTime = performance.now() - start;
-    
+
     return {
-      status: 'healthy',
+      status: "healthy",
       responseTime: Math.round(responseTime),
       details: {
-        connections: 'active',
-        latency: `${Math.round(responseTime)}ms`
-      }
+        connections: "active",
+        latency: `${Math.round(responseTime)}ms`,
+      },
     };
   } catch (error) {
     return {
-      status: 'unhealthy',
-      message: 'Database connection failed',
-      responseTime: performance.now() - start
+      status: "unhealthy",
+      message: "Database connection failed",
+      responseTime: performance.now() - start,
     };
   }
 }
 
 async function checkRedis(): Promise<HealthCheck> {
   const start = performance.now();
-  
+
   try {
     // Simulation check Redis
-    await new Promise(resolve => setTimeout(resolve, 5));
-    
+    await new Promise((resolve) => setTimeout(resolve, 5));
+
     const responseTime = performance.now() - start;
-    
+
     return {
-      status: 'healthy',
+      status: "healthy",
       responseTime: Math.round(responseTime),
       details: {
-        connections: 'active',
-        memory_usage: '45%'
-      }
+        connections: "active",
+        memory_usage: "45%",
+      },
     };
   } catch (error) {
     return {
-      status: 'unhealthy',
-      message: 'Redis connection failed',
-      responseTime: performance.now() - start
+      status: "unhealthy",
+      message: "Redis connection failed",
+      responseTime: performance.now() - start,
     };
   }
 }
 
 async function checkExternalAPIs(): Promise<HealthCheck> {
   const apis = [
-    { name: 'Firebase', url: 'https://firebase.googleapis.com' },
-    { name: 'OpenAI', url: 'https://api.openai.com' }
+    { name: "Firebase", url: "https://firebase.googleapis.com" },
+    { name: "OpenAI", url: "https://api.openai.com" },
   ];
-  
+
   const results = await Promise.allSettled(
-    apis.map(async api => {
+    apis.map(async (api) => {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 5000);
-      
+
       try {
         const response = await fetch(`${api.url}/health`, {
           signal: controller.signal,
-          method: 'HEAD'
+          method: "HEAD",
         });
         clearTimeout(timeoutId);
-        
+
         return {
           name: api.name,
-          status: response.ok ? 'healthy' : 'degraded',
-          statusCode: response.status
+          status: response.ok ? "healthy" : "degraded",
+          statusCode: response.status,
         };
       } catch (error) {
         clearTimeout(timeoutId);
         return {
           name: api.name,
-          status: 'unhealthy',
-          error: error.message
+          status: "unhealthy",
+          error: error.message,
         };
       }
     })
   );
-  
-  const apiChecks = results.map(result => 
-    result.status === 'fulfilled' ? result.value : { status: 'unhealthy' }
+
+  const apiChecks = results.map((result) =>
+    result.status === "fulfilled" ? result.value : { status: "unhealthy" }
   );
-  
-  const allHealthy = apiChecks.every(check => check.status === 'healthy');
-  const someHealthy = apiChecks.some(check => check.status === 'healthy');
-  
+
+  const allHealthy = apiChecks.every((check) => check.status === "healthy");
+  const someHealthy = apiChecks.some((check) => check.status === "healthy");
+
   return {
-    status: allHealthy ? 'healthy' : someHealthy ? 'degraded' : 'unhealthy',
+    status: allHealthy ? "healthy" : someHealthy ? "degraded" : "unhealthy",
     details: {
-      apis: apiChecks
-    }
+      apis: apiChecks,
+    },
   };
 }
 
@@ -1323,42 +1334,44 @@ function checkMemory(): HealthCheck {
   const totalMB = Math.round(usage.rss / 1024 / 1024);
   const heapUsedMB = Math.round(usage.heapUsed / 1024 / 1024);
   const heapTotalMB = Math.round(usage.heapTotal / 1024 / 1024);
-  
+
   // Alerte si utilisation mémoire > 80%
   const memoryUsagePercent = (usage.heapUsed / usage.heapTotal) * 100;
-  
+
   return {
-    status: memoryUsagePercent > 80 ? 'degraded' : 'healthy',
+    status: memoryUsagePercent > 80 ? "degraded" : "healthy",
     details: {
       rss: `${totalMB}MB`,
       heapUsed: `${heapUsedMB}MB`,
       heapTotal: `${heapTotalMB}MB`,
-      usagePercent: `${Math.round(memoryUsagePercent)}%`
-    }
+      usagePercent: `${Math.round(memoryUsagePercent)}%`,
+    },
   };
 }
 
 async function checkDiskSpace(): Promise<HealthCheck> {
   try {
-    const { promisify } = await import('util');
-    const { exec } = await import('child_process');
+    const { promisify } = await import("util");
+    const { exec } = await import("child_process");
     const execAsync = promisify(exec);
-    
-    const { stdout } = await execAsync('df -h /tmp | tail -1 | awk \'{print $5}\'');
-    const usagePercent = parseInt(stdout.trim().replace('%', ''));
-    
+
+    const { stdout } = await execAsync(
+      "df -h /tmp | tail -1 | awk '{print $5}'"
+    );
+    const usagePercent = parseInt(stdout.trim().replace("%", ""));
+
     return {
-      status: usagePercent > 85 ? 'degraded' : 'healthy',
+      status: usagePercent > 85 ? "degraded" : "healthy",
       details: {
         usage: `${usagePercent}%`,
-        warning_threshold: '85%'
-      }
+        warning_threshold: "85%",
+      },
     };
   } catch (error) {
     return {
-      status: 'degraded',
-      message: 'Unable to check disk space',
-      details: { error: error.message }
+      status: "degraded",
+      message: "Unable to check disk space",
+      details: { error: error.message },
     };
   }
 }
@@ -1367,27 +1380,27 @@ async function checkDiskSpace(): Promise<HealthCheck> {
 **[FILE]** Créer `src/routes/metrics/+server.ts` :
 
 ```ts
-import { text } from '@sveltejs/kit';
-import type { RequestHandler } from './$types';
+import { text } from "@sveltejs/kit";
+import type { RequestHandler } from "./$types";
 
 // Metrics endpoint pour Prometheus
 export const GET: RequestHandler = async () => {
   const metrics = await collectMetrics();
-  
+
   return text(metrics, {
     headers: {
-      'Content-Type': 'text/plain; version=0.0.4; charset=utf-8'
-    }
+      "Content-Type": "text/plain; version=0.0.4; charset=utf-8",
+    },
   });
 };
 
 async function collectMetrics(): Promise<string> {
   const timestamp = Date.now();
-  
+
   // Métriques système
   const memory = process.memoryUsage();
   const uptime = process.uptime();
-  
+
   // Métriques applicatives (simulation)
   const appMetrics = {
     http_requests_total: Math.floor(Math.random() * 10000),
@@ -1397,9 +1410,9 @@ async function collectMetrics(): Promise<string> {
     exercises_completed_total: Math.floor(Math.random() * 20000),
     error_rate: Math.random() * 0.05,
     database_connections: Math.floor(Math.random() * 20) + 5,
-    cache_hit_ratio: 0.85 + Math.random() * 0.1
+    cache_hit_ratio: 0.85 + Math.random() * 0.1,
   };
-  
+
   return `
 # HELP process_resident_memory_bytes Resident memory size in bytes
 # TYPE process_resident_memory_bytes gauge
@@ -1486,34 +1499,34 @@ module.exports = {
   ci: {
     collect: {
       url: [
-        'https://app.funlearning.com',                    // Page accueil
-        'https://app.funlearning.com/cours',              // Navigation cours
-        'https://app.funlearning.com/auth/login',         // Authentification
-        'https://app.funlearning.com/cours/math/6eme'     // Page cours spécifique
+        "https://app.funlearning.com", // Page accueil
+        "https://app.funlearning.com/cours", // Navigation cours
+        "https://app.funlearning.com/auth/login", // Authentification
+        "https://app.funlearning.com/cours/math/6eme", // Page cours spécifique
       ],
-      startServerCommand: 'npm run preview',
-      numberOfRuns: 3 // Moyenne sur 3 runs pour stabilité
+      startServerCommand: "npm run preview",
+      numberOfRuns: 3, // Moyenne sur 3 runs pour stabilité
     },
     assert: {
       assertions: {
-        'categories:performance': ['error', { minScore: 0.9 }],    // 90%+ obligatoire
-        'categories:accessibility': ['error', { minScore: 0.9 }],  // 90%+ obligatoire  
-        'categories:best-practices': ['error', { minScore: 0.9 }], // 90%+ obligatoire
-        'categories:seo': ['error', { minScore: 0.8 }],            // 80%+ acceptable
-        'categories:pwa': ['error', { minScore: 0.8 }],            // 80%+ acceptable
-        
+        "categories:performance": ["error", { minScore: 0.9 }], // 90%+ obligatoire
+        "categories:accessibility": ["error", { minScore: 0.9 }], // 90%+ obligatoire
+        "categories:best-practices": ["error", { minScore: 0.9 }], // 90%+ obligatoire
+        "categories:seo": ["error", { minScore: 0.8 }], // 80%+ acceptable
+        "categories:pwa": ["error", { minScore: 0.8 }], // 80%+ acceptable
+
         // Métriques Core Web Vitals STRICTES
-        'first-contentful-paint': ['error', { maxNumericValue: 2000 }],  // < 2s
-        'largest-contentful-paint': ['error', { maxNumericValue: 2500 }], // < 2.5s
-        'cumulative-layout-shift': ['error', { maxNumericValue: 0.1 }],   // < 0.1
-        'total-blocking-time': ['error', { maxNumericValue: 300 }]        // < 300ms
-      }
+        "first-contentful-paint": ["error", { maxNumericValue: 2000 }], // < 2s
+        "largest-contentful-paint": ["error", { maxNumericValue: 2500 }], // < 2.5s
+        "cumulative-layout-shift": ["error", { maxNumericValue: 0.1 }], // < 0.1
+        "total-blocking-time": ["error", { maxNumericValue: 300 }], // < 300ms
+      },
     },
     upload: {
-      target: 'temporary-public-storage',
-      reportFilenamePattern: 'lighthouse-report-%%DATETIME%%.html'
-    }
-  }
+      target: "temporary-public-storage",
+      reportFilenamePattern: "lighthouse-report-%%DATETIME%%.html",
+    },
+  },
 };
 ```
 
@@ -1521,47 +1534,47 @@ module.exports = {
 
 ```javascript
 // scripts/performance-monitor.js - Monitoring performance automatisé
-const lighthouse = require('lighthouse');
-const chromeLauncher = require('chrome-launcher');
-const fs = require('fs');
+const lighthouse = require("lighthouse");
+const chromeLauncher = require("chrome-launcher");
+const fs = require("fs");
 
-async function runPerformanceAudit(url = 'https://app.funlearning.com') {
+async function runPerformanceAudit(url = "https://app.funlearning.com") {
   console.log(`🚀 Audit performance: ${url}`);
-  
-  const chrome = await chromeLauncher.launch({ 
-    chromeFlags: ['--headless', '--no-sandbox', '--disable-dev-shm-usage'] 
+
+  const chrome = await chromeLauncher.launch({
+    chromeFlags: ["--headless", "--no-sandbox", "--disable-dev-shm-usage"],
   });
-  
+
   const options = {
-    logLevel: 'info',
-    output: 'html',
-    onlyCategories: ['performance', 'pwa', 'accessibility'],
+    logLevel: "info",
+    output: "html",
+    onlyCategories: ["performance", "pwa", "accessibility"],
     port: chrome.port,
-    formFactor: 'desktop',
+    formFactor: "desktop",
     throttling: {
       rttMs: 40,
       throughputKbps: 10240,
-      cpuSlowdownMultiplier: 1
-    }
+      cpuSlowdownMultiplier: 1,
+    },
   };
-  
+
   try {
     const runnerResult = await lighthouse(url, options);
     const { lhr } = runnerResult;
-    
+
     // Extraction métriques critiques
     const metrics = {
       performance: Math.round(lhr.categories.performance.score * 100),
       pwa: Math.round(lhr.categories.pwa.score * 100),
       accessibility: Math.round(lhr.categories.accessibility.score * 100),
-      fcp: lhr.audits['first-contentful-paint'].numericValue,
-      lcp: lhr.audits['largest-contentful-paint'].numericValue,
-      cls: lhr.audits['cumulative-layout-shift'].numericValue,
-      tbt: lhr.audits['total-blocking-time'].numericValue,
-      timestamp: new Date().toISOString()
+      fcp: lhr.audits["first-contentful-paint"].numericValue,
+      lcp: lhr.audits["largest-contentful-paint"].numericValue,
+      cls: lhr.audits["cumulative-layout-shift"].numericValue,
+      tbt: lhr.audits["total-blocking-time"].numericValue,
+      timestamp: new Date().toISOString(),
     };
-    
-    console.log('📊 Métriques Performance:');
+
+    console.log("📊 Métriques Performance:");
     console.log(`  Performance Score: ${metrics.performance}%`);
     console.log(`  PWA Score: ${metrics.pwa}%`);
     console.log(`  Accessibilité: ${metrics.accessibility}%`);
@@ -1569,33 +1582,36 @@ async function runPerformanceAudit(url = 'https://app.funlearning.com') {
     console.log(`  LCP: ${Math.round(metrics.lcp)}ms`);
     console.log(`  CLS: ${metrics.cls.toFixed(3)}`);
     console.log(`  TBT: ${Math.round(metrics.tbt)}ms`);
-    
+
     // Alertes si scores < seuils critiques
     const alerts = [];
-    if (metrics.performance < 90) alerts.push(`⚠️ Performance dégradée: ${metrics.performance}%`);
+    if (metrics.performance < 90)
+      alerts.push(`⚠️ Performance dégradée: ${metrics.performance}%`);
     if (metrics.pwa < 80) alerts.push(`⚠️ PWA non conforme: ${metrics.pwa}%`);
-    if (metrics.accessibility < 90) alerts.push(`⚠️ Accessibilité insuffisante: ${metrics.accessibility}%`);
-    if (metrics.lcp > 2500) alerts.push(`⚠️ LCP trop lent: ${Math.round(metrics.lcp)}ms`);
-    if (metrics.cls > 0.1) alerts.push(`⚠️ CLS instable: ${metrics.cls.toFixed(3)}`);
-    
+    if (metrics.accessibility < 90)
+      alerts.push(`⚠️ Accessibilité insuffisante: ${metrics.accessibility}%`);
+    if (metrics.lcp > 2500)
+      alerts.push(`⚠️ LCP trop lent: ${Math.round(metrics.lcp)}ms`);
+    if (metrics.cls > 0.1)
+      alerts.push(`⚠️ CLS instable: ${metrics.cls.toFixed(3)}`);
+
     if (alerts.length > 0) {
-      console.error('\n🚨 ALERTES PERFORMANCE:');
-      alerts.forEach(alert => console.error(alert));
-      
+      console.error("\n🚨 ALERTES PERFORMANCE:");
+      alerts.forEach((alert) => console.error(alert));
+
       // Notification Slack/Discord si configuré
       await sendPerformanceAlert(alerts, metrics);
-      
+
       // Échec si seuils critiques non atteints
       process.exit(1);
     } else {
-      console.log('\n✅ Tous les seuils de performance respectés !');
+      console.log("\n✅ Tous les seuils de performance respectés !");
     }
-    
+
     // Sauvegarde métriques pour historique
     await saveMetricsHistory(metrics);
-    
+
     return metrics;
-    
   } finally {
     await chrome.kill();
   }
@@ -1607,50 +1623,60 @@ async function sendPerformanceAlert(alerts, metrics) {
     const webhook = process.env.SLACK_WEBHOOK_URL;
     const message = {
       text: `🚨 Alerte Performance FunLearning`,
-      attachments: [{
-        color: 'danger',
-        fields: [
-          { title: 'Performance', value: `${metrics.performance}%`, short: true },
-          { title: 'PWA', value: `${metrics.pwa}%`, short: true },
-          { title: 'LCP', value: `${Math.round(metrics.lcp)}ms`, short: true },
-          { title: 'CLS', value: `${metrics.cls.toFixed(3)}`, short: true }
-        ],
-        footer: 'Lighthouse CI',
-        ts: Math.floor(Date.now() / 1000)
-      }]
+      attachments: [
+        {
+          color: "danger",
+          fields: [
+            {
+              title: "Performance",
+              value: `${metrics.performance}%`,
+              short: true,
+            },
+            { title: "PWA", value: `${metrics.pwa}%`, short: true },
+            {
+              title: "LCP",
+              value: `${Math.round(metrics.lcp)}ms`,
+              short: true,
+            },
+            { title: "CLS", value: `${metrics.cls.toFixed(3)}`, short: true },
+          ],
+          footer: "Lighthouse CI",
+          ts: Math.floor(Date.now() / 1000),
+        },
+      ],
     };
-    
+
     // Envoi webhook (implémentation simplifiée)
-    console.log('📲 Alerte envoyée vers Slack');
+    console.log("📲 Alerte envoyée vers Slack");
   }
 }
 
 async function saveMetricsHistory(metrics) {
-  const historyFile = 'performance-history.json';
+  const historyFile = "performance-history.json";
   let history = [];
-  
+
   try {
     if (fs.existsSync(historyFile)) {
-      history = JSON.parse(fs.readFileSync(historyFile, 'utf8'));
+      history = JSON.parse(fs.readFileSync(historyFile, "utf8"));
     }
   } catch (error) {
-    console.warn('Impossible de lire l\'historique existant');
+    console.warn("Impossible de lire l'historique existant");
   }
-  
+
   history.push(metrics);
-  
+
   // Garder seulement les 100 dernières mesures
   if (history.length > 100) {
     history = history.slice(-100);
   }
-  
+
   fs.writeFileSync(historyFile, JSON.stringify(history, null, 2));
   console.log(`💾 Métriques sauvegardées (${history.length} entrées)`);
 }
 
 // Exécution si appelé directement
 if (require.main === module) {
-  const url = process.argv[2] || 'https://app.funlearning.com';
+  const url = process.argv[2] || "https://app.funlearning.com";
   runPerformanceAudit(url).catch(console.error);
 }
 
@@ -1664,12 +1690,12 @@ module.exports = { runPerformanceAudit };
   "scripts": {
     "test:lighthouse": "lighthouse-ci autorun",
     "test:lighthouse:desktop": "lighthouse-ci autorun --config=lighthouse.desktop.js",
-    "test:lighthouse:mobile": "lighthouse-ci autorun --config=lighthouse.mobile.js", 
+    "test:lighthouse:mobile": "lighthouse-ci autorun --config=lighthouse.mobile.js",
     "test:performance:bundle": "bundlesize",
     "test:performance:vitals": "web-vitals-cli",
     "test:performance:monitor": "node scripts/performance-monitor.js",
     "validate:performance": "npm run test:lighthouse && npm run test:performance:bundle && npm run test:performance:monitor",
-    
+
     "performance:watch": "chokidar 'build/**/*' -c 'npm run test:performance:monitor'",
     "performance:ci": "npm run test:lighthouse && npm run test:performance:monitor"
   },
@@ -1683,8 +1709,10 @@ module.exports = { runPerformanceAudit };
   }
 }
 ```
+
 [TEST] lighthouse --url=https://app.funlearning.com --view
-```
+
+````
 
 ---
 
@@ -1708,7 +1736,7 @@ module.exports = { runPerformanceAudit };
 [CMD] git add . && git commit -m "feat: Phase 12 - Production Deployment complete"
 [CMD] git tag v2.0                  # 🎉 TAG RELEASE PRODUCTION v2.0
 [CMD] git push origin v2.0          # Déclenche déploiement production
-```
+````
 
 **🎉 MILESTONE ATTEINT** : Application FunLearning déployée en production v2.0 !
 
@@ -1717,18 +1745,21 @@ module.exports = { runPerformanceAudit };
 ## 🎯 **Post-Deployment Checklist**
 
 ### 📊 **Monitoring Initial (24h)**
+
 - [ ] Surveillance métriques performance
 - [ ] Vérification logs erreurs
 - [ ] Test fonctionnalités critiques
 - [ ] Monitoring utilisation ressources
 
 ### 🔄 **Optimisations Continue**
+
 - [ ] Analyse performance utilisateurs réels
 - [ ] Optimisation requêtes base données
 - [ ] Fine-tuning auto-scaling
 - [ ] Amélioration cache hit ratio
 
 ### 📈 **Roadmap Future**
+
 - [ ] Intégration analytics avancés
 - [ ] Fonctionnalités A/B testing
 - [ ] Expansion géographique CDN

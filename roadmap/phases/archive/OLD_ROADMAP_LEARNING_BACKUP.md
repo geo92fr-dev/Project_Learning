@@ -1,36 +1,43 @@
 # 🗺️ FunLearning - Roadmap IA-Optimisée 🤖
 
-> **Approche IA-First** : Instructions granulaires, commandes pr### ✅ **BASES ## 🗂️ Navigation par Phases - Nouvelle Organisation
+> **Approche IA-First** : Instructions granulaires, commandes pr### ✅ \*\*BASES ## 🗂️ Navigation par Phases - Nouvelle Organisation
 
 ### 📋 **PHASES À DÉVELOPPER**
 
 #### 🚀 [Phase 0 : Setup & Architecture](phases/phase-0-setup.md) (3 jours)
+
 **Statut** : 📋 **À DÉMARRER**  
 **Objectif** : Initialiser SvelteKit avec TypeScript, tests, et structure de base
 
 #### 🔐 [Phase 1 : Firebase & Authentification](phases/phase-1-auth.md) (1 semaine)
+
 **Statut** : 📋 **En attente de Phase 0**  
 **Objectif** : Authentification Google OAuth et protection des routes
 
 #### 📚 [Phase 2 : Contenu & Markdown](phases/phase-2-content.md) (1 semaine)
+
 **Statut** : 📋 **En attente de Phase 1**  
 **Objectif** : Système de contenu Markdown avec routes dynamiques
 
 #### 🧠 [Phase 2.5 : Pédagogie Avancée](phases/phase-2.5-pedagogy.md) (3 jours)
+
 **Statut** : � **En attente de Phase 2**  
 **Objectif** : Innovation pédagogique avec pré-évaluation et métacognition🚀 [Phase 0 : Setup & Architecture](phases/phase-0-setup.md) (3 jours)
 **Statut** : 📋 **À DÉMARRER**  
 **Objectif** : Initialiser SvelteKit avec TypeScript, tests, et structure de base
 
 #### 🔐 [Phase 1 : Firebase & Authentification](phases/phase-1-auth.md) (1 semaine)
+
 **Statut** : 📋 **En attente de Phase 0**  
 **Objectif** : Authentification Google OAuth et protection des routes
 
 #### 📚 [Phase 2 : Contenu & Markdown](phases/phase-2-content.md) (1 semaine)
+
 **Statut** : 📋 **En attente de Phase 1**  
 **Objectif** : Système de contenu Markdown avec routes dynamiques
 
 #### 🧠 [Phase 2.5 : Pédagogie Avancée](phases/phase-2.5-pedagogy.md) (3 jours)
+
 **Statut** : 📋 **En attente de Phase 2**  
 **Objectif** : Innovation pédagogique avec pré-évaluation et métacognitionn automatisée pour assistant Copilot.
 
@@ -54,67 +61,84 @@ Créer une application d'apprentissage complète avec authentification, contenu 
 
 ### 📋 **Plan de Développement**
 
-#### 🎯 **Phase Moteur (v1.5) - Données & Contenu** 
+#### 🎯 **Phase Moteur (v1.5) - Données & Contenu**
+
 **Objectif** : Établir la fondation de données avant toute interface
+
 - 📊 Phase 2.2 : Intégration Firebase Data Layer
-- 📊 Phase 2.9 : Génération Curriculum Complet  
+- 📊 Phase 2.9 : Génération Curriculum Complet
 - 🔄 Phase 2.10 : Interface Dynamique Firebase
 
 #### 🎮 **Phase UX (v1.7) - Expérience & Interactivité**
+
 **Objectif** : Navigation et interaction utilisateur une fois les données en place
+
 - 🧭 Phase 2.1 : Navigation UX Structure
 - 🎮 Phase 3 : Exercices & Progression
 
 #### 📱 **Phase Écosystème (v1.9) - Accessibilité & Administration**
+
 **Objectif** : Fonctionnalités avancées pour une solution complète
+
 - � Phase 4 : PWA & Offline
 - ⚙️ Phase 5 : Admin & Import
 
 #### 🚀 **Phase Production (v2.0) - Finalisation & Déploiement**
+
 **Objectif** : Optimisation finale et préparation production
+
 - 🚀 Phase 6 : Polish & Performance
 
 ---
 
 ## 🏷️ **Système de Versioning - Releases Progressives**
 
-| Version  | Phase(s) | Fonctionnalités         | Statut                    |
-| -------- | -------- | ----------------------- | ------------------------- |
-| **v1.0** | Setup + Auth | Base technique + Authentification | 📋 **À développer** |
-| **v1.1** | Contenu | Système Markdown + Pédagogie | 📋 **À développer** |
-| **v1.25**| Navigation | Structure UX hiérarchique | 📋 **À développer** |
-| **v1.5** | **Phase Moteur** | Données & Interface Dynamique | 🎯 **Objectif Principal** |
-| **v1.7** | **Phase UX** | Navigation + Exercices Interactifs | 📋 **Objectif Suivant** |
-| **v1.9** | **Phase Écosystème** | PWA + Admin + Offline | 📋 **Objectif Avancé** |
-| **v2.0** | **Phase Production** | Optimisation + Performance | 📋 **Objectif Final** |
+| Version   | Phase(s)             | Fonctionnalités                    | Statut                    |
+| --------- | -------------------- | ---------------------------------- | ------------------------- |
+| **v1.0**  | Setup + Auth         | Base technique + Authentification  | 📋 **À développer**       |
+| **v1.1**  | Contenu              | Système Markdown + Pédagogie       | 📋 **À développer**       |
+| **v1.25** | Navigation           | Structure UX hiérarchique          | 📋 **À développer**       |
+| **v1.5**  | **Phase Moteur**     | Données & Interface Dynamique      | 🎯 **Objectif Principal** |
+| **v1.7**  | **Phase UX**         | Navigation + Exercices Interactifs | 📋 **Objectif Suivant**   |
+| **v1.9**  | **Phase Écosystème** | PWA + Admin + Offline              | 📋 **Objectif Avancé**    |
+| **v2.0**  | **Phase Production** | Optimisation + Performance         | 📋 **Objectif Final**     |
 
 ### 🎯 **Nouvelle Logique de Phases**
 
 #### ⚙️ **Phase Moteur : Données & Contenu**
+
 **Objectif** : Finaliser l'architecture de contenu et la connexion avec Firebase
+
 - **Phase 2.2** : Intégration Firebase Data Layer (🎯 EN COURS)
-- **Phase 2.9** : Génération Curriculum Complet  
+- **Phase 2.9** : Génération Curriculum Complet
 - **Phase 2.10** : Interface Dynamique Firebase
 - **Logique** : Données d'abord → Affichage dynamique ensuite
 
-#### 🎮 **Phase UX : Expérience Utilisateur & Interactivité**  
+#### 🎮 **Phase UX : Expérience Utilisateur & Interactivité**
+
 **Objectif** : Navigation et interaction utilisateur optimales
+
 - **Phase 2.1** : Navigation UX Structure (✅ TERMINÉ)
 - **Phase 3** : Exercices & Progression
 - **Logique** : Navigation créée → Exercices intégrés
 
 #### 📱 **Phase Écosystème : Accessibilité & Administration**
+
 **Objectif** : Solution complète et accessible sur toutes plateformes
+
 - **Phase 4** : PWA & Offline
-- **Phase 5** : Admin & Import  
+- **Phase 5** : Admin & Import
 - **Logique** : PWA et Admin peuvent être développés en parallèle
 
 #### 🚀 **Phase Production : Finalisation & Déploiement**
+
 **Objectif** : Optimisation et préparation déploiement public
+
 - **Phase 6** : Polish & Performance
 - **Logique** : Optimisations finales une fois toutes fonctionnalités en place
 
 ### 🎯 **Stratégie de Release**
+
 - **Versions mineures (1.x)** : Nouvelles fonctionnalités majeures par phase
 - **Versions patch (1.x.y)** : Corrections de bugs et améliorations
 - **Version majeure (2.0)** : Plateforme production-ready complète
@@ -142,18 +166,22 @@ Créer une application d'apprentissage complète avec authentification, contenu 
 ### ✅ **BASES TERMINÉES**
 
 #### 🚀 [Phase 0 : Setup & Architecture](phases/phase-0-setup.md) (3 jours)
+
 **Statut** : ✅ **TERMINÉ** - 30/08/2025  
 **Objectif** : Initialiser SvelteKit avec TypeScript, tests, et structure de base
 
 #### 🔐 [Phase 1 : Firebase & Authentification](phases/phase-1-auth.md) (1 semaine)
+
 **Statut** : ✅ **TERMINÉ** - 30/08/2025  
 **Objectif** : Authentification Google OAuth et protection des routes
 
 #### 📚 [Phase 2 : Contenu & Markdown](phases/phase-2-content.md) (1 semaine)
+
 **Statut** : ✅ **TERMINÉ** - 30/08/2025  
 **Objectif** : Système de contenu Markdown avec routes dynamiques
 
 #### � [Phase 2.5 : Pédagogie Avancée](phases/phase-2.5-pedagogy.md) (3 jours)
+
 **Statut** : ✅ **TERMINÉ** - 30/08/2025  
 **Objectif** : Innovation pédagogique avec pré-évaluation et métacognition
 
@@ -164,24 +192,30 @@ Créer une application d'apprentissage complète avec authentification, contenu 
 > **Objectif** : Finaliser l'architecture de contenu et la connexion avec Firebase. Base de tout ce qui sera affiché sur la plateforme.
 
 #### 📊 [Phase 2.2 : Intégration Firebase Data Layer](phases/PHASE_2.2_FIREBASE_INTEGRATION.md) (3 heures)
+
 **Statut** : 📋 **En attente des bases**  
 **Objectif** : Intégrer Firebase comme source de données principale
+
 - � Services Firebase CRUD pour toutes collections
 - � Adaptateurs de données Firebase ↔ App
 - � Migration pages pour utiliser Firebase
 - � Script de migration des données de test
 
 #### 📊 [Phase 2.9 : Génération Curriculum Complet](phases/phase-2.9-curriculum.md) (2 jours)
+
 **Statut** : 📋 **En attente de Phase 2.2**  
 **Objectif** : Générer automatiquement 120+ compétences pour tout le collège français
-- Scripts de génération automatique de curriculum  
+
+- Scripts de génération automatique de curriculum
 - Templates par matière et niveau (6ème → 3ème)
 - 6 matières complètes : Math, Français, Histoire-Géo, Sciences, Anglais, Arts & Techno
 - Population automatique Firebase avec validation
 
 #### 🔄 [Phase 2.10 : Interface Dynamique Firebase](phases/phase-2.10-dynamic.md) (2 heures)
+
 **Statut** : 📋 **En attente de Phase 2.9**  
 **Objectif** : Interface entièrement dynamique connectée à Firebase
+
 - Remplacement complet des données statiques
 - Chargement temps réel avec états visuels (loading, succès, erreur)
 - Statistiques globales et par matière affichées
@@ -197,16 +231,20 @@ Créer une application d'apprentissage complète avec authentification, contenu 
 > **Objectif** : Une fois que les données sont en place, cette phase se concentre sur l'interaction avec l'utilisateur et la navigation.
 
 #### 🧭 [Phase 2.1 : Navigation UX Structure](phases/phase-2.1-cours.md) (1-2 jours)
+
 **Statut** : 📋 **En attente de Phase Moteur**  
 **Objectif** : Créer la navigation hiérarchique complète pour accéder aux cours
+
 - 📋 Navigation par matière → niveau → compétences → cours
 - 📋 Breadcrumbs intelligents et interface cohérente
 - 📋 Design responsive inspiré de FunRevis
 - 📋 Composants réutilisables de navigation
 
 #### 🎮 [Phase 3 : Exercices & Progression](phases/phase-3-exercises.md) (1 semaine)
+
 **Statut** : 📋 **En attente de Phase 2.1**  
 **Objectif** : Système d'exercices interactifs avec progression
+
 - QCM interactifs avec validation temps réel
 - Système de scoring et progression
 - Tracking des performances utilisateur
@@ -221,16 +259,20 @@ Créer une application d'apprentissage complète avec authentification, contenu 
 > **Objectif** : Cette phase est dédiée aux fonctionnalités qui transforment l'application en une solution complète et accessible sur différentes plateformes.
 
 #### 📱 [Phase 4 : PWA & Offline](phases/phase-4-pwa.md) (1 semaine)
+
 **Statut** : 📋 **En attente de Phase UX**  
 **Objectif** : Application Progressive Web App installable
+
 - Configuration PWA avec Service Worker
 - Mode offline avec cache intelligent
 - App installable sur mobile/desktop
 - Synchronisation hors ligne
 
 #### ⚙️ [Phase 5 : Admin & Import](phases/phase-5-admin.md) (1 semaine)
+
 **Statut** : 📋 **En attente de Phase UX**  
 **Objectif** : Interface administrateur complète
+
 - Dashboard administrateur avec analytics
 - Import de contenu en masse (CSV, JSON)
 - Gestion des utilisateurs et permissions
@@ -245,8 +287,10 @@ Créer une application d'apprentissage complète avec authentification, contenu 
 > **Objectif** : La dernière étape pour optimiser la performance et préparer la plateforme pour un déploiement public.
 
 #### 🚀 [Phase 6 : Polish & Performance](phases/phase-6-production.md) (1 semaine)
+
 **Statut** : 📋 **En attente de Phase Écosystème**  
 **Objectif** : Optimisation production et performances
+
 - Optimisation Lighthouse > 90
 - Bundle optimization et code splitting
 - Performance monitoring et analytics
@@ -283,26 +327,28 @@ Créer une application d'apprentissage complète avec authentification, contenu 
 
 Toutes les implémentations techniques sont organisées en modules réutilisables :
 
-| Module            | Référence                                                             | Status | Description                                                  |
-| ----------------- | --------------------------------------------------------------------- | ------ | ------------------------------------------------------------ |
-| **🔐 Auth**       | [firebase-auth.md](references/auth/firebase-auth.md)                 | ✅     | Authentification Firebase complète avec stores et composants |
-| **📊 Data**       | [content-types.md](references/data/content-types.md)                 | ✅     | Types TypeScript + validation Zod pour contenu éducatif      |
-| **⚡ Realtime**   | [realtime-system.md](references/data/realtime-system.md)             | ✅     | Cache intelligent + synchronisation temps réel               |
-| **🎨 UI Stores**  | [reactive-stores.md](references/ui/reactive-stores.md)               | ✅     | Stores Svelte avec persistence et réactivité                 |
-| **🧩 Components** | [component-patterns.md](references/ui/component-patterns.md)         | ✅     | Design system + composants réutilisables                     |
-| **🧪 Testing**    | [testing-strategy.md](references/testing/testing-strategy.md)        | ✅     | Stratégie complète (unit, intégration, E2E)                  |
+| Module            | Référence                                                     | Status | Description                                                  |
+| ----------------- | ------------------------------------------------------------- | ------ | ------------------------------------------------------------ |
+| **🔐 Auth**       | [firebase-auth.md](references/auth/firebase-auth.md)          | ✅     | Authentification Firebase complète avec stores et composants |
+| **📊 Data**       | [content-types.md](references/data/content-types.md)          | ✅     | Types TypeScript + validation Zod pour contenu éducatif      |
+| **⚡ Realtime**   | [realtime-system.md](references/data/realtime-system.md)      | ✅     | Cache intelligent + synchronisation temps réel               |
+| **🎨 UI Stores**  | [reactive-stores.md](references/ui/reactive-stores.md)        | ✅     | Stores Svelte avec persistence et réactivité                 |
+| **🧩 Components** | [component-patterns.md](references/ui/component-patterns.md)  | ✅     | Design system + composants réutilisables                     |
+| **🧪 Testing**    | [testing-strategy.md](references/testing/testing-strategy.md) | ✅     | Stratégie complète (unit, intégration, E2E)                  |
 
 ### 🔧 **Types TypeScript Étendus**
 
 #### **Structures de données avancées :**
+
 - ✅ `ExtendedNiveauEducatif` avec configuration complète
-- ✅ `ExtendedMatiere` avec modalités pédagogiques  
+- ✅ `ExtendedMatiere` avec modalités pédagogiques
 - ✅ `ExtendedUserProfile` avec préférences avancées
 - ✅ `DataStructureConfig` pour extensibilité
 - ✅ `UIConfiguration` pour thèmes personnalisables
 - ✅ `PerformanceConfig` pour monitoring
 
 #### **Système pédagogique avancé :**
+
 - ✅ `TypeEvaluation` pour différents formats d'évaluation
 - ✅ `ModalitePedagogique` pour styles d'apprentissage
 - ✅ `AdaptationDifficulte` algorithmique
@@ -310,6 +356,7 @@ Toutes les implémentations techniques sont organisées en modules réutilisable
 - ✅ `UserPreferences` granulaires avec notifications
 
 #### **Monitoring et performance :**
+
 - ✅ `MonitoringConfig` avec analytics
 - ✅ `CachingStrategy` avec TTL et invalidation
 - ✅ `PerformanceLimits` et optimisations
@@ -346,6 +393,7 @@ Toutes les implémentations techniques sont organisées en modules réutilisable
 **� STOP** : Toujours valider une phase avant de passer à la suivante.
 
 **📝 LOG** : Maintenir un suivi des modifications dans chaque phase.
+
 - Conversion Markdown → HTML
 - Routes dynamiques
 - Composants UI de base
@@ -453,7 +501,7 @@ npm run validate -- 2.5  # Validation Phase 2.5
 📍 État Actuel : Phase 2.5 (Pédagogie Avancée) - TERMINÉ ✅
 │
 ├── ✅ Phase 0 : Setup & Architecture
-├── ✅ Phase 1 : Firebase & Authentification  
+├── ✅ Phase 1 : Firebase & Authentification
 ├── ✅ Phase 2 : Contenu & Markdown + Interface Dynamique
 ├── ✅ Phase 2.5 : Pédagogie Avancée (Pré-évaluation, Métacognition, Ressources Adaptatives)
 ├── 🎯 Phase 2.1 : Squelette Navigation Cours (PROCHAINE PRIORITÉ UX)

@@ -1,6 +1,26 @@
-import { r as run_all, b as blank_object } from "./utils.js";
-function custom_event(type, detail, { bubbles = false, cancelable = false } = {}) {
-  return new CustomEvent(type, { detail, bubbles, cancelable });
+function noop() {
+}
+function run(fn) {
+  return fn();
+}
+function blank_object() {
+  return /* @__PURE__ */ Object.create(null);
+}
+function run_all(fns) {
+  fns.forEach(run);
+}
+function safe_not_equal(a, b) {
+  return a != a ? b == b : a !== b || a && typeof a === "object" || typeof a === "function";
+}
+function subscribe(store, ...callbacks) {
+  if (store == null) {
+    for (const callback of callbacks) {
+      callback(void 0);
+    }
+    return noop;
+  }
+  const unsub = store.subscribe(...callbacks);
+  return unsub.unsubscribe ? () => unsub.unsubscribe() : unsub;
 }
 let current_component;
 function set_current_component(component) {
@@ -11,61 +31,12 @@ function get_current_component() {
     throw new Error("Function called outside component initialization");
   return current_component;
 }
-function onDestroy(fn) {
-  get_current_component().$$.on_destroy.push(fn);
-}
-function createEventDispatcher() {
-  const component = get_current_component();
-  return (type, detail, { cancelable = false } = {}) => {
-    const callbacks = component.$$.callbacks[type];
-    if (callbacks) {
-      const event = custom_event(
-        /** @type {string} */
-        type,
-        detail,
-        { cancelable }
-      );
-      callbacks.slice().forEach((fn) => {
-        fn.call(component, event);
-      });
-      return !event.defaultPrevented;
-    }
-    return true;
-  };
-}
 function setContext(key, context) {
   get_current_component().$$.context.set(key, context);
   return context;
 }
 function getContext(key) {
   return get_current_component().$$.context.get(key);
-}
-function ensure_array_like(array_like_or_iterator) {
-  return array_like_or_iterator?.length !== void 0 ? array_like_or_iterator : Array.from(array_like_or_iterator);
-}
-const ATTR_REGEX = /[&"<]/g;
-const CONTENT_REGEX = /[&<]/g;
-function escape(value, is_attr = false) {
-  const str = String(value);
-  const pattern = is_attr ? ATTR_REGEX : CONTENT_REGEX;
-  pattern.lastIndex = 0;
-  let escaped = "";
-  let last = 0;
-  while (pattern.test(str)) {
-    const i = pattern.lastIndex - 1;
-    const ch = str[i];
-    escaped += str.substring(last, i) + (ch === "&" ? "&amp;" : ch === '"' ? "&quot;" : "&lt;");
-    last = i + 1;
-  }
-  return escaped + str.substring(last);
-}
-function each(items, fn) {
-  items = ensure_array_like(items);
-  let str = "";
-  for (let i = 0; i < items.length; i += 1) {
-    str += fn(items[i], i);
-  }
-  return str;
 }
 const missing_component = {
   $$render: () => ""
@@ -117,21 +88,13 @@ function create_ssr_component(fn) {
     $$render
   };
 }
-function add_attribute(name, value, boolean) {
-  if (value == null || boolean && !value)
-    return "";
-  const assignment = boolean && value === true ? "" : `="${escape(value, true)}"`;
-  return ` ${name}${assignment}`;
-}
 export {
-  createEventDispatcher as a,
-  each as b,
+  setContext as a,
+  subscribe as b,
   create_ssr_component as c,
-  add_attribute as d,
-  escape as e,
   getContext as g,
   missing_component as m,
-  onDestroy as o,
-  setContext as s,
+  noop as n,
+  safe_not_equal as s,
   validate_component as v
 };

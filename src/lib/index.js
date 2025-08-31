@@ -1,20 +1,14 @@
-// Exports centralisés FunLearning v1.0
-// Phase 0 - Exports de base
+// 🚀 FunLearning V2.0 - Phase 1 Export Index
+// Configuration centralisée des exports pour la Phase 1 uniquement
 
-// TODO Phase 1: Décommenter quand les composants seront créés
-// export { default as Header } from './components/Header.svelte';
-// export { default as Footer } from './components/Footer.svelte';
-// export { default as Sidebar } from './components/Sidebar.svelte';
-// export { default as LoadingSpinner } from './components/LoadingSpinner.svelte';
+// === FIREBASE CONFIG ===
+export { auth, db } from "./firebase.js";
 
-// TODO Phase 1: Décommenter quand les stores seront créés
-// export { authStore } from './stores/auth.js';
-// export { contentStore } from './stores/content.js';
+// === PHASE 1 COMPONENTS ===
+// Note: Les composants avancés seront ajoutés dans les phases ultérieures
+// export { default as LoginForm } from './components/auth/LoginForm.svelte';
 
-// TODO Phase 1: Décommenter quand les utils seront créés
-// export { formatDate, slugify } from './utils/helpers.js';
-// export { validateEmail, validatePassword } from './utils/validation.js';
+// === UTILS ===
+// À enrichir au fur et à mesure des phases
 
-// Phase 0 - Version basique pour validation
-export const version = "1.0.0-alpha";
-export const phase = "Phase 0 - Setup & Architecture";
+// 📋 Phase Status: ✅ Phase 1 - Setup basique conforme roadmap

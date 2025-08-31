@@ -15,6 +15,7 @@
 ### 🏗️ **Architecture Technique**
 
 **Stack Technologique :**
+
 - **Frontend** : SvelteKit (SSR/SPA hybride) + TypeScript
 - **Styling** : CSS moderne + composants réutilisables
 - **Tests** : Vitest (unit) + Playwright (E2E) + Testing Library
@@ -23,6 +24,7 @@
 - **Déploiement** : Vercel (serverless) avec preview automatique
 
 **Principes d'Architecture :**
+
 - **Séparation des responsabilités** : lib/ (business) vs routes/ (présentation)
 - **Configuration centralisée** : Tous les configs dans `/config/`
 - **Structure modulaire** : Exports centralisés via `src/lib/index.js`
@@ -32,6 +34,7 @@
 ### ⚙️ **Approche Qualité**
 
 **Quality Gates Intégrés :**
+
 - **Linting** : ESLint avec règles strictes TypeScript + Svelte
 - **Formatting** : Prettier avec plugins Svelte
 - **Testing** : Couverture > 80% + tests E2E obligatoires
@@ -39,6 +42,7 @@
 - **Performance** : Vite optimizations + bundle analysis
 
 **Validation Automatisée :**
+
 - **Scripts de validation** : `npm run validate <phase>`
 - **Pre-commit hooks** : Lint + format automatique
 - **CI/CD ready** : Configuration pour GitHub Actions
@@ -102,11 +106,11 @@ export default defineConfig({
           branches: 80,
           functions: 80,
           lines: 80,
-          statements: 80
-        }
-      }
-    }
-  }
+          statements: 80,
+        },
+      },
+    },
+  },
 });
 ```
 
@@ -115,39 +119,39 @@ export default defineConfig({
 ```js
 module.exports = {
   root: true,
-  parser: '@typescript-eslint/parser',
+  parser: "@typescript-eslint/parser",
   extends: [
-    'eslint:recommended',
-    '@typescript-eslint/recommended',
-    'plugin:svelte/recommended'
+    "eslint:recommended",
+    "@typescript-eslint/recommended",
+    "plugin:svelte/recommended",
   ],
-  plugins: ['@typescript-eslint'],
-  ignorePatterns: ['*.cjs'],
+  plugins: ["@typescript-eslint"],
+  ignorePatterns: ["*.cjs"],
   parserOptions: {
-    sourceType: 'module',
+    sourceType: "module",
     ecmaVersion: 2020,
-    extraFileExtensions: ['.svelte']
+    extraFileExtensions: [".svelte"],
   },
   env: {
     browser: true,
     es2017: true,
-    node: true
+    node: true,
   },
   overrides: [
     {
-      files: ['*.svelte'],
-      parser: 'svelte-eslint-parser',
+      files: ["*.svelte"],
+      parser: "svelte-eslint-parser",
       parserOptions: {
-        parser: '@typescript-eslint/parser'
-      }
-    }
+        parser: "@typescript-eslint/parser",
+      },
+    },
   ],
   rules: {
     // Règles strictes pour la qualité
-    '@typescript-eslint/no-unused-vars': 'error',
-    '@typescript-eslint/explicit-function-return-type': 'warn',
-    'svelte/no-at-html-tags': 'error'
-  }
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/explicit-function-return-type": "warn",
+    "svelte/no-at-html-tags": "error",
+  },
 };
 ```
 
@@ -156,15 +160,15 @@ module.exports = {
 **[FILE]** Créer `scripts/validate-phase.js` :
 
 ```js
-import { exec } from 'child_process';
-import { promisify } from 'util';
+import { exec } from "child_process";
+import { promisify } from "util";
 
 const execAsync = promisify(exec);
 
 const PHASE_VALIDATIONS = {
-  '1': ['lint', 'build', 'test'],
-  '2': ['lint', 'build', 'test', 'test:auth'],
-  '3': ['lint', 'build', 'test', 'test:content'],
+  1: ["lint", "build", "test"],
+  2: ["lint", "build", "test", "test:auth"],
+  3: ["lint", "build", "test", "test:content"],
   // ... configurations pour toutes les phases
 };
 
@@ -182,8 +186,8 @@ async function runCommand(command, description) {
 
 async function validatePhase(phase) {
   console.log(`🚀 Validation Phase ${phase} en cours...`);
-  
-  const commands = PHASE_VALIDATIONS[phase] || ['lint', 'build', 'test'];
+
+  const commands = PHASE_VALIDATIONS[phase] || ["lint", "build", "test"];
   let allPassed = true;
 
   for (const command of commands) {
@@ -194,7 +198,9 @@ async function validatePhase(phase) {
   if (allPassed) {
     console.log(`✅ Phase ${phase} validée avec succès !`);
   } else {
-    console.log(`❌ Phase ${phase} a échoué. Corrigez les erreurs avant de continuer.`);
+    console.log(
+      `❌ Phase ${phase} a échoué. Corrigez les erreurs avant de continuer.`
+    );
     process.exit(1);
   }
 }
@@ -202,7 +208,7 @@ async function validatePhase(phase) {
 // Récupération de l'argument phase
 const phase = process.argv[2];
 if (!phase) {
-  console.error('Usage: npm run validate <numero-phase>');
+  console.error("Usage: npm run validate <numero-phase>");
   process.exit(1);
 }
 
@@ -239,13 +245,13 @@ class DevIAOrchestrator {
   detectCurrentPhase() {
     const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
     const version = packageJson.version || '1.0.0';
-    
+
     // Logic de détection basée sur la version et les fichiers présents
     if (!fs.existsSync('src/lib/firebase')) return 1;
     if (!fs.existsSync('src/routes/auth')) return 2;
     if (!fs.existsSync('src/lib/curriculum')) return 6;
     // ... autres détections
-    
+
     return 1; // Default Phase 1
   }
 
@@ -268,16 +274,16 @@ class DevIAOrchestrator {
     try {
       // Phase 1: Validation CBD automatique
       await this.validateCBD();
-      
+
       // Phase 2: Synchronisation Git
       if (options.syncGit !== false) {
         await this.syncGit();
       }
-      
+
       // Phase 3: Exécution des commandes de validation
       const commands = this.workflowConfig[this.currentPhase] || ['lint', 'build', 'test'];
       let allPassed = true;
-      
+
       for (const command of commands) {
         const success = await this.runCommand(command);
         if (!success) {
@@ -310,7 +316,7 @@ class DevIAOrchestrator {
   // Validation CBD selon DOC_CoPilot_Practices
   async validateCBD() {
     console.log('🔍 Validation CBD (Check Before Doing)...');
-    
+
     // Vérifications phase-spécifiques
     const checks = {
       1: ['Node.js ≥ 18', 'Git configuré', 'Structure projet'],
@@ -328,7 +334,7 @@ class DevIAOrchestrator {
     try {
       await execAsync('git add .');
       const { stdout } = await execAsync('git status --porcelain');
-      
+
       if (stdout.trim()) {
         console.log('📝 Changements détectés, commit en attente...');
       } else {
@@ -371,7 +377,7 @@ class DevIAOrchestrator {
     if (!fs.existsSync(reportsDir)) {
       fs.mkdirSync(reportsDir);
     }
-    
+
     const reportFile = path.join(reportsDir, `validation-${timestamp.split('T')[0]}.json`);
     fs.writeFileSync(reportFile, JSON.stringify(report, null, 2));
 
@@ -394,7 +400,7 @@ class DevIAOrchestrator {
   async handleBlockage(error) {
     console.log('\n🚨 GESTION DE BLOCAGE ACTIVÉE');
     console.log('💡 Suggestions de résolution:');
-    
+
     const suggestions = {
       'lint': 'Exécuter: npm run format puis npm run lint',
       'build': 'Vérifier les imports et la syntaxe TypeScript',
@@ -410,7 +416,7 @@ class DevIAOrchestrator {
 async function main() {
   const orchestrator = new DevIAOrchestrator();
   const args = process.argv.slice(2);
-  
+
   const options = {
     strictMode: !args.includes('--no-strict'),
     autoCommit: !args.includes('--no-commit'),
@@ -444,30 +450,34 @@ export default DevIAOrchestrator;
  * @criticality HIGH - Assure la cohérence documentaire
  */
 
-import fs from 'fs';
-import path from 'path';
+import fs from "fs";
+import path from "path";
 
 class RoadmapChecker {
   constructor() {
-    this.roadmapMain = this.loadRoadmap('roadmap/ROADMAP_LEARNING.md');
-    this.roadmapAuto = this.loadRoadmap('roadmap/ROADMAP_AUTOMATISATIONS_TECHNIQUES.md');
-    this.roadmapSummary = this.loadRoadmap('roadmap/ROADMAP_LEARNING_SUMMARY.md');
+    this.roadmapMain = this.loadRoadmap("roadmap/ROADMAP_LEARNING.md");
+    this.roadmapAuto = this.loadRoadmap(
+      "roadmap/ROADMAP_AUTOMATISATIONS_TECHNIQUES.md"
+    );
+    this.roadmapSummary = this.loadRoadmap(
+      "roadmap/ROADMAP_LEARNING_SUMMARY.md"
+    );
     this.phases = this.loadPhases();
   }
 
   // Validation de cohérence multi-niveaux
   async validateAlignment() {
-    console.log('🔍 Validation cohérence roadmap multi-niveaux...');
-    
+    console.log("🔍 Validation cohérence roadmap multi-niveaux...");
+
     const checks = [
       this.checkPhaseConsistency(),
       this.checkCommandsConsistency(),
       this.checkAutomationAlignment(),
-      this.checkSummarySync()
+      this.checkSummarySync(),
     ];
 
     const results = await Promise.all(checks);
-    const allPassed = results.every(r => r.success);
+    const allPassed = results.every((r) => r.success);
 
     this.generateAlignmentReport(results, allPassed);
     return allPassed;
@@ -475,80 +485,92 @@ class RoadmapChecker {
 
   // Vérification cohérence des phases
   checkPhaseConsistency() {
-    console.log('📋 Vérification cohérence phases...');
+    console.log("📋 Vérification cohérence phases...");
     const mainPhases = this.extractPhases(this.roadmapMain);
     const summaryPhases = this.extractPhases(this.roadmapSummary);
-    
-    const mismatches = mainPhases.filter(p => !summaryPhases.includes(p));
-    
+
+    const mismatches = mainPhases.filter((p) => !summaryPhases.includes(p));
+
     return {
-      name: 'Phase Consistency',
+      name: "Phase Consistency",
       success: mismatches.length === 0,
-      details: mismatches.length ? `Phases manquantes: ${mismatches.join(', ')}` : 'Toutes les phases alignées'
+      details: mismatches.length
+        ? `Phases manquantes: ${mismatches.join(", ")}`
+        : "Toutes les phases alignées",
     };
   }
 
   // Vérification cohérence des commandes npm
   checkCommandsConsistency() {
-    console.log('⚙️ Vérification commandes npm...');
-    const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+    console.log("⚙️ Vérification commandes npm...");
+    const packageJson = JSON.parse(fs.readFileSync("package.json", "utf8"));
     const scripts = Object.keys(packageJson.scripts || {});
-    
-    const requiredScripts = ['dev:ia', 'quality:gates', 'validate', 'test:critical'];
-    const missing = requiredScripts.filter(s => !scripts.includes(s));
-    
+
+    const requiredScripts = [
+      "dev:ia",
+      "quality:gates",
+      "validate",
+      "test:critical",
+    ];
+    const missing = requiredScripts.filter((s) => !scripts.includes(s));
+
     return {
-      name: 'Commands Consistency',
+      name: "Commands Consistency",
       success: missing.length === 0,
-      details: missing.length ? `Scripts manquants: ${missing.join(', ')}` : 'Tous les scripts présents'
+      details: missing.length
+        ? `Scripts manquants: ${missing.join(", ")}`
+        : "Tous les scripts présents",
     };
   }
 
   // Vérification alignement automation
   checkAutomationAlignment() {
-    console.log('🤖 Vérification alignement automation...');
+    console.log("🤖 Vérification alignement automation...");
     // Logique de vérification entre roadmap principal et automation
     return {
-      name: 'Automation Alignment',
+      name: "Automation Alignment",
       success: true,
-      details: 'Roadmap automation aligné avec roadmap principal'
+      details: "Roadmap automation aligné avec roadmap principal",
     };
   }
 
   // Vérification synchronisation summary
   checkSummarySync() {
-    console.log('� Vérification synchronisation summary...');
+    console.log("� Vérification synchronisation summary...");
     // Logique de vérification summary vs détail
     return {
-      name: 'Summary Sync',
+      name: "Summary Sync",
       success: true,
-      details: 'Summary synchronisé avec roadmap détaillé'
+      details: "Summary synchronisé avec roadmap détaillé",
     };
   }
 
   generateAlignmentReport(results, success) {
-    console.log('\n� RAPPORT DE COHÉRENCE ROADMAP:');
-    console.log(`Status Global: ${success ? '✅ CONFORME' : '❌ NON-CONFORME'}`);
-    console.log('─'.repeat(50));
-    
-    results.forEach(result => {
-      const status = result.success ? '✅' : '❌';
+    console.log("\n� RAPPORT DE COHÉRENCE ROADMAP:");
+    console.log(
+      `Status Global: ${success ? "✅ CONFORME" : "❌ NON-CONFORME"}`
+    );
+    console.log("─".repeat(50));
+
+    results.forEach((result) => {
+      const status = result.success ? "✅" : "❌";
       console.log(`${status} ${result.name}: ${result.details}`);
     });
   }
 
   // Utilitaires
   loadRoadmap(filePath) {
-    return fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : '';
+    return fs.existsSync(filePath) ? fs.readFileSync(filePath, "utf8") : "";
   }
 
   loadPhases() {
-    const phasesDir = 'roadmap/phases';
+    const phasesDir = "roadmap/phases";
     if (!fs.existsSync(phasesDir)) return [];
-    
-    return fs.readdirSync(phasesDir)
-      .filter(f => f.endsWith('.md'))
-      .map(f => f.replace('.md', ''));
+
+    return fs
+      .readdirSync(phasesDir)
+      .filter((f) => f.endsWith(".md"))
+      .map((f) => f.replace(".md", ""));
   }
 
   extractPhases(content) {
@@ -561,8 +583,9 @@ class RoadmapChecker {
 // CLI Interface
 if (import.meta.url === `file://${process.argv[1]}`) {
   const checker = new RoadmapChecker();
-  checker.validateAlignment()
-    .then(success => process.exit(success ? 0 : 1))
+  checker
+    .validateAlignment()
+    .then((success) => process.exit(success ? 0 : 1))
     .catch(console.error);
 }
 
@@ -579,25 +602,40 @@ export default RoadmapChecker;
  * @criticality HIGH - Garde-fou qualité avant progression
  */
 
-import { exec } from 'child_process';
-import { promisify } from 'util';
+import { exec } from "child_process";
+import { promisify } from "util";
 
 const execAsync = promisify(exec);
 
 class QualityGates {
   constructor() {
     this.gates = {
-      'lint': { command: 'npm run lint', description: 'Code style et syntaxe' },
-      'build': { command: 'npm run build', description: 'Compilation TypeScript' },
-      'test:unit': { command: 'npm run test:unit', description: 'Tests unitaires' },
-      'test:critical': { command: 'npm run test:critical', description: 'Tests critiques' },
-      'security': { command: 'npm audit --audit-level moderate', description: 'Audit sécurité' },
-      'performance': { command: 'npm run test:lighthouse', description: 'Performance Lighthouse' }
+      lint: { command: "npm run lint", description: "Code style et syntaxe" },
+      build: {
+        command: "npm run build",
+        description: "Compilation TypeScript",
+      },
+      "test:unit": {
+        command: "npm run test:unit",
+        description: "Tests unitaires",
+      },
+      "test:critical": {
+        command: "npm run test:critical",
+        description: "Tests critiques",
+      },
+      security: {
+        command: "npm audit --audit-level moderate",
+        description: "Audit sécurité",
+      },
+      performance: {
+        command: "npm run test:lighthouse",
+        description: "Performance Lighthouse",
+      },
     };
   }
 
   async runAllGates(options = {}) {
-    console.log('🛡️ Quality Gates - Validation complète...');
+    console.log("🛡️ Quality Gates - Validation complète...");
     console.log(`📋 ${Object.keys(this.gates).length} gates à valider\n`);
 
     const results = [];
@@ -611,11 +649,11 @@ class QualityGates {
 
       const result = await this.runGate(gateName, gate);
       results.push(result);
-      
+
       if (!result.success) {
         allPassed = false;
         if (options.failFast) {
-          console.log('🚨 Arrêt sur premier échec (--fail-fast)');
+          console.log("🚨 Arrêt sur premier échec (--fail-fast)");
           break;
         }
       }
@@ -627,44 +665,53 @@ class QualityGates {
 
   async runGate(name, gate) {
     console.log(`🔍 ${name}: ${gate.description}...`);
-    
+
     try {
       const startTime = Date.now();
       await execAsync(gate.command);
       const duration = Date.now() - startTime;
-      
+
       console.log(`✅ ${name}: PASSÉ (${duration}ms)`);
-      return { name, success: true, duration, message: 'Succès' };
-      
+      return { name, success: true, duration, message: "Succès" };
     } catch (error) {
       console.log(`❌ ${name}: ÉCHEC`);
-      console.log(`   Error: ${error.message.split('\n')[0]}`);
-      
-      return { 
-        name, 
-        success: false, 
-        duration: 0, 
-        message: error.message.split('\n')[0] 
+      console.log(`   Error: ${error.message.split("\n")[0]}`);
+
+      return {
+        name,
+        success: false,
+        duration: 0,
+        message: error.message.split("\n")[0],
       };
     }
   }
 
   generateQualityReport(results, success) {
-    console.log('\n📊 RAPPORT QUALITY GATES:');
-    console.log(`Status Global: ${success ? '✅ TOUS PASSÉS' : '❌ ÉCHECS DÉTECTÉS'}`);
-    console.log('─'.repeat(60));
-    
-    results.forEach(result => {
-      const status = result.success ? '✅' : '❌';
-      const duration = result.duration ? `(${result.duration}ms)` : '';
-      console.log(`${status} ${result.name.padEnd(15)} ${duration.padEnd(10)} ${result.message}`);
+    console.log("\n📊 RAPPORT QUALITY GATES:");
+    console.log(
+      `Status Global: ${success ? "✅ TOUS PASSÉS" : "❌ ÉCHECS DÉTECTÉS"}`
+    );
+    console.log("─".repeat(60));
+
+    results.forEach((result) => {
+      const status = result.success ? "✅" : "❌";
+      const duration = result.duration ? `(${result.duration}ms)` : "";
+      console.log(
+        `${status} ${result.name.padEnd(15)} ${duration.padEnd(10)} ${
+          result.message
+        }`
+      );
     });
 
     if (!success) {
-      console.log('\n💡 ACTIONS RECOMMANDÉES:');
-      results.filter(r => !r.success).forEach(result => {
-        console.log(`🔧 ${result.name}: Vérifier et corriger les erreurs reportées`);
-      });
+      console.log("\n💡 ACTIONS RECOMMANDÉES:");
+      results
+        .filter((r) => !r.success)
+        .forEach((result) => {
+          console.log(
+            `🔧 ${result.name}: Vérifier et corriger les erreurs reportées`
+          );
+        });
     }
   }
 }
@@ -673,14 +720,16 @@ class QualityGates {
 if (import.meta.url === `file://${process.argv[1]}`) {
   const args = process.argv.slice(2);
   const options = {
-    failFast: args.includes('--fail-fast'),
-    skip: args.includes('--skip') ? 
-      args[args.indexOf('--skip') + 1]?.split(',') || [] : []
+    failFast: args.includes("--fail-fast"),
+    skip: args.includes("--skip")
+      ? args[args.indexOf("--skip") + 1]?.split(",") || []
+      : [],
   };
 
   const gates = new QualityGates();
-  gates.runAllGates(options)
-    .then(result => process.exit(result.success ? 0 : 1))
+  gates
+    .runAllGates(options)
+    .then((result) => process.exit(result.success ? 0 : 1))
     .catch(console.error);
 }
 
@@ -692,10 +741,11 @@ export default QualityGates;
 **[FILE]** Créer `scripts/templates/` - **Templates phases 1-3** :
 
 **📁 Structure templates :**
+
 ```bash
 scripts/templates/
 ├── TEMPLATE_validation_phase1.js    # Setup & Foundation
-├── TEMPLATE_validation_phase2.js    # Firebase & Auth  
+├── TEMPLATE_validation_phase2.js    # Firebase & Auth
 ├── TEMPLATE_validation_phase3.js    # Content & Core
 ├── generator.js                     # Générateur intelligent
 └── README.md                        # Documentation templates
@@ -713,7 +763,7 @@ scripts/templates/
 export const PHASE1_TEMPLATE = {
   phase: "Phase 1 - Setup & Foundation",
   description: "Validation environnement développement et outils de base",
-  
+
   checks: [
     {
       name: "Node.js Version ≥ 18",
@@ -723,57 +773,65 @@ export const PHASE1_TEMPLATE = {
         return parseInt(version) >= 18;
       },
       errorHelp: "🔧 Installer Node.js 18+ : https://nodejs.org",
-      criticality: "HIGH"
+      criticality: "HIGH",
     },
     {
       name: "Package Manager (npm/pnpm)",
       command: "npm --version && pnpm --version || echo 'npm only'",
-      validator: (output) => output.includes('.'),
+      validator: (output) => output.includes("."),
       errorHelp: "🔧 Installer pnpm : npm install -g pnpm",
-      criticality: "MEDIUM"
+      criticality: "MEDIUM",
     },
     {
       name: "Git Configuration",
       command: "git config --list | grep user",
-      validator: (output) => output.includes('user.name') && output.includes('user.email'),
+      validator: (output) =>
+        output.includes("user.name") && output.includes("user.email"),
       errorHelp: "🔧 git config --global user.name 'Votre Nom'",
-      criticality: "HIGH"
+      criticality: "HIGH",
     },
     {
       name: "SvelteKit Project Structure",
       validator: () => {
-        const fs = require('fs');
-        return fs.existsSync('package.json') && 
-               fs.existsSync('src/') && 
-               fs.existsSync('vite.config.js') &&
-               fs.existsSync('svelte.config.js');
+        const fs = require("fs");
+        return (
+          fs.existsSync("package.json") &&
+          fs.existsSync("src/") &&
+          fs.existsSync("vite.config.js") &&
+          fs.existsSync("svelte.config.js")
+        );
       },
-      errorHelp: "🔧 npm create svelte@latest . --template skeleton --types typescript",
-      criticality: "HIGH"
+      errorHelp:
+        "🔧 npm create svelte@latest . --template skeleton --types typescript",
+      criticality: "HIGH",
     },
     {
       name: "TypeScript Configuration",
       validator: () => {
-        const fs = require('fs');
-        return fs.existsSync('tsconfig.json') && fs.existsSync('src/app.d.ts');
+        const fs = require("fs");
+        return fs.existsSync("tsconfig.json") && fs.existsSync("src/app.d.ts");
       },
       errorHelp: "🔧 Vérifier tsconfig.json et src/app.d.ts",
-      criticality: "HIGH"
+      criticality: "HIGH",
     },
     {
       name: "Quality Tools (ESLint + Prettier)",
       command: "npm list eslint prettier",
-      validator: (output) => output.includes('eslint') && output.includes('prettier'),
-      errorHelp: "🔧 npm install -D eslint prettier @typescript-eslint/eslint-plugin",
-      criticality: "MEDIUM"
-    }
+      validator: (output) =>
+        output.includes("eslint") && output.includes("prettier"),
+      errorHelp:
+        "🔧 npm install -D eslint prettier @typescript-eslint/eslint-plugin",
+      criticality: "MEDIUM",
+    },
   ],
-  
+
   generateReport: (results) => {
-    const passed = results.filter(r => r.success).length;
+    const passed = results.filter((r) => r.success).length;
     const total = results.length;
-    const critical = results.filter(r => !r.success && r.criticality === 'HIGH').length;
-    
+    const critical = results.filter(
+      (r) => !r.success && r.criticality === "HIGH"
+    ).length;
+
     return {
       phase: "Phase 1",
       score: `${passed}/${total}`,
@@ -781,10 +839,15 @@ export const PHASE1_TEMPLATE = {
       readyForNext: critical === 0 && passed >= total * 0.8, // 80% minimum
       nextPhase: "Phase 2 - Firebase & Auth",
       recommendations: results
-        .filter(r => !r.success)
-        .map(r => `${r.criticality === 'HIGH' ? '🚨' : '⚠️'} ${r.name}: ${r.errorHelp}`)
+        .filter((r) => !r.success)
+        .map(
+          (r) =>
+            `${r.criticality === "HIGH" ? "🚨" : "⚠️"} ${r.name}: ${
+              r.errorHelp
+            }`
+        ),
     };
-  }
+  },
 };
 ```
 
@@ -798,78 +861,96 @@ export const PHASE1_TEMPLATE = {
  */
 
 export const PHASE2_TEMPLATE = {
-  phase: "Phase 2 - Firebase & Auth", 
+  phase: "Phase 2 - Firebase & Auth",
   description: "Validation authentification Firebase et sécurité",
   prerequisites: ["Phase 1 validée"],
-  
+
   checks: [
     {
       name: "Firebase CLI Installé",
       command: "firebase --version",
-      validator: (output) => output.includes('firebase-tools'),
+      validator: (output) => output.includes("firebase-tools"),
       errorHelp: "🔧 npm install -g firebase-tools",
-      criticality: "HIGH"
+      criticality: "HIGH",
     },
     {
       name: "Firebase Project Initialized",
       command: "firebase projects:list",
-      validator: (output) => !output.includes('No projects found'),
+      validator: (output) => !output.includes("No projects found"),
       errorHelp: "🔧 firebase login puis firebase init",
-      criticality: "HIGH"
+      criticality: "HIGH",
     },
     {
       name: "Firebase Configuration File",
       validator: () => {
-        const fs = require('fs');
-        return fs.existsSync('src/lib/firebase.js') || fs.existsSync('src/lib/firebase.ts');
+        const fs = require("fs");
+        return (
+          fs.existsSync("src/lib/firebase.js") ||
+          fs.existsSync("src/lib/firebase.ts")
+        );
       },
-      errorHelp: "🔧 Créer src/lib/firebase.ts avec initializeApp, getAuth, getFirestore",
-      criticality: "HIGH"
+      errorHelp:
+        "🔧 Créer src/lib/firebase.ts avec initializeApp, getAuth, getFirestore",
+      criticality: "HIGH",
     },
     {
       name: "Environment Variables",
       validator: () => {
-        const fs = require('fs');
-        if (!fs.existsSync('.env')) return false;
-        const env = fs.readFileSync('.env', 'utf8');
-        return env.includes('VITE_FIREBASE_API_KEY') && env.includes('VITE_FIREBASE_PROJECT_ID');
+        const fs = require("fs");
+        if (!fs.existsSync(".env")) return false;
+        const env = fs.readFileSync(".env", "utf8");
+        return (
+          env.includes("VITE_FIREBASE_API_KEY") &&
+          env.includes("VITE_FIREBASE_PROJECT_ID")
+        );
       },
       errorHelp: "🔧 Configurer .env avec toutes les variables VITE_FIREBASE_*",
-      criticality: "HIGH"
+      criticality: "HIGH",
     },
     {
       name: "Auth Store Created",
       validator: () => {
-        const fs = require('fs');
-        return fs.existsSync('src/lib/stores/auth.ts') || fs.existsSync('src/lib/stores/auth.js');
+        const fs = require("fs");
+        return (
+          fs.existsSync("src/lib/stores/auth.ts") ||
+          fs.existsSync("src/lib/stores/auth.js")
+        );
       },
       errorHelp: "🔧 Créer store d'authentification réactif avec Svelte stores",
-      criticality: "MEDIUM"
+      criticality: "MEDIUM",
     },
     {
       name: "No Hardcoded Secrets",
-      command: "grep -r 'AIza\\|firebase' src/ --include='*.js' --include='*.ts' || echo 'Clean'",
-      validator: (output) => !output.includes('AIza') || output.includes('Clean'),
+      command:
+        "grep -r 'AIza\\|firebase' src/ --include='*.js' --include='*.ts' || echo 'Clean'",
+      validator: (output) =>
+        !output.includes("AIza") || output.includes("Clean"),
       errorHelp: "🚨 CRITIQUE: Déplacer toutes les clés API vers .env",
-      criticality: "CRITICAL"
-    }
+      criticality: "CRITICAL",
+    },
   ],
-  
+
   generateReport: (results) => {
-    const securityIssues = results.filter(r => !r.success && r.criticality === 'CRITICAL').length;
-    const authReady = results.find(r => r.name.includes('Auth Store'))?.success;
-    
+    const securityIssues = results.filter(
+      (r) => !r.success && r.criticality === "CRITICAL"
+    ).length;
+    const authReady = results.find((r) =>
+      r.name.includes("Auth Store")
+    )?.success;
+
     return {
       phase: "Phase 2",
       authenticationReady: authReady,
       securityIssues,
-      readyForNext: securityIssues === 0 && results.filter(r => r.criticality === 'HIGH').every(r => r.success),
+      readyForNext:
+        securityIssues === 0 &&
+        results.filter((r) => r.criticality === "HIGH").every((r) => r.success),
       nextPhase: "Phase 3 - Content & Core Features",
       criticalAlerts: results
-        .filter(r => !r.success && r.criticality === 'CRITICAL')
-        .map(r => `🚨 SÉCURITÉ: ${r.name}`)
+        .filter((r) => !r.success && r.criticality === "CRITICAL")
+        .map((r) => `🚨 SÉCURITÉ: ${r.name}`),
     };
-  }
+  },
 };
 ```
 
@@ -886,66 +967,76 @@ export const PHASE3_TEMPLATE = {
   phase: "Phase 3 - Content & Core Features",
   description: "Validation système de contenu et fonctionnalités core",
   prerequisites: ["Phase 1 validée", "Phase 2 validée"],
-  
+
   checks: [
     {
       name: "Content Management System",
       validator: () => {
-        const fs = require('fs');
-        return fs.existsSync('src/lib/content/') && 
-               fs.existsSync('src/lib/content/contentManager.ts');
+        const fs = require("fs");
+        return (
+          fs.existsSync("src/lib/content/") &&
+          fs.existsSync("src/lib/content/contentManager.ts")
+        );
       },
       errorHelp: "🔧 Créer système de gestion de contenu dans src/lib/content/",
-      criticality: "HIGH"
+      criticality: "HIGH",
     },
     {
       name: "Markdown Parser Installed",
       command: "npm list marked",
-      validator: (output) => output.includes('marked'),
+      validator: (output) => output.includes("marked"),
       errorHelp: "🔧 npm install marked @types/marked",
-      criticality: "MEDIUM"
+      criticality: "MEDIUM",
     },
     {
-      name: "Content Routes Structure", 
+      name: "Content Routes Structure",
       validator: () => {
-        const fs = require('fs');
-        return fs.existsSync('src/routes/cours/') &&
-               fs.existsSync('src/routes/cours/[matiere]/');
+        const fs = require("fs");
+        return (
+          fs.existsSync("src/routes/cours/") &&
+          fs.existsSync("src/routes/cours/[matiere]/")
+        );
       },
-      errorHelp: "🔧 Créer structure routes: src/routes/cours/[matiere]/[niveau]/",
-      criticality: "HIGH"
+      errorHelp:
+        "🔧 Créer structure routes: src/routes/cours/[matiere]/[niveau]/",
+      criticality: "HIGH",
     },
     {
       name: "Content Validation Tests",
       command: "npm run test:content || echo 'No content tests'",
-      validator: (output) => !output.includes('No content tests') && output.includes('✓'),
+      validator: (output) =>
+        !output.includes("No content tests") && output.includes("✓"),
       errorHelp: "🔧 Créer tests de validation du contenu",
-      criticality: "MEDIUM"
+      criticality: "MEDIUM",
     },
     {
       name: "SEO & Meta Tags",
       validator: () => {
-        const fs = require('fs');
-        const appHtml = fs.readFileSync('src/app.html', 'utf8');
-        return appHtml.includes('%sveltekit.head%') && appHtml.includes('viewport');
+        const fs = require("fs");
+        const appHtml = fs.readFileSync("src/app.html", "utf8");
+        return (
+          appHtml.includes("%sveltekit.head%") && appHtml.includes("viewport")
+        );
       },
       errorHelp: "🔧 Configurer meta tags dans src/app.html et +layout.svelte",
-      criticality: "LOW"
-    }
+      criticality: "LOW",
+    },
   ],
 
   generateReport: (results) => {
-    const coreFeatures = results.filter(r => r.criticality === 'HIGH').filter(r => r.success).length;
-    const totalCore = results.filter(r => r.criticality === 'HIGH').length;
-    
+    const coreFeatures = results
+      .filter((r) => r.criticality === "HIGH")
+      .filter((r) => r.success).length;
+    const totalCore = results.filter((r) => r.criticality === "HIGH").length;
+
     return {
-      phase: "Phase 3", 
+      phase: "Phase 3",
       coreFeaturesReady: `${coreFeatures}/${totalCore}`,
       readyForNext: coreFeatures === totalCore,
       nextPhase: "Phase 4 - Advanced Features",
-      progressIndicator: Math.round((coreFeatures / totalCore) * 100)
+      progressIndicator: Math.round((coreFeatures / totalCore) * 100),
     };
-  }
+  },
 };
 ```
 
@@ -966,7 +1057,7 @@ export const PHASE3_TEMPLATE = {
   "categorizeByGroup": true,
   "categoryOrder": [
     "Authentication",
-    "Content Management", 
+    "Content Management",
     "UI Components",
     "Utilities",
     "*"
@@ -1001,7 +1092,7 @@ class DocsGenerator {
   constructor() {
     this.docsConfig = {
       apiDocs: 'docs/api',
-      userGuides: 'docs/guides', 
+      userGuides: 'docs/guides',
       roadmapDocs: 'docs/roadmap',
       outputDir: 'dist/docs'
     };
@@ -1010,23 +1101,23 @@ class DocsGenerator {
   // Génération complète documentation
   async generateAll() {
     console.log('📚 Génération documentation complète...');
-    
+
     try {
       // 1. Documentation API avec TypeDoc
       await this.generateAPIDocumentation();
-      
+
       // 2. Documentation guides utilisateur
       await this.generateUserGuides();
-      
+
       // 3. Documentation roadmap et phases
       await this.generateRoadmapDocs();
-      
+
       // 4. Site Docusaurus unifié
       await this.buildDocusaurusSite();
-      
+
       console.log('✅ Documentation générée avec succès !');
       return true;
-      
+
     } catch (error) {
       console.error('❌ Erreur génération docs:', error.message);
       return false;
@@ -1036,14 +1127,14 @@ class DocsGenerator {
   // Documentation API TypeScript
   async generateAPIDocumentation() {
     console.log('🔍 Génération documentation API TypeDoc...');
-    
+
     try {
       // Installation TypeDoc si nécessaire
       await execAsync('npm list typedoc || npm install -D typedoc typedoc-plugin-markdown');
-      
+
       // Génération docs API
       await execAsync('npx typedoc --options typedoc.json');
-      
+
       console.log('✅ Documentation API générée');
     } catch (error) {
       throw new Error(`TypeDoc génération échouée: ${error.message}`);
@@ -1053,7 +1144,7 @@ class DocsGenerator {
   // Guides utilisateur automatiques
   async generateUserGuides() {
     console.log('📖 Génération guides utilisateur...');
-    
+
     const guides = [
       {
         title: 'Guide de Démarrage Rapide',
@@ -1062,7 +1153,7 @@ class DocsGenerator {
       },
       {
         title: 'Guide Développement',
-        file: 'development.md', 
+        file: 'development.md',
         content: this.generateDevelopmentGuide()
       },
       {
@@ -1089,7 +1180,7 @@ class DocsGenerator {
   // Documentation roadmap automatique
   async generateRoadmapDocs() {
     console.log('🗺️ Génération documentation roadmap...');
-    
+
     const roadmapDir = this.docsConfig.roadmapDocs;
     if (!fs.existsSync(roadmapDir)) {
       fs.mkdirSync(roadmapDir, { recursive: true });
@@ -1106,10 +1197,10 @@ class DocsGenerator {
   // Site Docusaurus unifié
   async buildDocusaurusSite() {
     console.log('🏗️ Construction site Docusaurus...');
-    
+
     // Configuration Docusaurus minimale
     const docusaurusConfig = this.generateDocusaurusConfig();
-    
+
     // Création config si nécessaire
     if (!fs.existsSync('docusaurus.config.js')) {
       fs.writeFileSync('docusaurus.config.js', docusaurusConfig);
@@ -1118,10 +1209,10 @@ class DocsGenerator {
     try {
       // Installation Docusaurus
       await execAsync('npm list @docusaurus/core || npm install -D @docusaurus/core @docusaurus/preset-classic');
-      
+
       // Build site documentation
       await execAsync('npx docusaurus build --out-dir dist/docs');
-      
+
       console.log('🌐 Site documentation construit');
     } catch (error) {
       console.warn('⚠️ Docusaurus build échoué (non-bloquant):', error.message);
@@ -1229,7 +1320,7 @@ Auto-généré le ${new Date().toISOString()}
   tagline: 'Plateforme d\\'apprentissage intelligente',
   url: 'https://funlearning-docs.vercel.app',
   baseUrl: '/',
-  
+
   presets: [
     [
       '@docusaurus/preset-classic',
@@ -1262,7 +1353,7 @@ Auto-généré le ${new Date().toISOString()}
         },
         {
           to: '/roadmap/',
-          label: 'Roadmap', 
+          label: 'Roadmap',
           position: 'left',
         },
       ],
@@ -1291,7 +1382,7 @@ export { DocsGenerator };
 {
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build", 
+    "build": "vite build",
     "preview": "vite preview",
     "test": "vitest --config config/vitest.config.js",
     "test:ui": "vitest --ui --config config/vitest.config.js",
@@ -1300,14 +1391,14 @@ export { DocsGenerator };
     "format": "prettier --config config/.prettierrc --write .",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "validate": "node scripts/validate-phase.js",
-    
+
     "dev:ia": "node scripts/dev-ia.js",
     "validate:phase1": "node scripts/templates/validate-phase1.js",
-    "validate:phase2": "node scripts/templates/validate-phase2.js", 
+    "validate:phase2": "node scripts/templates/validate-phase2.js",
     "validate:phase3": "node scripts/templates/validate-phase3.js",
     "docs:generate": "node scripts/docs-generator.js",
     "docs:api": "typedoc --options typedoc.json",
-    
+
     "release:prepare": "npm run lint && npm run test && npm run build",
     "release:validate": "npm run validate",
     "release:deploy": "vercel --prod"
@@ -1326,24 +1417,24 @@ export { DocsGenerator };
 ```js
 #!/usr/bin/env node
 // Script dev:ia - Orchestration workflow simple
-console.log('🤖 DevIA - Phase 1 Validation');
+console.log("🤖 DevIA - Phase 1 Validation");
 
-const { exec } = require('child_process');
+const { exec } = require("child_process");
 
 async function runValidation() {
   try {
-    console.log('🔍 Lint...');
-    await exec('npm run lint');
-    
-    console.log('🧪 Tests...');
-    await exec('npm run test');
-    
-    console.log('🏗️ Build...');
-    await exec('npm run build');
-    
-    console.log('✅ Phase 1 validation réussie !');
+    console.log("🔍 Lint...");
+    await exec("npm run lint");
+
+    console.log("🧪 Tests...");
+    await exec("npm run test");
+
+    console.log("🏗️ Build...");
+    await exec("npm run build");
+
+    console.log("✅ Phase 1 validation réussie !");
   } catch (error) {
-    console.error('❌ Validation échouée:', error.message);
+    console.error("❌ Validation échouée:", error.message);
     process.exit(1);
   }
 }
@@ -1355,21 +1446,21 @@ runValidation();
 
 ```js
 // Template validation Phase 1
-console.log('🎯 Validation Phase 1 - Setup & Foundation');
-console.log('✅ Node.js ≥ 18');
-console.log('✅ SvelteKit configuré');
-console.log('✅ TypeScript activé');
-console.log('✅ Tests opérationnels');
-console.log('✅ Phase 1 prête pour Phase 2');
+console.log("🎯 Validation Phase 1 - Setup & Foundation");
+console.log("✅ Node.js ≥ 18");
+console.log("✅ SvelteKit configuré");
+console.log("✅ TypeScript activé");
+console.log("✅ Tests opérationnels");
+console.log("✅ Phase 1 prête pour Phase 2");
 ```
 
 **[FILE]** Créer `scripts/docs-generator.js` :
 
 ```js
 // Générateur documentation basique
-const fs = require('fs');
+const fs = require("fs");
 
-console.log('📚 Génération documentation...');
+console.log("📚 Génération documentation...");
 
 // Guide démarrage rapide auto-généré
 const quickStart = `# Guide Démarrage FunLearning
@@ -1382,10 +1473,10 @@ npm run dev:ia
 
 Auto-généré le ${new Date().toLocaleDateString()}`;
 
-if (!fs.existsSync('docs')) fs.mkdirSync('docs');
-fs.writeFileSync('docs/quick-start.md', quickStart);
+if (!fs.existsSync("docs")) fs.mkdirSync("docs");
+fs.writeFileSync("docs/quick-start.md", quickStart);
 
-console.log('✅ Documentation générée');
+console.log("✅ Documentation générée");
 ```
 
 **[FILE]** Créer `typedoc.json` :
@@ -1407,7 +1498,7 @@ declare global {
       code?: string;
       id?: string;
     }
-    
+
     interface Locals {
       user?: {
         id: string;
@@ -1415,18 +1506,18 @@ declare global {
         name: string;
       };
     }
-    
+
     interface PageData {
-      user?: App.Locals['user'];
+      user?: App.Locals["user"];
     }
-    
+
     interface Platform {}
   }
 }
 
 // Types globaux pour l'application
-declare module '*.svelte' {
-  import type { ComponentType } from 'svelte';
+declare module "*.svelte" {
+  import type { ComponentType } from "svelte";
   const component: ComponentType;
   export default component;
 }
@@ -1450,7 +1541,7 @@ export {};
 **[FILE]** Créer `tests/setup.js` :
 
 ```js
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 
 // Configuration globale des tests
 global.fetch = vi.fn();
@@ -1463,17 +1554,17 @@ beforeEach(() => {
 **[FILE]** Créer test basique `src/lib/utils/helpers.test.ts` :
 
 ```ts
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect } from "vitest";
 
 // Fonction utilitaire simple pour tester
 export function formatDate(date: Date): string {
-  return date.toLocaleDateString('fr-FR');
+  return date.toLocaleDateString("fr-FR");
 }
 
-describe('helpers', () => {
-  it('should format date correctly', () => {
-    const date = new Date('2024-01-15');
-    expect(formatDate(date)).toBe('15/01/2024');
+describe("helpers", () => {
+  it("should format date correctly", () => {
+    const date = new Date("2024-01-15");
+    expect(formatDate(date)).toBe("15/01/2024");
   });
 });
 ```
@@ -1485,6 +1576,7 @@ describe('helpers', () => {
 ### 🔧 **Risques Identifiés & Solutions**
 
 **⚠️ Incompatibilités TypeScript + SvelteKit :**
+
 ```bash
 # Si erreurs de types dans .svelte
 [CMD] npm install -D @tsconfig/svelte
@@ -1492,6 +1584,7 @@ describe('helpers', () => {
 ```
 
 **⚠️ Conflits Vitest + SvelteKit :**
+
 ```bash
 # Si tests ne trouvent pas les modules Svelte
 [FIX] Vérifier vitest.config.js pointe bien vers sveltekit plugin
@@ -1499,6 +1592,7 @@ describe('helpers', () => {
 ```
 
 **⚠️ ESLint + Prettier conflits :**
+
 ```bash
 # Configuration anti-conflits
 [CMD] npm install -D eslint-config-prettier
@@ -1508,6 +1602,7 @@ describe('helpers', () => {
 ### 🛠️ **Buffer de 1 jour : Plan d'action**
 
 **Jour 4 - Résolution & Consolidation :**
+
 - **Matin** : Résolution incompatibilités détectées
 - **Après-midi** : Tests supplémentaires + optimisations
 - **Validation** : Tous les CHECK doivent passer ✅
@@ -1517,6 +1612,7 @@ describe('helpers', () => {
 ## ✅ **Critères de Validation Obligatoires - Intégrations CBD**
 
 ### 🔧 **Validation de base (existante)**
+
 - [ ] **[CHECK]** `npm run dev` démarre sur localhost:5173
 - [ ] **[CHECK]** `npm run test` : Au moins 1 test passe
 - [ ] **[CHECK]** `npm run lint` : 0 erreur
@@ -1526,6 +1622,7 @@ describe('helpers', () => {
 - [ ] **[CHECK]** Types TypeScript configurés
 
 ### 🤖 **Nouveaux critères CBD (ajoutés)**
+
 - [ ] **[CHECK]** `npm run dev:ia` : Script orchestrateur fonctionnel
 - [ ] **[CHECK]** `npm run validate:phase1` : Template Phase 1 créé
 - [ ] **[CHECK]** `npm run docs:generate` : Documentation de base générée
@@ -1533,6 +1630,7 @@ describe('helpers', () => {
 - [ ] **[CHECK]** Configuration TypeDoc présente
 
 ### 🎯 **Test complet intégration**
+
 ```bash
 [TEST] npm run dev:ia                 # Test orchestrateur principal
 [TEST] npm run validate:phase1        # Test template spécialisé

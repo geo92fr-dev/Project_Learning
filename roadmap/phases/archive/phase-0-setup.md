@@ -51,14 +51,14 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   plugins: [sveltekit()],
   test: {
-    include: ['src/**/*.{test,spec}.{js,ts}'],
-    environment: 'jsdom',
-    setupFiles: ['./src/test-setup.js'],
+    include: ["src/**/*.{test,spec}.{js,ts}"],
+    environment: "jsdom",
+    setupFiles: ["./src/test-setup.js"],
     coverage: {
-      reporter: ['text', 'html', 'lcov'],
-      exclude: ['node_modules/', 'src/test-setup.js']
-    }
-  }
+      reporter: ["text", "html", "lcov"],
+      exclude: ["node_modules/", "src/test-setup.js"],
+    },
+  },
 });
 ```
 
@@ -68,37 +68,37 @@ export default defineConfig({
 module.exports = {
   root: true,
   extends: [
-    'eslint:recommended',
-    '@typescript-eslint/recommended',
-    'plugin:svelte/recommended'
+    "eslint:recommended",
+    "@typescript-eslint/recommended",
+    "plugin:svelte/recommended",
   ],
-  parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
+  parser: "@typescript-eslint/parser",
+  plugins: ["@typescript-eslint"],
   parserOptions: {
-    sourceType: 'module',
+    sourceType: "module",
     ecmaVersion: 2020,
-    extraFileExtensions: ['.svelte']
+    extraFileExtensions: [".svelte"],
   },
   env: {
     browser: true,
     es2017: true,
-    node: true
+    node: true,
   },
   overrides: [
     {
-      files: ['*.svelte'],
-      parser: 'svelte-eslint-parser',
+      files: ["*.svelte"],
+      parser: "svelte-eslint-parser",
       parserOptions: {
-        parser: '@typescript-eslint/parser'
-      }
-    }
+        parser: "@typescript-eslint/parser",
+      },
+    },
   ],
   rules: {
-    '@typescript-eslint/no-unused-vars': 'error',
-    '@typescript-eslint/explicit-function-return-type': 'warn',
-    'svelte/no-at-html-tags': 'error',
-    'svelte/accessibility-label-has-associated-control': 'error'
-  }
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/explicit-function-return-type": "warn",
+    "svelte/no-at-html-tags": "error",
+    "svelte/accessibility-label-has-associated-control": "error",
+  },
 };
 ```
 
@@ -112,13 +112,13 @@ module.exports = {
   "printWidth": 100,
   "plugins": ["prettier-plugin-svelte"],
   "overrides": [
-    { 
-      "files": "*.svelte", 
-      "options": { 
+    {
+      "files": "*.svelte",
+      "options": {
         "parser": "svelte",
         "svelteStrictMode": true,
         "svelteAllowShorthand": false
-      } 
+      }
     }
   ]
 }
@@ -129,47 +129,47 @@ module.exports = {
 **[FILE]** Créer `src/hooks.server.ts` pour la protection serveur :
 
 ```ts
-import type { Handle } from '@sveltejs/kit';
-import { adminAuth } from '$lib/firebase/admin';
+import type { Handle } from "@sveltejs/kit";
+import { adminAuth } from "$lib/firebase/admin";
 
-const protectedRoutes = ['/dashboard', '/admin', '/cours'];
+const protectedRoutes = ["/dashboard", "/admin", "/cours"];
 
 export const handle: Handle = async ({ event, resolve }) => {
   const { url, cookies } = event;
-  
+
   // Vérifier si la route nécessite une authentification
-  const isProtectedRoute = protectedRoutes.some(route => 
+  const isProtectedRoute = protectedRoutes.some((route) =>
     url.pathname.startsWith(route)
   );
-  
+
   if (isProtectedRoute) {
-    const sessionCookie = cookies.get('session');
-    
+    const sessionCookie = cookies.get("session");
+
     if (!sessionCookie) {
       return new Response(null, {
         status: 302,
-        headers: { Location: '/auth/login' }
+        headers: { Location: "/auth/login" },
       });
     }
-    
+
     try {
       // Vérifier le token côté serveur
       const decodedToken = await adminAuth.verifySessionCookie(sessionCookie);
       event.locals.user = {
         uid: decodedToken.uid,
         email: decodedToken.email,
-        role: decodedToken.role || 'student'
+        role: decodedToken.role || "student",
       };
     } catch (error) {
-      console.error('Session invalide:', error);
-      cookies.delete('session');
+      console.error("Session invalide:", error);
+      cookies.delete("session");
       return new Response(null, {
         status: 302,
-        headers: { Location: '/auth/login' }
+        headers: { Location: "/auth/login" },
       });
     }
   }
-  
+
   return resolve(event);
 };
 ```
@@ -177,14 +177,14 @@ export const handle: Handle = async ({ event, resolve }) => {
 **[FILE]** Créer `src/lib/firebase/admin.ts` :
 
 ```ts
-import { getAuth } from 'firebase-admin/auth';
-import { initializeApp, getApps, cert } from 'firebase-admin/app';
-import { FIREBASE_ADMIN_SDK_KEY } from '$env/static/private';
+import { getAuth } from "firebase-admin/auth";
+import { initializeApp, getApps, cert } from "firebase-admin/app";
+import { FIREBASE_ADMIN_SDK_KEY } from "$env/static/private";
 
 // Initialiser Firebase Admin si pas déjà fait
 if (!getApps().length) {
   initializeApp({
-    credential: cert(JSON.parse(FIREBASE_ADMIN_SDK_KEY))
+    credential: cert(JSON.parse(FIREBASE_ADMIN_SDK_KEY)),
   });
 }
 
@@ -221,27 +221,27 @@ export {};
 **[FILE]** Créer `playwright.config.ts` :
 
 ```ts
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
-  testDir: './tests/e2e',
+  testDir: "./tests/e2e",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  reporter: "html",
   use: {
-    baseURL: 'http://localhost:5173',
-    trace: 'on-first-retry',
+    baseURL: "http://localhost:5173",
+    trace: "on-first-retry",
   },
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
     },
   ],
   webServer: {
-    command: 'npm run build && npm run preview',
+    command: "npm run build && npm run preview",
     port: 5173,
   },
 });
@@ -252,21 +252,21 @@ export default defineConfig({
 **[FILE]** Créer `scripts/validate-phase.js` - script unique avec paramètre :
 
 ```js
-import { exec } from 'child_process';
-import { promisify } from 'util';
+import { exec } from "child_process";
+import { promisify } from "util";
 
 const execAsync = promisify(exec);
 
 const PHASE_VALIDATIONS = {
-  '0': ['lint', 'build', 'test'],
-  '1': ['lint', 'build', 'test', 'test:auth'],
-  '2': ['lint', 'build', 'test', 'test:content', 'test:security'],
-  '2.1': ['lint', 'build', 'test', 'test:navigation'],
-  '2.2': ['lint', 'build', 'test', 'test:firebase'],
-  '3': ['lint', 'build', 'test', 'test:exercises', 'test:performance'],
-  '4': ['lint', 'build', 'test', 'test:pwa', 'test:offline'],
-  '5': ['lint', 'build', 'test', 'test:admin', 'test:e2e'],
-  '6': ['lint', 'build', 'test', 'test:e2e', 'test:lighthouse']
+  0: ["lint", "build", "test"],
+  1: ["lint", "build", "test", "test:auth"],
+  2: ["lint", "build", "test", "test:content", "test:security"],
+  2.1: ["lint", "build", "test", "test:navigation"],
+  2.2: ["lint", "build", "test", "test:firebase"],
+  3: ["lint", "build", "test", "test:exercises", "test:performance"],
+  4: ["lint", "build", "test", "test:pwa", "test:offline"],
+  5: ["lint", "build", "test", "test:admin", "test:e2e"],
+  6: ["lint", "build", "test", "test:e2e", "test:lighthouse"],
 };
 
 async function runCommand(command, description) {
@@ -283,21 +283,21 @@ async function runCommand(command, description) {
 
 async function validatePhase(phase) {
   console.log(`🚀 Validation Phase ${phase} - FunLearning V1.0`);
-  console.log('='.repeat(50));
-  
+  console.log("=".repeat(50));
+
   const validations = PHASE_VALIDATIONS[phase];
   if (!validations) {
     console.error(`❌ Phase ${phase} non reconnue`);
     process.exit(1);
   }
-  
+
   let success = true;
-  
+
   for (const validation of validations) {
-    const result = await runCommand(validation, validation.replace(':', ' '));
+    const result = await runCommand(validation, validation.replace(":", " "));
     if (!result) success = false;
   }
-  
+
   if (success) {
     console.log(`🎉 Phase ${phase} validée avec succès !`);
     console.log(`📊 ${validations.length} vérifications passées`);
@@ -307,7 +307,7 @@ async function validatePhase(phase) {
   }
 }
 
-const phase = process.argv[2] || '0';
+const phase = process.argv[2] || "0";
 validatePhase(phase);
 ```
 
@@ -340,7 +340,7 @@ validatePhase(phase);
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "validate": "node scripts/validate-phase.js",
     "release:prepare": "node scripts/prepare-release.js",
-    "release:validate": "node scripts/validate-release.js", 
+    "release:validate": "node scripts/validate-release.js",
     "release:deploy": "node scripts/deploy-release.js"
   }
 }
@@ -351,7 +351,7 @@ validatePhase(phase);
 **[FILE]** Créer `src/test-setup.js` :
 
 ```js
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 
 // Configuration globale pour les tests
 global.ResizeObserver = class ResizeObserver {
@@ -364,9 +364,9 @@ global.ResizeObserver = class ResizeObserver {
 };
 
 // Mock des APIs du navigateur
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
   writable: true,
-  value: vi.fn().mockImplementation(query => ({
+  value: vi.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -378,17 +378,19 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 ```
-  plugins: [sveltekit()],
-  test: {
-    include: ["src/**/*.{test,spec}.{js,ts}"],
-    environment: "jsdom",
-    setupFiles: ["./src/test-setup.js"],
-    coverage: {
-      reporter: ["text", "html", "lcov"],
-      exclude: ["node_modules/", "src/test-setup.js"],
-    },
-  },
+
+plugins: [sveltekit()],
+test: {
+include: ["src/**/*.{test,spec}.{js,ts}"],
+environment: "jsdom",
+setupFiles: ["./src/test-setup.js"],
+coverage: {
+reporter: ["text", "html", "lcov"],
+exclude: ["node_modules/", "src/test-setup.js"],
+},
+},
 });
+
 ```
 
 ## 🧪 Tests de validation Phase 0
@@ -419,3 +421,4 @@ Object.defineProperty(window, 'matchMedia', {
 ---
 
 **Phase 0 terminée** ✅ → Prête pour **Phase 1 : Firebase & Authentification**
+```

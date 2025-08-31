@@ -15,6 +15,7 @@
 ### 🔐 **Architecture d'Authentification**
 
 **Approche Technique :**
+
 - **Firebase Auth** : Service managé avec Google OAuth
 - **Store réactif** : Gestion d'état centralisée avec Svelte stores
 - **Protection des routes** : Middleware SvelteKit avec hooks
@@ -22,6 +23,7 @@
 - **Persistence** : Session maintenue via Firebase SDK
 
 **Principes de Sécurité :**
+
 - **Zero Trust** : Vérification côté serveur obligatoire
 - **Token validation** : Validation JWT côté serveur (hooks.server.ts)
 - **Redirections sécurisées** : Protection contre les attaques de redirection
@@ -31,6 +33,7 @@
 ### ⚡ **Approche Qualité & Performance**
 
 **Optimisations :**
+
 - **Lazy loading** : Firebase SDK chargé à la demande
 - **State management** : Store minimal et réactif
 - **Cache intelligent** : Persistence automatique Firebase
@@ -38,6 +41,7 @@
 - **Error boundaries** : Gestion gracieuse des erreurs réseau
 
 **Tests & Validation :**
+
 - **Unit tests** : Store auth + utilities
 - **Integration tests** : Flux complet login/logout
 - **E2E tests** : Parcours utilisateur authentifié
@@ -50,6 +54,7 @@
 **[REF]** Documentation complète : **[firebase-auth.md](../references/auth/firebase-auth.md)**
 
 Cette référence contient :
+
 - ✅ Configuration Firebase production-ready
 - ✅ Types TypeScript sécurisés et extensibles
 - ✅ Store d'authentification avec persistence
@@ -67,11 +72,13 @@ Cette référence contient :
 **⚡ Approche Progressive (Recommandation Expert) :**
 
 1. **🥇 Priorité 1 - Email/Password** (Jours 1-3)
+
    - Configuration Firebase la plus simple
    - Pas de dépendances OAuth externes
    - Validation immédiate du flux auth
 
 2. **🥈 Priorité 2 - Google OAuth** (Jours 4-5)
+
    - Après stabilisation Email/Password
    - Configuration OAuth peut révéler des problèmes complexes
    - Buffer disponible pour résolution
@@ -106,10 +113,10 @@ FIREBASE_ADMIN_SDK_KEY={"type":"service_account",...}
 **[FILE]** Créer `src/lib/firebase/config.ts` :
 
 ```ts
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import { browser } from '$app/environment';
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { browser } from "$app/environment";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -117,7 +124,7 @@ const firebaseConfig = {
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 // Initialisation côté client seulement
@@ -131,10 +138,10 @@ export const db = browser ? getFirestore(app!) : null;
 **[FILE]** Créer `src/lib/stores/auth.ts` :
 
 ```ts
-import { writable, derived } from 'svelte/store';
-import { auth } from '$lib/firebase/config';
-import { onAuthStateChanged, signOut, type User } from 'firebase/auth';
-import { browser } from '$app/environment';
+import { writable, derived } from "svelte/store";
+import { auth } from "$lib/firebase/config";
+import { onAuthStateChanged, signOut, type User } from "firebase/auth";
+import { browser } from "$app/environment";
 
 interface AuthState {
   user: User | null;
@@ -146,59 +153,64 @@ function createAuthStore() {
   const { subscribe, set, update } = writable<AuthState>({
     user: null,
     loading: true,
-    error: null
+    error: null,
   });
 
   return {
     subscribe,
-    
+
     // Initialiser l'écoute de l'état d'auth
     init: () => {
       if (!browser || !auth) return;
-      
-      return onAuthStateChanged(auth, (user) => {
-        update(state => ({
-          ...state,
-          user,
-          loading: false,
-          error: null
-        }));
-      }, (error) => {
-        update(state => ({
-          ...state,
-          user: null,
-          loading: false,
-          error: error.message
-        }));
-      });
+
+      return onAuthStateChanged(
+        auth,
+        (user) => {
+          update((state) => ({
+            ...state,
+            user,
+            loading: false,
+            error: null,
+          }));
+        },
+        (error) => {
+          update((state) => ({
+            ...state,
+            user: null,
+            loading: false,
+            error: error.message,
+          }));
+        }
+      );
     },
-    
+
     // Déconnexion
     logout: async () => {
       if (!auth) return;
       try {
         await signOut(auth);
       } catch (error) {
-        update(state => ({
+        update((state) => ({
           ...state,
-          error: error instanceof Error ? error.message : 'Erreur de déconnexion'
+          error:
+            error instanceof Error ? error.message : "Erreur de déconnexion",
         }));
       }
     },
-    
+
     // Nettoyer les erreurs
     clearError: () => {
-      update(state => ({ ...state, error: null }));
-    }
+      update((state) => ({ ...state, error: null }));
+    },
   };
 }
 
 export const authStore = createAuthStore();
 
 // Store dérivés pour faciliter l'usage
-export const user = derived(authStore, $auth => $auth.user);
-export const isAuthenticated = derived(authStore, $auth => !!$auth.user);
-export const isLoading = derived(authStore, $auth => $auth.loading);
+export const user = derived(authStore, ($auth) => $auth.user);
+export const isAuthenticated = derived(authStore, ($auth) => !!$auth.user);
+export const isLoading = derived(authStore, ($auth) => $auth.loading);
 ```
 
 ### 🎨 **Étape 2.3 : Composants d'authentification**
@@ -207,30 +219,30 @@ export const isLoading = derived(authStore, $auth => $auth.loading);
 
 ```svelte
 <script lang="ts">
-  import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-  import { auth } from '$lib/firebase/config';
-  import { authStore } from '$lib/stores/auth';
-  import { goto } from '$app/navigation';
+  import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+  import { auth } from "$lib/firebase/config";
+  import { authStore } from "$lib/stores/auth";
+  import { goto } from "$app/navigation";
 
   let loading = false;
-  let error = '';
+  let error = "";
 
   async function loginWithGoogle() {
     if (!auth) return;
-    
+
     loading = true;
-    error = '';
-    
+    error = "";
+
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
-      
+
       if (result.user) {
         // Redirection après connexion réussie
-        goto('/dashboard');
+        goto("/dashboard");
       }
     } catch (err) {
-      error = err instanceof Error ? err.message : 'Erreur de connexion';
+      error = err instanceof Error ? err.message : "Erreur de connexion";
     } finally {
       loading = false;
     }
@@ -239,21 +251,21 @@ export const isLoading = derived(authStore, $auth => $auth.loading);
 
 <div class="login-form">
   <h2>Connexion à FunLearning</h2>
-  
+
   {#if error}
     <div class="error" role="alert">
       {error}
     </div>
   {/if}
-  
-  <button 
-    type="button" 
+
+  <button
+    type="button"
     class="google-btn"
     disabled={loading}
     on:click={loginWithGoogle}
   >
     {#if loading}
-      <span class="spinner"></span>
+      <span class="spinner" />
       Connexion...
     {:else}
       <svg class="google-icon" viewBox="0 0 24 24">
@@ -272,7 +284,7 @@ export const isLoading = derived(authStore, $auth => $auth.loading);
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
-  
+
   .google-btn {
     width: 100%;
     padding: 12px 24px;
@@ -289,16 +301,16 @@ export const isLoading = derived(authStore, $auth => $auth.loading);
     gap: 12px;
     transition: all 0.2s;
   }
-  
+
   .google-btn:hover:not(:disabled) {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   }
-  
+
   .google-btn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
   }
-  
+
   .error {
     background: #fef2f2;
     border: 1px solid #fca5a5;
@@ -307,7 +319,7 @@ export const isLoading = derived(authStore, $auth => $auth.loading);
     border-radius: 4px;
     margin-bottom: 16px;
   }
-  
+
   .spinner {
     width: 16px;
     height: 16px;
@@ -316,10 +328,14 @@ export const isLoading = derived(authStore, $auth => $auth.loading);
     border-radius: 50%;
     animation: spin 1s linear infinite;
   }
-  
+
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 </style>
 ```
@@ -329,15 +345,15 @@ export const isLoading = derived(authStore, $auth => $auth.loading);
 **[FILE]** Créer `src/hooks.server.ts` :
 
 ```ts
-import type { Handle } from '@sveltejs/kit';
-import { initializeApp, cert, getApps } from 'firebase-admin/app';
-import { getAuth } from 'firebase-admin/auth';
+import type { Handle } from "@sveltejs/kit";
+import { initializeApp, cert, getApps } from "firebase-admin/app";
+import { getAuth } from "firebase-admin/auth";
 
 // Initialiser Firebase Admin (une seule fois)
 if (!getApps().length) {
-  const serviceAccount = JSON.parse(process.env.FIREBASE_ADMIN_SDK_KEY || '{}');
+  const serviceAccount = JSON.parse(process.env.FIREBASE_ADMIN_SDK_KEY || "{}");
   initializeApp({
-    credential: cert(serviceAccount)
+    credential: cert(serviceAccount),
   });
 }
 
@@ -345,8 +361,8 @@ const adminAuth = getAuth();
 
 export const handle: Handle = async ({ event, resolve }) => {
   // Récupérer le token de l'en-tête Authorization
-  const authHeader = event.request.headers.get('authorization');
-  const token = authHeader?.replace('Bearer ', '');
+  const authHeader = event.request.headers.get("authorization");
+  const token = authHeader?.replace("Bearer ", "");
 
   if (token) {
     try {
@@ -354,11 +370,11 @@ export const handle: Handle = async ({ event, resolve }) => {
       const decodedToken = await adminAuth.verifyIdToken(token);
       event.locals.user = {
         id: decodedToken.uid,
-        email: decodedToken.email || '',
-        name: decodedToken.name || ''
+        email: decodedToken.email || "",
+        name: decodedToken.name || "",
       };
     } catch (error) {
-      console.error('Token verification failed:', error);
+      console.error("Token verification failed:", error);
       event.locals.user = undefined;
     }
   }
@@ -370,17 +386,17 @@ export const handle: Handle = async ({ event, resolve }) => {
 **[FILE]** Créer `src/routes/dashboard/+layout.server.ts` :
 
 ```ts
-import { redirect } from '@sveltejs/kit';
-import type { LayoutServerLoad } from './$types';
+import { redirect } from "@sveltejs/kit";
+import type { LayoutServerLoad } from "./$types";
 
 export const load: LayoutServerLoad = async ({ locals }) => {
   // Rediriger vers login si non authentifié
   if (!locals.user) {
-    throw redirect(302, '/auth/login');
+    throw redirect(302, "/auth/login");
   }
 
   return {
-    user: locals.user
+    user: locals.user,
   };
 };
 ```
@@ -391,22 +407,22 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 
 ```svelte
 <script lang="ts">
-  import LoginForm from '$lib/components/auth/LoginForm.svelte';
-  import { onMount } from 'svelte';
-  import { authStore } from '$lib/stores/auth';
-  import { goto } from '$app/navigation';
-  import { get } from 'svelte/store';
+  import LoginForm from "$lib/components/auth/LoginForm.svelte";
+  import { onMount } from "svelte";
+  import { authStore } from "$lib/stores/auth";
+  import { goto } from "$app/navigation";
+  import { get } from "svelte/store";
 
   onMount(() => {
     // Initialiser l'écoute de l'auth
     const unsubscribe = authStore.init();
-    
+
     // Rediriger si déjà connecté
     const auth = get(authStore);
     if (auth.user) {
-      goto('/dashboard');
+      goto("/dashboard");
     }
-    
+
     return unsubscribe;
   });
 </script>
@@ -424,8 +440,8 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 
 ```svelte
 <script lang="ts">
-  import { authStore } from '$lib/stores/auth';
-  import type { PageData } from './$types';
+  import { authStore } from "$lib/stores/auth";
+  import type { PageData } from "./$types";
 
   export let data: PageData;
 
@@ -443,7 +459,7 @@ export const load: LayoutServerLoad = async ({ locals }) => {
     <h1>Bienvenue, {data.user.name} !</h1>
     <button on:click={handleLogout}>Déconnexion</button>
   </header>
-  
+
   <main>
     <p>Vous êtes connecté avec succès à FunLearning.</p>
     <p>Email : {data.user.email}</p>
@@ -456,14 +472,14 @@ export const load: LayoutServerLoad = async ({ locals }) => {
     margin: 0 auto;
     padding: 2rem;
   }
-  
+
   header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
   }
-  
+
   button {
     padding: 8px 16px;
     border: 1px solid #ccc;
@@ -490,31 +506,31 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 **[FILE]** Créer `src/lib/stores/auth.test.ts` :
 
 ```ts
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { get } from 'svelte/store';
-import { authStore } from './auth';
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { get } from "svelte/store";
+import { authStore } from "./auth";
 
 // Mock Firebase
-vi.mock('$lib/firebase/config', () => ({
+vi.mock("$lib/firebase/config", () => ({
   auth: {
     onAuthStateChanged: vi.fn(),
-    signOut: vi.fn()
-  }
+    signOut: vi.fn(),
+  },
 }));
 
-describe('Auth Store', () => {
+describe("Auth Store", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  it('should initialize with loading state', () => {
+  it("should initialize with loading state", () => {
     const state = get(authStore);
     expect(state.loading).toBe(true);
     expect(state.user).toBe(null);
     expect(state.error).toBe(null);
   });
 
-  it('should handle logout', async () => {
+  it("should handle logout", async () => {
     await authStore.logout();
     // Vérifier que signOut a été appelé
     expect(vi.mocked(auth.signOut)).toHaveBeenCalled();
@@ -525,17 +541,17 @@ describe('Auth Store', () => {
 **[FILE]** Créer `tests/e2e/auth.spec.ts` :
 
 ```ts
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test.describe('Authentication', () => {
-  test('should redirect to login when not authenticated', async ({ page }) => {
-    await page.goto('/dashboard');
-    await expect(page).toHaveURL('/auth/login');
+test.describe("Authentication", () => {
+  test("should redirect to login when not authenticated", async ({ page }) => {
+    await page.goto("/dashboard");
+    await expect(page).toHaveURL("/auth/login");
   });
 
-  test('should show login form', async ({ page }) => {
-    await page.goto('/auth/login');
-    await expect(page.locator('text=Se connecter avec Google')).toBeVisible();
+  test("should show login form", async ({ page }) => {
+    await page.goto("/auth/login");
+    await expect(page.locator("text=Se connecter avec Google")).toBeVisible();
   });
 });
 ```

@@ -1,109 +1,119 @@
-<!-- Page de connexion - FunLearning Phase 1 -->
-<script lang="ts">
-  import LoginForm from "$lib/components/auth/LoginForm.svelte";
-  import { authStore } from "$lib/stores/auth";
-  import { goto } from "$app/navigation";
-  import { onMount } from "svelte";
+<script>
+  // 🚀 FunLearning V2.0 - Phase 1 Auth Page
+  // Page d'authentification basique conforme roadmap Phase 1
 
-  // Rediriger si déjà connecté
-  $: if ($authStore.user && !$authStore.loading) {
-    goto("/dashboard");
-  }
-
-  // Initialiser le store d'auth
-  onMount(() => {
-    authStore.init();
-  });
-
-  function handleLoginSuccess(event: CustomEvent) {
-    console.log("Connexion réussie:", event.detail);
-    // Redirection automatique gérée par le store
-  }
-
-  function handleLoginError(event: CustomEvent) {
-    console.error("Erreur de connexion:", event.detail);
-  }
+  import { user, loading } from "$lib/stores/auth.js";
 </script>
 
 <svelte:head>
-  <title>Connexion - FunLearning</title>
-  <meta
-    name="description"
-    content="Connectez-vous à FunLearning pour accéder à vos cours et exercices."
-  />
+  <title>Authentification - FunLearning V2.0</title>
 </svelte:head>
 
-<main>
-  {#if $authStore.loading}
-    <div class="loading-screen">
-      <div class="loading-content">
-        <div class="loading-spinner" />
-        <p>Initialisation...</p>
+<main class="auth-container">
+  <div class="auth-card">
+    <header>
+      <h1>🔐 Authentification</h1>
+      <p>Phase 1 - Configuration de base</p>
+    </header>
+
+    <div class="auth-status">
+      <h2>📋 État Authentication</h2>
+      <div class="status-info">
+        <p><strong>Phase actuelle:</strong> Phase 1 - Setup</p>
+        <p><strong>Firebase Auth:</strong> Configuré (basique)</p>
+        <p><strong>Prochaine phase:</strong> Phase 2 - Auth complète</p>
       </div>
     </div>
-  {:else if !$authStore.user}
-    <LoginForm on:success={handleLoginSuccess} on:error={handleLoginError} />
-  {:else}
-    <div class="redirect-screen">
-      <div class="redirect-content">
-        <h2>✅ Connexion réussie</h2>
-        <p>Redirection vers votre tableau de bord...</p>
-        <div class="loading-spinner" />
-      </div>
+
+    <div class="phase-info">
+      <h3>🎯 Fonctionnalités Phase 1</h3>
+      <ul>
+        <li>✅ Configuration Firebase basique</li>
+        <li>✅ Structure auth store</li>
+        <li>✅ Route d'authentification</li>
+        <li>⏳ Login/Register (Phase 2)</li>
+        <li>⏳ Gestion sessions (Phase 2)</li>
+      </ul>
     </div>
-  {/if}
+
+    <div class="navigation">
+      <a href="/" class="btn-secondary">← Retour accueil</a>
+    </div>
+  </div>
 </main>
 
 <style>
-  main {
+  .auth-container {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  .loading-screen,
-  .redirect-screen {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
+    padding: 2rem;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   }
 
-  .loading-content,
-  .redirect-content {
+  .auth-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2.5rem;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  header {
     text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  header h1 {
+    color: #2563eb;
+    margin-bottom: 0.5rem;
+  }
+
+  .auth-status {
+    background: #f0fdf4;
+    border: 1px solid #10b981;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .status-info p {
+    margin: 0.5rem 0;
+  }
+
+  .phase-info {
+    background: #fffbeb;
+    border: 1px solid #f59e0b;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .phase-info ul {
+    margin: 1rem 0 0 1rem;
+  }
+
+  .phase-info li {
+    margin: 0.5rem 0;
+  }
+
+  .navigation {
+    text-align: center;
+  }
+
+  .btn-secondary {
+    background: #6b7280;
     color: white;
-    padding: 2rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s;
   }
 
-  .loading-content h2,
-  .redirect-content h2 {
-    margin: 0 0 1rem;
-    font-size: 1.5rem;
-    font-weight: 600;
-  }
-
-  .loading-content p,
-  .redirect-content p {
-    margin: 0 0 1.5rem;
-    opacity: 0.9;
-  }
-
-  .loading-spinner {
-    width: 32px;
-    height: 32px;
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-top: 3px solid white;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto;
-  }
-
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
+  .btn-secondary:hover {
+    background: #4b5563;
   }
 </style>

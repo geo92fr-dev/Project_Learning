@@ -14,6 +14,7 @@
 ### 🧠 **Architecture Pédagogique**
 
 **Approche Scientifique :**
+
 - **Learning Analytics** : Mesure et analyse des données d'apprentissage
 - **Adaptive Learning** : Personnalisation en temps réel du parcours
 - **Metacognition** : Développement de la conscience d'apprendre
@@ -21,6 +22,7 @@
 - **Gamification** : Motivation par mécaniques de jeu éthiques
 
 **Algorithmes d'Adaptation :**
+
 - **Knowledge Tracing** : Modélisation des connaissances acquises
 - **Item Response Theory** : Calibrage de la difficulté des exercices
 - **Bayesian Networks** : Prédiction des performances futures
@@ -29,6 +31,7 @@
 ### 🎓 **Théories Pédagogiques Intégrées**
 
 **Fondements Théoriques :**
+
 - **Constructivisme** : Apprentissage par construction active
 - **Zone de Développement Proximal** (Vygotsky) : Défis optimaux
 - **Flow State** (Csikszentmihalyi) : Engagement optimal
@@ -36,6 +39,7 @@
 - **Spaced Repetition** : Révision optimisée temporellement
 
 **Mesures d'Efficacité :**
+
 - **Temps d'engagement** : Durée et qualité de l'attention
 - **Taux de complétion** : Persévérance et motivation
 - **Courbe d'apprentissage** : Vitesse d'acquisition
@@ -45,6 +49,7 @@
 ### 🔬 **Approche Qualité & Recherche**
 
 **Méthodes de Validation :**
+
 - **A/B Testing** : Comparaison d'approches pédagogiques
 - **Learning Analytics** : Analyse de patterns d'apprentissage
 - **Peer Review** : Validation par experts pédagogiques
@@ -56,12 +61,14 @@
 ## 📚 **Références Modulaires**
 
 ### **[REF]** Stores réactifs avancés : **[reactive-stores.md](../references/ui/reactive-stores.md)**
+
 - ✅ Progression d'apprentissage avec adaptation
-- ✅ Système de préférences pédagogiques  
+- ✅ Système de préférences pédagogiques
 - ✅ Notifications intelligentes
 - ✅ Hooks personnalisés pour composants
 
 ### **[REF]** Tests et validation : **[testing-strategy.md](../references/testing/testing-strategy.md)**
+
 - ✅ Stratégie complète (unit, intégration, E2E)
 - ✅ Tests de performance et charge cognitive
 - ✅ Validation d'efficacité pédagogique
@@ -76,19 +83,19 @@
 **[FILE]** Créer `src/lib/pedagogy/preAssessment.ts` :
 
 ```ts
-import { z } from 'zod';
+import { z } from "zod";
 
 // ===== TYPES DE PRÉ-ÉVALUATION =====
 export const QuestionSchema = z.object({
   id: z.string(),
   text: z.string(),
-  type: z.enum(['qcm', 'ouverte', 'ordre', 'appariement']),
+  type: z.enum(["qcm", "ouverte", "ordre", "appariement"]),
   options: z.array(z.string()).optional(),
   correctAnswer: z.union([z.string(), z.array(z.string())]),
   difficulty: z.number().min(0).max(1), // 0=facile, 1=difficile
   competenceId: z.string(),
   points: z.number().positive(),
-  timeLimit: z.number().positive().optional() // en secondes
+  timeLimit: z.number().positive().optional(), // en secondes
 });
 
 export const PreAssessmentSchema = z.object({
@@ -98,13 +105,15 @@ export const PreAssessmentSchema = z.object({
   matiereId: z.string(),
   niveauId: z.string(),
   questions: z.array(QuestionSchema),
-  adaptiveRules: z.array(z.object({
-    condition: z.string(),
-    action: z.string(),
-    parameters: z.record(z.unknown())
-  })),
+  adaptiveRules: z.array(
+    z.object({
+      condition: z.string(),
+      action: z.string(),
+      parameters: z.record(z.unknown()),
+    })
+  ),
   duration: z.number().positive(), // durée totale en minutes
-  passingScore: z.number().min(0).max(1) // score minimum pour validation
+  passingScore: z.number().min(0).max(1), // score minimum pour validation
 });
 
 export type Question = z.infer<typeof QuestionSchema>;
@@ -143,13 +152,18 @@ export interface CompetenceLevel {
   masteryLevel: number; // 0-1
   confidence: number;
   lastAssessed: string;
-  trend: 'improving' | 'stable' | 'declining';
+  trend: "improving" | "stable" | "declining";
 }
 
-export type LearningStyle = 'visual' | 'auditory' | 'kinesthetic' | 'reading' | 'mixed';
+export type LearningStyle =
+  | "visual"
+  | "auditory"
+  | "kinesthetic"
+  | "reading"
+  | "mixed";
 
 export interface Recommendation {
-  type: 'content' | 'exercise' | 'revision' | 'break';
+  type: "content" | "exercise" | "revision" | "break";
   resourceId: string;
   priority: number;
   reason: string;
@@ -167,7 +181,7 @@ export class PreAssessmentManager {
    * Lance une pré-évaluation adaptative
    */
   async startAssessment(
-    userId: string, 
+    userId: string,
     assessmentId: string
   ): Promise<AdaptiveSession> {
     const assessment = await this.loadAssessment(assessmentId);
@@ -181,21 +195,23 @@ export class PreAssessmentManager {
     const competenceScores = this.calculateCompetenceScores(answers);
     const learningStyle = this.detectLearningStyle(answers);
     const cognitiveLoad = this.assessCognitiveLoad(answers);
-    
+
     return {
       competences: competenceScores,
       learningStyle,
       cognitiveLoad,
       motivationLevel: this.calculateMotivation(answers),
-      recommendedDifficulty: this.calculateOptimalDifficulty(competenceScores)
+      recommendedDifficulty: this.calculateOptimalDifficulty(competenceScores),
     };
   }
 
-  private calculateCompetenceScores(answers: AnswerRecord[]): Record<string, CompetenceLevel> {
+  private calculateCompetenceScores(
+    answers: AnswerRecord[]
+  ): Record<string, CompetenceLevel> {
     // Implémentation algorithme de Knowledge Tracing
     const competenceMap = new Map<string, CompetenceLevel>();
-    
-    answers.forEach(answer => {
+
+    answers.forEach((answer) => {
       // Logique de calcul du niveau de maîtrise par compétence
       // Utilise un modèle bayésien pour estimer la probabilité de maîtrise
     });
@@ -211,25 +227,33 @@ export class PreAssessmentManager {
 
   private assessCognitiveLoad(answers: AnswerRecord[]): number {
     // Calcul de la charge cognitive basé sur temps de réponse et erreurs
-    const avgResponseTime = answers.reduce((sum, a) => sum + a.timeSpent, 0) / answers.length;
-    const errorRate = answers.filter(a => !a.isCorrect).length / answers.length;
-    
+    const avgResponseTime =
+      answers.reduce((sum, a) => sum + a.timeSpent, 0) / answers.length;
+    const errorRate =
+      answers.filter((a) => !a.isCorrect).length / answers.length;
+
     return Math.min(1, (avgResponseTime / 60 + errorRate) / 2);
   }
 
   private calculateMotivation(answers: AnswerRecord[]): number {
     // Estimation motivation basée sur persévérance et confiance
-    const avgConfidence = answers.reduce((sum, a) => sum + a.confidence, 0) / answers.length;
+    const avgConfidence =
+      answers.reduce((sum, a) => sum + a.confidence, 0) / answers.length;
     const completionRate = answers.length > 0 ? 1 : 0; // Simplification
-    
+
     return (avgConfidence + completionRate) / 2;
   }
 
-  private calculateOptimalDifficulty(competences: Record<string, CompetenceLevel>): number {
+  private calculateOptimalDifficulty(
+    competences: Record<string, CompetenceLevel>
+  ): number {
     // Zone de développement proximal : légèrement au-dessus du niveau actuel
-    const avgMastery = Object.values(competences)
-      .reduce((sum, comp) => sum + comp.masteryLevel, 0) / Object.keys(competences).length;
-    
+    const avgMastery =
+      Object.values(competences).reduce(
+        (sum, comp) => sum + comp.masteryLevel,
+        0
+      ) / Object.keys(competences).length;
+
     return Math.min(1, avgMastery + 0.2); // +20% de challenge
   }
 }
@@ -247,9 +271,15 @@ export class AdaptiveEngine {
     if (availableQuestions.length === 0) return null;
 
     // Algorithme de sélection adaptative
-    const targetDifficulty = this.calculateTargetDifficulty(currentProfile, previousAnswers);
-    const candidateQuestions = this.filterByDifficulty(availableQuestions, targetDifficulty);
-    
+    const targetDifficulty = this.calculateTargetDifficulty(
+      currentProfile,
+      previousAnswers
+    );
+    const candidateQuestions = this.filterByDifficulty(
+      availableQuestions,
+      targetDifficulty
+    );
+
     return this.selectOptimalQuestion(candidateQuestions, currentProfile);
   }
 
@@ -261,23 +291,26 @@ export class AdaptiveEngine {
 
     const recentPerformance = this.analyzeRecentPerformance(answers.slice(-3));
     const adjustmentFactor = this.calculateAdjustmentFactor(recentPerformance);
-    
+
     return Math.max(0.1, Math.min(0.9, recentPerformance + adjustmentFactor));
   }
 
   private analyzeRecentPerformance(recentAnswers: AnswerRecord[]): number {
     if (recentAnswers.length === 0) return 0.3;
-    
-    const correctRate = recentAnswers.filter(a => a.isCorrect).length / recentAnswers.length;
-    const avgConfidence = recentAnswers.reduce((sum, a) => sum + a.confidence, 0) / recentAnswers.length;
-    
+
+    const correctRate =
+      recentAnswers.filter((a) => a.isCorrect).length / recentAnswers.length;
+    const avgConfidence =
+      recentAnswers.reduce((sum, a) => sum + a.confidence, 0) /
+      recentAnswers.length;
+
     return (correctRate + avgConfidence) / 2;
   }
 
   private calculateAdjustmentFactor(performance: number): number {
     // Si performance > 0.8, augmenter difficulté
     if (performance > 0.8) return 0.1;
-    // Si performance < 0.5, diminuer difficulté  
+    // Si performance < 0.5, diminuer difficulté
     if (performance < 0.5) return -0.1;
     // Sinon maintenir
     return 0;
@@ -300,18 +333,28 @@ export class AdaptiveSession {
    * Obtient la prochaine question de l'évaluation
    */
   getNextQuestion(): Question | null {
-    const remainingQuestions = this.assessment.questions.slice(this.currentQuestion);
+    const remainingQuestions = this.assessment.questions.slice(
+      this.currentQuestion
+    );
     const currentProfile = this.buildCurrentProfile();
-    
-    return this.engine.selectNextQuestion(remainingQuestions, currentProfile, this.answers);
+
+    return this.engine.selectNextQuestion(
+      remainingQuestions,
+      currentProfile,
+      this.answers
+    );
   }
 
   /**
    * Enregistre une réponse et met à jour le profil
    */
-  submitAnswer(questionId: string, answer: string | string[], confidence: number): void {
-    const question = this.assessment.questions.find(q => q.id === questionId);
-    if (!question) throw new Error('Question not found');
+  submitAnswer(
+    questionId: string,
+    answer: string | string[],
+    confidence: number
+  ): void {
+    const question = this.assessment.questions.find((q) => q.id === questionId);
+    if (!question) throw new Error("Question not found");
 
     const isCorrect = this.validateAnswer(question, answer);
     const timeSpent = Date.now() - this.startTime;
@@ -321,7 +364,7 @@ export class AdaptiveSession {
       userAnswer: answer,
       isCorrect,
       timeSpent,
-      confidence
+      confidence,
     });
 
     this.currentQuestion++;
@@ -343,19 +386,24 @@ export class AdaptiveSession {
       timeSpent: Date.now() - this.startTime,
       knowledgeProfile,
       recommendations,
-      completedAt: new Date().toISOString()
+      completedAt: new Date().toISOString(),
     };
   }
 
-  private validateAnswer(question: Question, answer: string | string[]): boolean {
+  private validateAnswer(
+    question: Question,
+    answer: string | string[]
+  ): boolean {
     // Logique de validation selon le type de question
     switch (question.type) {
-      case 'qcm':
+      case "qcm":
         return answer === question.correctAnswer;
-      case 'ordre':
-        return Array.isArray(answer) && 
-               Array.isArray(question.correctAnswer) &&
-               JSON.stringify(answer) === JSON.stringify(question.correctAnswer);
+      case "ordre":
+        return (
+          Array.isArray(answer) &&
+          Array.isArray(question.correctAnswer) &&
+          JSON.stringify(answer) === JSON.stringify(question.correctAnswer)
+        );
       default:
         return false;
     }
@@ -363,8 +411,10 @@ export class AdaptiveSession {
 
   private calculateFinalScore(): number {
     const totalPoints = this.answers.reduce((sum, answer) => {
-      const question = this.assessment.questions.find(q => q.id === answer.questionId);
-      return sum + (answer.isCorrect ? (question?.points || 0) : 0);
+      const question = this.assessment.questions.find(
+        (q) => q.id === answer.questionId
+      );
+      return sum + (answer.isCorrect ? question?.points || 0 : 0);
     }, 0);
 
     const maxPoints = this.assessment.questions
@@ -377,7 +427,10 @@ export class AdaptiveSession {
   private buildCurrentProfile(): Partial<KnowledgeProfile> {
     // Construction rapide du profil actuel pour adaptation en temps réel
     return {
-      recommendedDifficulty: this.engine['calculateTargetDifficulty']({}, this.answers)
+      recommendedDifficulty: this.engine["calculateTargetDifficulty"](
+        {},
+        this.answers
+      ),
     };
   }
 
@@ -388,10 +441,10 @@ export class AdaptiveSession {
     Object.entries(profile.competences).forEach(([competenceId, level]) => {
       if (level.masteryLevel < 0.6) {
         recommendations.push({
-          type: 'content',
+          type: "content",
           resourceId: `content-${competenceId}`,
           priority: 1 - level.masteryLevel,
-          reason: `Renforcement nécessaire en ${competenceId}`
+          reason: `Renforcement nécessaire en ${competenceId}`,
         });
       }
     });
@@ -406,7 +459,7 @@ export class AdaptiveSession {
 **[FILE]** Créer `src/lib/pedagogy/metacognition.ts` :
 
 ```ts
-import { writable, derived } from 'svelte/store';
+import { writable, derived } from "svelte/store";
 
 // ===== TYPES MÉTACOGNITIFS =====
 export interface MetacognitionSession {
@@ -423,7 +476,7 @@ export interface Reflection {
   id: string;
   prompt: string;
   response: string;
-  type: 'before' | 'during' | 'after';
+  type: "before" | "during" | "after";
   timestamp: string;
   mood: EmotionalState;
 }
@@ -445,7 +498,13 @@ export interface SelfAssessment {
   wouldRecommend: boolean;
 }
 
-export type EmotionalState = 'excited' | 'confident' | 'neutral' | 'frustrated' | 'confused' | 'bored';
+export type EmotionalState =
+  | "excited"
+  | "confident"
+  | "neutral"
+  | "frustrated"
+  | "confused"
+  | "bored";
 
 // ===== PROMPTS DE RÉFLEXION =====
 export const REFLECTION_PROMPTS = {
@@ -453,20 +512,20 @@ export const REFLECTION_PROMPTS = {
     "Que savez-vous déjà sur ce sujet ?",
     "Quels sont vos objectifs pour cette session ?",
     "Quelle stratégie allez-vous utiliser ?",
-    "Comment vous sentez-vous avant de commencer ?"
+    "Comment vous sentez-vous avant de commencer ?",
   ],
   during: [
     "Cette stratégie fonctionne-t-elle bien ?",
     "Que trouvez-vous le plus difficile ?",
     "Comment pourriez-vous adapter votre approche ?",
-    "Êtes-vous en train d'atteindre vos objectifs ?"
+    "Êtes-vous en train d'atteindre vos objectifs ?",
   ],
   after: [
     "Qu'avez-vous appris de nouveau ?",
     "Votre stratégie a-t-elle été efficace ?",
     "Que feriez-vous différemment la prochaine fois ?",
-    "Comment vous sentez-vous maintenant ?"
-  ]
+    "Comment vous sentez-vous maintenant ?",
+  ],
 };
 
 // ===== GESTIONNAIRE DE MÉTACOGNITION =====
@@ -475,8 +534,14 @@ export class MetacognitionManager {
   private currentSession = writable<MetacognitionSession | null>(null);
 
   // Stores dérivés pour analyse
-  public readonly sessionHistory = derived(this.sessions, $sessions => $sessions);
-  public readonly currentReflection = derived(this.currentSession, $session => $session);
+  public readonly sessionHistory = derived(
+    this.sessions,
+    ($sessions) => $sessions
+  );
+  public readonly currentReflection = derived(
+    this.currentSession,
+    ($session) => $session
+  );
 
   /**
    * Démarre une nouvelle session métacognitive
@@ -494,8 +559,8 @@ export class MetacognitionManager {
         difficultyPerceived: 0.5,
         effortLevel: 0.5,
         satisfaction: 0.5,
-        wouldRecommend: false
-      }
+        wouldRecommend: false,
+      },
     };
 
     this.currentSession.set(session);
@@ -505,8 +570,13 @@ export class MetacognitionManager {
   /**
    * Ajoute une réflexion à la session courante
    */
-  addReflection(prompt: string, response: string, type: Reflection['type'], mood: EmotionalState): void {
-    this.currentSession.update(session => {
+  addReflection(
+    prompt: string,
+    response: string,
+    type: Reflection["type"],
+    mood: EmotionalState
+  ): void {
+    this.currentSession.update((session) => {
       if (!session) return session;
 
       const reflection: Reflection = {
@@ -515,12 +585,12 @@ export class MetacognitionManager {
         response,
         type,
         timestamp: new Date().toISOString(),
-        mood
+        mood,
       };
 
       return {
         ...session,
-        reflections: [...session.reflections, reflection]
+        reflections: [...session.reflections, reflection],
       };
     });
   }
@@ -528,19 +598,19 @@ export class MetacognitionManager {
   /**
    * Enregistre une stratégie d'apprentissage utilisée
    */
-  recordStrategy(strategy: Omit<LearningStrategy, 'id' | 'lastUsed'>): void {
-    this.currentSession.update(session => {
+  recordStrategy(strategy: Omit<LearningStrategy, "id" | "lastUsed">): void {
+    this.currentSession.update((session) => {
       if (!session) return session;
 
       const learningStrategy: LearningStrategy = {
         ...strategy,
         id: crypto.randomUUID(),
-        lastUsed: new Date().toISOString()
+        lastUsed: new Date().toISOString(),
       };
 
       return {
         ...session,
-        strategies: [...session.strategies, learningStrategy]
+        strategies: [...session.strategies, learningStrategy],
       };
     });
   }
@@ -549,15 +619,15 @@ export class MetacognitionManager {
    * Met à jour l'auto-évaluation
    */
   updateSelfAssessment(assessment: Partial<SelfAssessment>): void {
-    this.currentSession.update(session => {
+    this.currentSession.update((session) => {
       if (!session) return session;
 
       return {
         ...session,
         selfAssessment: {
           ...session.selfAssessment,
-          ...assessment
-        }
+          ...assessment,
+        },
       };
     });
   }
@@ -566,12 +636,12 @@ export class MetacognitionManager {
    * Finalise la session et l'ajoute à l'historique
    */
   endSession(): void {
-    this.currentSession.update(session => {
+    this.currentSession.update((session) => {
       if (!session) return null;
 
       // Ajouter à l'historique
-      this.sessions.update(sessions => [...sessions, session]);
-      
+      this.sessions.update((sessions) => [...sessions, session]);
+
       return null;
     });
   }
@@ -586,7 +656,7 @@ export class MetacognitionManager {
       dominantStrategies: [],
       emotionalPatterns: {},
       improvementAreas: [],
-      strengths: []
+      strengths: [],
     };
   }
 
@@ -615,8 +685,8 @@ export const metacognitionManager = new MetacognitionManager();
 **[FILE]** Créer `src/lib/pedagogy/adaptiveResources.ts` :
 
 ```ts
-import type { KnowledgeProfile, LearningStyle } from './preAssessment';
-import type { Course, Competence } from '$lib/types/content';
+import type { KnowledgeProfile, LearningStyle } from "./preAssessment";
+import type { Course, Competence } from "$lib/types/content";
 
 // ===== TYPES DE RESSOURCES ADAPTATIVES =====
 export interface AdaptiveResource {
@@ -633,18 +703,24 @@ export interface AdaptiveResource {
   content: ResourceContent;
 }
 
-export type ResourceType = 'video' | 'text' | 'interactive' | 'simulation' | 'game' | 'quiz';
+export type ResourceType =
+  | "video"
+  | "text"
+  | "interactive"
+  | "simulation"
+  | "game"
+  | "quiz";
 
 export interface AdaptiveFeature {
-  type: 'scaffolding' | 'hints' | 'examples' | 'practice' | 'feedback';
+  type: "scaffolding" | "hints" | "examples" | "practice" | "feedback";
   trigger: TriggerCondition;
   content: string;
 }
 
 export interface TriggerCondition {
-  type: 'time' | 'error_rate' | 'confidence' | 'completion';
+  type: "time" | "error_rate" | "confidence" | "completion";
   threshold: number;
-  comparison: 'greater' | 'less' | 'equal';
+  comparison: "greater" | "less" | "equal";
 }
 
 export interface ResourceContent {
@@ -656,7 +732,7 @@ export interface ResourceContent {
 export interface AdaptiveElement {
   id: string;
   position: number; // Position dans le contenu
-  type: 'explanation' | 'example' | 'hint' | 'practice';
+  type: "explanation" | "example" | "hint" | "practice";
   condition: DisplayCondition;
   content: string;
 }
@@ -673,7 +749,7 @@ export interface DisplayCondition {
 export interface AssessmentQuestion {
   id: string;
   question: string;
-  type: 'understanding' | 'application' | 'analysis';
+  type: "understanding" | "application" | "analysis";
   expectedAnswer: string;
   hints: string[];
 }
@@ -690,11 +766,12 @@ export class AdaptiveResourceManager {
     targetCompetence: string,
     maxResources = 5
   ): ResourceRecommendation[] {
-    const candidateResources = this.filterResourcesByCompetence(targetCompetence);
-    const scoredResources = candidateResources.map(resource => ({
+    const candidateResources =
+      this.filterResourcesByCompetence(targetCompetence);
+    const scoredResources = candidateResources.map((resource) => ({
       resource,
       score: this.calculateRecommendationScore(resource, knowledgeProfile),
-      adaptations: this.generateAdaptations(resource, knowledgeProfile)
+      adaptations: this.generateAdaptations(resource, knowledgeProfile),
     }));
 
     return scoredResources
@@ -717,7 +794,8 @@ export class AdaptiveResourceManager {
     }
 
     // Score basé sur la difficulté optimale (40%)
-    const difficultyMatch = 1 - Math.abs(resource.difficulty - profile.recommendedDifficulty);
+    const difficultyMatch =
+      1 - Math.abs(resource.difficulty - profile.recommendedDifficulty);
     score += difficultyMatch * 0.4;
 
     // Score basé sur les compétences à développer (30%)
@@ -739,35 +817,39 @@ export class AdaptiveResourceManager {
     // Adaptation basée sur la charge cognitive
     if (profile.cognitiveLoad > 0.7) {
       adaptations.push({
-        type: 'cognitive_support',
-        description: 'Contenu décomposé en étapes plus petites',
-        modifications: ['add_breaks', 'simplify_language', 'add_summaries']
+        type: "cognitive_support",
+        description: "Contenu décomposé en étapes plus petites",
+        modifications: ["add_breaks", "simplify_language", "add_summaries"],
       });
     }
 
     // Adaptation basée sur le niveau de motivation
     if (profile.motivationLevel < 0.5) {
       adaptations.push({
-        type: 'motivation_boost',
-        description: 'Éléments de gamification ajoutés',
-        modifications: ['add_progress_indicators', 'add_rewards', 'add_social_elements']
+        type: "motivation_boost",
+        description: "Éléments de gamification ajoutés",
+        modifications: [
+          "add_progress_indicators",
+          "add_rewards",
+          "add_social_elements",
+        ],
       });
     }
 
     // Adaptation basée sur le style d'apprentissage
     switch (profile.learningStyle) {
-      case 'visual':
+      case "visual":
         adaptations.push({
-          type: 'visual_enhancement',
-          description: 'Contenu enrichi visuellement',
-          modifications: ['add_diagrams', 'add_colors', 'add_infographics']
+          type: "visual_enhancement",
+          description: "Contenu enrichi visuellement",
+          modifications: ["add_diagrams", "add_colors", "add_infographics"],
         });
         break;
-      case 'kinesthetic':
+      case "kinesthetic":
         adaptations.push({
-          type: 'interactive_enhancement',
-          description: 'Éléments interactifs ajoutés',
-          modifications: ['add_simulations', 'add_drag_drop', 'add_hands_on']
+          type: "interactive_enhancement",
+          description: "Éléments interactifs ajoutés",
+          modifications: ["add_simulations", "add_drag_drop", "add_hands_on"],
         });
         break;
     }
@@ -785,16 +867,20 @@ export class AdaptiveResourceManager {
   ): AdaptedResource {
     let adaptedContent = { ...resource.content };
 
-    adaptations.forEach(adaptation => {
-      adaptation.modifications.forEach(modification => {
-        adaptedContent = this.applyModification(adaptedContent, modification, currentContext);
+    adaptations.forEach((adaptation) => {
+      adaptation.modifications.forEach((modification) => {
+        adaptedContent = this.applyModification(
+          adaptedContent,
+          modification,
+          currentContext
+        );
       });
     });
 
     return {
       ...resource,
       content: adaptedContent,
-      adaptations: adaptations
+      adaptations: adaptations,
     };
   }
 
@@ -805,11 +891,11 @@ export class AdaptiveResourceManager {
   ): ResourceContent {
     // Implémentation des modifications spécifiques
     switch (modification) {
-      case 'add_breaks':
+      case "add_breaks":
         return this.addContentBreaks(content);
-      case 'add_hints':
+      case "add_hints":
         return this.addContextualHints(content, context);
-      case 'simplify_language':
+      case "simplify_language":
         return this.simplifyLanguage(content);
       default:
         return content;
@@ -821,7 +907,10 @@ export class AdaptiveResourceManager {
     return content; // Implémentation simplifiée
   }
 
-  private addContextualHints(content: ResourceContent, context: LearningContext): ResourceContent {
+  private addContextualHints(
+    content: ResourceContent,
+    context: LearningContext
+  ): ResourceContent {
     // Ajoute des indices basés sur le contexte d'apprentissage
     return content; // Implémentation simplifiée
   }
@@ -831,8 +920,10 @@ export class AdaptiveResourceManager {
     return content; // Implémentation simplifiée
   }
 
-  private filterResourcesByCompetence(competenceId: string): AdaptiveResource[] {
-    return this.resources.filter(resource => 
+  private filterResourcesByCompetence(
+    competenceId: string
+  ): AdaptiveResource[] {
+    return this.resources.filter((resource) =>
       resource.competenceIds.includes(competenceId)
     );
   }
@@ -841,16 +932,17 @@ export class AdaptiveResourceManager {
     resource: AdaptiveResource,
     profile: KnowledgeProfile
   ): number {
-    const relevantCompetences = resource.competenceIds.filter(id => 
-      profile.competences[id]
+    const relevantCompetences = resource.competenceIds.filter(
+      (id) => profile.competences[id]
     );
 
     if (relevantCompetences.length === 0) return 0;
 
-    const avgMastery = relevantCompetences.reduce(
-      (sum, id) => sum + profile.competences[id].masteryLevel, 
-      0
-    ) / relevantCompetences.length;
+    const avgMastery =
+      relevantCompetences.reduce(
+        (sum, id) => sum + profile.competences[id].masteryLevel,
+        0
+      ) / relevantCompetences.length;
 
     // Ressource optimale si légèrement au-dessus du niveau actuel
     return 1 - Math.abs(avgMastery - (resource.difficulty - 0.1));
@@ -874,8 +966,8 @@ export interface LearningContext {
   sessionDuration: number;
   errorCount: number;
   currentConfidence: number;
-  timeOfDay: 'morning' | 'afternoon' | 'evening';
-  deviceType: 'mobile' | 'tablet' | 'desktop';
+  timeOfDay: "morning" | "afternoon" | "evening";
+  deviceType: "mobile" | "tablet" | "desktop";
 }
 
 export interface AdaptedResource extends AdaptiveResource {
@@ -902,34 +994,34 @@ export const adaptiveResourceManager = new AdaptiveResourceManager();
 **[FILE]** Créer `src/lib/pedagogy/preAssessment.test.ts` :
 
 ```ts
-import { describe, it, expect, vi } from 'vitest';
-import { PreAssessmentManager, AdaptiveEngine } from './preAssessment';
-import type { AnswerRecord, Question } from './preAssessment';
+import { describe, it, expect, vi } from "vitest";
+import { PreAssessmentManager, AdaptiveEngine } from "./preAssessment";
+import type { AnswerRecord, Question } from "./preAssessment";
 
-describe('PreAssessmentManager', () => {
+describe("PreAssessmentManager", () => {
   const manager = new PreAssessmentManager();
 
-  describe('analyzeAnswers', () => {
-    it('should calculate knowledge profile correctly', async () => {
+  describe("analyzeAnswers", () => {
+    it("should calculate knowledge profile correctly", async () => {
       const mockAnswers: AnswerRecord[] = [
         {
-          questionId: 'q1',
-          userAnswer: 'correct',
+          questionId: "q1",
+          userAnswer: "correct",
           isCorrect: true,
           timeSpent: 30000,
-          confidence: 0.8
+          confidence: 0.8,
         },
         {
-          questionId: 'q2',
-          userAnswer: 'wrong',
+          questionId: "q2",
+          userAnswer: "wrong",
           isCorrect: false,
           timeSpent: 60000,
-          confidence: 0.3
-        }
+          confidence: 0.3,
+        },
       ];
 
       const profile = await manager.analyzeAnswers(mockAnswers);
-      
+
       expect(profile.motivationLevel).toBeGreaterThan(0);
       expect(profile.cognitiveLoad).toBeGreaterThan(0);
       expect(profile.recommendedDifficulty).toBeGreaterThan(0);
@@ -937,44 +1029,48 @@ describe('PreAssessmentManager', () => {
   });
 });
 
-describe('AdaptiveEngine', () => {
+describe("AdaptiveEngine", () => {
   const engine = new AdaptiveEngine();
 
-  describe('selectNextQuestion', () => {
-    it('should select appropriate difficulty question', () => {
+  describe("selectNextQuestion", () => {
+    it("should select appropriate difficulty question", () => {
       const questions: Question[] = [
         {
-          id: 'easy',
-          text: 'Easy question',
-          type: 'qcm',
-          correctAnswer: 'a',
+          id: "easy",
+          text: "Easy question",
+          type: "qcm",
+          correctAnswer: "a",
           difficulty: 0.2,
-          competenceId: 'comp1',
-          points: 1
+          competenceId: "comp1",
+          points: 1,
         },
         {
-          id: 'hard',
-          text: 'Hard question',
-          type: 'qcm',
-          correctAnswer: 'b',
+          id: "hard",
+          text: "Hard question",
+          type: "qcm",
+          correctAnswer: "b",
           difficulty: 0.8,
-          competenceId: 'comp1',
-          points: 2
-        }
+          competenceId: "comp1",
+          points: 2,
+        },
       ];
 
       const mockAnswers: AnswerRecord[] = [
         {
-          questionId: 'prev',
-          userAnswer: 'correct',
+          questionId: "prev",
+          userAnswer: "correct",
           isCorrect: true,
           timeSpent: 30000,
-          confidence: 0.9
-        }
+          confidence: 0.9,
+        },
       ];
 
-      const nextQuestion = engine.selectNextQuestion(questions, {}, mockAnswers);
-      
+      const nextQuestion = engine.selectNextQuestion(
+        questions,
+        {},
+        mockAnswers
+      );
+
       expect(nextQuestion).toBeDefined();
       // Devrait sélectionner une question plus difficile après une bonne performance
       expect(nextQuestion?.difficulty).toBeGreaterThan(0.3);

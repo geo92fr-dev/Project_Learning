@@ -14,6 +14,7 @@
 ### 🧭 **Architecture de Navigation Intelligente**
 
 **Patterns de Navigation :**
+
 - **Contextual Navigation** : Adaptation selon phase d'apprentissage
 - **Progressive Navigation** : Révélation progressive des options
 - **Predictive Navigation** : Suggestions basées sur comportement
@@ -21,6 +22,7 @@
 - **Quick Actions** : Raccourcis contextuels intelligents
 
 **Structure Hiérarchique :**
+
 - **Dashboard** → **Curriculum** → **Module** → **Lesson** → **Exercise**
 - **Lateral Navigation** : Contenu connexe et recommandations
 - **Vertical Navigation** : Progression séquentielle optimisée
@@ -30,6 +32,7 @@
 ### 🎨 **UX Patterns Éducatifs**
 
 **Learning-Centered Design :**
+
 - **Cognitive Load Reduction** : Information hiérarchisée et contextuelle
 - **Flow State Maintenance** : Minimisation des interruptions
 - **Progress Visualization** : Feedback visuel de progression
@@ -37,6 +40,7 @@
 - **Accessibility First** : Navigation inclusive et universelle
 
 **Micro-Interactions :**
+
 - **Hover States** : Prévisualisation de contenu
 - **Loading States** : Feedback immédiat et informatif
 - **Transition States** : Continuité visuelle fluide
@@ -46,6 +50,7 @@
 ### 🔬 **Approche Qualité & Analytics**
 
 **Métriques UX Navigation :**
+
 - **Task Success Rate** : Taux de réussite des tâches > 90%
 - **Time to Find Information** : < 3 clics pour contenu principal
 - **Navigation Abandonment** : < 5% abandon en navigation
@@ -57,12 +62,14 @@
 ## 📚 **Références Modulaires**
 
 ### **[REF]** Navigation Patterns : **[navigation-patterns.md](../references/ux/navigation-patterns.md)**
+
 - ✅ Patterns adaptatifs selon contexte d'apprentissage
 - ✅ Système de breadcrumbs intelligent
 - ✅ Quick actions et raccourcis contextuels
 - ✅ Navigation gesture et keyboard
 
 ### **[REF]** UX Analytics : **[ux-analytics.md](../references/ux/ux-analytics.md)**
+
 - ✅ Tracking comportement navigation
 - ✅ Heatmaps et user flows
 - ✅ A/B testing navigation patterns
@@ -77,9 +84,9 @@
 **[FILE]** Créer `src/lib/navigation/navigationContext.ts` :
 
 ```ts
-import { writable, derived, readable } from 'svelte/store';
-import { page } from '$app/stores';
-import type { UserProfile } from '$lib/firebase/collections';
+import { writable, derived, readable } from "svelte/store";
+import { page } from "$app/stores";
+import type { UserProfile } from "$lib/firebase/collections";
 
 // ===== TYPES DE NAVIGATION =====
 export interface NavigationContext {
@@ -95,7 +102,7 @@ export interface Breadcrumb {
   id: string;
   label: string;
   href: string;
-  type: 'dashboard' | 'course' | 'module' | 'lesson' | 'exercise';
+  type: "dashboard" | "course" | "module" | "lesson" | "exercise";
   isActive: boolean;
   progress?: number; // 0-1
   metadata?: {
@@ -111,14 +118,14 @@ export interface NavigationAction {
   icon: string;
   action: () => void | string;
   shortcut?: string;
-  context: 'primary' | 'secondary' | 'contextual';
-  visibility: 'always' | 'hover' | 'focus' | 'conditional';
+  context: "primary" | "secondary" | "contextual";
+  visibility: "always" | "hover" | "focus" | "conditional";
   condition?: () => boolean;
 }
 
 export interface NavigationRecommendation {
   id: string;
-  type: 'next_lesson' | 'review' | 'similar_content' | 'help';
+  type: "next_lesson" | "review" | "similar_content" | "help";
   title: string;
   description: string;
   href: string;
@@ -143,33 +150,33 @@ export interface AccessibilityContext {
   reducedMotion: boolean;
   highContrast: boolean;
   keyboardOnly: boolean;
-  fontSize: 'small' | 'medium' | 'large';
+  fontSize: "small" | "medium" | "large";
 }
 
 // ===== NAVIGATION STORE =====
 class NavigationContextManager {
   private context = writable<NavigationContext>({
-    currentPath: '/',
+    currentPath: "/",
     breadcrumbs: [],
     availableActions: [],
     recommendations: [],
     userProgress: {
-      currentModule: '',
-      currentLesson: '',
+      currentModule: "",
+      currentLesson: "",
       overallProgress: 0,
       moduleProgress: 0,
       lessonProgress: 0,
-      nextRecommended: '',
+      nextRecommended: "",
       completedToday: 0,
-      streak: 0
+      streak: 0,
     },
     accessibility: {
       screenReader: false,
       reducedMotion: false,
       highContrast: false,
       keyboardOnly: false,
-      fontSize: 'medium'
-    }
+      fontSize: "medium",
+    },
   });
 
   public readonly state = readable(this.context);
@@ -178,37 +185,40 @@ class NavigationContextManager {
    * Met à jour le contexte de navigation
    */
   updateContext(updates: Partial<NavigationContext>): void {
-    this.context.update(current => ({
+    this.context.update((current) => ({
       ...current,
-      ...updates
+      ...updates,
     }));
   }
 
   /**
    * Génère les breadcrumbs intelligents
    */
-  async generateBreadcrumbs(currentPath: string, userProfile: UserProfile): Promise<Breadcrumb[]> {
-    const pathSegments = currentPath.split('/').filter(Boolean);
+  async generateBreadcrumbs(
+    currentPath: string,
+    userProfile: UserProfile
+  ): Promise<Breadcrumb[]> {
+    const pathSegments = currentPath.split("/").filter(Boolean);
     const breadcrumbs: Breadcrumb[] = [];
 
     // Breadcrumb racine
     breadcrumbs.push({
-      id: 'dashboard',
-      label: 'Tableau de bord',
-      href: '/dashboard',
-      type: 'dashboard',
-      isActive: pathSegments.length === 1 && pathSegments[0] === 'dashboard'
+      id: "dashboard",
+      label: "Tableau de bord",
+      href: "/dashboard",
+      type: "dashboard",
+      isActive: pathSegments.length === 1 && pathSegments[0] === "dashboard",
     });
 
     // Construire breadcrumbs hiérarchiques
-    let currentHref = '';
+    let currentHref = "";
     for (let i = 0; i < pathSegments.length; i++) {
       const segment = pathSegments[i];
       currentHref += `/${segment}`;
 
       const breadcrumb = await this.createBreadcrumbFromSegment(
-        segment, 
-        currentHref, 
+        segment,
+        currentHref,
         i === pathSegments.length - 1,
         userProfile
       );
@@ -230,96 +240,96 @@ class NavigationContextManager {
     // Actions universelles
     actions.push(
       {
-        id: 'search',
-        label: 'Rechercher',
-        icon: 'search',
+        id: "search",
+        label: "Rechercher",
+        icon: "search",
         action: () => this.openSearch(),
-        shortcut: 'Ctrl+K',
-        context: 'primary',
-        visibility: 'always'
+        shortcut: "Ctrl+K",
+        context: "primary",
+        visibility: "always",
       },
       {
-        id: 'help',
-        label: 'Aide',
-        icon: 'help-circle',
+        id: "help",
+        label: "Aide",
+        icon: "help-circle",
         action: () => this.openHelp(),
-        shortcut: 'F1',
-        context: 'secondary',
-        visibility: 'always'
+        shortcut: "F1",
+        context: "secondary",
+        visibility: "always",
       }
     );
 
     // Actions contextuelles selon la page
     const pathType = this.getPathType(context.currentPath);
-    
+
     switch (pathType) {
-      case 'lesson':
+      case "lesson":
         actions.push(
           {
-            id: 'prev_lesson',
-            label: 'Leçon précédente',
-            icon: 'arrow-left',
+            id: "prev_lesson",
+            label: "Leçon précédente",
+            icon: "arrow-left",
             action: () => this.navigateToPreviousLesson(),
-            shortcut: 'ArrowLeft',
-            context: 'contextual',
-            visibility: 'always',
-            condition: () => this.hasPreviousLesson()
+            shortcut: "ArrowLeft",
+            context: "contextual",
+            visibility: "always",
+            condition: () => this.hasPreviousLesson(),
           },
           {
-            id: 'next_lesson',
-            label: 'Leçon suivante',
-            icon: 'arrow-right',
+            id: "next_lesson",
+            label: "Leçon suivante",
+            icon: "arrow-right",
             action: () => this.navigateToNextLesson(),
-            shortcut: 'ArrowRight',
-            context: 'primary',
-            visibility: 'always',
-            condition: () => this.hasNextLesson()
+            shortcut: "ArrowRight",
+            context: "primary",
+            visibility: "always",
+            condition: () => this.hasNextLesson(),
           },
           {
-            id: 'bookmark',
-            label: 'Marquer',
-            icon: 'bookmark',
+            id: "bookmark",
+            label: "Marquer",
+            icon: "bookmark",
             action: () => this.toggleBookmark(),
-            shortcut: 'B',
-            context: 'secondary',
-            visibility: 'hover'
+            shortcut: "B",
+            context: "secondary",
+            visibility: "hover",
           }
         );
         break;
 
-      case 'exercise':
+      case "exercise":
         actions.push(
           {
-            id: 'hint',
-            label: 'Indice',
-            icon: 'lightbulb',
+            id: "hint",
+            label: "Indice",
+            icon: "lightbulb",
             action: () => this.showHint(),
-            shortcut: 'H',
-            context: 'secondary',
-            visibility: 'always'
+            shortcut: "H",
+            context: "secondary",
+            visibility: "always",
           },
           {
-            id: 'solution',
-            label: 'Solution',
-            icon: 'eye',
+            id: "solution",
+            label: "Solution",
+            icon: "eye",
             action: () => this.showSolution(),
-            shortcut: 'S',
-            context: 'contextual',
-            visibility: 'conditional',
-            condition: () => this.canShowSolution()
+            shortcut: "S",
+            context: "contextual",
+            visibility: "conditional",
+            condition: () => this.canShowSolution(),
           }
         );
         break;
     }
 
-    return actions.filter(action => !action.condition || action.condition());
+    return actions.filter((action) => !action.condition || action.condition());
   }
 
   /**
    * Génère des recommandations intelligentes
    */
   async generateRecommendations(
-    context: NavigationContext, 
+    context: NavigationContext,
     userProfile: UserProfile
   ): Promise<NavigationRecommendation[]> {
     const recommendations: NavigationRecommendation[] = [];
@@ -327,14 +337,14 @@ class NavigationContextManager {
     // Recommandation de progression
     if (context.userProgress.nextRecommended) {
       recommendations.push({
-        id: 'next_recommended',
-        type: 'next_lesson',
-        title: 'Continuer votre apprentissage',
-        description: 'Leçon recommandée selon votre progression',
+        id: "next_recommended",
+        type: "next_lesson",
+        title: "Continuer votre apprentissage",
+        description: "Leçon recommandée selon votre progression",
         href: `/lesson/${context.userProgress.nextRecommended}`,
         priority: 10,
-        reasoning: 'Algorithme de progression optimale',
-        estimatedTime: 15
+        reasoning: "Algorithme de progression optimale",
+        estimatedTime: 15,
       });
     }
 
@@ -342,13 +352,13 @@ class NavigationContextManager {
     const reviewNeeded = await this.getContentNeedingReview(userProfile);
     if (reviewNeeded.length > 0) {
       recommendations.push({
-        id: 'review_content',
-        type: 'review',
-        title: 'Révision recommandée',
+        id: "review_content",
+        type: "review",
+        title: "Révision recommandée",
         description: `${reviewNeeded.length} concepts à réviser`,
-        href: '/review',
+        href: "/review",
         priority: 8,
-        reasoning: 'Optimisation de la rétention à long terme'
+        reasoning: "Optimisation de la rétention à long terme",
       });
     }
 
@@ -356,13 +366,13 @@ class NavigationContextManager {
     const similarContent = await this.getSimilarContent(context.currentPath);
     if (similarContent.length > 0) {
       recommendations.push({
-        id: 'similar_content',
-        type: 'similar_content',
-        title: 'Contenu connexe',
-        description: 'Approfondissez avec du contenu similaire',
+        id: "similar_content",
+        type: "similar_content",
+        title: "Contenu connexe",
+        description: "Approfondissez avec du contenu similaire",
         href: similarContent[0].href,
         priority: 6,
-        reasoning: 'Renforcement des concepts liés'
+        reasoning: "Renforcement des concepts liés",
       });
     }
 
@@ -374,9 +384,10 @@ class NavigationContextManager {
    */
   detectAccessibilityPreferences(): AccessibilityContext {
     const mediaQueries = {
-      reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-      highContrast: window.matchMedia('(prefers-contrast: high)').matches,
-      screenReader: this.detectScreenReader()
+      reducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)")
+        .matches,
+      highContrast: window.matchMedia("(prefers-contrast: high)").matches,
+      screenReader: this.detectScreenReader(),
     };
 
     return {
@@ -384,20 +395,23 @@ class NavigationContextManager {
       reducedMotion: mediaQueries.reducedMotion,
       highContrast: mediaQueries.highContrast,
       keyboardOnly: false, // Détecté dynamiquement
-      fontSize: this.detectFontSizePreference()
+      fontSize: this.detectFontSizePreference(),
     };
   }
 
   /**
    * Navigation programmatique avec analytics
    */
-  async navigateTo(href: string, options: NavigationOptions = {}): Promise<void> {
+  async navigateTo(
+    href: string,
+    options: NavigationOptions = {}
+  ): Promise<void> {
     // Analytics de navigation
     this.trackNavigation({
       from: this.getCurrentPath(),
       to: href,
-      method: options.method || 'programmatic',
-      context: options.context
+      method: options.method || "programmatic",
+      context: options.context,
     });
 
     // Préchargement si nécessaire
@@ -407,9 +421,9 @@ class NavigationContextManager {
 
     // Navigation
     if (options.replace) {
-      history.replaceState(null, '', href);
+      history.replaceState(null, "", href);
     } else {
-      history.pushState(null, '', href);
+      history.pushState(null, "", href);
     }
 
     // Mise à jour contexte
@@ -419,14 +433,14 @@ class NavigationContextManager {
   // ===== MÉTHODES PRIVÉES =====
 
   private async createBreadcrumbFromSegment(
-    segment: string, 
-    href: string, 
+    segment: string,
+    href: string,
     isActive: boolean,
     userProfile: UserProfile
   ): Promise<Breadcrumb | null> {
     // Résolution du segment vers métadonnées
     const metadata = await this.resolveSegmentMetadata(segment);
-    
+
     if (!metadata) return null;
 
     return {
@@ -439,45 +453,47 @@ class NavigationContextManager {
       metadata: {
         difficulty: metadata.difficulty,
         estimatedTime: metadata.estimatedTime,
-        completionDate: metadata.completionDate
-      }
+        completionDate: metadata.completionDate,
+      },
     };
   }
 
   private getPathType(path: string): string {
-    if (path.includes('/lesson/')) return 'lesson';
-    if (path.includes('/exercise/')) return 'exercise';
-    if (path.includes('/module/')) return 'module';
-    if (path.includes('/course/')) return 'course';
-    return 'dashboard';
+    if (path.includes("/lesson/")) return "lesson";
+    if (path.includes("/exercise/")) return "exercise";
+    if (path.includes("/module/")) return "module";
+    if (path.includes("/course/")) return "course";
+    return "dashboard";
   }
 
   private detectScreenReader(): boolean {
     // Heuristiques pour détecter un lecteur d'écran
     return Boolean(
-      navigator.userAgent.includes('NVDA') ||
-      navigator.userAgent.includes('JAWS') ||
-      (window as any).speechSynthesis ||
-      document.body.classList.contains('screen-reader')
+      navigator.userAgent.includes("NVDA") ||
+        navigator.userAgent.includes("JAWS") ||
+        (window as any).speechSynthesis ||
+        document.body.classList.contains("screen-reader")
     );
   }
 
-  private detectFontSizePreference(): 'small' | 'medium' | 'large' {
-    const fontSize = parseInt(getComputedStyle(document.documentElement).fontSize);
-    if (fontSize >= 20) return 'large';
-    if (fontSize <= 14) return 'small';
-    return 'medium';
+  private detectFontSizePreference(): "small" | "medium" | "large" {
+    const fontSize = parseInt(
+      getComputedStyle(document.documentElement).fontSize
+    );
+    if (fontSize >= 20) return "large";
+    if (fontSize <= 14) return "small";
+    return "medium";
   }
 
   private trackNavigation(event: NavigationEvent): void {
     // Envoi analytics
-    console.log('Navigation tracking:', event);
+    console.log("Navigation tracking:", event);
   }
 
   private async preloadRoute(href: string): Promise<void> {
     // Préchargement intelligent des ressources
-    const link = document.createElement('link');
-    link.rel = 'prefetch';
+    const link = document.createElement("link");
+    link.rel = "prefetch";
     link.href = href;
     document.head.appendChild(link);
   }
@@ -493,7 +509,7 @@ class NavigationContextManager {
 interface NavigationOptions {
   replace?: boolean;
   preload?: boolean;
-  method?: 'click' | 'keyboard' | 'programmatic';
+  method?: "click" | "keyboard" | "programmatic";
   context?: string;
 }
 
@@ -511,17 +527,17 @@ export const navigationManager = new NavigationContextManager();
 // Stores dérivés
 export const currentBreadcrumbs = derived(
   navigationManager.state,
-  $state => $state.breadcrumbs
+  ($state) => $state.breadcrumbs
 );
 
 export const availableActions = derived(
   navigationManager.state,
-  $state => $state.availableActions
+  ($state) => $state.availableActions
 );
 
 export const navigationRecommendations = derived(
   navigationManager.state,
-  $state => $state.recommendations
+  ($state) => $state.recommendations
 );
 ```
 
@@ -531,31 +547,33 @@ export const navigationRecommendations = derived(
 
 ```svelte
 <script lang="ts">
-  import { slide } from 'svelte/transition';
-  import { quintOut } from 'svelte/easing';
-  import type { Breadcrumb } from '$lib/navigation/navigationContext';
-  
+  import { slide } from "svelte/transition";
+  import { quintOut } from "svelte/easing";
+  import type { Breadcrumb } from "$lib/navigation/navigationContext";
+
   // ===== PROPS =====
   export let breadcrumbs: Breadcrumb[] = [];
   export let maxVisible = 4;
   export let showProgress = true;
   export let compact = false;
-  
+
   // ===== STATE =====
   let showAll = false;
-  
+
   // ===== COMPUTED =====
-  $: visibleBreadcrumbs = showAll ? breadcrumbs : breadcrumbs.slice(-maxVisible);
+  $: visibleBreadcrumbs = showAll
+    ? breadcrumbs
+    : breadcrumbs.slice(-maxVisible);
   $: hasOverflow = breadcrumbs.length > maxVisible;
   $: hiddenCount = breadcrumbs.length - maxVisible;
-  
+
   // ===== METHODS =====
   function toggleShowAll() {
     showAll = !showAll;
   }
-  
+
   function handleKeyboardNavigation(event: KeyboardEvent, href: string) {
-    if (event.key === 'Enter' || event.key === ' ') {
+    if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
       window.location.href = href;
     }
@@ -563,8 +581,8 @@ export const navigationRecommendations = derived(
 </script>
 
 <!-- ===== TEMPLATE ===== -->
-<nav 
-  aria-label="Fil d'Ariane" 
+<nav
+  aria-label="Fil d'Ariane"
   class="breadcrumb"
   class:breadcrumb--compact={compact}
 >
@@ -583,7 +601,7 @@ export const navigationRecommendations = derived(
           </svg>
           <span class="breadcrumb__overflow-count">+{hiddenCount}</span>
         </button>
-        
+
         <span class="breadcrumb__separator" aria-hidden="true">
           <svg class="breadcrumb__separator-icon">
             <use href="#chevron-right" />
@@ -591,63 +609,65 @@ export const navigationRecommendations = derived(
         </span>
       </li>
     {/if}
-    
+
     <!-- Visible breadcrumbs -->
     {#each visibleBreadcrumbs as breadcrumb, index (breadcrumb.id)}
-      <li 
+      <li
         class="breadcrumb__item"
         class:breadcrumb__item--active={breadcrumb.isActive}
         transition:slide={{ duration: 200, easing: quintOut }}
       >
         {#if breadcrumb.isActive}
           <!-- Current page -->
-          <span 
-            class="breadcrumb__current"
-            aria-current="page"
-          >
+          <span class="breadcrumb__current" aria-current="page">
             <span class="breadcrumb__label">{breadcrumb.label}</span>
-            
+
             {#if showProgress && breadcrumb.progress !== undefined}
               <span class="breadcrumb__progress">
-                <span 
+                <span
                   class="breadcrumb__progress-bar"
                   style="width: {breadcrumb.progress * 100}%"
-                  aria-label="Progression: {Math.round(breadcrumb.progress * 100)}%"
-                ></span>
+                  aria-label="Progression: {Math.round(
+                    breadcrumb.progress * 100
+                  )}%"
+                />
               </span>
             {/if}
           </span>
         {:else}
           <!-- Clickable breadcrumb -->
-          <a 
+          <a
             href={breadcrumb.href}
             class="breadcrumb__link"
             on:keydown={(e) => handleKeyboardNavigation(e, breadcrumb.href)}
           >
             <span class="breadcrumb__label">{breadcrumb.label}</span>
-            
+
             {#if breadcrumb.metadata}
               <span class="breadcrumb__metadata">
                 {#if breadcrumb.metadata.difficulty}
-                  <span 
-                    class="breadcrumb__difficulty breadcrumb__difficulty--{breadcrumb.metadata.difficulty}"
+                  <span
+                    class="breadcrumb__difficulty breadcrumb__difficulty--{breadcrumb
+                      .metadata.difficulty}"
                     title="Difficulté: {breadcrumb.metadata.difficulty}"
-                  ></span>
+                  />
                 {/if}
-                
+
                 {#if breadcrumb.metadata.estimatedTime}
-                  <span 
+                  <span
                     class="breadcrumb__time"
                     title="Temps estimé: {breadcrumb.metadata.estimatedTime}min"
                   >
                     {breadcrumb.metadata.estimatedTime}min
                   </span>
                 {/if}
-                
+
                 {#if breadcrumb.metadata.completionDate}
-                  <span 
+                  <span
                     class="breadcrumb__completed"
-                    title="Complété le {new Date(breadcrumb.metadata.completionDate).toLocaleDateString()}"
+                    title="Complété le {new Date(
+                      breadcrumb.metadata.completionDate
+                    ).toLocaleDateString()}"
                   >
                     <svg class="breadcrumb__completed-icon" aria-hidden="true">
                       <use href="#check-circle" />
@@ -656,18 +676,20 @@ export const navigationRecommendations = derived(
                 {/if}
               </span>
             {/if}
-            
+
             {#if showProgress && breadcrumb.progress !== undefined}
               <span class="breadcrumb__progress">
-                <span 
+                <span
                   class="breadcrumb__progress-bar"
                   style="width: {breadcrumb.progress * 100}%"
-                  aria-label="Progression: {Math.round(breadcrumb.progress * 100)}%"
-                ></span>
+                  aria-label="Progression: {Math.round(
+                    breadcrumb.progress * 100
+                  )}%"
+                />
               </span>
             {/if}
           </a>
-          
+
           <!-- Separator -->
           {#if index < visibleBreadcrumbs.length - 1}
             <span class="breadcrumb__separator" aria-hidden="true">
@@ -691,22 +713,22 @@ export const navigationRecommendations = derived(
     padding: var(--space-3) var(--space-4);
     border: 1px solid var(--color-border);
     margin-bottom: var(--space-4);
-    
+
     /* Responsive */
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    
+
     &::-webkit-scrollbar {
       display: none;
     }
   }
-  
+
   .breadcrumb--compact {
     padding: var(--space-2) var(--space-3);
     margin-bottom: var(--space-2);
   }
-  
+
   .breadcrumb__list {
     display: flex;
     align-items: center;
@@ -716,13 +738,13 @@ export const navigationRecommendations = derived(
     list-style: none;
     min-width: fit-content;
   }
-  
+
   .breadcrumb__item {
     display: flex;
     align-items: center;
     gap: var(--space-2);
     white-space: nowrap;
-    
+
     &--active {
       .breadcrumb__current {
         font-weight: 600;
@@ -730,7 +752,7 @@ export const navigationRecommendations = derived(
       }
     }
   }
-  
+
   .breadcrumb__link {
     display: flex;
     flex-direction: column;
@@ -740,31 +762,31 @@ export const navigationRecommendations = derived(
     padding: var(--space-1) var(--space-2);
     border-radius: var(--radius-sm);
     transition: all var(--duration-fast) var(--easing-easeOut);
-    
+
     &:hover {
       background: var(--color-surface-bg);
       color: var(--color-text-primary);
       transform: translateY(-1px);
     }
-    
+
     &:focus-visible {
       outline: 2px solid var(--color-primary);
       outline-offset: 2px;
     }
   }
-  
+
   .breadcrumb__current {
     display: flex;
     flex-direction: column;
     gap: var(--space-1);
     padding: var(--space-1) var(--space-2);
   }
-  
+
   .breadcrumb__label {
     font-size: var(--font-size-sm);
     line-height: var(--line-height-tight);
   }
-  
+
   .breadcrumb__metadata {
     display: flex;
     align-items: center;
@@ -772,29 +794,35 @@ export const navigationRecommendations = derived(
     font-size: var(--font-size-xs);
     color: var(--color-text-secondary);
   }
-  
+
   .breadcrumb__difficulty {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    
-    &--beginner { background: var(--color-success); }
-    &--intermediate { background: var(--color-warning); }
-    &--advanced { background: var(--color-error); }
+
+    &--beginner {
+      background: var(--color-success);
+    }
+    &--intermediate {
+      background: var(--color-warning);
+    }
+    &--advanced {
+      background: var(--color-error);
+    }
   }
-  
+
   .breadcrumb__time {
     display: flex;
     align-items: center;
     gap: var(--space-1);
   }
-  
+
   .breadcrumb__completed-icon {
     width: 12px;
     height: 12px;
     fill: var(--color-success);
   }
-  
+
   .breadcrumb__progress {
     height: 2px;
     background: var(--color-surface-bg);
@@ -802,26 +830,26 @@ export const navigationRecommendations = derived(
     overflow: hidden;
     width: 100%;
   }
-  
+
   .breadcrumb__progress-bar {
     height: 100%;
     background: var(--color-primary);
     border-radius: var(--radius-full);
     transition: width var(--duration-normal) var(--easing-easeOut);
   }
-  
+
   .breadcrumb__separator {
     display: flex;
     align-items: center;
     color: var(--color-text-secondary);
   }
-  
+
   .breadcrumb__separator-icon {
     width: 16px;
     height: 16px;
     fill: currentColor;
   }
-  
+
   .breadcrumb__overflow {
     .breadcrumb__overflow-btn {
       display: flex;
@@ -834,55 +862,55 @@ export const navigationRecommendations = derived(
       border-radius: var(--radius-sm);
       cursor: pointer;
       transition: all var(--duration-fast) var(--easing-easeOut);
-      
+
       &:hover {
         background: var(--color-surface-bg);
         color: var(--color-text-primary);
       }
-      
+
       &:focus-visible {
         outline: 2px solid var(--color-primary);
         outline-offset: 2px;
       }
     }
   }
-  
+
   .breadcrumb__icon {
     width: 16px;
     height: 16px;
     fill: currentColor;
   }
-  
+
   .breadcrumb__overflow-count {
     font-size: var(--font-size-xs);
     font-weight: 500;
   }
-  
+
   /* ===== RESPONSIVE ===== */
   @media (max-width: 640px) {
     .breadcrumb {
       padding: var(--space-2) var(--space-3);
     }
-    
+
     .breadcrumb__list {
       gap: var(--space-1);
     }
-    
+
     .breadcrumb__metadata {
       display: none;
     }
-    
+
     .breadcrumb__label {
       font-size: var(--font-size-xs);
     }
   }
-  
+
   /* ===== REDUCED MOTION ===== */
   @media (prefers-reduced-motion: reduce) {
     .breadcrumb__link:hover {
       transform: none;
     }
-    
+
     .breadcrumb__progress-bar {
       transition: none;
     }
@@ -901,17 +929,17 @@ export const navigationRecommendations = derived(
   import { quintOut } from 'svelte/easing';
   import type { NavigationAction } from '$lib/navigation/navigationContext';
   import { availableActions } from '$lib/navigation/navigationContext';
-  
+
   // ===== PROPS =====
   export let position: 'top' | 'bottom' | 'left' | 'right' | 'floating' = 'floating';
   export let trigger: 'always' | 'hover' | 'keyboard' | 'contextmenu' = 'always';
   export let maxVisible = 6;
-  
+
   // ===== STATE =====
   let isVisible = false;
   let actions: NavigationAction[] = [];
   let keyboardShortcuts = new Map<string, NavigationAction>();
-  
+
   // ===== LIFECYCLE =====
   onMount(() => {
     // Subscribe to available actions
@@ -919,34 +947,34 @@ export const navigationRecommendations = derived(
       actions = currentActions;
       updateKeyboardShortcuts(currentActions);
     });
-    
+
     // Keyboard event listeners
     document.addEventListener('keydown', handleKeydown);
     document.addEventListener('contextmenu', handleContextMenu);
-    
+
     // Visibility logic
     if (trigger === 'always') {
       isVisible = true;
     } else if (trigger === 'hover') {
       setupHoverTrigger();
     }
-    
+
     return () => {
       unsubscribe();
       document.removeEventListener('keydown', handleKeydown);
       document.removeEventListener('contextmenu', handleContextMenu);
     };
   });
-  
+
   // ===== COMPUTED =====
   $: visibleActions = actions
     .filter(action => shouldShowAction(action))
     .slice(0, maxVisible);
-  
+
   $: primaryActions = visibleActions.filter(a => a.context === 'primary');
   $: secondaryActions = visibleActions.filter(a => a.context === 'secondary');
   $: contextualActions = visibleActions.filter(a => a.context === 'contextual');
-  
+
   // ===== METHODS =====
   function shouldShowAction(action: NavigationAction): boolean {
     switch (action.visibility) {
@@ -962,7 +990,7 @@ export const navigationRecommendations = derived(
         return true;
     }
   }
-  
+
   function updateKeyboardShortcuts(actions: NavigationAction[]): void {
     keyboardShortcuts.clear();
     actions.forEach(action => {
@@ -971,19 +999,19 @@ export const navigationRecommendations = derived(
       }
     });
   }
-  
+
   function handleKeydown(event: KeyboardEvent): void {
     const shortcut = buildShortcutString(event);
     const action = keyboardShortcuts.get(shortcut);
-    
+
     if (action) {
       event.preventDefault();
       executeAction(action);
-      
+
       // Visual feedback
       showShortcutFeedback(action);
     }
-    
+
     // Toggle visibility with specific key combinations
     if (event.key === 'Escape') {
       if (trigger === 'keyboard') {
@@ -995,74 +1023,74 @@ export const navigationRecommendations = derived(
       }
     }
   }
-  
+
   function handleContextMenu(event: MouseEvent): void {
     if (trigger === 'contextmenu') {
       event.preventDefault();
       isVisible = true;
-      
+
       // Position near cursor
       positionNearCursor(event.clientX, event.clientY);
     }
   }
-  
+
   function buildShortcutString(event: KeyboardEvent): string {
     const parts: string[] = [];
-    
+
     if (event.ctrlKey) parts.push('ctrl');
     if (event.altKey) parts.push('alt');
     if (event.shiftKey) parts.push('shift');
     if (event.metaKey) parts.push('meta');
-    
+
     parts.push(event.key.toLowerCase());
-    
+
     return parts.join('+');
   }
-  
+
   function executeAction(action: NavigationAction): void {
     if (typeof action.action === 'function') {
       action.action();
     } else if (typeof action.action === 'string') {
       window.location.href = action.action;
     }
-    
+
     // Analytics
     trackActionUsage(action);
   }
-  
+
   function showShortcutFeedback(action: NavigationAction): void {
     // Visual feedback for keyboard shortcuts
     const feedback = document.createElement('div');
     feedback.className = 'shortcut-feedback';
     feedback.textContent = `${action.label} (${action.shortcut})`;
-    
+
     document.body.appendChild(feedback);
-    
+
     setTimeout(() => {
       feedback.remove();
     }, 2000);
   }
-  
+
   function trackActionUsage(action: NavigationAction): void {
     console.log('Action used:', action.id);
     // Send analytics
   }
-  
+
   function setupHoverTrigger(): void {
     let hoverTimeout: number;
-    
+
     document.addEventListener('mousemove', () => {
       clearTimeout(hoverTimeout);
       hoverTimeout = setTimeout(() => {
         isVisible = true;
       }, 1000); // Show after 1s of no movement
     });
-    
+
     document.addEventListener('scroll', () => {
       isVisible = false;
     });
   }
-  
+
   function positionNearCursor(x: number, y: number): void {
     // Implementation for context menu positioning
     // Would set CSS custom properties for positioning
@@ -1071,7 +1099,7 @@ export const navigationRecommendations = derived(
 
 <!-- ===== TEMPLATE ===== -->
 {#if isVisible && visibleActions.length > 0}
-  <div 
+  <div
     class="quick-actions quick-actions--{position}"
     transition:fade={{ duration: 200, easing: quintOut }}
     role="toolbar"
@@ -1091,9 +1119,9 @@ export const navigationRecommendations = derived(
             <svg class="quick-actions__icon" aria-hidden="true">
               <use href="#{action.icon}" />
             </svg>
-            
+
             <span class="quick-actions__label">{action.label}</span>
-            
+
             {#if action.shortcut}
               <span class="quick-actions__shortcut" aria-hidden="true">
                 {action.shortcut}
@@ -1103,7 +1131,7 @@ export const navigationRecommendations = derived(
         {/each}
       </div>
     {/if}
-    
+
     <!-- Secondary Actions -->
     {#if secondaryActions.length > 0}
       <div class="quick-actions__group quick-actions__group--secondary">
@@ -1118,9 +1146,9 @@ export const navigationRecommendations = derived(
             <svg class="quick-actions__icon" aria-hidden="true">
               <use href="#{action.icon}" />
             </svg>
-            
+
             <span class="quick-actions__label">{action.label}</span>
-            
+
             {#if action.shortcut}
               <span class="quick-actions__shortcut" aria-hidden="true">
                 {action.shortcut}
@@ -1130,7 +1158,7 @@ export const navigationRecommendations = derived(
         {/each}
       </div>
     {/if}
-    
+
     <!-- Contextual Actions -->
     {#if contextualActions.length > 0}
       <div class="quick-actions__group quick-actions__group--contextual">
@@ -1145,7 +1173,7 @@ export const navigationRecommendations = derived(
             <svg class="quick-actions__icon" aria-hidden="true">
               <use href="#{action.icon}" />
             </svg>
-            
+
             {#if position === 'floating'}
               <span class="quick-actions__label">{action.label}</span>
             {/if}
@@ -1153,7 +1181,7 @@ export const navigationRecommendations = derived(
         {/each}
       </div>
     {/if}
-    
+
     <!-- Keyboard Hint -->
     {#if trigger === 'keyboard'}
       <div class="quick-actions__hint">
@@ -1173,16 +1201,16 @@ export const navigationRecommendations = derived(
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-4);
     backdrop-filter: blur(8px);
-    
+
     display: flex;
     gap: var(--space-1);
     padding: var(--space-2);
-    
+
     /* Default floating position */
     bottom: var(--space-6);
     right: var(--space-6);
   }
-  
+
   /* ===== POSITION VARIANTS ===== */
   .quick-actions--top {
     top: var(--space-4);
@@ -1191,14 +1219,14 @@ export const navigationRecommendations = derived(
     bottom: auto;
     right: auto;
   }
-  
+
   .quick-actions--bottom {
     bottom: var(--space-4);
     left: 50%;
     transform: translateX(-50%);
     right: auto;
   }
-  
+
   .quick-actions--left {
     left: var(--space-4);
     top: 50%;
@@ -1207,7 +1235,7 @@ export const navigationRecommendations = derived(
     bottom: auto;
     right: auto;
   }
-  
+
   .quick-actions--right {
     right: var(--space-4);
     top: 50%;
@@ -1215,16 +1243,16 @@ export const navigationRecommendations = derived(
     flex-direction: column;
     bottom: auto;
   }
-  
+
   .quick-actions--floating {
     /* Default styles already applied */
   }
-  
+
   /* ===== GROUPS ===== */
   .quick-actions__group {
     display: flex;
     gap: var(--space-1);
-    
+
     &:not(:last-child)::after {
       content: '';
       width: 1px;
@@ -1232,18 +1260,18 @@ export const navigationRecommendations = derived(
       margin: 0 var(--space-1);
     }
   }
-  
+
   .quick-actions--left .quick-actions__group,
   .quick-actions--right .quick-actions__group {
     flex-direction: column;
-    
+
     &:not(:last-child)::after {
       width: auto;
       height: 1px;
       margin: var(--space-1) 0;
     }
   }
-  
+
   /* ===== BUTTONS ===== */
   .quick-actions__btn {
     position: relative;
@@ -1258,47 +1286,47 @@ export const navigationRecommendations = derived(
     cursor: pointer;
     transition: all var(--duration-fast) var(--easing-easeOut);
     white-space: nowrap;
-    
+
     &:hover {
       background: var(--color-surface-bg);
       color: var(--color-text-primary);
       transform: translateY(-1px);
     }
-    
+
     &:focus-visible {
       outline: 2px solid var(--color-primary);
       outline-offset: 2px;
     }
-    
+
     &:active {
       transform: translateY(0);
     }
   }
-  
+
   .quick-actions__btn--primary {
     background: var(--color-primary);
     color: white;
-    
+
     &:hover {
       background: var(--color-primary-600);
       color: white;
     }
   }
-  
+
   .quick-actions__btn--secondary {
     border: 1px solid var(--color-border);
-    
+
     &:hover {
       border-color: var(--color-primary);
     }
   }
-  
+
   .quick-actions__btn--contextual {
     padding: var(--space-2);
     min-width: 36px;
     justify-content: center;
   }
-  
+
   /* ===== BUTTON ELEMENTS ===== */
   .quick-actions__icon {
     width: 16px;
@@ -1306,12 +1334,12 @@ export const navigationRecommendations = derived(
     fill: currentColor;
     flex-shrink: 0;
   }
-  
+
   .quick-actions__label {
     font-size: var(--font-size-sm);
     font-weight: 500;
   }
-  
+
   .quick-actions__shortcut {
     font-size: var(--font-size-xs);
     opacity: 0.7;
@@ -1320,7 +1348,7 @@ export const navigationRecommendations = derived(
     border-radius: var(--radius-sm);
     margin-left: auto;
   }
-  
+
   /* ===== HINT ===== */
   .quick-actions__hint {
     position: absolute;
@@ -1335,7 +1363,7 @@ export const navigationRecommendations = derived(
     color: var(--color-text-secondary);
     white-space: nowrap;
   }
-  
+
   kbd {
     background: var(--color-surface-card);
     border: 1px solid var(--color-border);
@@ -1344,7 +1372,7 @@ export const navigationRecommendations = derived(
     font-family: var(--font-mono);
     font-size: 0.75em;
   }
-  
+
   /* ===== RESPONSIVE ===== */
   @media (max-width: 768px) {
     .quick-actions {
@@ -1354,18 +1382,18 @@ export const navigationRecommendations = derived(
       width: auto;
       justify-content: center;
     }
-    
+
     .quick-actions__label {
       display: none;
     }
-    
+
     .quick-actions__btn {
       padding: var(--space-2);
       min-width: 44px;
       justify-content: center;
     }
   }
-  
+
   /* ===== REDUCED MOTION ===== */
   @media (prefers-reduced-motion: reduce) {
     .quick-actions__btn:hover {
@@ -1393,7 +1421,7 @@ export const navigationRecommendations = derived(
     pointer-events: none;
     animation: shortcut-feedback 2s ease-out forwards;
   }
-  
+
   @keyframes shortcut-feedback {
     0% {
       opacity: 0;

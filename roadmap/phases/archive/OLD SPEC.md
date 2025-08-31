@@ -1,18 +1,10 @@
 # FunLearning - Roadmap IA-Optimisée 🤖
 
-
-
 > **Approche IA-First** : Instructions granulaires, commandes précises, validation automatisée pour assistant Copilot.
-
-
 
 ---
 
-
-
 ## 🏷️ **Système de Versioning - Releases Progressives**
-
-
 
 | Version | Phase(s) | Fonctionnalités | Status |
 
@@ -32,8 +24,6 @@
 
 | **2.0** | P6 | Polish & Performance | 🚀 **Release Production** |
 
-
-
 ### 🎯 **Stratégie de Release**
 
 - **Versions mineures (1.x)** : Nouvelles fonctionnalités majeures par phase
@@ -41,8 +31,6 @@
 - **Versions patch (1.x.y)** : Corrections de bugs et améliorations
 
 - **Version majeure (2.0)** : Plateforme production-ready complète
-
-
 
 ### 📦 **Gestion des Releases**
 
@@ -58,8 +46,6 @@
 
 ```
 
-
-
 ### 🎯 **Jalons Critiques**
 
 - **v1.0** 🎯 : Premier MVP public (Auth + Interface)
@@ -70,19 +56,11 @@
 
 - **v2.0** 🚀 : Solution production complète
 
-
-
 ---
-
-
 
 ## 🚀 **État Actuel du Projet - 30 Août 2025**
 
-
-
 Le projet va démarrer du début. Toutes les phases précédentes sont réinitialisées.
-
-
 
 ### 🟢 **Prochaine étape : Phase 0**
 
@@ -94,25 +72,15 @@ Le projet va démarrer du début. Toutes les phases précédentes sont réinitia
 
 - Aucun développement n’a encore été réalisé
 
-
-
 ---
-
-
 
 ## 📚 **Architecture Modulaire - Références Techniques**
 
-
-
 > **⚡ Nouveau** : Architecture modulaire avec références séparées pour une meilleure maintenabilité.
-
-
 
 ### 🔗 **Index des Références**
 
 Toutes les implémentations techniques sont désormais organisées en modules réutilisables :
-
-
 
 | Module | Référence | Status | Description |
 
@@ -130,8 +98,6 @@ Toutes les implémentations techniques sont désormais organisées en modules r�
 
 | **🧪 Testing** | [testing-strategy.md](roadmap/references/testing/testing-strategy.md) | ✅ | Stratégie complète (unit, intégration, E2E) |
 
-
-
 ### 📁 **Navigation Rapide**
 
 - **[Index Central](roadmap/README.md)** - Navigation complète des références
@@ -139,8 +105,6 @@ Toutes les implémentations techniques sont désormais organisées en modules r�
 - **[Guides d'implémentation](roadmap/implementations/)** - Guides par phase
 
 - **[Troubleshooting](roadmap/guides/troubleshooting.md)** - Résolution de problèmes
-
-
 
 ### 🎯 **Utilisation**
 
@@ -152,15 +116,9 @@ Toutes les implémentations techniques sont désormais organisées en modules r�
 
 4. **Tester** avec les stratégies fournies
 
-
-
 ---
 
-
-
 ## 🎯 Guide d'utilisation avec Assistant IA
-
-
 
 ### 📋 Syntaxe des commandes
 
@@ -174,8 +132,6 @@ Toutes les implémentations techniques sont désormais organisées en modules r�
 
 - **[REF]** : Référence technique modulaire à consulter
 
-
-
 ### 🔄 Processus de validation
 
 1. **Consulter** les références modulaires appropriées ([REF])
@@ -186,15 +142,9 @@ Toutes les implémentations techniques sont désormais organisées en modules r�
 
 4. **Valider** les tests avant progression
 
-
-
 ---
 
-
-
 ## 📅 Vue d'ensemble
-
-
 
 | Phase | Durée | Objectif | Version | Validation |
 
@@ -216,15 +166,9 @@ Toutes les implémentations techniques sont désormais organisées en modules r�
 
 | **P6** | 1 semaine | Polish & Performance | **v2.0** 🚀 | Lighthouse > 90 |
 
-
-
 ---
 
-
-
 ## 🚀 Phase 0 : Setup & Architecture (3 jours) - v1.0-alpha
-
-
 
 ### 🎯 Contexte IA
 
@@ -234,11 +178,7 @@ Toutes les implémentations techniques sont désormais organisées en modules r�
 
 **Pré-requis** : Node.js 18+, Git configuré, compte Vercel.
 
-
-
 ### 📝 Instructions granulaires
-
-
 
 #### Étape 0.1 : Initialisation SvelteKit
 
@@ -252,11 +192,7 @@ Toutes les implémentations techniques sont désormais organisées en modules r�
 
 ```
 
-
-
 **[CHECK]** Confirmer que le projet démarre avec `npm run dev` sur http://localhost:5173
-
-
 
 #### Étape 0.2 : Structure de dossiers
 
@@ -270,21 +206,15 @@ Toutes les implémentations techniques sont désormais organisées en modules r�
 
 ```
 
-
-
 **[FILE]** Créer `src/lib/index.js` :
 
 ```js
-
 // Exports centralisés
 
-export { default as Header } from './components/Header.svelte';
+export { default as Header } from "./components/Header.svelte";
 
-export { default as Footer } from './components/Footer.svelte';
-
+export { default as Footer } from "./components/Footer.svelte";
 ```
-
-
 
 #### Étape 0.3 : Configuration développement centralisée
 
@@ -296,377 +226,256 @@ export { default as Footer } from './components/Footer.svelte';
 
 ```
 
-
-
 **[FILE]** Créer `config/vitest.config.js` :
 
 ```js
+import { sveltekit } from "@sveltejs/kit/vite";
 
-import { sveltekit } from '@sveltejs/kit/vite';
-
-import { defineConfig } from 'vitest/config';
-
-
+import { defineConfig } from "vitest/config";
 
 export default defineConfig({
+  plugins: [sveltekit()],
 
-  plugins: [sveltekit()],
+  test: {
+    include: ["src/**/*.{test,spec}.{js,ts}"],
 
-  test: {
+    environment: "jsdom",
 
-    include: ['src/**/*.{test,spec}.{js,ts}'],
+    setupFiles: ["./src/test-setup.js"],
 
-    environment: 'jsdom',
+    coverage: {
+      reporter: ["text", "html", "lcov"],
 
-    setupFiles: ['./src/test-setup.js'],
-
-    coverage: {
-
-      reporter: ['text', 'html', 'lcov'],
-
-      exclude: ['node_modules/', 'src/test-setup.js']
-
-    }
-
-  }
-
+      exclude: ["node_modules/", "src/test-setup.js"],
+    },
+  },
 });
-
 ```
-
-
 
 **[FILE]** Créer `config/.eslintrc.cjs` :
 
 ```js
-
 module.exports = {
+  root: true,
 
-  root: true,
+  extends: [
+    "eslint:recommended",
 
-  extends: [
+    "@typescript-eslint/recommended",
 
-    'eslint:recommended',
+    "plugin:svelte/recommended",
+  ],
 
-    '@typescript-eslint/recommended',
+  parser: "@typescript-eslint/parser",
 
-    'plugin:svelte/recommended'
+  plugins: ["@typescript-eslint"],
 
-  ],
+  parserOptions: {
+    sourceType: "module",
 
-  parser: '@typescript-eslint/parser',
+    ecmaVersion: 2020,
 
-  plugins: ['@typescript-eslint'],
+    extraFileExtensions: [".svelte"],
+  },
 
-  parserOptions: {
+  env: {
+    browser: true,
 
-    sourceType: 'module',
+    es2017: true,
 
-    ecmaVersion: 2020,
+    node: true,
+  },
 
-    extraFileExtensions: ['.svelte']
+  overrides: [
+    {
+      files: ["*.svelte"],
 
-  },
+      parser: "svelte-eslint-parser",
 
-  env: {
+      parserOptions: {
+        parser: "@typescript-eslint/parser",
+      },
+    },
+  ],
 
-    browser: true,
+  rules: {
+    // Règles strictes pour la qualité
 
-    es2017: true,
+    "@typescript-eslint/no-unused-vars": "error",
 
-    node: true
+    "@typescript-eslint/explicit-function-return-type": "warn",
 
-  },
+    "svelte/no-at-html-tags": "error",
 
-  overrides: [
+    "svelte/accessibility-label-has-associated-control": "error",
 
-    {
-
-      files: ['*.svelte'],
-
-      parser: 'svelte-eslint-parser',
-
-      parserOptions: {
-
-        parser: '@typescript-eslint/parser'
-
-      }
-
-    }
-
-  ],
-
-  rules: {
-
-    // Règles strictes pour la qualité
-
-    '@typescript-eslint/no-unused-vars': 'error',
-
-    '@typescript-eslint/explicit-function-return-type': 'warn',
-
-    'svelte/no-at-html-tags': 'error',
-
-    'svelte/accessibility-label-has-associated-control': 'error',
-
-    'svelte/accessibility-missing-attribute': 'error'
-
-  }
-
+    "svelte/accessibility-missing-attribute": "error",
+  },
 };
-
 ```
-
-
 
 **[FILE]** Créer `config/.prettierrc` :
 
 ```json
-
 {
+  "useTabs": false,
 
-  "useTabs": false,
+  "singleQuote": true,
 
-  "singleQuote": true,
+  "trailingComma": "es5",
 
-  "trailingComma": "es5",
+  "printWidth": 100,
 
-  "printWidth": 100,
+  "plugins": ["prettier-plugin-svelte"],
 
-  "plugins": ["prettier-plugin-svelte"],
+  "overrides": [
+    {
+      "files": "*.svelte",
+      "options": {
+        "parser": "svelte",
 
-  "overrides": [
+        "svelteStrictMode": true,
 
-    { 
-
-      "files": "*.svelte", 
-
-      "options": { 
-
-        "parser": "svelte",
-
-        "svelteStrictMode": true,
-
-        "svelteAllowShorthand": false
-
-      } 
-
-    }
-
-  ]
-
+        "svelteAllowShorthand": false
+      }
+    }
+  ]
 }
-
 ```
-
-
 
 **[FILE]** Modifier `package.json` pour pointer vers les configs :
 
 ```json
-
 {
+  "scripts": {
+    "dev": "vite dev",
 
-  "scripts": {
+    "build": "vite build",
 
-    "dev": "vite dev",
+    "preview": "vite preview",
 
-    "build": "vite build",
+    "test": "vitest --config config/vitest.config.js",
 
-    "preview": "vite preview",
+    "test:ui": "vitest --ui --config config/vitest.config.js",
 
-    "test": "vitest --config config/vitest.config.js",
+    "test:e2e": "playwright test",
 
-    "test:ui": "vitest --ui --config config/vitest.config.js",
+    "lint": "eslint --config config/.eslintrc.cjs .",
 
-    "test:e2e": "playwright test",
+    "format": "prettier --config config/.prettierrc --write .",
 
-    "lint": "eslint --config config/.eslintrc.cjs .",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 
-    "format": "prettier --config config/.prettierrc --write .",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 
-    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-
-    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-
-    "validate": "node scripts/validate-phase.js"
-
-  }
-
+    "validate": "node scripts/validate-phase.js"
+  }
 }
-
 ```
 
-
-
 #### Étape 0.4 : Hooks de sécurité SvelteKit
-
-
 
 **[FILE]** Créer `src/hooks.server.ts` pour la protection serveur :
 
 ```ts
+import type { Handle } from "@sveltejs/kit";
 
-import type { Handle } from '@sveltejs/kit';
+import { adminAuth } from "$lib/firebase/admin";
 
-import { adminAuth } from '$lib/firebase/admin';
-
-
-
-const protectedRoutes = ['/dashboard', '/admin', '/cours'];
-
-
+const protectedRoutes = ["/dashboard", "/admin", "/cours"];
 
 export const handle: Handle = async ({ event, resolve }) => {
+  const { url, cookies } = event; // Vérifier si la route nécessite une authentification
 
-  const { url, cookies } = event;
+  const isProtectedRoute = protectedRoutes.some((route) =>
+    url.pathname.startsWith(route)
+  );
 
-  
+  if (isProtectedRoute) {
+    const sessionCookie = cookies.get("session");
 
-  // Vérifier si la route nécessite une authentification
+    if (!sessionCookie) {
+      return new Response(null, {
+        status: 302,
 
-  const isProtectedRoute = protectedRoutes.some(route => 
+        headers: { Location: "/auth/login" },
+      });
+    }
 
-    url.pathname.startsWith(route)
+    try {
+      // Vérifier le token côté serveur
 
-  );
+      const decodedToken = await adminAuth.verifySessionCookie(sessionCookie);
 
-  
+      event.locals.user = {
+        uid: decodedToken.uid,
 
-  if (isProtectedRoute) {
+        email: decodedToken.email,
 
-    const sessionCookie = cookies.get('session');
+        role: decodedToken.role || "student",
+      };
+    } catch (error) {
+      console.error("Session invalide:", error);
 
-    
+      cookies.delete("session");
 
-    if (!sessionCookie) {
+      return new Response(null, {
+        status: 302,
 
-      return new Response(null, {
+        headers: { Location: "/auth/login" },
+      });
+    }
+  }
 
-        status: 302,
-
-        headers: { Location: '/auth/login' }
-
-      });
-
-    }
-
-    
-
-    try {
-
-      // Vérifier le token côté serveur
-
-      const decodedToken = await adminAuth.verifySessionCookie(sessionCookie);
-
-      event.locals.user = {
-
-        uid: decodedToken.uid,
-
-        email: decodedToken.email,
-
-        role: decodedToken.role || 'student'
-
-      };
-
-    } catch (error) {
-
-      console.error('Session invalide:', error);
-
-      cookies.delete('session');
-
-      return new Response(null, {
-
-        status: 302,
-
-        headers: { Location: '/auth/login' }
-
-      });
-
-    }
-
-  }
-
-  
-
-  return resolve(event);
-
+  return resolve(event);
 };
-
 ```
-
-
 
 **[FILE]** Créer `src/lib/firebase/admin.ts` :
 
 ```ts
+import { getAuth } from "firebase-admin/auth";
 
-import { getAuth } from 'firebase-admin/auth';
+import { initializeApp, getApps, cert } from "firebase-admin/app";
 
-import { initializeApp, getApps, cert } from 'firebase-admin/app';
-
-import { FIREBASE_ADMIN_SDK_KEY } from '$env/static/private';
-
-
+import { FIREBASE_ADMIN_SDK_KEY } from "$env/static/private";
 
 // Initialiser Firebase Admin si pas déjà fait
 
 if (!getApps().length) {
-
-  initializeApp({
-
-    credential: cert(JSON.parse(FIREBASE_ADMIN_SDK_KEY))
-
-  });
-
+  initializeApp({
+    credential: cert(JSON.parse(FIREBASE_ADMIN_SDK_KEY)),
+  });
 }
 
-
-
 export const adminAuth = getAuth();
-
 ```
-
-
 
 **[FILE]** Créer `src/app.d.ts` pour typer les locals :
 
 ```ts
-
 declare global {
+  namespace App {
+    interface Error {}
 
-  namespace App {
+    interface Locals {
+      user?: {
+        uid: string;
 
-    interface Error {}
+        email: string | null;
 
-    interface Locals {
+        role: string;
+      };
+    }
 
-      user?: {
+    interface PageData {}
 
-        uid: string;
-
-        email: string | null;
-
-        role: string;
-
-      };
-
-    }
-
-    interface PageData {}
-
-    interface Platform {}
-
-  }
-
+    interface Platform {}
+  }
 }
 
-
-
 export {};
-
 ```
-
-
 
 #### Étape 0.5 : Configuration Playwright
 
@@ -678,63 +487,45 @@ export {};
 
 ```
 
-
-
 **[FILE]** Créer `playwright.config.ts` :
 
 ```ts
-
-import { defineConfig, devices } from '@playwright/test';
-
-
+import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
+  testDir: "./tests/e2e",
 
-  testDir: './tests/e2e',
+  fullyParallel: true,
 
-  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
 
-  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0,
 
-  retries: process.env.CI ? 2 : 0,
+  workers: process.env.CI ? 1 : undefined,
 
-  workers: process.env.CI ? 1 : undefined,
+  reporter: "html",
 
-  reporter: 'html',
+  use: {
+    baseURL: "http://localhost:5173",
 
-  use: {
+    trace: "on-first-retry",
+  },
 
-    baseURL: 'http://localhost:5173',
+  projects: [
+    {
+      name: "chromium",
 
-    trace: 'on-first-retry',
+      use: { ...devices["Desktop Chrome"] },
+    },
+  ],
 
-  },
+  webServer: {
+    command: "npm run build && npm run preview",
 
-  projects: [
-
-    {
-
-      name: 'chromium',
-
-      use: { ...devices['Desktop Chrome'] },
-
-    },
-
-  ],
-
-  webServer: {
-
-    command: 'npm run build && npm run preview',
-
-    port: 5173,
-
-  },
-
+    port: 5173,
+  },
 });
-
 ```
-
-
 
 #### Étape 0.6 : Script de validation centralisé
 
@@ -744,333 +535,238 @@ export default defineConfig({
 
 ```
 
-
-
 **[FILE]** Créer `scripts/validate-phase.js` - script unique avec paramètre :
 
 ```js
+import { exec } from "child_process";
 
-import { exec } from 'child_process';
+import { promisify } from "util";
 
-import { promisify } from 'util';
-
-import { readFileSync } from 'fs';
-
-
+import { readFileSync } from "fs";
 
 const execAsync = promisify(exec);
 
-
-
 const PHASE_VALIDATIONS = {
+  0: ["lint", "build", "test"],
 
-  '0': ['lint', 'build', 'test'],
+  1: ["lint", "build", "test", "test:auth"],
 
-  '1': ['lint', 'build', 'test', 'test:auth'],
+  2: ["lint", "build", "test", "test:content", "test:security"],
 
-  '2': ['lint', 'build', 'test', 'test:content', 'test:security'],
+  3: ["lint", "build", "test", "test:exercises", "test:performance"],
 
-  '3': ['lint', 'build', 'test', 'test:exercises', 'test:performance'],
+  4: ["lint", "build", "test", "test:pwa", "test:offline"],
 
-  '4': ['lint', 'build', 'test', 'test:pwa', 'test:offline'],
+  5: ["lint", "build", "test", "test:admin", "test:e2e"],
 
-  '5': ['lint', 'build', 'test', 'test:admin', 'test:e2e'],
-
-  '6': ['lint', 'build', 'test', 'test:e2e', 'test:lighthouse']
-
+  6: ["lint", "build", "test", "test:e2e", "test:lighthouse"],
 };
 
-
-
 async function runCommand(command, description) {
+  console.log(`🔍 ${description}...`);
 
-  console.log(`🔍 ${description}...`);
+  try {
+    const { stdout } = await execAsync(`npm run ${command}`);
 
-  try {
+    console.log(`✅ ${description} réussi`);
 
-    const { stdout } = await execAsync(`npm run ${command}`);
+    return true;
+  } catch (error) {
+    console.error(`❌ ${description} échoué:`, error.message);
 
-    console.log(`✅ ${description} réussi`);
-
-    return true;
-
-  } catch (error) {
-
-    console.error(`❌ ${description} échoué:`, error.message);
-
-    return false;
-
-  }
-
+    return false;
+  }
 }
-
-
 
 async function validatePhase(phase) {
+  console.log(`🚀 Validation Phase ${phase} - FunLearning V1.0`);
 
-  console.log(`🚀 Validation Phase ${phase} - FunLearning V1.0`);
+  console.log("=".repeat(50));
 
-  console.log('='.repeat(50));
+  const validations = PHASE_VALIDATIONS[phase];
 
-  
+  if (!validations) {
+    console.error(`❌ Phase ${phase} non reconnue`);
 
-  const validations = PHASE_VALIDATIONS[phase];
+    process.exit(1);
+  }
 
-  if (!validations) {
+  let success = true;
 
-    console.error(`❌ Phase ${phase} non reconnue`);
+  for (const validation of validations) {
+    const result = await runCommand(validation, validation.replace(":", " "));
 
-    process.exit(1);
+    if (!result) success = false;
+  }
 
-  }
+  if (success) {
+    console.log(`🎉 Phase ${phase} validée avec succès !`);
 
-  
+    console.log(`📊 ${validations.length} vérifications passées`);
+  } else {
+    console.error(`💥 Phase ${phase} a échoué`);
 
-  let success = true;
-
-  
-
-  for (const validation of validations) {
-
-    const result = await runCommand(validation, validation.replace(':', ' '));
-
-    if (!result) success = false;
-
-  }
-
-  
-
-  if (success) {
-
-    console.log(`🎉 Phase ${phase} validée avec succès !`);
-
-    console.log(`📊 ${validations.length} vérifications passées`);
-
-  } else {
-
-    console.error(`💥 Phase ${phase} a échoué`);
-
-    process.exit(1);
-
-  }
-
+    process.exit(1);
+  }
 }
 
-
-
-const phase = process.argv[2] || '0';
+const phase = process.argv[2] || "0";
 
 validatePhase(phase);
-
 ```
-
-
 
 #### Étape 0.7 : Configuration package.json
 
 **[FILE]** Modifier complètement `package.json` section scripts avec configurations centralisées :
 
 ```json
-
 {
+  "scripts": {
+    "dev": "vite dev",
 
-  "scripts": {
+    "build": "vite build",
 
-    "dev": "vite dev",
+    "preview": "vite preview",
 
-    "build": "vite build",
+    "test": "vitest --config config/vitest.config.js",
 
-    "preview": "vite preview",
+    "test:ui": "vitest --ui --config config/vitest.config.js",
 
-    "test": "vitest --config config/vitest.config.js",
+    "test:e2e": "playwright test",
 
-    "test:ui": "vitest --ui --config config/vitest.config.js",
+    "test:auth": "vitest --config config/vitest.config.js src/lib/auth",
 
-    "test:e2e": "playwright test",
+    "test:content": "vitest --config config/vitest.config.js src/lib/content",
 
-    "test:auth": "vitest --config config/vitest.config.js src/lib/auth",
+    "test:exercises": "vitest --config config/vitest.config.js src/lib/exercises",
 
-    "test:content": "vitest --config config/vitest.config.js src/lib/content",
+    "test:pwa": "vitest --config config/vitest.config.js src/lib/pwa",
 
-    "test:exercises": "vitest --config config/vitest.config.js src/lib/exercises",
+    "test:offline": "vitest --config config/vitest.config.js src/lib/offline",
 
-    "test:pwa": "vitest --config config/vitest.config.js src/lib/pwa",
+    "test:admin": "vitest --config config/vitest.config.js src/lib/admin",
 
-    "test:offline": "vitest --config config/vitest.config.js src/lib/offline",
+    "test:security": "vitest --config config/vitest.config.js src/lib/security",
 
-    "test:admin": "vitest --config config/vitest.config.js src/lib/admin",
+    "test:performance": "lighthouse http://localhost:5173 --output html --output-path ./reports/lighthouse.html",
 
-    "test:security": "vitest --config config/vitest.config.js src/lib/security",
+    "test:lighthouse": "npm run test:performance",
 
-    "test:performance": "lighthouse http://localhost:5173 --output html --output-path ./reports/lighthouse.html",
+    "lint": "eslint --config config/.eslintrc.cjs .",
 
-    "test:lighthouse": "npm run test:performance",
+    "format": "prettier --config config/.prettierrc --write .",
 
-    "lint": "eslint --config config/.eslintrc.cjs .",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 
-    "format": "prettier --config config/.prettierrc --write .",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 
-    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "validate": "node scripts/validate-phase.js",
 
-    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "release:prepare": "node scripts/prepare-release.js",
 
-    "validate": "node scripts/validate-phase.js",
+    "release:validate": "node scripts/validate-release.js",
+    "release:deploy": "node scripts/deploy-release.js",
 
-    "release:prepare": "node scripts/prepare-release.js",
-
-    "release:validate": "node scripts/validate-release.js", 
-
-    "release:deploy": "node scripts/deploy-release.js",
-
-    "version:bump": "npm version"
-
-  }
-
+    "version:bump": "npm version"
+  }
 }
-
 ```
-
-
 
 #### Étape 0.8 : Test de base avec setup
 
 **[FILE]** Créer `src/test-setup.js` :
 
 ```js
-
-import '@testing-library/jest-dom';
-
-
+import "@testing-library/jest-dom";
 
 // Configuration globale pour les tests
 
 global.ResizeObserver = class ResizeObserver {
+  constructor(cb) {
+    this.cb = cb;
+  }
 
-  constructor(cb) {
+  observe() {}
 
-    this.cb = cb;
+  unobserve() {}
 
-  }
-
-  observe() {}
-
-  unobserve() {}
-
-  disconnect() {}
-
+  disconnect() {}
 };
-
-
 
 // Mock des APIs du navigateur
 
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
+  writable: true,
 
-  writable: true,
+  value: vi.fn().mockImplementation((query) => ({
+    matches: false,
 
-  value: vi.fn().mockImplementation(query => ({
+    media: query,
 
-    matches: false,
+    onchange: null,
 
-    media: query,
+    addListener: vi.fn(),
 
-    onchange: null,
+    removeListener: vi.fn(),
 
-    addListener: vi.fn(),
+    addEventListener: vi.fn(),
 
-    removeListener: vi.fn(),
+    removeEventListener: vi.fn(),
 
-    addEventListener: vi.fn(),
-
-    removeEventListener: vi.fn(),
-
-    dispatchEvent: vi.fn(),
-
-  })),
-
+    dispatchEvent: vi.fn(),
+  })),
 });
-
 ```
-
-
 
 **[FILE]** Créer `src/lib/utils/helpers.test.ts` :
 
 ```ts
-
-import { describe, it, expect } from 'vitest';
-
-
+import { describe, it, expect } from "vitest";
 
 // Fonction utilitaire simple pour tester
 
 export function formatDate(date: Date): string {
-
-  return date.toLocaleDateString('fr-FR');
-
+  return date.toLocaleDateString("fr-FR");
 }
 
+describe("helpers", () => {
+  it("should format date correctly", () => {
+    const date = new Date("2024-01-15");
 
-
-describe('helpers', () => {
-
-  it('should format date correctly', () => {
-
-    const date = new Date('2024-01-15');
-
-    expect(formatDate(date)).toBe('15/01/2024');
-
-  });
-
+    expect(formatDate(date)).toBe("15/01/2024");
+  });
 });
-
 ```
-
-
 
 #### Étape 0.8 : Test E2E de base
 
 **[FILE]** Créer `tests/e2e/basic.spec.ts` :
 
 ```ts
+import { test, expect } from "@playwright/test";
 
-import { test, expect } from '@playwright/test';
+test("homepage loads correctly", async ({ page }) => {
+  await page.goto("/");
 
+  await expect(page).toHaveTitle(/Welcome to SvelteKit/);
 
-
-test('homepage loads correctly', async ({ page }) => {
-
-  await page.goto('/');
-
-  await expect(page).toHaveTitle(/Welcome to SvelteKit/);
-
-  await expect(page.locator('h1')).toBeVisible();
-
+  await expect(page.locator("h1")).toBeVisible();
 });
-
 ```
-
-
 
 #### Étape 0.9 : Configuration Vercel
 
 **[FILE]** Créer `vercel.json` :
 
 ```json
-
 {
+  "buildCommand": "npm run build",
 
-  "buildCommand": "npm run build",
+  "outputDirectory": "build",
 
-  "outputDirectory": "build",
-
-  "framework": "sveltekit"
-
+  "framework": "sveltekit"
 }
-
 ```
-
-
 
 **[CMD]** Installer Vercel CLI et déployer :
 
@@ -1082,17 +778,12 @@ test('homepage loads correctly', async ({ page }) => {
 
 ```
 
-
-
 #### Étape 0.10 : Documentation
 
 **[FILE]** Créer `README.md` :
 
-```md
-
+````md
 # FunLearning V1.0
-
-
 
 ## Installation
 
@@ -1101,10 +792,8 @@ test('homepage loads correctly', async ({ page }) => {
 npm install
 
 npm run dev
-
 ```
-
-
+````
 
 ## Tests
 
@@ -1118,8 +807,6 @@ npm run lint        # Linting
 
 ```
 
-
-
 ## Déploiement
 
 ```bash
@@ -1130,7 +817,7 @@ vercel --prod
 
 ```
 
-```
+````
 
 
 
@@ -1146,9 +833,7 @@ vercel --prod
 
 [TEST] npm run test:e2e      # E2E passent
 
-```
-
-
+````
 
 ### ✅ Critères de validation obligatoires
 
@@ -1164,11 +849,7 @@ vercel --prod
 
 - [ ] **[CHECK]** Test E2E passe
 
-
-
 **🚫 STOP** : Ne pas passer à Phase 1 sans validation complète de Phase 0.
-
-
 
 ### 🏷️ **Processus de Release v1.0-alpha**
 
@@ -1180,17 +861,11 @@ vercel --prod
 
 4. **[CHECK]** URL publique accessible et fonctionnelle
 
-
-
 ---
-
-
 
 ## 🔐 Phase 1 : Firebase & Authentification ✅ COMPLÈTE - v1.0 MVP
 
-*Durée réelle : 1 semaine - Migration Google Auth*
-
-
+_Durée réelle : 1 semaine - Migration Google Auth_
 
 ### 🎯 Contexte IA
 
@@ -1200,13 +875,9 @@ vercel --prod
 
 **Résultat** : ✅ Système d'authentification simplifié et sécurisé opérationnel.
 
-
-
 ### 📚 **Référence Modulaire**
 
 **[REF]** Toute l'implémentation est documentée dans : **[firebase-auth.md](roadmap/references/auth/firebase-auth.md)**
-
-
 
 Cette référence contient :
 
@@ -1226,8 +897,6 @@ Cette référence contient :
 
 - ✅ Guide de déploiement et configuration production
 
-
-
 ### 🚀 **Instructions d'implémentation**
 
 1. **[REF]** Consulter [firebase-auth.md](roadmap/references/auth/firebase-auth.md) pour l'implémentation complète
@@ -1237,8 +906,6 @@ Cette référence contient :
 3. **[FILE]** Créer les fichiers selon la structure documentée
 
 4. **[TEST]** Exécuter les tests de validation fournis
-
-
 
 ### ✅ **Validation Phase 1**
 
@@ -1254,8 +921,6 @@ Cette référence contient :
 
 ```
 
-
-
 ### 🎯 **Critères de validation obligatoires**
 
 - [ ] **[CHECK]** Configuration Firebase opérationnelle
@@ -1270,15 +935,9 @@ Cette référence contient :
 
 - [ ] **[CHECK]** Tests de sécurité passants
 
-
-
 ---
 
-
-
 ## 📚 Phase 2 : Contenu & Markdown (1 semaine) - v1.1
-
-
 
 ### 🎯 Contexte IA
 
@@ -1288,11 +947,7 @@ Cette référence contient :
 
 **Pré-requis** : Firebase configuré, auth fonctionnelle.
 
-
-
 ### 📚 **Références Modulaires**
-
-
 
 #### **[REF]** Gestion des données : **[content-types.md](roadmap/references/data/content-types.md)**
 
@@ -1304,8 +959,6 @@ Cette référence contient :
 
 - ✅ Interfaces pour exercices et progression
 
-
-
 #### **[REF]** Système temps réel : **[realtime-system.md](roadmap/references/data/realtime-system.md)**
 
 - ✅ Cache intelligent avec TTL et invalidation
@@ -1315,8 +968,6 @@ Cette référence contient :
 - ✅ Stores réactifs avec cleanup automatique
 
 - ✅ Optimisations de performance
-
-
 
 #### **[REF]** Composants UI : **[component-patterns.md](roadmap/references/ui/component-patterns.md)**
 
@@ -1328,8 +979,6 @@ Cette référence contient :
 
 - ✅ Patterns d'accessibilité et responsive
 
-
-
 #### **[REF]** Stores réactifs : **[reactive-stores.md](roadmap/references/ui/reactive-stores.md)**
 
 - ✅ Stores persistants avec localStorage
@@ -1340,8 +989,6 @@ Cette référence contient :
 
 - ✅ Système de notifications
 
-
-
 ### 🚀 **Instructions d'implémentation**
 
 1. **[REF]** Consulter les références modulaires appropriées
@@ -1351,8 +998,6 @@ Cette référence contient :
 3. **[FILE]** Créer les fichiers selon les structures définies
 
 4. **[TEST]** Utiliser les stratégies de test fournies
-
-
 
 ### ✅ **Validation Phase 2**
 
@@ -1368,8 +1013,6 @@ Cette référence contient :
 
 ```
 
-
-
 ### 🎯 **Critères de validation obligatoires**
 
 - [ ] **[CHECK]** Contenu Markdown affiché dynamiquement
@@ -1384,15 +1027,9 @@ Cette référence contient :
 
 - [ ] **[CHECK]** Types TypeScript validés
 
-
-
 ---
 
-
-
 ## 🧠 Phase 2.5 : Pédagogie Avancée (3 jours) - v1.2
-
-
 
 ### 🎯 Contexte IA
 
@@ -1402,11 +1039,7 @@ Cette référence contient :
 
 **Pré-requis** : Phase 2 validée, interface dynamique opérationnelle.
 
-
-
 ### 📚 **Références Modulaires**
-
-
 
 #### **[REF]** Tests et validation : **[testing-strategy.md](roadmap/references/testing/testing-strategy.md)**
 
@@ -1420,8 +1053,6 @@ Cette référence contient :
 
 - ✅ Tests de performance et bundle size
 
-
-
 #### **[REF]** Stores réactifs avancés : **[reactive-stores.md](roadmap/references/ui/reactive-stores.md)**
 
 - ✅ Progression d'apprentissage avec adaptation
@@ -1432,8 +1063,6 @@ Cette référence contient :
 
 - ✅ Hooks personnalisés pour composants
 
-
-
 ### 🚀 **Instructions d'implémentation**
 
 1. **[REF]** Implémenter les features pédagogiques avancées
@@ -1443,8 +1072,6 @@ Cette référence contient :
 3. **[FILE]** Créer modules de métacognition
 
 4. **[TEST]** Valider innovations pédagogiques
-
-
 
 ### ✅ **Validation Phase 2.5**
 
@@ -1458,8 +1085,6 @@ Cette référence contient :
 
 ```
 
-
-
 ### 🎯 **Critères de validation obligatoires**
 
 - [ ] **[CHECK]** Système de pré-évaluation fonctionnel
@@ -1470,680 +1095,598 @@ Cette référence contient :
 
 - [ ] **[CHECK]** Progression personnalisée active
 
-  [key: string]: boolean; // Extensibilité future
+[key: string]: boolean; // Extensibilité future
 
 }
-
-
 
 export interface DataStructureConfig {
 
-  version: string;
+version: string;
 
-  supportedMigrations: string[];
+supportedMigrations: string[];
 
-  customFields: CustomFieldDefinition[];
+customFields: CustomFieldDefinition[];
 
-  validationRules: ValidationRule[];
+validationRules: ValidationRule[];
 
-  cachingStrategy: CachingStrategy;
+cachingStrategy: CachingStrategy;
 
 }
-
-
 
 export interface CustomFieldDefinition {
 
-  id: string;
+id: string;
 
-  name: string;
+name: string;
 
-  type: 'string' | 'number' | 'boolean' | 'date' | 'reference' | 'array' | 'object';
+type: 'string' | 'number' | 'boolean' | 'date' | 'reference' | 'array' | 'object';
 
-  entityTypes: string[]; // competences, courses, etc.
+entityTypes: string[]; // competences, courses, etc.
 
-  required: boolean;
+required: boolean;
 
-  defaultValue?: any;
+defaultValue?: any;
 
-  validationSchema?: any;
+validationSchema?: any;
 
-  metadata: {
+metadata: {
 
-    description: string;
+description: string;
 
-    version: string;
+version: string;
 
-    addedIn: string;
+addedIn: string;
 
-  };
+};
 
 }
-
-
 
 export interface ValidationRule {
 
-  id: string;
+id: string;
 
-  field: string;
+field: string;
 
-  entityType: string;
+entityType: string;
 
-  rule: 'required' | 'min' | 'max' | 'pattern' | 'custom';
+rule: 'required' | 'min' | 'max' | 'pattern' | 'custom';
 
-  parameters: Record<string, any>;
+parameters: Record<string, any>;
 
-  errorMessage: string;
+errorMessage: string;
 
-  active: boolean;
+active: boolean;
 
 }
-
-
 
 export interface CachingStrategy {
 
-  defaultTTL: number;
+defaultTTL: number;
 
-  specificTTLs: Record<string, number>;
+specificTTLs: Record<string, number>;
 
-  invalidationRules: InvalidationRule[];
+invalidationRules: InvalidationRule[];
 
-  compressionEnabled: boolean;
+compressionEnabled: boolean;
 
 }
-
-
 
 export interface InvalidationRule {
 
-  trigger: 'update' | 'delete' | 'time' | 'dependency';
+trigger: 'update' | 'delete' | 'time' | 'dependency';
 
-  target: string;
+target: string;
 
-  pattern?: string;
+pattern?: string;
 
-  cascadeRules?: string[];
+cascadeRules?: string[];
 
 }
-
-
 
 // ============= CONFIGURATION UI =============
 
-
-
 export interface UIConfiguration {
 
-  theme: ThemeConfiguration;
+theme: ThemeConfiguration;
 
-  layout: LayoutConfiguration;
+layout: LayoutConfiguration;
 
-  accessibility: AccessibilityConfiguration;
+accessibility: AccessibilityConfiguration;
 
-  responsive: ResponsiveConfiguration;
+responsive: ResponsiveConfiguration;
 
-  customizations: UICustomization[];
+customizations: UICustomization[];
 
 }
-
-
 
 export interface ThemeConfiguration {
 
-  primaryColors: ColorPalette;
+primaryColors: ColorPalette;
 
-  secondaryColors: ColorPalette;
+secondaryColors: ColorPalette;
 
-  semanticColors: SemanticColors;
+semanticColors: SemanticColors;
 
-  typography: TypographyConfiguration;
+typography: TypographyConfiguration;
 
-  spacing: SpacingConfiguration;
+spacing: SpacingConfiguration;
 
-  animations: AnimationConfiguration;
+animations: AnimationConfiguration;
 
 }
-
-
 
 export interface ColorPalette {
 
-  50: string;
+50: string;
 
-  100: string;
+100: string;
 
-  200: string;
+200: string;
 
-  300: string;
+300: string;
 
-  400: string;
+400: string;
 
-  500: string;
+500: string;
 
-  600: string;
+600: string;
 
-  700: string;
+700: string;
 
-  800: string;
+800: string;
 
-  900: string;
+900: string;
 
 }
-
-
 
 export interface SemanticColors {
 
-  success: ColorPalette;
+success: ColorPalette;
 
-  warning: ColorPalette;
+warning: ColorPalette;
 
-  error: ColorPalette;
+error: ColorPalette;
 
-  info: ColorPalette;
+info: ColorPalette;
 
-  neutral: ColorPalette;
+neutral: ColorPalette;
 
 }
-
-
 
 export interface TypographyConfiguration {
 
-  fontFamilies: {
+fontFamilies: {
 
-    sans: string[];
+sans: string[];
 
-    serif: string[];
+serif: string[];
 
-    mono: string[];
+mono: string[];
 
-  };
+};
 
-  fontSizes: Record<string, string>;
+fontSizes: Record<string, string>;
 
-  fontWeights: Record<string, number>;
+fontWeights: Record<string, number>;
 
-  lineHeights: Record<string, number>;
+lineHeights: Record<string, number>;
 
 }
-
-
 
 export interface SpacingConfiguration {
 
-  unit: number;
+unit: number;
 
-  scale: number[];
+scale: number[];
 
-  breakpoints: Record<string, string>;
+breakpoints: Record<string, string>;
 
 }
-
-
 
 export interface AnimationConfiguration {
 
-  durations: Record<string, string>;
+durations: Record<string, string>;
 
-  easings: Record<string, string>;
+easings: Record<string, string>;
 
-  reducedMotion: boolean;
+reducedMotion: boolean;
 
 }
-
-
 
 // ============= PERFORMANCE & MONITORING =============
 
-
-
 export interface PerformanceConfig {
 
-  caching: CachingConfig;
+caching: CachingConfig;
 
-  optimization: OptimizationConfig;
+optimization: OptimizationConfig;
 
-  monitoring: MonitoringConfig;
+monitoring: MonitoringConfig;
 
-  limits: PerformanceLimits;
+limits: PerformanceLimits;
 
 }
-
-
 
 export interface CachingConfig {
 
-  strategy: 'memory' | 'localStorage' | 'sessionStorage' | 'indexedDB';
+strategy: 'memory' | 'localStorage' | 'sessionStorage' | 'indexedDB';
 
-  maxSize: number;
+maxSize: number;
 
-  ttlDefault: number;
+ttlDefault: number;
 
-  compressionEnabled: boolean;
+compressionEnabled: boolean;
 
-  prefetchStrategies: PrefetchStrategy[];
+prefetchStrategies: PrefetchStrategy[];
 
 }
-
-
 
 export interface PrefetchStrategy {
 
-  trigger: 'navigation' | 'idle' | 'interaction' | 'time';
+trigger: 'navigation' | 'idle' | 'interaction' | 'time';
 
-  targets: string[];
+targets: string[];
 
-  priority: 'low' | 'normal' | 'high';
+priority: 'low' | 'normal' | 'high';
 
-  conditions?: Record<string, any>;
+conditions?: Record<string, any>;
 
 }
-
-
 
 export interface OptimizationConfig {
 
-  lazyLoading: {
+lazyLoading: {
 
-    images: boolean;
+images: boolean;
 
-    components: boolean;
+components: boolean;
 
-    routes: boolean;
+routes: boolean;
 
-  };
+};
 
-  bundleOptimization: {
+bundleOptimization: {
 
-    codesplitting: boolean;
+codesplitting: boolean;
 
-    treeshaking: boolean;
+treeshaking: boolean;
 
-    minification: boolean;
+minification: boolean;
 
-  };
+};
 
-  resourceOptimization: {
+resourceOptimization: {
 
-    imageCompression: boolean;
+imageCompression: boolean;
 
-    fontOptimization: boolean;
+fontOptimization: boolean;
 
-    cssOptimization: boolean;
+cssOptimization: boolean;
 
-  };
+};
 
 }
-
-
 
 export interface MonitoringConfig {
 
-  analytics: AnalyticsConfig;
+analytics: AnalyticsConfig;
 
-  errorTracking: ErrorTrackingConfig;
+errorTracking: ErrorTrackingConfig;
 
-  performanceMetrics: PerformanceMetricsConfig;
+performanceMetrics: PerformanceMetricsConfig;
 
-  userBehavior: UserBehaviorConfig;
+userBehavior: UserBehaviorConfig;
 
 }
-
-
 
 export interface AnalyticsConfig {
 
-  provider: 'google' | 'plausible' | 'matomo' | 'custom';
+provider: 'google' | 'plausible' | 'matomo' | 'custom';
 
-  trackingId?: string;
+trackingId?: string;
 
-  customEvents: CustomEventDefinition[];
+customEvents: CustomEventDefinition[];
 
-  privacyMode: boolean;
+privacyMode: boolean;
 
 }
-
-
 
 export interface CustomEventDefinition {
 
-  name: string;
+name: string;
 
-  category: string;
+category: string;
 
-  parameters: Record<string, string>;
+parameters: Record<string, string>;
 
-  conditions?: Record<string, any>;
+conditions?: Record<string, any>;
 
 }
-
-
 
 // ============= DONNÉES DE RÉFÉRENCE ÉTENDUES =============
 
-
-
 export interface ExtendedNiveauEducatif extends BaseEntity {
 
-  nom: string;
+nom: string;
 
-  code: string;
+code: string;
 
-  ordre: number;
+ordre: number;
 
-  cycleId?: string;
+cycleId?: string;
 
-  ageMin?: number;
+ageMin?: number;
 
-  ageMax?: number;
+ageMax?: number;
 
-  description?: string;
+description?: string;
 
-  competencesTransversales?: string[];
+competencesTransversales?: string[];
 
-  couleur?: string;
+couleur?: string;
 
-  icone?: string;
+icone?: string;
 
-  configuration: NiveauConfiguration;
+configuration: NiveauConfiguration;
 
 }
-
-
 
 export interface NiveauConfiguration {
 
-  evaluationMode: 'continue' | 'periodique' | 'finale';
+evaluationMode: 'continue' | 'periodique' | 'finale';
 
-  notationSystem: 'competences' | 'notes' | 'mixte';
+notationSystem: 'competences' | 'notes' | 'mixte';
 
-  difficulteDefault: string;
+difficulteDefault: string;
 
-  dureeSessionRecommandee: number;
+dureeSessionRecommandee: number;
 
-  objectifsSeuils: {
+objectifsSeuils: {
 
-    acquisition: number;
+acquisition: number;
 
-    maitrise: number;
+maitrise: number;
 
-    expertise: number;
+expertise: number;
 
-  };
+};
 
 }
-
-
 
 export interface ExtendedMatiere extends BaseEntity {
 
-  nom: string;
+nom: string;
 
-  code: string;
+code: string;
 
-  couleur: string;
+couleur: string;
 
-  icone: string;
+icone: string;
 
-  description?: string;
+description?: string;
 
-  domaineId?: string;
+domaineId?: string;
 
-  niveauxCompatibles: string[];
+niveauxCompatibles: string[];
 
-  prerequisGeneraux?: string[];
+prerequisGeneraux?: string[];
 
-  ressourcesExterne?: RessourceExterne[];
+ressourcesExterne?: RessourceExterne[];
 
-  configuration: MatiereConfiguration;
+configuration: MatiereConfiguration;
 
 }
-
-
 
 export interface MatiereConfiguration {
 
-  typeEvaluations: TypeEvaluation[];
+typeEvaluations: TypeEvaluation[];
 
-  modalitesPedagogiques: ModalitePedagogique[];
+modalitesPedagogiques: ModalitePedagogique[];
 
-  competencesTransversales: string[];
+competencesTransversales: string[];
 
-  outilsRecommandes: OutilRecommande[];
+outilsRecommandes: OutilRecommande[];
 
-  adaptationDifficulte: AdaptationDifficulte;
+adaptationDifficulte: AdaptationDifficulte;
 
 }
-
-
 
 export interface TypeEvaluation {
 
-  id: string;
+id: string;
 
-  nom: string;
+nom: string;
 
-  description: string;
+description: string;
 
-  format: 'qcm' | 'texte' | 'numerique' | 'production' | 'oral';
+format: 'qcm' | 'texte' | 'numerique' | 'production' | 'oral';
 
-  dureeTypique: number;
+dureeTypique: number;
 
-  critereEvaluation: CritereEvaluation[];
+critereEvaluation: CritereEvaluation[];
 
 }
-
-
 
 export interface ModalitePedagogique {
 
-  id: string;
+id: string;
 
-  nom: string;
+nom: string;
 
-  description: string;
+description: string;
 
-  type: 'individuel' | 'collectif' | 'autonome' | 'guide';
+type: 'individuel' | 'collectif' | 'autonome' | 'guide';
 
-  ressourcesNecessaires: string[];
+ressourcesNecessaires: string[];
 
-  dureeTypique: number;
+dureeTypique: number;
 
 }
-
-
 
 export interface OutilRecommande {
 
-  nom: string;
+nom: string;
 
-  type: 'logiciel' | 'ressource' | 'manuel' | 'site';
+type: 'logiciel' | 'ressource' | 'manuel' | 'site';
 
-  url?: string;
+url?: string;
 
-  description: string;
+description: string;
 
-  niveauxCibles: string[];
+niveauxCibles: string[];
 
 }
-
-
 
 export interface AdaptationDifficulte {
 
-  algorithme: 'lineaire' | 'adaptatif' | 'personalise';
+algorithme: 'lineaire' | 'adaptatif' | 'personalise';
 
-  facteurs: FacteurAdaptation[];
+facteurs: FacteurAdaptation[];
 
-  seuilsProgression: Record<string, number>;
+seuilsProgression: Record<string, number>;
 
 }
-
-
 
 export interface FacteurAdaptation {
 
-  nom: string;
+nom: string;
 
-  poids: number;
+poids: number;
 
-  type: 'performance' | 'temps' | 'erreurs' | 'engagement';
+type: 'performance' | 'temps' | 'erreurs' | 'engagement';
 
-  mesure: string;
+mesure: string;
 
 }
-
-
 
 // ============= GESTION AVANCÉE DES UTILISATEURS =============
 
-
-
 export interface ExtendedUserProfile extends BaseEntity {
 
-  authId: string;
+authId: string;
 
-  email: string;
+email: string;
 
-  displayName: string;
+displayName: string;
 
-  avatar?: string;
+avatar?: string;
 
-  role: UserRole;
+role: UserRole;
 
-  preferences: UserPreferences;
+preferences: UserPreferences;
 
-  progression: UserProgression;
+progression: UserProgression;
 
-  statistiques: UserStatistiques;
+statistiques: UserStatistiques;
 
-  parametres: UserParametres;
+parametres: UserParametres;
 
-  abonnement?: AbonnementInfo;
+abonnement?: AbonnementInfo;
 
 }
-
-
 
 export interface UserRole {
 
-  type: 'eleve' | 'enseignant' | 'parent' | 'administrateur';
+type: 'eleve' | 'enseignant' | 'parent' | 'administrateur';
 
-  permissions: Permission[];
+permissions: Permission[];
 
-  restrictions?: Restriction[];
+restrictions?: Restriction[];
 
-  niveauAcces: number;
+niveauAcces: number;
 
 }
-
-
 
 export interface Permission {
 
-  ressource: string;
+ressource: string;
 
-  actions: ('read' | 'write' | 'delete' | 'share' | 'admin')[];
+actions: ('read' | 'write' | 'delete' | 'share' | 'admin')[];
 
-  conditions?: Record<string, any>;
+conditions?: Record<string, any>;
 
 }
-
-
 
 export interface Restriction {
 
-  type: 'temps' | 'contenu' | 'fonctionnalite';
+type: 'temps' | 'contenu' | 'fonctionnalite';
 
-  parametres: Record<string, any>;
+parametres: Record<string, any>;
 
-  actif: boolean;
+actif: boolean;
 
 }
-
-
 
 export interface UserPreferences {
 
-  theme: 'auto' | 'light' | 'dark';
+theme: 'auto' | 'light' | 'dark';
 
-  langue: string;
+langue: string;
 
-  notifications: NotificationPreferences;
+notifications: NotificationPreferences;
 
-  affichage: AffichagePreferences;
+affichage: AffichagePreferences;
 
-  accessibilite: AccessibilitePreferences;
+accessibilite: AccessibilitePreferences;
 
-  pedagogie: PedagogiePreferences;
+pedagogie: PedagogiePreferences;
 
 }
-
-
 
 export interface NotificationPreferences {
 
-  email: boolean;
+email: boolean;
 
-  push: boolean;
+push: boolean;
 
-  types: Record<string, boolean>;
+types: Record<string, boolean>;
 
-  frequence: 'immediate' | 'quotidienne' | 'hebdomadaire';
+frequence: 'immediate' | 'quotidienne' | 'hebdomadaire';
 
-  horaires?: PlageHoraire[];
+horaires?: PlageHoraire[];
 
 }
-
-
 
 export interface PlageHoraire {
 
-  debut: string;
+debut: string;
 
-  fin: string;
+fin: string;
 
-  jours: number[];
+jours: number[];
 
 }
-
-
 
 export interface PedagogiePreferences {
 
-  styleApprentissage: 'visuel' | 'auditif' | 'kinesthesique' | 'mixte';
+styleApprentissage: 'visuel' | 'auditif' | 'kinesthesique' | 'mixte';
 
-  rythmePreference: 'lent' | 'normal' | 'rapide';
+rythmePreference: 'lent' | 'normal' | 'rapide';
 
-  typeExercicesPreference: string[];
+typeExercicesPreference: string[];
 
-  niveauDefiPreference: 'facile' | 'modere' | 'difficile' | 'adaptatif';
+niveauDefiPreference: 'facile' | 'modere' | 'difficile' | 'adaptatif';
 
-  objectifsPersonnels: ObjectifPersonnel[];
+objectifsPersonnels: ObjectifPersonnel[];
 
 }
 
-
-
 export interface ObjectifPersonnel {
 
-  id: string;
+id: string;
 
-  nom: string;
+nom: string;
 
-  description: string;
+description: string;
 
-  matiereId?: string;
+matiereId?: string;
 
-  competenceIds: string[];
+competenceIds: string[];
 
-  echeance?: string;
+echeance?: string;
 
-  progres: number;
+progres: number;
 
-  actif: boolean;
+actif: boolean;
 
 }

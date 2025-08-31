@@ -7,12 +7,15 @@
 ## 🎯 **Récapitulatifs Disponibles**
 
 ### **✅ Phases Complétées**
+
 - [📋 Phase 1 - Setup & Architecture](./phase-1-recap.md) ✅ **COMPLÉTÉE**
 
 ### **🔄 Phases En Cours/À Venir**
+
 - [📋 Phase 2 - Authentication Système](./phase-2-recap.md) 🔄 **EN COURS**
 
 ### **🎯 Phases Planifiées**
+
 - [📋 Phase 3 - Content Management](./phase-3-recap.md) 🎯 **v1.1**
 - [📋 Phase 4 - Pédagogie & Métacognition](./phase-4-recap.md) 🎯 **v1.1**
 - [📋 Phase 5 - Firebase Integration](./phase-5-recap.md) 🎯 **v1.2**
@@ -29,6 +32,7 @@
 ## 🔧 **Utilisation des Récapitulatifs**
 
 ### **Pour le suivi de projet :**
+
 ```bash
 # Voir le status global
 find roadmap/phases -name "*recap.md" -exec echo {} \;
@@ -38,6 +42,7 @@ node scripts/generate-phase-recaps.cjs
 ```
 
 ### **Pour la documentation :**
+
 - **Avant phase** : Consulter phase-X-setup.md (objectifs)
 - **Après phase** : Mettre à jour phase-X-recap.md (réalisations)
 - **Status global** : Consulter ROADMAP_LEARNING_SUMMARY.md

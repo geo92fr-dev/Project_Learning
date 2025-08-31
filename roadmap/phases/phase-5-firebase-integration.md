@@ -14,6 +14,7 @@
 ### 🗄️ **Architecture de Données Firebase**
 
 **Stratégie NoSQL :**
+
 - **Collections principales** : users, courses, competences, assessments, analytics
 - **Relations dénormalisées** : Optimisation pour lecture rapide
 - **Indexation stratégique** : Requêtes complexes performantes
@@ -21,6 +22,7 @@
 - **Sharding horizontal** : Évolutivité massive
 
 **Modèle de Données :**
+
 - **Document-oriented** : Structure flexible pour contenu éducatif
 - **Références optimisées** : Balance entre cohérence et performance
 - **Versionning** : Historique des modifications de contenu
@@ -30,6 +32,7 @@
 ### 🔐 **Sécurité & Conformité**
 
 **Firestore Security Rules :**
+
 - **Authentification obligatoire** : Aucun accès anonyme aux données sensibles
 - **Autorisation granulaire** : RBAC (Role-Based Access Control)
 - **Validation côté serveur** : Schémas Zod appliqués dans les rules
@@ -37,6 +40,7 @@
 - **Audit logging** : Traçabilité des accès données
 
 **RGPD & Privacy :**
+
 - **Anonymisation** : Données personnelles chiffrées
 - **Droit à l'oubli** : Suppression complète sur demande
 - **Consentement explicite** : Tracking granulaire des permissions
@@ -46,6 +50,7 @@
 ### 🚀 **Performance & Évolutivité**
 
 **Optimisations Firebase :**
+
 - **Composite indexes** : Requêtes multi-champs optimisées
 - **Denormalization strategy** : Duplication intelligente pour performance
 - **Real-time selective** : WebSockets uniquement si nécessaire
@@ -57,12 +62,14 @@
 ## 📚 **Références Modulaires**
 
 ### **[REF]** Architecture Firebase : **[firebase-architecture.md](../references/backend/firebase-architecture.md)**
+
 - ✅ Structure complète des collections Firestore
 - ✅ Security Rules avancées avec validation
 - ✅ Cloud Functions pour logique métier
 - ✅ Stratégies de mise en cache et performance
 
 ### **[REF]** Gestion des utilisateurs : **[user-management.md](../references/backend/user-management.md)**
+
 - ✅ Profils utilisateurs avec données pédagogiques
 - ✅ Système de rôles et permissions
 - ✅ Analytics utilisateur et progression
@@ -77,8 +84,8 @@
 **[FILE]** Créer `src/lib/firebase/collections.ts` :
 
 ```ts
-import { z } from 'zod';
-import type { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
+import { z } from "zod";
+import type { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
 
 // ===== SCHÉMAS DE DONNÉES =====
 
@@ -88,29 +95,31 @@ export const UserProfileSchema = z.object({
   email: z.string().email(),
   displayName: z.string(),
   photoURL: z.string().url().optional(),
-  role: z.enum(['student', 'teacher', 'admin']),
+  role: z.enum(["student", "teacher", "admin"]),
   createdAt: z.string(),
   lastLoginAt: z.string(),
   preferences: z.object({
-    language: z.string().default('fr'),
-    theme: z.enum(['light', 'dark', 'auto']).default('auto'),
+    language: z.string().default("fr"),
+    theme: z.enum(["light", "dark", "auto"]).default("auto"),
     notifications: z.object({
       email: z.boolean().default(true),
       push: z.boolean().default(true),
-      marketing: z.boolean().default(false)
+      marketing: z.boolean().default(false),
     }),
     accessibility: z.object({
-      fontSize: z.enum(['small', 'medium', 'large']).default('medium'),
+      fontSize: z.enum(["small", "medium", "large"]).default("medium"),
       highContrast: z.boolean().default(false),
-      reducedMotion: z.boolean().default(false)
-    })
+      reducedMotion: z.boolean().default(false),
+    }),
   }),
   learningProfile: z.object({
-    style: z.enum(['visual', 'auditory', 'kinesthetic', 'reading', 'mixed']).default('mixed'),
+    style: z
+      .enum(["visual", "auditory", "kinesthetic", "reading", "mixed"])
+      .default("mixed"),
     difficultyPreference: z.number().min(0).max(1).default(0.5),
     sessionDurationPreference: z.number().positive().default(30), // minutes
     learningGoals: z.array(z.string()).default([]),
-    interests: z.array(z.string()).default([])
+    interests: z.array(z.string()).default([]),
   }),
   progressTracking: z.object({
     totalTimeSpent: z.number().default(0), // minutes
@@ -118,19 +127,19 @@ export const UserProfileSchema = z.object({
     competencesAcquired: z.array(z.string()).default([]),
     currentStreak: z.number().default(0), // jours consécutifs
     longestStreak: z.number().default(0),
-    averageScore: z.number().min(0).max(1).optional()
+    averageScore: z.number().min(0).max(1).optional(),
   }),
   metadata: z.object({
-    version: z.string().default('1.0'),
+    version: z.string().default("1.0"),
     lastUpdated: z.string(),
     isActive: z.boolean().default(true),
     gdprConsent: z.object({
       functional: z.boolean(),
       analytics: z.boolean(),
       marketing: z.boolean(),
-      consentDate: z.string()
-    })
-  })
+      consentDate: z.string(),
+    }),
+  }),
 });
 
 // Collection Courses
@@ -139,52 +148,60 @@ export const CourseSchema = z.object({
   title: z.string(),
   description: z.string(),
   category: z.string(),
-  level: z.enum(['beginner', 'intermediate', 'advanced']),
+  level: z.enum(["beginner", "intermediate", "advanced"]),
   estimatedDuration: z.number().positive(), // minutes
-  language: z.string().default('fr'),
+  language: z.string().default("fr"),
   tags: z.array(z.string()).default([]),
   competenceIds: z.array(z.string()),
   prerequisites: z.array(z.string()).default([]),
   content: z.object({
-    modules: z.array(z.object({
-      id: z.string(),
-      title: z.string(),
-      description: z.string(),
-      order: z.number(),
-      lessons: z.array(z.object({
+    modules: z.array(
+      z.object({
         id: z.string(),
         title: z.string(),
-        type: z.enum(['video', 'text', 'interactive', 'quiz']),
-        content: z.string(),
-        duration: z.number(),
-        resources: z.array(z.object({
-          type: z.string(),
-          url: z.string(),
-          title: z.string()
-        })).default([])
-      }))
-    }))
+        description: z.string(),
+        order: z.number(),
+        lessons: z.array(
+          z.object({
+            id: z.string(),
+            title: z.string(),
+            type: z.enum(["video", "text", "interactive", "quiz"]),
+            content: z.string(),
+            duration: z.number(),
+            resources: z
+              .array(
+                z.object({
+                  type: z.string(),
+                  url: z.string(),
+                  title: z.string(),
+                })
+              )
+              .default([]),
+          })
+        ),
+      })
+    ),
   }),
   assessment: z.object({
     preAssessment: z.string().optional(), // ID de l'évaluation
     postAssessment: z.string().optional(),
     continuousAssessment: z.array(z.string()).default([]),
-    passingScore: z.number().min(0).max(1).default(0.7)
+    passingScore: z.number().min(0).max(1).default(0.7),
   }),
   analytics: z.object({
     totalEnrollments: z.number().default(0),
     completionRate: z.number().min(0).max(1).default(0),
     averageRating: z.number().min(0).max(5).optional(),
-    totalRatings: z.number().default(0)
+    totalRatings: z.number().default(0),
   }),
   metadata: z.object({
     authorId: z.string(),
     createdAt: z.string(),
     updatedAt: z.string(),
-    version: z.string().default('1.0'),
+    version: z.string().default("1.0"),
     isPublished: z.boolean().default(false),
-    publishedAt: z.string().optional()
-  })
+    publishedAt: z.string().optional(),
+  }),
 });
 
 // Collection Competences
@@ -196,22 +213,28 @@ export const CompetenceSchema = z.object({
   level: z.number().min(1).max(5), // Échelle 1-5
   prerequisites: z.array(z.string()).default([]),
   learningObjectives: z.array(z.string()),
-  assessmentCriteria: z.array(z.object({
-    criterion: z.string(),
-    weight: z.number().min(0).max(1)
-  })),
-  resources: z.array(z.object({
-    type: z.enum(['course', 'exercise', 'reading', 'video']),
-    resourceId: z.string(),
-    title: z.string(),
-    difficulty: z.number().min(0).max(1)
-  })).default([]),
+  assessmentCriteria: z.array(
+    z.object({
+      criterion: z.string(),
+      weight: z.number().min(0).max(1),
+    })
+  ),
+  resources: z
+    .array(
+      z.object({
+        type: z.enum(["course", "exercise", "reading", "video"]),
+        resourceId: z.string(),
+        title: z.string(),
+        difficulty: z.number().min(0).max(1),
+      })
+    )
+    .default([]),
   metadata: z.object({
     createdAt: z.string(),
     updatedAt: z.string(),
     createdBy: z.string(),
-    isActive: z.boolean().default(true)
-  })
+    isActive: z.boolean().default(true),
+  }),
 });
 
 // Collection User Progress - STRUCTURE OPTIMISÉE (Recommandation Expert)
@@ -219,56 +242,62 @@ export const UserProgressSchema = z.object({
   id: z.string(), // userId-courseId
   userId: z.string(),
   courseId: z.string(),
-  status: z.enum(['not_started', 'in_progress', 'completed', 'paused']),
-  
+  status: z.enum(["not_started", "in_progress", "completed", "paused"]),
+
   // Structure hiérarchique optimisée pour coûts Firebase
   score: z.number().min(0).max(100).default(0),
   completed: z.boolean().default(false),
   lastAttempt: z.string(), // ISO timestamp
-  
+
   // Exercices avec structure compacte
-  exercises: z.array(z.object({
-    id: z.string(),
-    correct: z.boolean(),
-    timeSpent: z.number().optional(), // secondes
-    attempts: z.number().default(1)
-  })).default([]),
-  
+  exercises: z
+    .array(
+      z.object({
+        id: z.string(),
+        correct: z.boolean(),
+        timeSpent: z.number().optional(), // secondes
+        attempts: z.number().default(1),
+      })
+    )
+    .default([]),
+
   progress: z.object({
     completedModules: z.array(z.string()).default([]),
     completedLessons: z.array(z.string()).default([]),
     currentModule: z.string().optional(),
     currentLesson: z.string().optional(),
-    completionPercentage: z.number().min(0).max(1).default(0)
+    completionPercentage: z.number().min(0).max(1).default(0),
   }),
-  
+
   timeTracking: z.object({
     totalTimeSpent: z.number().default(0), // minutes
     sessionCount: z.number().default(0),
     averageSessionDuration: z.number().default(0),
-    lastSessionAt: z.string().optional()
+    lastSessionAt: z.string().optional(),
   }),
-  
+
   // Optimisation coûts : Assessments séparés
   lastAssessmentScore: z.number().min(0).max(1).optional(),
-  competenceProgress: z.record(z.object({
-    masteryLevel: z.number().min(0).max(1),
-    lastAssessed: z.string(),
-    evidences: z.array(z.string()).default([]) // IDs des preuves de maîtrise
-  })),
-  
+  competenceProgress: z.record(
+    z.object({
+      masteryLevel: z.number().min(0).max(1),
+      lastAssessed: z.string(),
+      evidences: z.array(z.string()).default([]), // IDs des preuves de maîtrise
+    })
+  ),
+
   learningAnalytics: z.object({
     learningVelocity: z.number().default(0), // modules/semaine
     difficultyPreference: z.number().min(0).max(1).default(0.5),
     engagementScore: z.number().min(0).max(1).default(0),
-    retentionRate: z.number().min(0).max(1).default(0)
+    retentionRate: z.number().min(0).max(1).default(0),
   }),
   metadata: z.object({
     enrolledAt: z.string(),
     lastAccessedAt: z.string(),
     completedAt: z.string().optional(),
-    version: z.string().default('1.0')
-  })
+    version: z.string().default("1.0"),
+  }),
 });
 
 // Collection Assessments
@@ -276,21 +305,29 @@ export const AssessmentSchema = z.object({
   id: z.string(),
   title: z.string(),
   description: z.string(),
-  type: z.enum(['pre_assessment', 'formative', 'summative', 'adaptive']),
+  type: z.enum(["pre_assessment", "formative", "summative", "adaptive"]),
   courseId: z.string().optional(),
   competenceIds: z.array(z.string()),
-  questions: z.array(z.object({
-    id: z.string(),
-    type: z.enum(['multiple_choice', 'true_false', 'short_answer', 'essay', 'code']),
-    question: z.string(),
-    options: z.array(z.string()).optional(),
-    correctAnswer: z.union([z.string(), z.array(z.string())]),
-    explanation: z.string().optional(),
-    difficulty: z.number().min(0).max(1),
-    competenceId: z.string(),
-    points: z.number().positive(),
-    timeLimit: z.number().optional() // secondes
-  })),
+  questions: z.array(
+    z.object({
+      id: z.string(),
+      type: z.enum([
+        "multiple_choice",
+        "true_false",
+        "short_answer",
+        "essay",
+        "code",
+      ]),
+      question: z.string(),
+      options: z.array(z.string()).optional(),
+      correctAnswer: z.union([z.string(), z.array(z.string())]),
+      explanation: z.string().optional(),
+      difficulty: z.number().min(0).max(1),
+      competenceId: z.string(),
+      points: z.number().positive(),
+      timeLimit: z.number().optional(), // secondes
+    })
+  ),
   configuration: z.object({
     timeLimit: z.number().optional(), // minutes totales
     questionCount: z.number().positive(),
@@ -298,20 +335,24 @@ export const AssessmentSchema = z.object({
     randomizeOptions: z.boolean().default(true),
     allowRetakes: z.boolean().default(false),
     maxAttempts: z.number().positive().default(1),
-    passingScore: z.number().min(0).max(1).default(0.7)
+    passingScore: z.number().min(0).max(1).default(0.7),
   }),
-  adaptiveRules: z.array(z.object({
-    condition: z.string(),
-    action: z.string(),
-    parameters: z.record(z.unknown())
-  })).default([]),
+  adaptiveRules: z
+    .array(
+      z.object({
+        condition: z.string(),
+        action: z.string(),
+        parameters: z.record(z.unknown()),
+      })
+    )
+    .default([]),
   metadata: z.object({
     createdAt: z.string(),
     updatedAt: z.string(),
     createdBy: z.string(),
     isActive: z.boolean().default(true),
-    version: z.string().default('1.0')
-  })
+    version: z.string().default("1.0"),
+  }),
 });
 
 // Collection Analytics Events
@@ -320,23 +361,30 @@ export const AnalyticsEventSchema = z.object({
   userId: z.string(),
   sessionId: z.string(),
   eventType: z.enum([
-    'page_view', 'lesson_start', 'lesson_complete', 'quiz_attempt',
-    'error_occurred', 'help_requested', 'resource_accessed',
-    'time_spent', 'interaction_made', 'goal_achieved'
+    "page_view",
+    "lesson_start",
+    "lesson_complete",
+    "quiz_attempt",
+    "error_occurred",
+    "help_requested",
+    "resource_accessed",
+    "time_spent",
+    "interaction_made",
+    "goal_achieved",
   ]),
   eventData: z.record(z.unknown()),
   context: z.object({
     courseId: z.string().optional(),
     lessonId: z.string().optional(),
-    deviceType: z.enum(['mobile', 'tablet', 'desktop']),
+    deviceType: z.enum(["mobile", "tablet", "desktop"]),
     browser: z.string().optional(),
-    userAgent: z.string().optional()
+    userAgent: z.string().optional(),
   }),
   timestamp: z.string(),
   metadata: z.object({
-    version: z.string().default('1.0'),
-    processed: z.boolean().default(false)
-  })
+    version: z.string().default("1.0"),
+    processed: z.boolean().default(false),
+  }),
 });
 
 // ===== TYPES TYPESCRIPT =====
@@ -351,54 +399,54 @@ export type AnalyticsEvent = z.infer<typeof AnalyticsEventSchema>;
 export const firestoreConverters = {
   userProfile: {
     toFirestore: (data: UserProfile): DocumentData => data,
-    fromFirestore: (snapshot: QueryDocumentSnapshot): UserProfile => 
-      UserProfileSchema.parse(snapshot.data())
+    fromFirestore: (snapshot: QueryDocumentSnapshot): UserProfile =>
+      UserProfileSchema.parse(snapshot.data()),
   },
-  
+
   course: {
     toFirestore: (data: Course): DocumentData => data,
-    fromFirestore: (snapshot: QueryDocumentSnapshot): Course => 
-      CourseSchema.parse(snapshot.data())
+    fromFirestore: (snapshot: QueryDocumentSnapshot): Course =>
+      CourseSchema.parse(snapshot.data()),
   },
-  
+
   competence: {
     toFirestore: (data: Competence): DocumentData => data,
-    fromFirestore: (snapshot: QueryDocumentSnapshot): Competence => 
-      CompetenceSchema.parse(snapshot.data())
+    fromFirestore: (snapshot: QueryDocumentSnapshot): Competence =>
+      CompetenceSchema.parse(snapshot.data()),
   },
-  
+
   userProgress: {
     toFirestore: (data: UserProgress): DocumentData => data,
-    fromFirestore: (snapshot: QueryDocumentSnapshot): UserProgress => 
-      UserProgressSchema.parse(snapshot.data())
+    fromFirestore: (snapshot: QueryDocumentSnapshot): UserProgress =>
+      UserProgressSchema.parse(snapshot.data()),
   },
-  
+
   assessment: {
     toFirestore: (data: Assessment): DocumentData => data,
-    fromFirestore: (snapshot: QueryDocumentSnapshot): Assessment => 
-      AssessmentSchema.parse(snapshot.data())
+    fromFirestore: (snapshot: QueryDocumentSnapshot): Assessment =>
+      AssessmentSchema.parse(snapshot.data()),
   },
-  
+
   analyticsEvent: {
     toFirestore: (data: AnalyticsEvent): DocumentData => data,
-    fromFirestore: (snapshot: QueryDocumentSnapshot): AnalyticsEvent => 
-      AnalyticsEventSchema.parse(snapshot.data())
-  }
+    fromFirestore: (snapshot: QueryDocumentSnapshot): AnalyticsEvent =>
+      AnalyticsEventSchema.parse(snapshot.data()),
+  },
 };
 
 // ===== NOMS DES COLLECTIONS =====
 export const COLLECTIONS = {
-  USERS: 'users',
-  COURSES: 'courses',
-  COMPETENCES: 'competences',
-  USER_PROGRESS: 'userProgress',
-  ASSESSMENTS: 'assessments',
-  ANALYTICS_EVENTS: 'analyticsEvents',
-  
+  USERS: "users",
+  COURSES: "courses",
+  COMPETENCES: "competences",
+  USER_PROGRESS: "userProgress",
+  ASSESSMENTS: "assessments",
+  ANALYTICS_EVENTS: "analyticsEvents",
+
   // Sub-collections
-  USER_SESSIONS: 'sessions',
-  COURSE_REVIEWS: 'reviews',
-  ASSESSMENT_RESULTS: 'results'
+  USER_SESSIONS: "sessions",
+  COURSE_REVIEWS: "reviews",
+  ASSESSMENT_RESULTS: "results",
 } as const;
 ```
 
@@ -410,26 +458,26 @@ export const COLLECTIONS = {
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    
+
     // ===== SÉCURITÉ RENFORCÉE =====
     function isAuthenticated() {
       return request.auth != null;
     }
-    
+
     function isOwner(userId) {
       return isAuthenticated() && request.auth.uid == userId;
     }
-    
+
     function hasRole(role) {
-      return isAuthenticated() && 
+      return isAuthenticated() &&
              exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
              get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == role;
     }
-    
+
     function isTeacherOrAdmin() {
       return hasRole('teacher') || hasRole('admin');
     }
-    
+
     // 🛡️ VALIDATION DONNÉES SENSIBLES (Nouvelle)
     function isValidUserProfile(data) {
       return data.keys().hasAll(['email', 'displayName', 'role', 'createdAt']) &&
@@ -439,7 +487,7 @@ service cloud.firestore {
              data.createdAt is string &&
              data.email.matches('.*@.*\\..*'); // Email format validation
     }
-    
+
     function isValidCourse(data) {
       return data.keys().hasAll(['title', 'description', 'level', 'metadata']) &&
              data.title is string &&
@@ -447,15 +495,15 @@ service cloud.firestore {
              data.level in ['beginner', 'intermediate', 'advanced'] &&
              data.metadata.authorId is string;
     }
-    
+
     // 🚨 PROTECTION ANTI-CRÉATION MALVEILLANTE (Nouvelle)
     function canEditCourse(courseData) {
-      return isTeacherOrAdmin() && 
+      return isTeacherOrAdmin() &&
              (courseData.metadata.authorId == request.auth.uid || hasRole('admin'));
     }
-    
+
     // ===== RÈGLES DE COLLECTION =====
-    
+
     // Users - Protection renforcée
     match /users/{userId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
@@ -463,139 +511,139 @@ service cloud.firestore {
       allow update: if isOwner(userId) && isValidUserProfile(request.resource.data);
       allow delete: if hasRole('admin') || isOwner(userId); // RGPD compliance
     }
-    
+
     // User Progress - Structure optimisée
     match /users/{userId}/progress/{courseId} {
       allow read, write: if isOwner(userId);
       allow create: if isOwner(userId) && request.resource.data.keys().hasAll(['score', 'completed', 'lastAttempt']);
-      allow update: if isOwner(userId) && 
+      allow update: if isOwner(userId) &&
                        request.resource.data.score is number &&
-                       request.resource.data.score >= 0 && 
+                       request.resource.data.score >= 0 &&
                        request.resource.data.score <= 100;
-    } 
+    }
              (hasRole('admin') || courseData.metadata.authorId == request.auth.uid);
     }
-    
+
     // ===== RÈGLES PAR COLLECTION =====
-    
+
     // Users Collection
     match /users/{userId} {
       // Lecture : utilisateur peut lire son propre profil, admin peut tout lire
       allow read: if isOwner(userId) || hasRole('admin');
-      
+
       // Création : seulement l'utilisateur lui-même peut créer son profil
-      allow create: if isOwner(userId) && 
+      allow create: if isOwner(userId) &&
                        isValidUserProfile(resource.data) &&
                        resource.data.role == 'student'; // Par défaut étudiant
-      
+
       // Mise à jour : utilisateur peut modifier son profil, admin peut tout modifier
       allow update: if (isOwner(userId) || hasRole('admin')) &&
                        isValidUserProfile(resource.data) &&
                        // Empêcher auto-promotion de rôle sauf par admin
                        (hasRole('admin') || resource.data.role == request.data.role);
-      
+
       // Suppression : seulement admin (soft delete recommandé)
       allow delete: if hasRole('admin');
-      
+
       // Sub-collection sessions
       match /sessions/{sessionId} {
         allow read, write: if isOwner(userId) || hasRole('admin');
       }
     }
-    
+
     // Courses Collection
     match /courses/{courseId} {
       // Lecture : tous les utilisateurs authentifiés peuvent lire les cours publiés
-      allow read: if isAuthenticated() && 
-                     (resource.data.metadata.isPublished == true || 
+      allow read: if isAuthenticated() &&
+                     (resource.data.metadata.isPublished == true ||
                       isTeacherOrAdmin() ||
                       resource.data.metadata.authorId == request.auth.uid);
-      
+
       // Création : seulement enseignants et admins
-      allow create: if isTeacherOrAdmin() && 
+      allow create: if isTeacherOrAdmin() &&
                        isValidCourse(resource.data) &&
                        resource.data.metadata.authorId == request.auth.uid;
-      
+
       // Mise à jour : créateur du cours ou admin
       allow update: if canEditCourse(resource.data) &&
                        isValidCourse(request.data);
-      
+
       // Suppression : créateur du cours ou admin
       allow delete: if canEditCourse(resource.data);
-      
+
       // Sub-collection reviews
       match /reviews/{reviewId} {
         allow read: if isAuthenticated();
-        allow create: if isAuthenticated() && 
+        allow create: if isAuthenticated() &&
                          resource.data.userId == request.auth.uid;
         allow update: if isOwner(resource.data.userId) || hasRole('admin');
         allow delete: if isOwner(resource.data.userId) || hasRole('admin');
       }
     }
-    
+
     // Competences Collection
     match /competences/{competenceId} {
       // Lecture : tous les utilisateurs authentifiés
       allow read: if isAuthenticated();
-      
+
       // Écriture : seulement enseignants et admins
       allow write: if isTeacherOrAdmin();
     }
-    
+
     // User Progress Collection
     match /userProgress/{progressId} {
       // Lecture : utilisateur peut lire sa progression, enseignants/admins peuvent tout lire
-      allow read: if isAuthenticated() && 
+      allow read: if isAuthenticated() &&
                      (resource.data.userId == request.auth.uid || isTeacherOrAdmin());
-      
+
       // Création : utilisateur peut créer sa progression
-      allow create: if isAuthenticated() && 
+      allow create: if isAuthenticated() &&
                        resource.data.userId == request.auth.uid;
-      
+
       // Mise à jour : utilisateur peut modifier sa progression
-      allow update: if isAuthenticated() && 
+      allow update: if isAuthenticated() &&
                        resource.data.userId == request.auth.uid &&
                        request.data.userId == request.auth.uid; // Empêcher changement userId
-      
+
       // Suppression : utilisateur ou admin
       allow delete: if isOwner(resource.data.userId) || hasRole('admin');
     }
-    
+
     // Assessments Collection
     match /assessments/{assessmentId} {
       // Lecture : tous les utilisateurs authentifiés
       allow read: if isAuthenticated();
-      
+
       // Écriture : seulement enseignants et admins
       allow write: if isTeacherOrAdmin();
-      
+
       // Sub-collection results
       match /results/{resultId} {
-        allow read: if isAuthenticated() && 
+        allow read: if isAuthenticated() &&
                        (resource.data.userId == request.auth.uid || isTeacherOrAdmin());
-        allow create: if isAuthenticated() && 
+        allow create: if isAuthenticated() &&
                          resource.data.userId == request.auth.uid;
         allow update: if false; // Les résultats ne doivent pas être modifiés
         allow delete: if hasRole('admin'); // Seulement admin pour nettoyage
       }
     }
-    
+
     // Analytics Events Collection
     match /analyticsEvents/{eventId} {
       // Lecture : seulement admins pour analytics
       allow read: if hasRole('admin');
-      
+
       // Création : utilisateurs peuvent créer leurs événements
-      allow create: if isAuthenticated() && 
+      allow create: if isAuthenticated() &&
                        resource.data.userId == request.auth.uid;
-      
+
       // Mise à jour/Suppression : seulement admins
       allow update, delete: if hasRole('admin');
     }
-    
+
     // ===== RÈGLES DE RATE LIMITING =====
     // Implémentées via Cloud Functions pour plus de flexibilité
-    
+
     // ===== RÈGLES D'AUDIT =====
     // Toutes les opérations sensibles sont loggées automatiquement
   }
@@ -607,30 +655,30 @@ service cloud.firestore {
 **[FILE]** Créer `src/lib/firebase/repositories/baseRepository.ts` :
 
 ```ts
-import { 
-  collection, 
-  doc, 
-  getDocs, 
-  getDoc, 
-  addDoc, 
-  updateDoc, 
-  deleteDoc, 
-  query, 
-  where, 
-  orderBy, 
-  limit, 
+import {
+  collection,
+  doc,
+  getDocs,
+  getDoc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  query,
+  where,
+  orderBy,
+  limit,
   startAfter,
   type DocumentData,
   type QueryConstraint,
   type DocumentReference,
   type CollectionReference,
-  type QuerySnapshot
-} from 'firebase/firestore';
-import { db } from '../firebaseClient';
+  type QuerySnapshot,
+} from "firebase/firestore";
+import { db } from "../firebaseClient";
 
 // ===== INTERFACE REPOSITORY GÉNÉRIQUE =====
 export interface Repository<T> {
-  create(data: Omit<T, 'id'>): Promise<string>;
+  create(data: Omit<T, "id">): Promise<string>;
   getById(id: string): Promise<T | null>;
   update(id: string, data: Partial<T>): Promise<void>;
   delete(id: string): Promise<void>;
@@ -647,9 +695,11 @@ export interface PaginatedResult<T> {
 }
 
 // ===== REPOSITORY DE BASE =====
-export abstract class BaseRepository<T extends { id: string }> implements Repository<T> {
+export abstract class BaseRepository<T extends { id: string }>
+  implements Repository<T>
+{
   protected collectionRef: CollectionReference<T>;
-  
+
   constructor(
     collectionName: string,
     private converter?: {
@@ -657,21 +707,24 @@ export abstract class BaseRepository<T extends { id: string }> implements Reposi
       fromFirestore: (snapshot: any) => T;
     }
   ) {
-    this.collectionRef = converter 
+    this.collectionRef = converter
       ? collection(db, collectionName).withConverter(converter)
-      : collection(db, collectionName) as CollectionReference<T>;
+      : (collection(db, collectionName) as CollectionReference<T>);
   }
 
   /**
    * Crée un nouveau document
    */
-  async create(data: Omit<T, 'id'>): Promise<string> {
+  async create(data: Omit<T, "id">): Promise<string> {
     try {
       const docRef = await addDoc(this.collectionRef, data as T);
       return docRef.id;
     } catch (error) {
-      console.error(`Error creating document in ${this.collectionRef.id}:`, error);
-      throw new RepositoryError('CREATE_FAILED', error);
+      console.error(
+        `Error creating document in ${this.collectionRef.id}:`,
+        error
+      );
+      throw new RepositoryError("CREATE_FAILED", error);
     }
   }
 
@@ -682,17 +735,17 @@ export abstract class BaseRepository<T extends { id: string }> implements Reposi
     try {
       const docRef = doc(this.collectionRef, id);
       const docSnap = await getDoc(docRef);
-      
+
       if (!docSnap.exists()) {
         return null;
       }
-      
-      return this.converter 
+
+      return this.converter
         ? this.converter.fromFirestore(docSnap)
-        : { id: docSnap.id, ...docSnap.data() } as T;
+        : ({ id: docSnap.id, ...docSnap.data() } as T);
     } catch (error) {
       console.error(`Error getting document ${id}:`, error);
-      throw new RepositoryError('GET_FAILED', error);
+      throw new RepositoryError("GET_FAILED", error);
     }
   }
 
@@ -705,7 +758,7 @@ export abstract class BaseRepository<T extends { id: string }> implements Reposi
       await updateDoc(docRef, data as any);
     } catch (error) {
       console.error(`Error updating document ${id}:`, error);
-      throw new RepositoryError('UPDATE_FAILED', error);
+      throw new RepositoryError("UPDATE_FAILED", error);
     }
   }
 
@@ -718,7 +771,7 @@ export abstract class BaseRepository<T extends { id: string }> implements Reposi
       await deleteDoc(docRef);
     } catch (error) {
       console.error(`Error deleting document ${id}:`, error);
-      throw new RepositoryError('DELETE_FAILED', error);
+      throw new RepositoryError("DELETE_FAILED", error);
     }
   }
 
@@ -726,12 +779,12 @@ export abstract class BaseRepository<T extends { id: string }> implements Reposi
    * Soft delete (recommandé pour audit)
    */
   async softDelete(id: string): Promise<void> {
-    await this.update(id, { 
-      metadata: { 
-        ...await this.getMetadata(id),
+    await this.update(id, {
+      metadata: {
+        ...(await this.getMetadata(id)),
         isActive: false,
-        deletedAt: new Date().toISOString()
-      } 
+        deletedAt: new Date().toISOString(),
+      },
     } as Partial<T>);
   }
 
@@ -742,15 +795,15 @@ export abstract class BaseRepository<T extends { id: string }> implements Reposi
     try {
       const q = query(this.collectionRef, ...constraints);
       const querySnapshot = await getDocs(q);
-      
-      return querySnapshot.docs.map(doc => 
-        this.converter 
+
+      return querySnapshot.docs.map((doc) =>
+        this.converter
           ? this.converter.fromFirestore(doc)
-          : { id: doc.id, ...doc.data() } as T
+          : ({ id: doc.id, ...doc.data() } as T)
       );
     } catch (error) {
-      console.error('Error getting all documents:', error);
-      throw new RepositoryError('GET_ALL_FAILED', error);
+      console.error("Error getting all documents:", error);
+      throw new RepositoryError("GET_ALL_FAILED", error);
     }
   }
 
@@ -758,41 +811,41 @@ export abstract class BaseRepository<T extends { id: string }> implements Reposi
    * Récupère des documents avec pagination
    */
   async getPaginated(
-    pageSize: number, 
+    pageSize: number,
     lastDoc?: any,
     constraints: QueryConstraint[] = []
   ): Promise<PaginatedResult<T>> {
     try {
       const queryConstraints = [
         ...constraints,
-        limit(pageSize + 1) // +1 pour savoir s'il y a plus de pages
+        limit(pageSize + 1), // +1 pour savoir s'il y a plus de pages
       ];
-      
+
       if (lastDoc) {
         queryConstraints.push(startAfter(lastDoc));
       }
-      
+
       const q = query(this.collectionRef, ...queryConstraints);
       const querySnapshot = await getDocs(q);
-      
-      const docs = querySnapshot.docs.map(doc => 
-        this.converter 
+
+      const docs = querySnapshot.docs.map((doc) =>
+        this.converter
           ? this.converter.fromFirestore(doc)
-          : { id: doc.id, ...doc.data() } as T
+          : ({ id: doc.id, ...doc.data() } as T)
       );
-      
+
       const hasMore = docs.length > pageSize;
       const data = hasMore ? docs.slice(0, pageSize) : docs;
       const newLastDoc = hasMore ? querySnapshot.docs[pageSize - 1] : null;
-      
+
       return {
         data,
         hasMore,
-        lastDoc: newLastDoc
+        lastDoc: newLastDoc,
       };
     } catch (error) {
-      console.error('Error getting paginated documents:', error);
-      throw new RepositoryError('GET_PAGINATED_FAILED', error);
+      console.error("Error getting paginated documents:", error);
+      throw new RepositoryError("GET_PAGINATED_FAILED", error);
     }
   }
 
@@ -804,8 +857,8 @@ export abstract class BaseRepository<T extends { id: string }> implements Reposi
       const snapshot = await getDocs(this.collectionRef);
       return snapshot.size;
     } catch (error) {
-      console.error('Error counting documents:', error);
-      throw new RepositoryError('COUNT_FAILED', error);
+      console.error("Error counting documents:", error);
+      throw new RepositoryError("COUNT_FAILED", error);
     }
   }
 
@@ -813,7 +866,7 @@ export abstract class BaseRepository<T extends { id: string }> implements Reposi
    * Recherche par champs spécifiques
    */
   async findBy(field: keyof T, value: any): Promise<T[]> {
-    return this.getAll([where(field as string, '==', value)]);
+    return this.getAll([where(field as string, "==", value)]);
   }
 
   /**
@@ -821,10 +874,10 @@ export abstract class BaseRepository<T extends { id: string }> implements Reposi
    */
   async findOneBy(field: keyof T, value: any): Promise<T | null> {
     const results = await this.getAll([
-      where(field as string, '==', value),
-      limit(1)
+      where(field as string, "==", value),
+      limit(1),
     ]);
-    
+
     return results.length > 0 ? results[0] : null;
   }
 
@@ -837,32 +890,36 @@ export abstract class BaseRepository<T extends { id: string }> implements Reposi
 
 // ===== GESTION D'ERREURS =====
 export class RepositoryError extends Error {
-  constructor(
-    public code: string,
-    public originalError?: any
-  ) {
-    super(`Repository Error [${code}]: ${originalError?.message || 'Unknown error'}`);
-    this.name = 'RepositoryError';
+  constructor(public code: string, public originalError?: any) {
+    super(
+      `Repository Error [${code}]: ${originalError?.message || "Unknown error"}`
+    );
+    this.name = "RepositoryError";
   }
 }
 
 // ===== DÉCORATEURS POUR CACHE =====
-export function cached(ttl: number = 300000) { // 5 minutes par défaut
-  return function(target: any, propertyName: string, descriptor: PropertyDescriptor) {
+export function cached(ttl: number = 300000) {
+  // 5 minutes par défaut
+  return function (
+    target: any,
+    propertyName: string,
+    descriptor: PropertyDescriptor
+  ) {
     const method = descriptor.value;
     const cache = new Map<string, { data: any; timestamp: number }>();
-    
-    descriptor.value = async function(...args: any[]) {
+
+    descriptor.value = async function (...args: any[]) {
       const cacheKey = JSON.stringify(args);
       const cached = cache.get(cacheKey);
-      
+
       if (cached && Date.now() - cached.timestamp < ttl) {
         return cached.data;
       }
-      
+
       const result = await method.apply(this, args);
       cache.set(cacheKey, { data: result, timestamp: Date.now() });
-      
+
       return result;
     };
   };
@@ -885,12 +942,12 @@ export function cached(ttl: number = 300000) { // 5 minutes par défaut
 **[FILE]** Créer `src/lib/firebase/repositories/userRepository.test.ts` :
 
 ```ts
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { UserRepository } from './userRepository';
-import type { UserProfile } from '../collections';
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { UserRepository } from "./userRepository";
+import type { UserProfile } from "../collections";
 
 // Tests avec Firebase Emulator
-describe('UserRepository', () => {
+describe("UserRepository", () => {
   let userRepo: UserRepository;
   let testUserId: string;
 
@@ -905,106 +962,110 @@ describe('UserRepository', () => {
     }
   });
 
-  describe('CRUD Operations', () => {
-    it('should create user profile', async () => {
-      const userData: Omit<UserProfile, 'id'> = {
-        email: 'test@example.com',
-        displayName: 'Test User',
-        role: 'student',
+  describe("CRUD Operations", () => {
+    it("should create user profile", async () => {
+      const userData: Omit<UserProfile, "id"> = {
+        email: "test@example.com",
+        displayName: "Test User",
+        role: "student",
         createdAt: new Date().toISOString(),
         lastLoginAt: new Date().toISOString(),
         preferences: {
-          language: 'fr',
-          theme: 'auto',
+          language: "fr",
+          theme: "auto",
           notifications: {
             email: true,
             push: true,
-            marketing: false
+            marketing: false,
           },
           accessibility: {
-            fontSize: 'medium',
+            fontSize: "medium",
             highContrast: false,
-            reducedMotion: false
-          }
+            reducedMotion: false,
+          },
         },
         learningProfile: {
-          style: 'mixed',
+          style: "mixed",
           difficultyPreference: 0.5,
           sessionDurationPreference: 30,
           learningGoals: [],
-          interests: []
+          interests: [],
         },
         progressTracking: {
           totalTimeSpent: 0,
           coursesCompleted: 0,
           competencesAcquired: [],
           currentStreak: 0,
-          longestStreak: 0
+          longestStreak: 0,
         },
         metadata: {
-          version: '1.0',
+          version: "1.0",
           lastUpdated: new Date().toISOString(),
           isActive: true,
           gdprConsent: {
             functional: true,
             analytics: true,
             marketing: false,
-            consentDate: new Date().toISOString()
-          }
-        }
+            consentDate: new Date().toISOString(),
+          },
+        },
       };
 
       testUserId = await userRepo.create(userData);
-      
+
       expect(testUserId).toBeDefined();
-      expect(typeof testUserId).toBe('string');
+      expect(typeof testUserId).toBe("string");
     });
 
-    it('should retrieve user by id', async () => {
+    it("should retrieve user by id", async () => {
       // Create user first
-      const userData = { /* ... */ };
+      const userData = {
+        /* ... */
+      };
       testUserId = await userRepo.create(userData);
-      
+
       const retrievedUser = await userRepo.getById(testUserId);
-      
+
       expect(retrievedUser).toBeDefined();
-      expect(retrievedUser?.email).toBe('test@example.com');
-      expect(retrievedUser?.role).toBe('student');
+      expect(retrievedUser?.email).toBe("test@example.com");
+      expect(retrievedUser?.role).toBe("student");
     });
 
-    it('should update user preferences', async () => {
+    it("should update user preferences", async () => {
       // Create user first
-      const userData = { /* ... */ };
+      const userData = {
+        /* ... */
+      };
       testUserId = await userRepo.create(userData);
-      
+
       await userRepo.update(testUserId, {
         preferences: {
           ...userData.preferences,
-          theme: 'dark'
-        }
+          theme: "dark",
+        },
       });
-      
+
       const updatedUser = await userRepo.getById(testUserId);
-      expect(updatedUser?.preferences.theme).toBe('dark');
+      expect(updatedUser?.preferences.theme).toBe("dark");
     });
   });
 
-  describe('Query Operations', () => {
-    it('should find users by role', async () => {
-      const students = await userRepo.findBy('role', 'student');
-      
+  describe("Query Operations", () => {
+    it("should find users by role", async () => {
+      const students = await userRepo.findBy("role", "student");
+
       expect(Array.isArray(students)).toBe(true);
-      students.forEach(user => {
-        expect(user.role).toBe('student');
+      students.forEach((user) => {
+        expect(user.role).toBe("student");
       });
     });
 
-    it('should get paginated results', async () => {
+    it("should get paginated results", async () => {
       const result = await userRepo.getPaginated(10);
-      
+
       expect(result.data).toBeDefined();
       expect(Array.isArray(result.data)).toBe(true);
-      expect(typeof result.hasMore).toBe('boolean');
+      expect(typeof result.hasMore).toBe("boolean");
     });
   });
 });

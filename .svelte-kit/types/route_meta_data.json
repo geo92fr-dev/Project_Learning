@@ -1,34 +1,4 @@
 {
 	"/": [],
-	"/auth": [],
-	"/cours": [],
-	"/cours/[slug]": [
-		"src/routes/cours/[slug]/+page.ts"
-	],
-	"/dashboard": [],
-	"/pedagogy": [],
-	"/[matiere]": [
-		"src/routes/[matiere]/+layout.ts",
-		"src/routes/[matiere]/+layout.ts"
-	],
-	"/[matiere]/[niveau]": [
-		"src/routes/[matiere]/[niveau]/+layout.ts",
-		"src/routes/[matiere]/+layout.ts",
-		"src/routes/[matiere]/[niveau]/+layout.ts",
-		"src/routes/[matiere]/+layout.ts"
-	],
-	"/[matiere]/[niveau]/[competence]": [
-		"src/routes/[matiere]/[niveau]/[competence]/+layout.ts",
-		"src/routes/[matiere]/[niveau]/+layout.ts",
-		"src/routes/[matiere]/+layout.ts",
-		"src/routes/[matiere]/[niveau]/[competence]/+layout.ts",
-		"src/routes/[matiere]/[niveau]/+layout.ts",
-		"src/routes/[matiere]/+layout.ts"
-	],
-	"/[matiere]/[niveau]/[competence]/[cours]": [
-		"src/routes/[matiere]/[niveau]/[competence]/[cours]/+page.ts",
-		"src/routes/[matiere]/[niveau]/[competence]/+layout.ts",
-		"src/routes/[matiere]/[niveau]/+layout.ts",
-		"src/routes/[matiere]/+layout.ts"
-	]
+	"/auth": []
 }

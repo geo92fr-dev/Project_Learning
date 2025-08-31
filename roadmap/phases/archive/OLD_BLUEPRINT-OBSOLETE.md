@@ -11,6 +11,7 @@
 **FunRevis V2** est une plateforme éducative web moderne utilisant une architecture ES6 modulaire pour l'apprentissage interactif des mathématiques niveau collège.
 
 ### 🎯 **Objectifs Clés**
+
 - **Apprentissage adaptatif** : Contenu personnalisé par niveau
 - **Architecture modulaire** : Extensions faciles (4ème, 3ème, lycée)
 - **Interface moderne** : Experience utilisateur optimisée
@@ -23,15 +24,16 @@
 
 ### 📦 **Stack Technologique**
 
-| Couche | Technologies | Rôle |
-|--------|-------------|------|
-| **Frontend** | HTML5, CSS3, JavaScript ES6+ | Interface utilisateur moderne |
-| **Modules** | ES6 Modules, Dynamic Imports | Architecture modulaire |
-| **Hébergement** | Firebase Hosting | Déploiement cloud |
-| **Build** | Node.js Scripts | Automatisation |
-| **Tests** | Custom Test Suite | Validation automatisée |
+| Couche          | Technologies                 | Rôle                          |
+| --------------- | ---------------------------- | ----------------------------- |
+| **Frontend**    | HTML5, CSS3, JavaScript ES6+ | Interface utilisateur moderne |
+| **Modules**     | ES6 Modules, Dynamic Imports | Architecture modulaire        |
+| **Hébergement** | Firebase Hosting             | Déploiement cloud             |
+| **Build**       | Node.js Scripts              | Automatisation                |
+| **Tests**       | Custom Test Suite            | Validation automatisée        |
 
 ### 🏗️ **Patterns Architecturaux**
+
 - **Module Pattern** : Encapsulation des fonctionnalités
 - **Observer Pattern** : Communication entre composants
 - **Factory Pattern** : Création dynamique des renderers
@@ -92,12 +94,14 @@ funrevis-v2/
 **Responsabilité** : Rendu optimisé et fiable des contenus de cours
 
 #### Fonctionnalités
+
 - ✅ Rendu HTML sécurisé avec sanitization
 - ✅ Gestion d'erreurs robuste
 - ✅ Support multiple formats de données
 - ✅ Templates adaptatifs par type de contenu
 
 #### API Publique
+
 ```javascript
 class SimpleCourseRenderer {
     constructor(options = {})
@@ -109,11 +113,12 @@ class SimpleCourseRenderer {
 ```
 
 #### Utilisation
+
 ```javascript
-import { SimpleCourseRenderer } from './components/SimpleCourseRenderer.js';
+import { SimpleCourseRenderer } from "./components/SimpleCourseRenderer.js";
 
 const renderer = new SimpleCourseRenderer();
-await renderer.renderCourse(courseData, 'courseContainer');
+await renderer.renderCourse(courseData, "courseContainer");
 ```
 
 ### 2. **ModuleLoader** 📄 `components/ModuleLoader.js` (Legacy)
@@ -121,6 +126,7 @@ await renderer.renderCourse(courseData, 'courseContainer');
 **Responsabilité** : Chargement et cache des modules 6ème
 
 #### Fonctionnalités
+
 - ✅ Cache intelligent avec Map()
 - ✅ Stratégies de chargement par matière
 - ✅ Validation données modules
@@ -131,6 +137,7 @@ await renderer.renderCourse(courseData, 'courseContainer');
 **Responsabilité** : Navigation universelle et breadcrumb
 
 #### Fonctionnalités
+
 - ✅ Breadcrumb dynamique niveau-sensible
 - ✅ Support URLs paramètres universels
 - ✅ Navigation hiérarchique automatique
@@ -142,6 +149,7 @@ await renderer.renderCourse(courseData, 'courseContainer');
 ### 🗂️ **Architecture ES6 Modulaire**
 
 #### Format 5ème (Nouveau Standard)
+
 ```javascript
 // 5e_nombres_calculs_fractions.js
 export default {
@@ -159,10 +167,11 @@ export default {
 ```
 
 #### Format 6ème (Legacy)
+
 ```javascript
 // addition-soustraction.js (CommonJS)
 const additionSoustraction = {
-    // Structure héritée
+  // Structure héritée
 };
 module.exports = additionSoustraction;
 ```
@@ -171,14 +180,14 @@ module.exports = additionSoustraction;
 
 ```javascript
 // data/index.js (Root)
-export { default as mathematiques } from './mathematiques/index.js';
+export { default as mathematiques } from "./mathematiques/index.js";
 
 // data/mathematiques/index.js (Matière)
-export { default as sixieme } from './6ieme/index.js';  // Legacy
-export * from './5ieme/index.js';                      // ES6
+export { default as sixieme } from "./6ieme/index.js"; // Legacy
+export * from "./5ieme/index.js"; // ES6
 
 // data/mathematiques/5ieme/index.js (Niveau)
-export { default as nombresCalculsfractions } from './5e_nombres_calculs_fractions.js';
+export { default as nombresCalculsfractions } from "./5e_nombres_calculs_fractions.js";
 ```
 
 ---
@@ -190,15 +199,17 @@ export { default as nombresCalculsfractions } from './5e_nombres_calculs_fractio
 **Responsabilité** : Rendu universel tous niveaux avec breadcrumb dynamique
 
 #### URL Patterns Supportés
+
 ```
 # Format 5ème+ (Nouveau)
 cours.html?niveau=5eme&matiere=mathematiques&chapitre=nombres-calculs-fractions
 
-# Format 6ème (Legacy)  
+# Format 6ème (Legacy)
 cours.html?level=6ieme&subject=mathematiques&topic=addition-soustraction
 ```
 
 #### Fonctions Clés
+
 ```javascript
 // Chargement 5ème ES6
 async function loadData5eme(niveau, matiere, chapitre)
@@ -213,18 +224,26 @@ function updateBreadcrumb(subject, level, topic)
 ### 🧭 **Système Breadcrumb Enhanced**
 
 #### Mise à Jour Forcée Multiple
+
 - **Immédiate** : updateBreadcrumb() lors du parsing URL
 - **50ms** : Premier setTimeout pour contournement timing
 - **200ms** : Deuxième force pour cache browser
 - **1000ms** : Force finale garantie
 
 #### HTML Template
+
 ```html
 <div class="breadcrumb">
-    <a href="/index.html" id="breadcrumbHomeLink">🏠 Accueil</a> › 
-    <a href="/pages/mathematiques/index.html" id="breadcrumbSubjectLink">Mathematiques</a> › 
-    <a href="/pages/mathematiques/5eme/index.html" id="breadcrumbLevelLink">5EME</a> › 
-    <span id="breadcrumbTopic">nombres calculs fractions</span>
+  <a href="/index.html" id="breadcrumbHomeLink">🏠 Accueil</a> ›
+  <a href="/pages/mathematiques/index.html" id="breadcrumbSubjectLink"
+    >Mathematiques</a
+  >
+  ›
+  <a href="/pages/mathematiques/5eme/index.html" id="breadcrumbLevelLink"
+    >5EME</a
+  >
+  ›
+  <span id="breadcrumbTopic">nombres calculs fractions</span>
 </div>
 ```
 
@@ -235,14 +254,16 @@ function updateBreadcrumb(subject, level, topic)
 ### 📋 **Suite de Tests Automatisés**
 
 #### Scripts de Test
-| Script | Cible | Description |
-|--------|-------|-------------|
-| `scripts/test.js` | Global | Tests complets structure/données |
-| `tests/cours-test-suite.js` | Cours | Validation système cours |
-| `validation-sauvegarde.js` | Architecture | Validation post-sauvegarde |
-| `test-5eme-structure.js` | 5ème | Tests spécifiques niveau 5ème |
+
+| Script                      | Cible        | Description                      |
+| --------------------------- | ------------ | -------------------------------- |
+| `scripts/test.js`           | Global       | Tests complets structure/données |
+| `tests/cours-test-suite.js` | Cours        | Validation système cours         |
+| `validation-sauvegarde.js`  | Architecture | Validation post-sauvegarde       |
+| `test-5eme-structure.js`    | 5ème         | Tests spécifiques niveau 5ème    |
 
 #### Catégories Testées
+
 - **Structure** : Existence fichiers/dossiers critiques
 - **Syntaxe** : Validation JavaScript/HTML/CSS
 - **Données** : Intégrité modules cours
@@ -250,9 +271,10 @@ function updateBreadcrumb(subject, level, topic)
 - **Navigation** : URLs et breadcrumb
 
 #### Exécution Tests
+
 ```bash
 npm run test              # Tests complets
-npm run test:cours        # Tests cours spécifiques  
+npm run test:cours        # Tests cours spécifiques
 npm run test:validation   # Validation post-build
 node validation-sauvegarde.js  # Validation architecture
 ```
@@ -264,11 +286,12 @@ node validation-sauvegarde.js  # Validation architecture
 ### 🔨 **Processus de Build**
 
 #### Scripts Automatisés
+
 ```json
 {
   "scripts": {
     "dev": "python -m http.server 8080",
-    "build": "node scripts/build.js", 
+    "build": "node scripts/build.js",
     "deploy": "firebase deploy",
     "test": "node scripts/test.js"
   }
@@ -276,6 +299,7 @@ node validation-sauvegarde.js  # Validation architecture
 ```
 
 #### Pipeline CI/CD
+
 1. **Tests automatisés** : Validation complète
 2. **Build project** : Optimisation assets
 3. **Deploy Firebase** : Hébergement cloud
@@ -284,6 +308,7 @@ node validation-sauvegarde.js  # Validation architecture
 ### 🌐 **Déploiement Firebase**
 
 #### Configuration
+
 ```json
 // firebase.json
 {
@@ -296,6 +321,7 @@ node validation-sauvegarde.js  # Validation architecture
 ```
 
 #### URLs Production
+
 - **Application** : https://funrevis.web.app
 - **Tests** : https://funrevis.web.app/test-architecture.html
 
@@ -306,13 +332,15 @@ node validation-sauvegarde.js  # Validation architecture
 ### ✅ **État Actuel Validé**
 
 #### Couverture Tests
+
 - **Structure** : 16/16 ✅ (100%)
-- **Modules 6ème** : 22/22 ✅ (100%)  
+- **Modules 6ème** : 22/22 ✅ (100%)
 - **Modules 5ème** : 1/1 ✅ (100%)
 - **Pages** : 8/8 ✅ (100%)
 - **Total** : **47/47 (100%)** 🎉
 
 #### Performance
+
 - **Chargement initial** : <500ms
 - **Navigation** : <100ms (cached)
 - **Rendu cours** : <200ms
@@ -325,11 +353,13 @@ node validation-sauvegarde.js  # Validation architecture
 ### 🎯 **Prochaines Étapes Immédiates**
 
 #### Extension Niveaux
+
 - **4ème** : Duplication architecture 5ème
-- **3ème** : Extension système ES6  
+- **3ème** : Extension système ES6
 - **2nde** : Adaptation lycée
 
 #### Améliorations Techniques
+
 - **Cache localStorage** : Performance offline
 - **Service Worker** : PWA capabilities
 - **Progressive loading** : Optimisation mobile
@@ -337,11 +367,13 @@ node validation-sauvegarde.js  # Validation architecture
 ### 📚 **Extensions Fonctionnelles**
 
 #### Nouvelles Matières
+
 - **Français** : Adaptation système modulaire
 - **Histoire-Géo** : Extension contenu textuel
 - **Sciences** : Support multimédia enrichi
 
 #### Features Avancées
+
 - **Analytics** : Suivi progression
 - **Adaptive Learning** : IA personnalisation
 - **Collaboration** : Partage notes/exercices
@@ -357,7 +389,7 @@ node validation-sauvegarde.js  # Validation architecture
 git clone https://github.com/geo92fr-dev/revision.git
 cd revision/v2
 
-# Install dependencies  
+# Install dependencies
 npm install
 
 # Développement local
@@ -377,24 +409,28 @@ npm run deploy
 ### 🧩 **Ajouter un Nouveau Niveau**
 
 #### 1. Structure Dossier
+
 ```bash
 mkdir src/data/mathematiques/4eme
 mkdir src/pages/mathematiques/4eme
 ```
 
 #### 2. Fichier Index ES6
+
 ```javascript
 // src/data/mathematiques/4eme/index.js
-export { default as nouveauChapitre } from './4e_nouveau_chapitre.js';
+export { default as nouveauChapitre } from "./4e_nouveau_chapitre.js";
 ```
 
 #### 3. Mise à Jour Parent
-```javascript  
+
+```javascript
 // src/data/mathematiques/index.js
-export * from './4eme/index.js';
+export * from "./4eme/index.js";
 ```
 
 #### 4. Adaptation Page Cours
+
 ```javascript
 // Ajouter case 4eme dans loadData5eme()
 case '4eme':
@@ -408,9 +444,9 @@ case '4eme':
 ```javascript
 // test-4eme-structure.js
 const paths = {
-    data4eme: 'v2/src/data/mathematiques/4eme/4e_nouveau_chapitre.js',
-    index4eme: 'v2/src/data/mathematiques/4eme/index.js',
-    page4eme: 'v2/src/pages/mathematiques/4eme/index.html'
+  data4eme: "v2/src/data/mathematiques/4eme/4e_nouveau_chapitre.js",
+  index4eme: "v2/src/data/mathematiques/4eme/index.js",
+  page4eme: "v2/src/pages/mathematiques/4eme/index.html",
 };
 ```
 
@@ -419,18 +455,21 @@ const paths = {
 ## 📚 RESSOURCES & DOCUMENTATION
 
 ### 📖 **Documentation Technique**
+
 - **README.md** : Vue d'ensemble projet
 - **ARCHITECTURE_MODULAIRE.md** : Détails composants
 - **SAUVEGARDE-ARCHITECTURE-5EME.md** : État architecture 5ème
 - **v2/DEPLOIEMENT.md** : Guide déploiement
 
 ### 🔗 **URLs Importantes**
+
 - **Application** : https://funrevis.web.app
 - **Repository** : https://github.com/geo92fr-dev/revision
 - **Test Architecture** : http://localhost:8080/test-architecture.html
 - **Test 5ème** : http://localhost:8080/v2/src/test-5eme.html
 
 ### 🛠️ **Outils Développement**
+
 - **VS Code** : Éditeur recommandé
 - **ES6 Modules** : Support natif navigateurs
 - **Firebase Tools** : CLI déploiement
@@ -443,18 +482,20 @@ const paths = {
 ### 📝 **Conventions Code**
 
 #### Nommage Fichiers
+
 - **5ème+** : `5e_chapitre_description.js` (ES6)
 - **6ème** : `chapitre-description.js` (Legacy)
 - **Pages** : `index.html` (Navigation)
 - **Tests** : `test-[cible]-[type].js`
 
 #### Structure Données
+
 ```javascript
 // Standard 5ème+
 export default {
     titre: "Titre explicite",
     niveau: "5ème",
-    matiere: "Mathématiques", 
+    matiere: "Mathématiques",
     competences: [{
         nom: "Nom compétence",
         cours: "Contenu cours",
@@ -466,11 +507,13 @@ export default {
 ```
 
 ### 🔒 **Sécurité**
+
 - **Sanitization** : Content HTML sécurisé
 - **Validation** : Données entrée systématique
 - **Error Handling** : Gestion erreurs gracieuse
 
 ### 📊 **Performance**
+
 - **Lazy Loading** : Modules chargés à la demande
 - **Cache Strategy** : Map() pour données fréquentes
 - **Minimisation DOM** : Manipulations batch optimisées
@@ -482,13 +525,15 @@ export default {
 **FunRevis V2** représente une architecture moderne, extensible et performante pour l'apprentissage interactif. L'implémentation progressive (6ème legacy → 5ème ES6) garantit une transition fluide vers une architecture pleinement modulaire.
 
 ### ✅ **Points Forts Actuels**
+
 - Architecture ES6 modulaire robuste
 - Tests automatisés 100% couverture
-- Backward compatibility préservée  
+- Backward compatibility préservée
 - Documentation complète et à jour
 - Déploiement automatisé opérationnel
 
 ### 🚀 **Potentiel d'Extension**
+
 - Scalabilité tous niveaux collège/lycée
 - Adaptation multi-matières facilitée
 - Intégration features avancées ready
@@ -498,4 +543,4 @@ export default {
 
 ---
 
-*Blueprint généré le 29 août 2025 - Version 2.0.0*
+_Blueprint généré le 29 août 2025 - Version 2.0.0_

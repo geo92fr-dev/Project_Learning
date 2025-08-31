@@ -20,7 +20,7 @@
   - Detection automatique phase projet avec alignement 3 niveaux
   - Rapport détaillé avec actions recommandées contextuelles
   - Validation croisée avec critères d'acceptation roadmap
-- [x] **Génération Documentation Automatique** 
+- [x] **Génération Documentation Automatique**
   - README automatiques adaptés à la structure FunLearning
   - Classification criticité basée sur impact métier (HIGH/MEDIUM/LOW)
   - Détection dépendances avec mapping roadmap phases
@@ -33,7 +33,7 @@
 
 ### ✅ **Nouvelles Automatisations CBD v2.0** 🔥
 
-- [x] **Validation Prompts Obligatoire** 
+- [x] **Validation Prompts Obligatoire**
   - Format CBD strict : `[CONTEXT] [FILE] [CMD] [TEST] [CHECK]`
   - Validation spéciale URL : `[VERIFICATION] [CONSOLE] [VISUAL] [REPORT] [CRITICAL]`
   - Rejet automatique des prompts non conformes
@@ -525,16 +525,16 @@ npm run publish:extension  # Publication marketplace
 
 ### **ROI Éducatif Attendu**
 
-| Bénéfice Éducatif                  | Gain Mensuel           | ROI Annuel |
-| ---------------------------------- | ---------------------- | ---------- |
-| **Réduction temps dev éducatif**   | 50h/dev/mois           | 150k€      |
-| **Amélioration qualité contenu**   | +40% efficacité        | 80k€       |
-| **Conformité automatique RGPD**    | -100% risques légaux   | 50k€       |
-| **Accessibilité automatisée**      | +30% inclusion         | 40k€       |
-| **Quality gates éducatives**       | +50% qualité produit   | 60k€       |
-| **Documentation auto-générée**     | -90% temps doc éduc    | 30k€       |
-| **Marketplace communautaire**      | Revenus supplémentaires| 100k€+     |
-| **TOTAL ROI ÉDUCATIF**            | **510k€/an**           | **467%**   |
+| Bénéfice Éducatif                | Gain Mensuel            | ROI Annuel |
+| -------------------------------- | ----------------------- | ---------- |
+| **Réduction temps dev éducatif** | 50h/dev/mois            | 150k€      |
+| **Amélioration qualité contenu** | +40% efficacité         | 80k€       |
+| **Conformité automatique RGPD**  | -100% risques légaux    | 50k€       |
+| **Accessibilité automatisée**    | +30% inclusion          | 40k€       |
+| **Quality gates éducatives**     | +50% qualité produit    | 60k€       |
+| **Documentation auto-générée**   | -90% temps doc éduc     | 30k€       |
+| **Marketplace communautaire**    | Revenus supplémentaires | 100k€+     |
+| **TOTAL ROI ÉDUCATIF**           | **510k€/an**            | **467%**   |
 
 ---
 
@@ -614,10 +614,10 @@ graph TD
     E --> F[Validation Efficacité]
     F --> G[Déploiement Améliorations]
     G --> A
-    
+
     H[Retours Enseignants] --> I[Analyse Qualitative]
     I --> D
-    
+
     J[Résultats Élèves] --> K[Analyse Impact]
     K --> D
 ```

@@ -1,4 +1,4 @@
-import { c as create_ssr_component, s as setContext, v as validate_component, m as missing_component } from "./ssr.js";
+import { c as create_ssr_component, a as setContext, v as validate_component, m as missing_component } from "./ssr.js";
 let base = "";
 let assets = base;
 const initial = { base, assets };
@@ -27,9 +27,6 @@ const Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let { form } = $$props;
   let { data_0 = null } = $$props;
   let { data_1 = null } = $$props;
-  let { data_2 = null } = $$props;
-  let { data_3 = null } = $$props;
-  let { data_4 = null } = $$props;
   {
     setContext("__svelte__", stores);
   }
@@ -48,12 +45,6 @@ const Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     $$bindings.data_0(data_0);
   if ($$props.data_1 === void 0 && $$bindings.data_1 && data_1 !== void 0)
     $$bindings.data_1(data_1);
-  if ($$props.data_2 === void 0 && $$bindings.data_2 && data_2 !== void 0)
-    $$bindings.data_2(data_2);
-  if ($$props.data_3 === void 0 && $$bindings.data_3 && data_3 !== void 0)
-    $$bindings.data_3(data_3);
-  if ($$props.data_4 === void 0 && $$bindings.data_4 && data_4 !== void 0)
-    $$bindings.data_4(data_4);
   let $$settled;
   let $$rendered;
   let previous_head = $$result.head;
@@ -74,79 +65,7 @@ const Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       },
       {
         default: () => {
-          return `${constructors[2] ? `${validate_component(constructors[1] || missing_component, "svelte:component").$$render(
-            $$result,
-            { data: data_1, this: components[1] },
-            {
-              this: ($$value) => {
-                components[1] = $$value;
-                $$settled = false;
-              }
-            },
-            {
-              default: () => {
-                return `${constructors[3] ? `${validate_component(constructors[2] || missing_component, "svelte:component").$$render(
-                  $$result,
-                  { data: data_2, this: components[2] },
-                  {
-                    this: ($$value) => {
-                      components[2] = $$value;
-                      $$settled = false;
-                    }
-                  },
-                  {
-                    default: () => {
-                      return `${constructors[4] ? `${validate_component(constructors[3] || missing_component, "svelte:component").$$render(
-                        $$result,
-                        { data: data_3, this: components[3] },
-                        {
-                          this: ($$value) => {
-                            components[3] = $$value;
-                            $$settled = false;
-                          }
-                        },
-                        {
-                          default: () => {
-                            return `${validate_component(constructors[4] || missing_component, "svelte:component").$$render(
-                              $$result,
-                              { data: data_4, form, this: components[4] },
-                              {
-                                this: ($$value) => {
-                                  components[4] = $$value;
-                                  $$settled = false;
-                                }
-                              },
-                              {}
-                            )}`;
-                          }
-                        }
-                      )}` : `${validate_component(constructors[3] || missing_component, "svelte:component").$$render(
-                        $$result,
-                        { data: data_3, form, this: components[3] },
-                        {
-                          this: ($$value) => {
-                            components[3] = $$value;
-                            $$settled = false;
-                          }
-                        },
-                        {}
-                      )}`}`;
-                    }
-                  }
-                )}` : `${validate_component(constructors[2] || missing_component, "svelte:component").$$render(
-                  $$result,
-                  { data: data_2, form, this: components[2] },
-                  {
-                    this: ($$value) => {
-                      components[2] = $$value;
-                      $$settled = false;
-                    }
-                  },
-                  {}
-                )}`}`;
-              }
-            }
-          )}` : `${validate_component(constructors[1] || missing_component, "svelte:component").$$render(
+          return `${validate_component(constructors[1] || missing_component, "svelte:component").$$render(
             $$result,
             { data: data_1, form, this: components[1] },
             {
@@ -156,7 +75,7 @@ const Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
               }
             },
             {}
-          )}`}`;
+          )}`;
         }
       }
     )}` : `${validate_component(constructors[0] || missing_component, "svelte:component").$$render(
@@ -259,7 +178,7 @@ const options = {
 		<div class="error">
 			<span class="status">` + status + '</span>\n			<div class="message">\n				<h1>' + message + "</h1>\n			</div>\n		</div>\n	</body>\n</html>\n"
   },
-  version_hash: "ao6z5j"
+  version_hash: "x8j83j"
 };
 function get_hooks() {
   return {};

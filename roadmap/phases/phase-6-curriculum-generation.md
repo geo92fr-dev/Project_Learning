@@ -15,6 +15,7 @@
 ### 🧠 **Intelligence Artificielle Pédagogique**
 
 **Algorithmes de Curriculum :**
+
 - **Graph-based Learning Paths** : Dépendances entre compétences modélisées en graphe
 - **Reinforcement Learning** : Optimisation continue basée sur outcomes
 - **Collaborative Filtering** : Recommandations basées sur apprenants similaires
@@ -22,6 +23,7 @@
 - **Multi-Armed Bandit** : A/B testing intelligent des parcours
 
 **Moteur de Recommandation :**
+
 - **Cold Start Problem** : Gestion nouveaux utilisateurs sans historique
 - **Diversity vs Accuracy** : Balance exploration/exploitation
 - **Serendipity Factor** : Découvertes inattendues mais pertinentes
@@ -31,6 +33,7 @@
 ### 📊 **Architecture des Données Curriculum**
 
 **Graphe de Connaissances :**
+
 - **Nodes** : Compétences, concepts, ressources
 - **Edges** : Relations (prerequis, recommandé_après, complément)
 - **Weights** : Force des relations, difficulté transitions
@@ -38,6 +41,7 @@
 - **Dynamic Updates** : Évolution basée sur analytics
 
 **Modèles Prédictifs :**
+
 - **Knowledge Tracing** : Estimation probabilité de maîtrise
 - **Performance Prediction** : Prédiction réussite parcours
 - **Dropout Prevention** : Détection risque abandon
@@ -47,6 +51,7 @@
 ### 🔬 **Approche Qualité & Recherche**
 
 **Validation Scientifique :**
+
 - **Randomized Controlled Trials** : Efficacité vs approches traditionnelles
 - **Learning Gain Analysis** : Mesure amélioration réelle compétences
 - **Retention Studies** : Mémorisation long terme
@@ -58,12 +63,14 @@
 ## 📚 **Références Modulaires**
 
 ### **[REF]** Algorithmes ML : **[machine-learning.md](../references/ai/machine-learning.md)**
+
 - ✅ Implémentation algorithmes de recommandation
 - ✅ Modèles de prédiction performance
 - ✅ Système de feedback en temps réel
 - ✅ A/B testing framework intégré
 
 ### **[REF]** Graphes de connaissances : **[knowledge-graphs.md](../references/ai/knowledge-graphs.md)**
+
 - ✅ Modélisation relations entre compétences
 - ✅ Algorithmes de pathfinding pédagogique
 - ✅ Visualisation interactive des parcours
@@ -78,16 +85,19 @@
 **⚡ Approche en 3 étapes pour réduire les risques :**
 
 **[PHASE-6.1] Validation Matière Pilote (Jour 1) :**
+
 - **Matière** : Mathématiques 6ème (5 compétences de base)
 - **Objectif** : Valider architecture + pipeline de génération
 - **Livrables** : 1 matière complète fonctionnelle
 
 **[PHASE-6.2] Templates et Scripts d'Automatisation (Jour 2) :**
+
 - **Scripts** : `generate-curriculum.js` + `firebase-bulk-import.js`
 - **Templates** : Structures pré-remplies pour accélération
 - **Validation** : Tests automatisés de génération
 
 **[PHASE-6.3] Génération Automatique Massive (Jour 3) :**
+
 - **Exécution** : 6 matières × 4 niveaux × 5 compétences = 120 items
 - **Monitoring** : Surveillance performance et coûts Firebase
 - **Validation** : Contrôle qualité et cohérence
@@ -97,45 +107,52 @@
 **[FILE]** Créer `scripts/generate-curriculum.js` - **SCRIPT ESSENTIEL** :
 
 ```javascript
-const admin = require('firebase-admin');
-const fs = require('fs');
+const admin = require("firebase-admin");
+const fs = require("fs");
 
 // Configuration des matières et niveaux
-const matters = ['Math', 'Français', 'Histoire-Géo', 'Sciences', 'Anglais', 'Arts & Techno'];
-const levels = ['6ème', '5ème', '4ème', '3ème'];
+const matters = [
+  "Math",
+  "Français",
+  "Histoire-Géo",
+  "Sciences",
+  "Anglais",
+  "Arts & Techno",
+];
+const levels = ["6ème", "5ème", "4ème", "3ème"];
 const skillsPerLevel = 5; // 5 compétences par niveau/matière
 
 // Templates de compétences par matière
 const skillTemplates = {
-  'Math': [
-    'Calculs et opérations',
-    'Géométrie et mesures', 
-    'Proportionnalité',
-    'Statistiques et probabilités',
-    'Raisonnement mathématique'
+  Math: [
+    "Calculs et opérations",
+    "Géométrie et mesures",
+    "Proportionnalité",
+    "Statistiques et probabilités",
+    "Raisonnement mathématique",
   ],
-  'Français': [
-    'Compréhension écrite',
-    'Expression écrite',
-    'Grammaire et orthographe',
-    'Vocabulaire',
-    'Littérature et culture'
+  Français: [
+    "Compréhension écrite",
+    "Expression écrite",
+    "Grammaire et orthographe",
+    "Vocabulaire",
+    "Littérature et culture",
   ],
   // ... autres matières
 };
 
 async function generateCurriculum() {
-  console.log('🚀 Génération curriculum - 120+ compétences');
-  
+  console.log("🚀 Génération curriculum - 120+ compétences");
+
   let generatedCount = 0;
   const totalItems = matters.length * levels.length * skillsPerLevel;
-  
+
   for (const matter of matters) {
     for (const level of levels) {
       for (let i = 1; i <= skillsPerLevel; i++) {
         const skillId = `${matter.toLowerCase()}-${level.toLowerCase()}-skill-${i}`;
-        const template = skillTemplates[matter]?.[i-1] || `Compétence ${i}`;
-        
+        const template = skillTemplates[matter]?.[i - 1] || `Compétence ${i}`;
+
         const competence = {
           id: skillId,
           name: `${template} - ${level}`,
@@ -144,29 +161,31 @@ async function generateCurriculum() {
           level: parseInt(level.charAt(0)) - 5, // 6ème = 1, 5ème = 2, etc.
           metadata: {
             createdAt: new Date().toISOString(),
-            createdBy: 'curriculum-generator',
+            createdBy: "curriculum-generator",
             isActive: true,
-            autoGenerated: true
-          }
+            autoGenerated: true,
+          },
         };
-        
+
         console.log(`✅ Généré: ${skillId}`);
         generatedCount++;
-        
+
         // Sauvegarde (à implémenter selon la stratégie)
         await saveCompetence(competence);
       }
     }
   }
-  
-  console.log(`🎉 Génération terminée: ${generatedCount}/${totalItems} compétences`);
+
+  console.log(
+    `🎉 Génération terminée: ${generatedCount}/${totalItems} compétences`
+  );
 }
 
 async function saveCompetence(competence) {
   // Phase 6.1: Validation locale
   // Phase 6.3: Import Firebase
   const output = JSON.stringify(competence, null, 2);
-  fs.appendFileSync('generated-curriculum.json', output + ',\n');
+  fs.appendFileSync("generated-curriculum.json", output + ",\n");
 }
 
 // Exécution
@@ -180,67 +199,70 @@ module.exports = { generateCurriculum, skillTemplates };
 **[FILE]** Créer `scripts/firebase-bulk-import.js` - **IMPORT OPTIMISÉ** :
 
 ```javascript
-const admin = require('firebase-admin');
-const fs = require('fs');
+const admin = require("firebase-admin");
+const fs = require("fs");
 
 // Initialisation Firebase Admin
 admin.initializeApp({
-  credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_ADMIN_SDK_KEY))
+  credential: admin.credential.cert(
+    JSON.parse(process.env.FIREBASE_ADMIN_SDK_KEY)
+  ),
 });
 
 const db = admin.firestore();
 
 async function bulkImportCurriculum() {
-  console.log('📥 Import masse Firebase en cours...');
-  
+  console.log("📥 Import masse Firebase en cours...");
+
   try {
-    const curriculumData = JSON.parse(fs.readFileSync('generated-curriculum.json', 'utf8'));
-    
+    const curriculumData = JSON.parse(
+      fs.readFileSync("generated-curriculum.json", "utf8")
+    );
+
     // Import par batch pour optimiser performance
     const batchSize = 500; // Limite Firestore
     const batches = [];
-    
+
     for (let i = 0; i < curriculumData.length; i += batchSize) {
       const batch = db.batch();
       const chunk = curriculumData.slice(i, i + batchSize);
-      
-      chunk.forEach(item => {
-        const docRef = db.collection('competences').doc(item.id);
+
+      chunk.forEach((item) => {
+        const docRef = db.collection("competences").doc(item.id);
         batch.set(docRef, item);
       });
-      
+
       batches.push(batch.commit());
     }
-    
+
     await Promise.all(batches);
     console.log(`✅ Import réussi: ${curriculumData.length} documents`);
-    
+
     // Monitoring coûts
     console.log(`💰 Coût estimé: ${curriculumData.length} écritures Firestore`);
-    
   } catch (error) {
-    console.error('❌ Erreur import:', error);
+    console.error("❌ Erreur import:", error);
     throw error;
   }
 }
 
 // Validation des données avant import
 async function validateCurriculumData() {
-  const data = JSON.parse(fs.readFileSync('generated-curriculum.json', 'utf8'));
-  
+  const data = JSON.parse(fs.readFileSync("generated-curriculum.json", "utf8"));
+
   const validation = {
     totalItems: data.length,
-    matters: [...new Set(data.map(item => item.category))],
-    levels: [...new Set(data.map(item => item.level))],
-    duplicates: data.length - new Set(data.map(item => item.id)).size
+    matters: [...new Set(data.map((item) => item.category))],
+    levels: [...new Set(data.map((item) => item.level))],
+    duplicates: data.length - new Set(data.map((item) => item.id)).size,
   };
-  
-  console.log('📊 Validation données:', validation);
-  
+
+  console.log("📊 Validation données:", validation);
+
   if (validation.duplicates > 0) {
     throw new Error(`❌ ${validation.duplicates} IDs dupliqués détectés`);
   }
-  
+
   return validation;
 }
 
@@ -252,8 +274,12 @@ module.exports = { bulkImportCurriculum, validateCurriculumData };
 **[FILE]** Créer `src/lib/curriculum/curriculumEngine.ts` :
 
 ```ts
-import { z } from 'zod';
-import type { UserProfile, Competence, Course } from '$lib/firebase/collections';
+import { z } from "zod";
+import type {
+  UserProfile,
+  Competence,
+  Course,
+} from "$lib/firebase/collections";
 
 // ===== TYPES DE CURRICULUM =====
 export const LearningPathSchema = z.object({
@@ -264,63 +290,95 @@ export const LearningPathSchema = z.object({
   targetCompetences: z.array(z.string()),
   estimatedDuration: z.number(), // en heures
   difficulty: z.number().min(0).max(1),
-  nodes: z.array(z.object({
-    id: z.string(),
-    type: z.enum(['competence', 'course', 'assessment', 'milestone']),
-    resourceId: z.string(),
-    title: z.string(),
-    position: z.object({
-      x: z.number(),
-      y: z.number()
-    }),
-    prerequisites: z.array(z.string()).default([]),
-    estimatedTime: z.number(), // minutes
-    difficulty: z.number().min(0).max(1),
-    priority: z.number().min(0).max(1).default(0.5)
-  })),
-  edges: z.array(z.object({
-    from: z.string(),
-    to: z.string(),
-    type: z.enum(['prerequisite', 'recommended', 'optional', 'alternative']),
-    weight: z.number().min(0).max(1).default(1),
-    condition: z.string().optional() // Condition pour débloquer
-  })),
-  adaptiveRules: z.array(z.object({
-    trigger: z.object({
-      type: z.enum(['performance', 'time', 'engagement', 'completion']),
-      threshold: z.number(),
-      comparison: z.enum(['greater', 'less', 'equal'])
-    }),
-    action: z.object({
-      type: z.enum(['skip', 'repeat', 'branch', 'recommend', 'adjust_difficulty']),
-      parameters: z.record(z.unknown())
+  nodes: z.array(
+    z.object({
+      id: z.string(),
+      type: z.enum(["competence", "course", "assessment", "milestone"]),
+      resourceId: z.string(),
+      title: z.string(),
+      position: z.object({
+        x: z.number(),
+        y: z.number(),
+      }),
+      prerequisites: z.array(z.string()).default([]),
+      estimatedTime: z.number(), // minutes
+      difficulty: z.number().min(0).max(1),
+      priority: z.number().min(0).max(1).default(0.5),
     })
-  })).default([]),
+  ),
+  edges: z.array(
+    z.object({
+      from: z.string(),
+      to: z.string(),
+      type: z.enum(["prerequisite", "recommended", "optional", "alternative"]),
+      weight: z.number().min(0).max(1).default(1),
+      condition: z.string().optional(), // Condition pour débloquer
+    })
+  ),
+  adaptiveRules: z
+    .array(
+      z.object({
+        trigger: z.object({
+          type: z.enum(["performance", "time", "engagement", "completion"]),
+          threshold: z.number(),
+          comparison: z.enum(["greater", "less", "equal"]),
+        }),
+        action: z.object({
+          type: z.enum([
+            "skip",
+            "repeat",
+            "branch",
+            "recommend",
+            "adjust_difficulty",
+          ]),
+          parameters: z.record(z.unknown()),
+        }),
+      })
+    )
+    .default([]),
   personalization: z.object({
-    learningStyle: z.enum(['visual', 'auditory', 'kinesthetic', 'reading', 'mixed']),
-    pacePreference: z.enum(['slow', 'normal', 'fast']),
+    learningStyle: z.enum([
+      "visual",
+      "auditory",
+      "kinesthetic",
+      "reading",
+      "mixed",
+    ]),
+    pacePreference: z.enum(["slow", "normal", "fast"]),
     difficultyPreference: z.number().min(0).max(1),
     interestTags: z.array(z.string()).default([]),
-    availableTimeSlots: z.array(z.object({
-      day: z.enum(['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']),
-      startTime: z.string(), // HH:MM
-      endTime: z.string(),
-      effectiveness: z.number().min(0).max(1).default(1) // Productivité dans ce créneau
-    })).default([])
+    availableTimeSlots: z
+      .array(
+        z.object({
+          day: z.enum([
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday",
+          ]),
+          startTime: z.string(), // HH:MM
+          endTime: z.string(),
+          effectiveness: z.number().min(0).max(1).default(1), // Productivité dans ce créneau
+        })
+      )
+      .default([]),
   }),
   metadata: z.object({
-    version: z.string().default('1.0'),
+    version: z.string().default("1.0"),
     generatedAt: z.string(),
     algorithm: z.string(), // Algorithme utilisé pour génération
     confidence: z.number().min(0).max(1), // Confiance dans la recommandation
     lastOptimized: z.string(),
-    isActive: z.boolean().default(true)
-  })
+    isActive: z.boolean().default(true),
+  }),
 });
 
 export type LearningPath = z.infer<typeof LearningPathSchema>;
-export type LearningNode = LearningPath['nodes'][0];
-export type LearningEdge = LearningPath['edges'][0];
+export type LearningNode = LearningPath["nodes"][0];
+export type LearningEdge = LearningPath["edges"][0];
 
 // ===== CONTEXTE DE GÉNÉRATION =====
 export interface GenerationContext {
@@ -369,19 +427,29 @@ export class CurriculumEngine {
   /**
    * Génère un parcours d'apprentissage personnalisé
    */
-  async generateLearningPath(context: GenerationContext): Promise<LearningPath> {
+  async generateLearningPath(
+    context: GenerationContext
+  ): Promise<LearningPath> {
     // 1. Analyser les compétences cibles et leurs dépendances
-    const targetNodes = await this.analyzeTargetCompetences(context.targetGoals);
-    
+    const targetNodes = await this.analyzeTargetCompetences(
+      context.targetGoals
+    );
+
     // 2. Construire le graphe de prérequis
-    const prerequisiteGraph = await this.buildPrerequisiteGraph(targetNodes, context);
-    
+    const prerequisiteGraph = await this.buildPrerequisiteGraph(
+      targetNodes,
+      context
+    );
+
     // 3. Optimiser le parcours selon le profil utilisateur
     const optimizedPath = await this.optimizePath(prerequisiteGraph, context);
-    
+
     // 4. Ajouter les règles adaptatives
-    const adaptiveRules = await this.generateAdaptiveRules(optimizedPath, context);
-    
+    const adaptiveRules = await this.generateAdaptiveRules(
+      optimizedPath,
+      context
+    );
+
     // 5. Personnaliser selon les préférences
     const personalizedPath = await this.personalizePath(optimizedPath, context);
 
@@ -399,18 +467,19 @@ export class CurriculumEngine {
       personalization: {
         learningStyle: context.preferences.learningStyle as any,
         pacePreference: this.determinePacePreference(context),
-        difficultyPreference: context.userProfile.learningProfile.difficultyPreference,
+        difficultyPreference:
+          context.userProfile.learningProfile.difficultyPreference,
         interestTags: context.userProfile.learningProfile.interests,
-        availableTimeSlots: []
+        availableTimeSlots: [],
       },
       metadata: {
-        version: '1.0',
+        version: "1.0",
         generatedAt: new Date().toISOString(),
-        algorithm: 'HybridRecommendation_v2',
+        algorithm: "HybridRecommendation_v2",
         confidence: this.calculateConfidence(personalizedPath, context),
         lastOptimized: new Date().toISOString(),
-        isActive: true
-      }
+        isActive: true,
+      },
     };
   }
 
@@ -418,24 +487,27 @@ export class CurriculumEngine {
    * Adapte un parcours existant basé sur les performances
    */
   async adaptPath(
-    currentPath: LearningPath, 
+    currentPath: LearningPath,
     performanceData: PerformanceData[],
     userProgress: any
   ): Promise<LearningPath> {
     // Analyser les performances récentes
     const performanceAnalysis = this.analyzePerformance(performanceData);
-    
+
     // Identifier les zones de difficulté
     const strugglingAreas = this.identifyStrugglingAreas(performanceAnalysis);
-    
+
     // Ajuster la difficulté et le rythme
-    const adjustedPath = await this.adjustPathDifficulty(currentPath, performanceAnalysis);
-    
+    const adjustedPath = await this.adjustPathDifficulty(
+      currentPath,
+      performanceAnalysis
+    );
+
     // Ajouter du contenu de renforcement si nécessaire
     if (strugglingAreas.length > 0) {
       return this.addReinforcementContent(adjustedPath, strugglingAreas);
     }
-    
+
     return adjustedPath;
   }
 
@@ -443,54 +515,58 @@ export class CurriculumEngine {
    * Recommande le prochain élément à étudier
    */
   async getNextRecommendation(
-    path: LearningPath, 
+    path: LearningPath,
     currentProgress: any,
     context: Partial<GenerationContext>
   ): Promise<NextRecommendation> {
     // Identifier les nœuds disponibles (prérequis satisfaits)
     const availableNodes = this.getAvailableNodes(path, currentProgress);
-    
+
     // Scorer chaque option selon multiple critères
     const scoredOptions = await Promise.all(
-      availableNodes.map(node => this.scoreRecommendation(node, path, context))
+      availableNodes.map((node) =>
+        this.scoreRecommendation(node, path, context)
+      )
     );
-    
+
     // Sélectionner la meilleure option
     const bestOption = scoredOptions.sort((a, b) => b.score - a.score)[0];
-    
+
     // Générer des alternatives
     const alternatives = scoredOptions
-      .filter(option => option.node.id !== bestOption.node.id)
+      .filter((option) => option.node.id !== bestOption.node.id)
       .slice(0, 3);
 
     return {
       primary: bestOption,
       alternatives,
       reasoning: this.generateRecommendationReasoning(bestOption, alternatives),
-      adaptations: await this.generateAdaptations(bestOption.node, context)
+      adaptations: await this.generateAdaptations(bestOption.node, context),
     };
   }
 
   // ===== MÉTHODES PRIVÉES =====
 
-  private async analyzeTargetCompetences(targetIds: string[]): Promise<CompetenceNode[]> {
+  private async analyzeTargetCompetences(
+    targetIds: string[]
+  ): Promise<CompetenceNode[]> {
     // Charger les compétences depuis Firebase
     const competences = await Promise.all(
-      targetIds.map(id => this.loadCompetenceById(id))
+      targetIds.map((id) => this.loadCompetenceById(id))
     );
-    
-    return competences.map(comp => ({
+
+    return competences.map((comp) => ({
       id: comp.id,
       name: comp.name,
       level: comp.level,
       prerequisites: comp.prerequisites,
       difficulty: this.calculateCompetenceDifficulty(comp),
-      estimatedTime: this.estimateCompetenceTime(comp)
+      estimatedTime: this.estimateCompetenceTime(comp),
     }));
   }
 
   private async buildPrerequisiteGraph(
-    targets: CompetenceNode[], 
+    targets: CompetenceNode[],
     context: GenerationContext
   ): Promise<PathGraph> {
     const graph = new Map<string, GraphNode>();
@@ -514,15 +590,18 @@ export class CurriculumEngine {
     visited.add(competenceId);
 
     const competence = await this.loadCompetenceById(competenceId);
-    const resources = await this.findResourcesForCompetence(competenceId, context);
+    const resources = await this.findResourcesForCompetence(
+      competenceId,
+      context
+    );
 
     // Ajouter le nœud de compétence
     graph.set(competenceId, {
       id: competenceId,
-      type: 'competence',
+      type: "competence",
       data: competence,
       resources,
-      prerequisites: competence.prerequisites
+      prerequisites: competence.prerequisites,
     });
 
     // Traiter récursivement les prérequis
@@ -531,16 +610,19 @@ export class CurriculumEngine {
     }
   }
 
-  private async optimizePath(graph: PathGraph, context: GenerationContext): Promise<OptimizedPath> {
+  private async optimizePath(
+    graph: PathGraph,
+    context: GenerationContext
+  ): Promise<OptimizedPath> {
     // Algorithme de pathfinding optimal selon profil utilisateur
     const algorithm = this.selectOptimizationAlgorithm(context);
-    
+
     switch (algorithm) {
-      case 'shortest_path':
+      case "shortest_path":
         return this.findShortestPath(graph, context);
-      case 'balanced_difficulty':
+      case "balanced_difficulty":
         return this.findBalancedDifficultyPath(graph, context);
-      case 'engagement_optimized':
+      case "engagement_optimized":
         return this.findEngagementOptimizedPath(graph, context);
       default:
         return this.findHybridOptimalPath(graph, context);
@@ -549,61 +631,75 @@ export class CurriculumEngine {
 
   private selectOptimizationAlgorithm(context: GenerationContext): string {
     const profile = context.userProfile;
-    
+
     // Algorithme basé sur profil et préférences
-    if (profile.progressTracking.averageScore && profile.progressTracking.averageScore > 0.8) {
-      return 'shortest_path'; // Apprenant avancé, chemin direct
+    if (
+      profile.progressTracking.averageScore &&
+      profile.progressTracking.averageScore > 0.8
+    ) {
+      return "shortest_path"; // Apprenant avancé, chemin direct
     } else if (profile.learningProfile.difficultyPreference < 0.3) {
-      return 'balanced_difficulty'; // Préfère progressif
+      return "balanced_difficulty"; // Préfère progressif
     } else {
-      return 'engagement_optimized'; // Focus sur l'engagement
+      return "engagement_optimized"; // Focus sur l'engagement
     }
   }
 
-  private calculateConfidence(path: OptimizedPath, context: GenerationContext): number {
+  private calculateConfidence(
+    path: OptimizedPath,
+    context: GenerationContext
+  ): number {
     let confidence = 0.7; // Base
-    
+
     // Augmenter confiance selon données disponibles
     if (context.historicalPerformance.length > 5) confidence += 0.1;
-    if (context.currentKnowledge && Object.keys(context.currentKnowledge).length > 3) confidence += 0.1;
-    if (context.userProfile.progressTracking.coursesCompleted > 2) confidence += 0.1;
-    
+    if (
+      context.currentKnowledge &&
+      Object.keys(context.currentKnowledge).length > 3
+    )
+      confidence += 0.1;
+    if (context.userProfile.progressTracking.coursesCompleted > 2)
+      confidence += 0.1;
+
     return Math.min(1, confidence);
   }
 
-  private generateAdaptiveRules(path: OptimizedPath, context: GenerationContext): AdaptiveRule[] {
+  private generateAdaptiveRules(
+    path: OptimizedPath,
+    context: GenerationContext
+  ): AdaptiveRule[] {
     const rules: AdaptiveRule[] = [];
 
     // Règle : Si performance faible, ajouter renforcement
     rules.push({
       trigger: {
-        type: 'performance',
+        type: "performance",
         threshold: 0.6,
-        comparison: 'less'
+        comparison: "less",
       },
       action: {
-        type: 'recommend',
+        type: "recommend",
         parameters: {
-          contentType: 'reinforcement',
-          difficulty: 'easier'
-        }
-      }
+          contentType: "reinforcement",
+          difficulty: "easier",
+        },
+      },
     });
 
     // Règle : Si temps dépassé, suggérer pause
     rules.push({
       trigger: {
-        type: 'time',
+        type: "time",
         threshold: context.preferences.sessionDuration * 1.5,
-        comparison: 'greater'
+        comparison: "greater",
       },
       action: {
-        type: 'recommend',
+        type: "recommend",
         parameters: {
-          action: 'take_break',
-          duration: 15
-        }
-      }
+          action: "take_break",
+          duration: 15,
+        },
+      },
     });
 
     return rules;
@@ -622,7 +718,7 @@ interface CompetenceNode {
 
 interface GraphNode {
   id: string;
-  type: 'competence' | 'course' | 'assessment';
+  type: "competence" | "course" | "assessment";
   data: any;
   resources: any[];
   prerequisites: string[];
@@ -664,7 +760,7 @@ interface Adaptation {
   parameters: Record<string, any>;
 }
 
-type AdaptiveRule = LearningPath['adaptiveRules'][0];
+type AdaptiveRule = LearningPath["adaptiveRules"][0];
 
 // ===== GRAPHE DE CONNAISSANCES =====
 export class KnowledgeGraph {
@@ -705,8 +801,12 @@ export const curriculumEngine = new CurriculumEngine();
 **[FILE]** Créer `src/lib/curriculum/recommendationEngine.ts` :
 
 ```ts
-import type { UserProfile, Course, Competence } from '$lib/firebase/collections';
-import type { PerformanceData } from './curriculumEngine';
+import type {
+  UserProfile,
+  Course,
+  Competence,
+} from "$lib/firebase/collections";
+import type { PerformanceData } from "./curriculumEngine";
 
 // ===== TYPES DE RECOMMANDATION =====
 export interface RecommendationRequest {
@@ -720,10 +820,10 @@ export interface RecommendationContext {
   currentCompetences: string[];
   targetGoals: string[];
   sessionTimeAvailable: number; // minutes
-  deviceType: 'mobile' | 'tablet' | 'desktop';
-  timeOfDay: 'morning' | 'afternoon' | 'evening';
-  mood?: 'motivated' | 'tired' | 'curious' | 'stressed';
-  environment: 'home' | 'commute' | 'work' | 'library';
+  deviceType: "mobile" | "tablet" | "desktop";
+  timeOfDay: "morning" | "afternoon" | "evening";
+  mood?: "motivated" | "tired" | "curious" | "stressed";
+  environment: "home" | "commute" | "work" | "library";
 }
 
 export interface RecommendationFilters {
@@ -736,7 +836,7 @@ export interface RecommendationFilters {
 
 export interface Recommendation {
   id: string;
-  type: 'course' | 'exercise' | 'reading' | 'video' | 'practice';
+  type: "course" | "exercise" | "reading" | "video" | "practice";
   resourceId: string;
   title: string;
   description: string;
@@ -766,7 +866,7 @@ export interface RecommendationReasoning {
 }
 
 export interface RecommendationAdaptation {
-  type: 'content' | 'presentation' | 'interaction';
+  type: "content" | "presentation" | "interaction";
   modification: string;
   reason: string;
 }
@@ -781,19 +881,21 @@ export class RecommendationEngine {
   /**
    * Génère des recommandations personnalisées
    */
-  async generateRecommendations(request: RecommendationRequest): Promise<Recommendation[]> {
+  async generateRecommendations(
+    request: RecommendationRequest
+  ): Promise<Recommendation[]> {
     const userProfile = await this.getUserProfile(request.userId);
-    
+
     // 1. Recommandations content-based (basées sur profil utilisateur)
     const contentBasedRecs = await this.generateContentBasedRecommendations(
-      userProfile, 
-      request.context, 
+      userProfile,
+      request.context,
       request.filters
     );
 
     // 2. Recommandations collaborative filtering (basées sur utilisateurs similaires)
     const collaborativeRecs = await this.generateCollaborativeRecommendations(
-      userProfile, 
+      userProfile,
       request.context
     );
 
@@ -807,11 +909,14 @@ export class RecommendationEngine {
     const hybridRecs = this.combineRecommendations([
       { recommendations: contentBasedRecs, weight: 0.4 },
       { recommendations: collaborativeRecs, weight: 0.3 },
-      { recommendations: contextualRecs, weight: 0.3 }
+      { recommendations: contextualRecs, weight: 0.3 },
     ]);
 
     // 5. Diversification et re-ranking
-    const diversifiedRecs = this.diversifyRecommendations(hybridRecs, userProfile);
+    const diversifiedRecs = this.diversifyRecommendations(
+      hybridRecs,
+      userProfile
+    );
 
     // 6. Application des filtres
     const filteredRecs = this.applyFilters(diversifiedRecs, request.filters);
@@ -823,8 +928,8 @@ export class RecommendationEngine {
    * Met à jour le modèle basé sur feedback utilisateur
    */
   async updateModel(
-    userId: string, 
-    recommendationId: string, 
+    userId: string,
+    recommendationId: string,
     feedback: RecommendationFeedback
   ): Promise<void> {
     // 1. Enregistrer le feedback
@@ -852,14 +957,19 @@ export class RecommendationEngine {
 
     for (const content of availableContent) {
       const features = await this.extractContentFeatures(content);
-      const score = this.calculateContentBasedScore(userProfile, features, context);
-      
-      if (score > 0.3) { // Seuil minimum
+      const score = this.calculateContentBasedScore(
+        userProfile,
+        features,
+        context
+      );
+
+      if (score > 0.3) {
+        // Seuil minimum
         recommendations.push({
           content,
           score,
-          type: 'content_based',
-          features
+          type: "content_based",
+          features,
         });
       }
     }
@@ -882,9 +992,12 @@ export class RecommendationEngine {
     score += styleMatch * 0.3;
 
     // Correspondance niveau de difficulté (25%)
-    const difficultyMatch = 1 - Math.abs(
-      userProfile.learningProfile.difficultyPreference - contentFeatures.difficulty
-    );
+    const difficultyMatch =
+      1 -
+      Math.abs(
+        userProfile.learningProfile.difficultyPreference -
+          contentFeatures.difficulty
+      );
     score += difficultyMatch * 0.25;
 
     // Correspondance centres d'intérêt (20%)
@@ -920,15 +1033,17 @@ export class RecommendationEngine {
     const recommendations = new Map<string, CollaborativeScore>();
 
     for (const similarUser of similarUsers) {
-      const userContent = await this.getUserPreferredContent(similarUser.userId);
-      
+      const userContent = await this.getUserPreferredContent(
+        similarUser.userId
+      );
+
       for (const [contentId, rating] of userContent) {
         if (!recommendations.has(contentId)) {
           recommendations.set(contentId, {
             contentId,
             totalScore: 0,
             userCount: 0,
-            similarity: 0
+            similarity: 0,
           });
         }
 
@@ -941,17 +1056,18 @@ export class RecommendationEngine {
 
     // 3. Calculer scores finaux
     const scoredRecs: ScoredRecommendation[] = [];
-    
+
     for (const [contentId, data] of recommendations) {
-      if (data.userCount >= 2) { // Minimum 2 utilisateurs similaires
+      if (data.userCount >= 2) {
+        // Minimum 2 utilisateurs similaires
         const content = await this.getContentById(contentId);
         const normalizedScore = data.totalScore / data.similarity;
-        
+
         scoredRecs.push({
           content,
           score: normalizedScore,
-          type: 'collaborative',
-          features: await this.extractContentFeatures(content)
+          type: "collaborative",
+          features: await this.extractContentFeatures(content),
         });
       }
     }
@@ -959,16 +1075,22 @@ export class RecommendationEngine {
     return scoredRecs.sort((a, b) => b.score - a.score);
   }
 
-  private async findSimilarUsers(userId: string, count: number): Promise<SimilarUser[]> {
+  private async findSimilarUsers(
+    userId: string,
+    count: number
+  ): Promise<SimilarUser[]> {
     // Utilise cosine similarity sur vectors de préférences
     const userVector = await this.getUserPreferenceVector(userId);
     const allUsers = await this.getAllUserVectors();
-    
+
     const similarities: SimilarUser[] = [];
-    
+
     for (const [otherUserId, otherVector] of allUsers) {
       if (otherUserId !== userId) {
-        const similarity = this.calculateCosineSimilarity(userVector, otherVector);
+        const similarity = this.calculateCosineSimilarity(
+          userVector,
+          otherVector
+        );
         similarities.push({ userId: otherUserId, similarity });
       }
     }
@@ -984,31 +1106,42 @@ export class RecommendationEngine {
     context: RecommendationContext
   ): Promise<ScoredRecommendation[]> {
     const recommendations: ScoredRecommendation[] = [];
-    
+
     // Adapter selon le contexte temporel et environnemental
     const contextualFactors = this.analyzeContext(context);
-    const availableContent = await this.getContextuallyAppropriateContent(context);
+    const availableContent = await this.getContextuallyAppropriateContent(
+      context
+    );
 
     for (const content of availableContent) {
       const features = await this.extractContentFeatures(content);
       const baseScore = 0.5; // Score de base
-      
+
       // Ajustements contextuels
       let contextualScore = baseScore;
-      
+
       // Ajustement selon temps disponible
       if (features.estimatedDuration <= context.sessionTimeAvailable) {
         contextualScore += 0.2;
-      } else if (features.estimatedDuration > context.sessionTimeAvailable * 1.5) {
+      } else if (
+        features.estimatedDuration >
+        context.sessionTimeAvailable * 1.5
+      ) {
         contextualScore -= 0.3;
       }
 
       // Ajustement selon appareil
-      const deviceMatch = this.calculateDeviceMatch(context.deviceType, features);
+      const deviceMatch = this.calculateDeviceMatch(
+        context.deviceType,
+        features
+      );
       contextualScore += deviceMatch * 0.15;
 
       // Ajustement selon heure de la journée
-      const timeMatch = this.calculateTimeOfDayMatch(context.timeOfDay, features);
+      const timeMatch = this.calculateTimeOfDayMatch(
+        context.timeOfDay,
+        features
+      );
       contextualScore += timeMatch * 0.1;
 
       // Ajustement selon humeur si disponible
@@ -1020,8 +1153,8 @@ export class RecommendationEngine {
       recommendations.push({
         content,
         score: Math.max(0, Math.min(1, contextualScore)),
-        type: 'contextual',
-        features
+        type: "contextual",
+        features,
       });
     }
 
@@ -1037,13 +1170,13 @@ export class RecommendationEngine {
     for (const source of sources) {
       for (const rec of source.recommendations) {
         const contentId = rec.content.id;
-        
+
         if (!combined.has(contentId)) {
           combined.set(contentId, {
             content: rec.content,
             scores: [],
             features: rec.features,
-            types: []
+            types: [],
           });
         }
 
@@ -1055,15 +1188,15 @@ export class RecommendationEngine {
 
     // Calculer score final hybride
     const hybridRecs: ScoredRecommendation[] = [];
-    
+
     for (const [contentId, data] of combined) {
       const finalScore = data.scores.reduce((sum, score) => sum + score, 0);
-      
+
       hybridRecs.push({
         content: data.content,
         score: finalScore,
-        type: 'hybrid',
-        features: data.features
+        type: "hybrid",
+        features: data.features,
       });
     }
 
@@ -1077,24 +1210,24 @@ export class RecommendationEngine {
   ): ScoredRecommendation[] {
     const diversified: ScoredRecommendation[] = [];
     const selectedFeatures = new Set<string>();
-    
+
     // Équilibrer entre accuracy et diversity
     const diversityWeight = 0.3; // 30% pour diversité
-    
+
     for (const rec of recommendations) {
       // Calculer bonus de diversité
       const diversityBonus = this.calculateDiversityBonus(
-        rec.features, 
+        rec.features,
         selectedFeatures,
         userProfile
       );
-      
-      const adjustedScore = rec.score * (1 - diversityWeight) + 
-                           diversityBonus * diversityWeight;
-      
+
+      const adjustedScore =
+        rec.score * (1 - diversityWeight) + diversityBonus * diversityWeight;
+
       diversified.push({
         ...rec,
-        score: adjustedScore
+        score: adjustedScore,
       });
 
       // Marquer features comme sélectionnées
@@ -1123,7 +1256,7 @@ interface ContentFeatures {
 interface ScoredRecommendation {
   content: any;
   score: number;
-  type: 'content_based' | 'collaborative' | 'contextual' | 'hybrid';
+  type: "content_based" | "collaborative" | "contextual" | "hybrid";
   features: ContentFeatures;
 }
 
@@ -1165,8 +1298,8 @@ export const recommendationEngine = new RecommendationEngine();
 **[FILE]** Créer `src/lib/curriculum/curriculumAnalytics.ts` :
 
 ```ts
-import type { LearningPath, PerformanceData } from './curriculumEngine';
-import type { UserProfile } from '$lib/firebase/collections';
+import type { LearningPath, PerformanceData } from "./curriculumEngine";
+import type { UserProfile } from "$lib/firebase/collections";
 
 // ===== ANALYTICS DE CURRICULUM =====
 export interface CurriculumAnalytics {
@@ -1213,9 +1346,9 @@ export interface CurriculumInsights {
 }
 
 export interface Insight {
-  type: 'performance' | 'engagement' | 'learning' | 'satisfaction';
+  type: "performance" | "engagement" | "learning" | "satisfaction";
   description: string;
-  impact: 'high' | 'medium' | 'low';
+  impact: "high" | "medium" | "low";
   evidence: Evidence[];
   recommendations: string[];
 }
@@ -1246,7 +1379,7 @@ export interface Prediction {
 export interface PredictionFactor {
   factor: string;
   importance: number;
-  direction: 'positive' | 'negative';
+  direction: "positive" | "negative";
 }
 
 export interface CurriculumOptimizations {
@@ -1256,10 +1389,10 @@ export interface CurriculumOptimizations {
 }
 
 export interface Optimization {
-  type: 'content' | 'sequence' | 'difficulty' | 'format' | 'timing';
+  type: "content" | "sequence" | "difficulty" | "format" | "timing";
   description: string;
   expectedImpact: number;
-  implementationCost: 'low' | 'medium' | 'high';
+  implementationCost: "low" | "medium" | "high";
   priority: number; // 1-10
   validationPlan: string;
 }
@@ -1274,15 +1407,22 @@ export class CurriculumAnalyticsEngine {
     userProfile: UserProfile,
     performanceHistory: PerformanceData[]
   ): Promise<CurriculumAnalytics> {
-    
     // 1. Calculer métriques de base
     const metrics = await this.calculateMetrics(path, performanceHistory);
-    
+
     // 2. Générer insights
-    const insights = await this.generateInsights(metrics, userProfile, performanceHistory);
-    
+    const insights = await this.generateInsights(
+      metrics,
+      userProfile,
+      performanceHistory
+    );
+
     // 3. Proposer optimisations
-    const optimizations = await this.generateOptimizations(insights, path, userProfile);
+    const optimizations = await this.generateOptimizations(
+      insights,
+      path,
+      userProfile
+    );
 
     return {
       pathId: path.id,
@@ -1290,7 +1430,7 @@ export class CurriculumAnalyticsEngine {
       metrics,
       insights,
       optimizations,
-      generatedAt: new Date().toISOString()
+      generatedAt: new Date().toISOString(),
     };
   }
 
@@ -1310,13 +1450,17 @@ export class CurriculumAnalyticsEngine {
     }
 
     // Pattern 2: Difficulty progression preferences
-    const difficultyPattern = this.analyzeDifficultyProgressionPatterns(performanceData);
+    const difficultyPattern =
+      this.analyzeDifficultyProgressionPatterns(performanceData);
     if (difficultyPattern.significance > 0.7) {
       patterns.push(difficultyPattern);
     }
 
     // Pattern 3: Content format preferences
-    const formatPattern = this.analyzeContentFormatPatterns(userProfiles, performanceData);
+    const formatPattern = this.analyzeContentFormatPatterns(
+      userProfiles,
+      performanceData
+    );
     if (formatPattern.significance > 0.75) {
       patterns.push(formatPattern);
     }
@@ -1371,7 +1515,7 @@ export class CurriculumAnalyticsEngine {
       ...optimizedPath.metadata,
       lastOptimized: new Date().toISOString(),
       version: this.incrementVersion(optimizedPath.metadata.version),
-      confidence: this.recalculateConfidence(optimizedPath, analytics)
+      confidence: this.recalculateConfidence(optimizedPath, analytics),
     };
 
     return optimizedPath;
@@ -1384,25 +1528,31 @@ export class CurriculumAnalyticsEngine {
     performanceHistory: PerformanceData[]
   ): Promise<CurriculumMetrics> {
     return {
-      completion: await this.calculateCompletionMetrics(path, performanceHistory),
+      completion: await this.calculateCompletionMetrics(
+        path,
+        performanceHistory
+      ),
       engagement: await this.calculateEngagementMetrics(performanceHistory),
       learning: await this.calculateLearningMetrics(performanceHistory),
-      satisfaction: await this.calculateSatisfactionMetrics(path.userId)
+      satisfaction: await this.calculateSatisfactionMetrics(path.userId),
     };
   }
 
   private async calculateCompletionMetrics(
     path: LearningPath,
     performanceHistory: PerformanceData[]
-  ): Promise<CurriculumMetrics['completion']> {
-    const completedNodes = performanceHistory.filter(p => p.masteryAchieved >= 0.7);
+  ): Promise<CurriculumMetrics["completion"]> {
+    const completedNodes = performanceHistory.filter(
+      (p) => p.masteryAchieved >= 0.7
+    );
     const totalNodes = path.nodes.length;
-    
+
     return {
       overall: completedNodes.length / totalNodes,
       byModule: this.calculateModuleCompletion(path, performanceHistory),
-      timeToCompletion: this.calculateAverageTimeToCompletion(performanceHistory),
-      abandonmentRate: await this.calculateAbandonmentRate(path.userId)
+      timeToCompletion:
+        this.calculateAverageTimeToCompletion(performanceHistory),
+      abandonmentRate: await this.calculateAbandonmentRate(path.userId),
     };
   }
 
@@ -1415,38 +1565,50 @@ export class CurriculumAnalyticsEngine {
       strengths: [],
       weaknesses: [],
       patterns: [],
-      predictions: []
+      predictions: [],
     };
 
     // Analyser forces
     if (metrics.engagement.returnRate > 0.8) {
       insights.strengths.push({
-        type: 'engagement',
-        description: 'Excellent taux de retour - le contenu maintient l\'intérêt',
-        impact: 'high',
-        evidence: [{
-          metric: 'returnRate',
-          value: metrics.engagement.returnRate,
-          benchmark: 0.7,
-          significance: 0.95
-        }],
-        recommendations: ['Maintenir le format de contenu actuel', 'Reproduire ce pattern dans autres modules']
+        type: "engagement",
+        description:
+          "Excellent taux de retour - le contenu maintient l'intérêt",
+        impact: "high",
+        evidence: [
+          {
+            metric: "returnRate",
+            value: metrics.engagement.returnRate,
+            benchmark: 0.7,
+            significance: 0.95,
+          },
+        ],
+        recommendations: [
+          "Maintenir le format de contenu actuel",
+          "Reproduire ce pattern dans autres modules",
+        ],
       });
     }
 
     // Analyser faiblesses
     if (metrics.completion.overall < 0.6) {
       insights.weaknesses.push({
-        type: 'performance',
-        description: 'Taux de complétion faible - possible problème de difficulté ou engagement',
-        impact: 'high',
-        evidence: [{
-          metric: 'completionRate',
-          value: metrics.completion.overall,
-          benchmark: 0.75,
-          significance: 0.9
-        }],
-        recommendations: ['Réviser la progression de difficulté', 'Ajouter plus de feedback intermédiaire']
+        type: "performance",
+        description:
+          "Taux de complétion faible - possible problème de difficulté ou engagement",
+        impact: "high",
+        evidence: [
+          {
+            metric: "completionRate",
+            value: metrics.completion.overall,
+            benchmark: 0.75,
+            significance: 0.9,
+          },
+        ],
+        recommendations: [
+          "Réviser la progression de difficulté",
+          "Ajouter plus de feedback intermédiaire",
+        ],
       });
     }
 
@@ -1464,36 +1626,36 @@ export class CurriculumAnalyticsEngine {
 
     // Optimisations immédiates basées sur insights
     for (const weakness of insights.weaknesses) {
-      if (weakness.impact === 'high') {
+      if (weakness.impact === "high") {
         immediate.push({
           type: this.mapInsightToOptimizationType(weakness),
           description: `Correction immédiate: ${weakness.description}`,
           expectedImpact: 0.8,
-          implementationCost: 'low',
+          implementationCost: "low",
           priority: 9,
-          validationPlan: 'A/B test sur 100 utilisateurs pendant 1 semaine'
+          validationPlan: "A/B test sur 100 utilisateurs pendant 1 semaine",
         });
       }
     }
 
     // Optimisations à court terme
     shortTerm.push({
-      type: 'sequence',
-      description: 'Réorganiser modules selon données de performance',
+      type: "sequence",
+      description: "Réorganiser modules selon données de performance",
       expectedImpact: 0.6,
-      implementationCost: 'medium',
+      implementationCost: "medium",
       priority: 7,
-      validationPlan: 'Cohorte pilote de 200 utilisateurs'
+      validationPlan: "Cohorte pilote de 200 utilisateurs",
     });
 
     // Optimisations à long terme
     longTerm.push({
-      type: 'content',
-      description: 'Développer contenu adaptatif basé sur IA',
+      type: "content",
+      description: "Développer contenu adaptatif basé sur IA",
       expectedImpact: 0.9,
-      implementationCost: 'high',
+      implementationCost: "high",
       priority: 8,
-      validationPlan: 'Déploiement progressif avec mesures longitudinales'
+      validationPlan: "Déploiement progressif avec mesures longitudinales",
     });
 
     return { immediate, shortTerm, longTerm };
@@ -1505,34 +1667,55 @@ export class CurriculumAnalyticsEngine {
   ): Promise<Prediction> {
     // Modèle prédictif basé sur historique utilisateur et similarités
     const features = this.extractPredictionFeatures(path, userProfile);
-    const completionProb = await this.applyMLModel('completion_prediction', features);
+    const completionProb = await this.applyMLModel(
+      "completion_prediction",
+      features
+    );
 
     return {
-      target: 'completion_probability',
+      target: "completion_probability",
       value: completionProb,
       confidence: 0.85,
-      timeframe: '30 days',
+      timeframe: "30 days",
       factors: [
-        { factor: 'previous_completion_rate', importance: 0.4, direction: 'positive' },
-        { factor: 'learning_style_match', importance: 0.3, direction: 'positive' },
-        { factor: 'available_time', importance: 0.2, direction: 'positive' },
-        { factor: 'difficulty_preference', importance: 0.1, direction: 'positive' }
-      ]
+        {
+          factor: "previous_completion_rate",
+          importance: 0.4,
+          direction: "positive",
+        },
+        {
+          factor: "learning_style_match",
+          importance: 0.3,
+          direction: "positive",
+        },
+        { factor: "available_time", importance: 0.2, direction: "positive" },
+        {
+          factor: "difficulty_preference",
+          importance: 0.1,
+          direction: "positive",
+        },
+      ],
     };
   }
 
-  private extractPredictionFeatures(path: LearningPath, userProfile: UserProfile): number[] {
+  private extractPredictionFeatures(
+    path: LearningPath,
+    userProfile: UserProfile
+  ): number[] {
     // Extraction features pour modèle ML
     return [
       userProfile.progressTracking.coursesCompleted / 10, // Normaliser
       userProfile.progressTracking.averageScore || 0.5,
       path.difficulty,
       path.estimatedDuration / 100, // Normaliser
-      userProfile.learningProfile.difficultyPreference
+      userProfile.learningProfile.difficultyPreference,
     ];
   }
 
-  private async applyMLModel(modelName: string, features: number[]): Promise<number> {
+  private async applyMLModel(
+    modelName: string,
+    features: number[]
+  ): Promise<number> {
     // Interface avec modèle ML (TensorFlow.js, API externe, etc.)
     // Simulation pour l'exemple
     return Math.random() * 0.4 + 0.6; // Score entre 0.6 et 1.0
@@ -1559,11 +1742,11 @@ export const curriculumAnalytics = new CurriculumAnalyticsEngine();
 **[FILE]** Créer `src/lib/curriculum/curriculumEngine.test.ts` :
 
 ```ts
-import { describe, it, expect, beforeEach } from 'vitest';
-import { CurriculumEngine } from './curriculumEngine';
-import type { GenerationContext } from './curriculumEngine';
+import { describe, it, expect, beforeEach } from "vitest";
+import { CurriculumEngine } from "./curriculumEngine";
+import type { GenerationContext } from "./curriculumEngine";
 
-describe('CurriculumEngine', () => {
+describe("CurriculumEngine", () => {
   let engine: CurriculumEngine;
   let mockContext: GenerationContext;
 
@@ -1571,106 +1754,111 @@ describe('CurriculumEngine', () => {
     engine = new CurriculumEngine();
     mockContext = {
       userProfile: {
-        id: 'user1',
-        email: 'test@example.com',
-        displayName: 'Test User',
-        role: 'student',
+        id: "user1",
+        email: "test@example.com",
+        displayName: "Test User",
+        role: "student",
         learningProfile: {
-          style: 'mixed',
+          style: "mixed",
           difficultyPreference: 0.5,
           sessionDurationPreference: 30,
-          learningGoals: ['javascript', 'react'],
-          interests: ['web-development']
+          learningGoals: ["javascript", "react"],
+          interests: ["web-development"],
         },
         progressTracking: {
           totalTimeSpent: 0,
           coursesCompleted: 0,
           competencesAcquired: [],
           currentStreak: 0,
-          longestStreak: 0
-        }
+          longestStreak: 0,
+        },
       },
-      targetGoals: ['javascript-basics', 'react-fundamentals'],
+      targetGoals: ["javascript-basics", "react-fundamentals"],
       constraints: {
         maxDuration: 20,
-        maxComplexity: 0.7
+        maxComplexity: 0.7,
       },
       preferences: {
-        learningStyle: 'mixed',
+        learningStyle: "mixed",
         sessionDuration: 30,
         weeklyCommitment: 5,
-        startDate: new Date().toISOString()
+        startDate: new Date().toISOString(),
       },
       currentKnowledge: {},
-      historicalPerformance: []
+      historicalPerformance: [],
     };
   });
 
-  describe('generateLearningPath', () => {
-    it('should generate valid learning path', async () => {
+  describe("generateLearningPath", () => {
+    it("should generate valid learning path", async () => {
       const path = await engine.generateLearningPath(mockContext);
-      
+
       expect(path).toBeDefined();
       expect(path.id).toBeDefined();
-      expect(path.userId).toBe('user1');
-      expect(path.targetCompetences).toEqual(['javascript-basics', 'react-fundamentals']);
+      expect(path.userId).toBe("user1");
+      expect(path.targetCompetences).toEqual([
+        "javascript-basics",
+        "react-fundamentals",
+      ]);
       expect(path.nodes.length).toBeGreaterThan(0);
       expect(path.estimatedDuration).toBeGreaterThan(0);
       expect(path.difficulty).toBeBetween(0, 1);
     });
 
-    it('should respect duration constraints', async () => {
+    it("should respect duration constraints", async () => {
       const path = await engine.generateLearningPath(mockContext);
-      
+
       expect(path.estimatedDuration).toBeLessThanOrEqual(
         mockContext.constraints.maxDuration || Infinity
       );
     });
 
-    it('should respect complexity constraints', async () => {
+    it("should respect complexity constraints", async () => {
       const path = await engine.generateLearningPath(mockContext);
-      
+
       expect(path.difficulty).toBeLessThanOrEqual(
         mockContext.constraints.maxComplexity || 1
       );
     });
   });
 
-  describe('adaptPath', () => {
-    it('should adapt path based on poor performance', async () => {
+  describe("adaptPath", () => {
+    it("should adapt path based on poor performance", async () => {
       const initialPath = await engine.generateLearningPath(mockContext);
-      
+
       const poorPerformance = [
         {
-          competenceId: 'javascript-basics',
+          competenceId: "javascript-basics",
           masteryAchieved: 0.3,
           timeSpent: 120,
           attemptsNeeded: 3,
           retentionRate: 0.4,
           engagementScore: 0.3,
-          timestamp: new Date().toISOString()
-        }
+          timestamp: new Date().toISOString(),
+        },
       ];
 
       const adaptedPath = await engine.adaptPath(
-        initialPath, 
-        poorPerformance, 
+        initialPath,
+        poorPerformance,
         {}
       );
 
       // Le chemin adapté devrait avoir plus de contenu de renforcement
-      expect(adaptedPath.nodes.length).toBeGreaterThanOrEqual(initialPath.nodes.length);
+      expect(adaptedPath.nodes.length).toBeGreaterThanOrEqual(
+        initialPath.nodes.length
+      );
     });
   });
 
-  describe('getNextRecommendation', () => {
-    it('should recommend appropriate next step', async () => {
+  describe("getNextRecommendation", () => {
+    it("should recommend appropriate next step", async () => {
       const path = await engine.generateLearningPath(mockContext);
       const currentProgress = { completedNodes: [] };
 
       const recommendation = await engine.getNextRecommendation(
-        path, 
-        currentProgress, 
+        path,
+        currentProgress,
         mockContext
       );
 

@@ -12,9 +12,9 @@
 **[FILE]** Créer `src/lib/services/subjects.ts` :
 
 ```typescript
-import { db } from '$lib/firebase/client';
-import { collection, getDocs, query, orderBy } from 'firebase/firestore';
-import type { Subject, Competence, Course } from '$lib/types/content';
+import { db } from "$lib/firebase/client";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import type { Subject, Competence, Course } from "$lib/types/content";
 
 interface SubjectStats {
   competences: number;
@@ -31,24 +31,24 @@ interface GlobalStats {
 export async function getSubjects(): Promise<Subject[]> {
   // Vérification SSR - Firebase n'est disponible que côté client
   if (!db) {
-    console.warn('⚠️ Firebase non disponible (SSR ou erreur config)');
+    console.warn("⚠️ Firebase non disponible (SSR ou erreur config)");
     return [];
   }
 
   try {
-    const subjectsRef = collection(db, 'subjects');
-    const q = query(subjectsRef, orderBy('ordre', 'asc'));
+    const subjectsRef = collection(db, "subjects");
+    const q = query(subjectsRef, orderBy("ordre", "asc"));
     const snapshot = await getDocs(q);
-    
+
     const subjects: Subject[] = [];
     snapshot.forEach((doc) => {
       subjects.push({ id: doc.id, ...doc.data() } as Subject);
     });
-    
-    console.log('✅ Matières chargées depuis Firebase:', subjects.length);
+
+    console.log("✅ Matières chargées depuis Firebase:", subjects.length);
     return subjects;
   } catch (error) {
-    console.error('❌ Erreur chargement matières:', error);
+    console.error("❌ Erreur chargement matières:", error);
     return [];
   }
 }
@@ -59,25 +59,25 @@ export async function calculateStats(): Promise<GlobalStats> {
       totalSubjects: 0,
       totalCompetences: 0,
       totalCourses: 0,
-      bySubject: {}
+      bySubject: {},
     };
   }
 
   try {
     const [subjectsSnap, competencesSnap, coursesSnap] = await Promise.all([
-      getDocs(collection(db, 'subjects')),
-      getDocs(collection(db, 'competences')),
-      getDocs(collection(db, 'courses'))
+      getDocs(collection(db, "subjects")),
+      getDocs(collection(db, "competences")),
+      getDocs(collection(db, "courses")),
     ]);
 
     const bySubject: Record<string, SubjectStats> = {};
-    
+
     // Calculer stats par matière
     subjectsSnap.forEach((doc) => {
       const subjectId = doc.id;
       bySubject[subjectId] = {
         competences: 0,
-        courses: 0
+        courses: 0,
       };
     });
 
@@ -103,15 +103,15 @@ export async function calculateStats(): Promise<GlobalStats> {
       totalSubjects: subjectsSnap.size,
       totalCompetences: competencesSnap.size,
       totalCourses: coursesSnap.size,
-      bySubject
+      bySubject,
     };
   } catch (error) {
-    console.error('❌ Erreur calcul statistiques:', error);
+    console.error("❌ Erreur calcul statistiques:", error);
     return {
       totalSubjects: 0,
       totalCompetences: 0,
       totalCourses: 0,
-      bySubject: {}
+      bySubject: {},
     };
   }
 }
@@ -123,11 +123,11 @@ export async function calculateStats(): Promise<GlobalStats> {
 
 ```svelte
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { browser } from '$app/environment';
-  import { getSubjects, calculateStats } from '$lib/services/subjects';
-  import type { Subject } from '$lib/types/content';
-  
+  import { onMount } from "svelte";
+  import { browser } from "$app/environment";
+  import { getSubjects, calculateStats } from "$lib/services/subjects";
+  import type { Subject } from "$lib/types/content";
+
   // État réactif
   let isLoading = true;
   let matieres: Subject[] = [];
@@ -135,70 +135,74 @@ export async function calculateStats(): Promise<GlobalStats> {
     totalSubjects: 0,
     totalCompetences: 0,
     totalCourses: 0,
-    bySubject: {}
+    bySubject: {},
   };
 
   // Données par défaut en cas d'erreur
   const defaultMatieres: Subject[] = [
     {
-      id: 'math',
-      nom: 'Mathématiques',
-      description: 'Développer le raisonnement logique',
-      couleur: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      icone: '🔢'
+      id: "math",
+      nom: "Mathématiques",
+      description: "Développer le raisonnement logique",
+      couleur: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+      icone: "🔢",
     },
     {
-      id: 'francais',
-      nom: 'Français',
-      description: 'Maîtriser la langue française',
-      couleur: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-      icone: '📚'
-    }
+      id: "francais",
+      nom: "Français",
+      description: "Maîtriser la langue française",
+      couleur: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+      icone: "📚",
+    },
   ];
 
   // Couleurs par défaut pour les matières
   const couleursDefaut = {
-    'mathematiques': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    'francais': 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-    'sciences': 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-    'histoire': 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-    'anglais': 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)'
+    mathematiques: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    francais: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+    sciences: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+    histoire: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+    anglais: "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)",
   };
 
   // Fonction de chargement des données dynamiques
   async function loadDynamicData() {
-    console.log('🔄 Chargement des données depuis Firebase...');
-    
+    console.log("🔄 Chargement des données depuis Firebase...");
+
     try {
       // Charger les matières et statistiques depuis Firebase
       const [subjects, statistiques] = await Promise.all([
         getSubjects(),
-        calculateStats()
+        calculateStats(),
       ]);
 
       if (subjects && subjects.length > 0) {
         // Convertir les subjects Firebase en format MatiereDisplay
-        matieres = subjects.map(subject => ({
+        matieres = subjects.map((subject) => ({
           id: subject.id,
           nom: subject.nom,
           description: subject.description,
-          couleur: subject.couleur || couleursDefaut[subject.nom.toLowerCase()] || '#6366f1',
-          icone: subject.icone || '📚'
+          couleur:
+            subject.couleur ||
+            couleursDefaut[subject.nom.toLowerCase()] ||
+            "#6366f1",
+          icone: subject.icone || "📚",
         }));
-        
+
         globalStats = statistiques;
-        console.log('✅ Interface dynamique chargée:', {
+        console.log("✅ Interface dynamique chargée:", {
           matieres: matieres.length,
-          stats: globalStats
+          stats: globalStats,
         });
       } else {
-        console.log('⚠️ Aucune matière trouvée dans Firebase, utilisation des données par défaut');
+        console.log(
+          "⚠️ Aucune matière trouvée dans Firebase, utilisation des données par défaut"
+        );
         matieres = defaultMatieres;
       }
-      
     } catch (error) {
-      console.error('❌ Erreur lors du chargement des données:', error);
-      console.log('🔄 Utilisation des données par défaut');
+      console.error("❌ Erreur lors du chargement des données:", error);
+      console.log("🔄 Utilisation des données par défaut");
       matieres = defaultMatieres;
     } finally {
       isLoading = false;
@@ -217,7 +221,7 @@ export async function calculateStats(): Promise<GlobalStats> {
   });
 
   const handleMatiereClick = (matiereId: string) => {
-    console.log('🎯 Navigation vers matière:', matiereId);
+    console.log("🎯 Navigation vers matière:", matiereId);
     // Navigation sera gérée par le router SvelteKit
   };
 </script>
@@ -230,7 +234,7 @@ export async function calculateStats(): Promise<GlobalStats> {
   {#if isLoading}
     <!-- État de chargement -->
     <div class="loading-container">
-      <div class="spinner"></div>
+      <div class="spinner" />
       <p class="loading-text">Chargement des données...</p>
     </div>
   {:else}
@@ -260,8 +264,8 @@ export async function calculateStats(): Promise<GlobalStats> {
       <h1>🎓 Choisissez votre matière</h1>
       <div class="matieres-grid">
         {#each matieres as matiere}
-          <a 
-            href="/matiere/{matiere.id}" 
+          <a
+            href="/matiere/{matiere.id}"
             class="matiere-card"
             on:click={() => handleMatiereClick(matiere.id)}
           >
@@ -271,7 +275,7 @@ export async function calculateStats(): Promise<GlobalStats> {
             <div class="matiere-content">
               <h3>{matiere.nom}</h3>
               <p>{matiere.description}</p>
-              
+
               {#if globalStats.bySubject[matiere.id]}
                 <div class="matiere-stats">
                   <span class="stat-item">
@@ -316,8 +320,12 @@ export async function calculateStats(): Promise<GlobalStats> {
   }
 
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 
   .loading-text {
@@ -442,15 +450,15 @@ export async function calculateStats(): Promise<GlobalStats> {
     .container {
       padding: 1rem;
     }
-    
+
     .content h1 {
       font-size: 2rem;
     }
-    
+
     .matieres-grid {
       grid-template-columns: 1fr;
     }
-    
+
     .stats-grid {
       grid-template-columns: 1fr;
     }
@@ -482,8 +490,13 @@ export async function calculateStats(): Promise<GlobalStats> {
 
 /* Animation de chargement globale */
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 .loading-pulse {
@@ -498,19 +511,24 @@ export async function calculateStats(): Promise<GlobalStats> {
 }
 
 @keyframes loading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 ```
 
 ### Étape 2.10.4 : Tests de validation (15min)
 
 **[CMD]** Tests de l'interface dynamique :
+
 ```bash
 npm run dev                           # Démarrer l'app
 # Vérifier dans le navigateur :
 # - État de chargement affiché au démarrage
-# - Tuiles remplacées par données Firebase  
+# - Tuiles remplacées par données Firebase
 # - Statistiques globales affichées en haut
 # - Console devtools : logs de chargement Firebase
 ```
@@ -549,7 +567,7 @@ npm run dev                           # Démarrer l'app
 ## 🎯 **Résultats attendus**
 
 - ✅ **Interface entièrement dynamique** : Plus de données hardcodées
-- ✅ **Chargement en temps réel** : Données actualisées à chaque visite  
+- ✅ **Chargement en temps réel** : Données actualisées à chaque visite
 - ✅ **États visuels** : Loading, succès, erreur gérés
 - ✅ **Performance optimisée** : Requêtes Firebase efficaces
 - ✅ **UX améliorée** : Feedback utilisateur pendant chargement

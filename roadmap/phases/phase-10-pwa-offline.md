@@ -14,6 +14,7 @@
 ### 📱 **Progressive Web App (PWA)**
 
 **Caractéristiques PWA :**
+
 - **App-like Experience** : Interface native sur mobile/desktop
 - **Offline-First Strategy** : Fonctionnement sans connexion
 - **Background Sync** : Synchronisation automatique des données
@@ -21,6 +22,7 @@
 - **Installation Native** : Ajout à l'écran d'accueil
 
 **Service Worker Architecture :**
+
 - **Caching Strategy** : Cache intelligent multi-niveau
 - **Network-First/Cache-First** : Stratégies adaptatives
 - **Background Tasks** : Sync différé et retry automatique
@@ -30,6 +32,7 @@
 ### 🔄 **Synchronisation Offline/Online**
 
 **Stratégie de Cache :**
+
 - **Critical Resources** : Cache immédiat (CSS, JS, fonts)
 - **Content Cache** : Mise en cache intelligent du contenu
 - **API Cache** : Cache réponses avec TTL adaptatif
@@ -37,6 +40,7 @@
 - **Conflict Resolution** : Gestion collisions données
 
 **Sync Patterns :**
+
 - **Immediate Sync** : Actions temps réel quand connecté
 - **Deferred Sync** : Queue actions offline pour sync ultérieure
 - **Optimistic Updates** : UI optimiste avec rollback
@@ -46,6 +50,7 @@
 ### 🔔 **Engagement & Notifications**
 
 **Push Notifications :**
+
 - **Learning Reminders** : Rappels adaptatifs d'apprentissage
 - **Progress Achievements** : Notifications de progression
 - **New Content** : Alertes nouveau contenu personnalisé
@@ -53,6 +58,7 @@
 - **System Updates** : Mises à jour importantes
 
 **Engagement Features :**
+
 - **Offline Learning** : Apprentissage continu sans réseau
 - **Quick Actions** : Actions rapides depuis l'écran d'accueil
 - **App Shortcuts** : Raccourcis contextuels natifs
@@ -62,6 +68,7 @@
 ### 🏗️ **Approche Qualité & Performance**
 
 **Performance PWA :**
+
 - **Loading Performance** : < 3s First Contentful Paint
 - **Runtime Performance** : 60fps animations natives
 - **Cache Efficiency** : Ratio cache hit > 90%
@@ -73,12 +80,14 @@
 ## 📚 **Références Modulaires**
 
 ### **[REF]** PWA Foundation : **[pwa-foundation.md](../references/pwa/pwa-foundation.md)**
+
 - ✅ Service Worker complet avec caching intelligent
 - ✅ Manifest PWA optimisé pour tous devices
 - ✅ Installation et mise à jour automatique
 - ✅ Offline-first architecture robuste
 
 ### **[REF]** Offline Sync : **[offline-sync.md](../references/pwa/offline-sync.md)**
+
 - ✅ Stratégies synchronisation avancées
 - ✅ Gestion conflicts résolution automatique
 - ✅ Queue actions avec retry intelligent
@@ -95,73 +104,97 @@
 ```html
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  
-  <!-- PWA Meta Tags -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="FunLearning">
-  <meta name="application-name" content="FunLearning">
-  <meta name="theme-color" content="#6366f1">
-  <meta name="background-color" content="#ffffff">
-  
-  <!-- Manifest -->
-  <link rel="manifest" href="/manifest.json">
-  
-  <!-- Icons -->
-  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
-  <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#6366f1">
-  
-  <!-- Preload Critical Resources -->
-  <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/css/critical.css" as="style">
-  
-  <!-- Critical CSS -->
-  <link rel="stylesheet" href="/css/critical.css">
-  
-  %sveltekit.head%
-</head>
-<body data-sveltekit-preload-data="hover" class="loading">
-  <div style="display: contents">%sveltekit.body%</div>
-  
-  <!-- Service Worker Registration -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then(registration => {
-            console.log('SW registered: ', registration);
-            
-            // Écouter les mises à jour
-            registration.addEventListener('updatefound', () => {
-              const newWorker = registration.installing;
-              newWorker.addEventListener('statechange', () => {
-                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                  // Nouvelle version disponible
-                  showUpdateNotification();
-                }
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- PWA Meta Tags -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="FunLearning" />
+    <meta name="application-name" content="FunLearning" />
+    <meta name="theme-color" content="#6366f1" />
+    <meta name="background-color" content="#ffffff" />
+
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Icons -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/icons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/icons/favicon-16x16.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/icons/apple-touch-icon.png"
+    />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#6366f1" />
+
+    <!-- Preload Critical Resources -->
+    <link
+      rel="preload"
+      href="/fonts/inter-var.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="preload" href="/css/critical.css" as="style" />
+
+    <!-- Critical CSS -->
+    <link rel="stylesheet" href="/css/critical.css" />
+
+    %sveltekit.head%
+  </head>
+  <body data-sveltekit-preload-data="hover" class="loading">
+    <div style="display: contents">%sveltekit.body%</div>
+
+    <!-- Service Worker Registration -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then((registration) => {
+              console.log("SW registered: ", registration);
+
+              // Écouter les mises à jour
+              registration.addEventListener("updatefound", () => {
+                const newWorker = registration.installing;
+                newWorker.addEventListener("statechange", () => {
+                  if (
+                    newWorker.state === "installed" &&
+                    navigator.serviceWorker.controller
+                  ) {
+                    // Nouvelle version disponible
+                    showUpdateNotification();
+                  }
+                });
               });
+            })
+            .catch((registrationError) => {
+              console.log("SW registration failed: ", registrationError);
             });
-          })
-          .catch(registrationError => {
-            console.log('SW registration failed: ', registrationError);
-          });
-      });
-    }
-    
-    function showUpdateNotification() {
-      // Afficher notification mise à jour
-      if (confirm('Une nouvelle version est disponible. Recharger ?')) {
-        window.location.reload();
+        });
       }
-    }
-  </script>
-</body>
+
+      function showUpdateNotification() {
+        // Afficher notification mise à jour
+        if (confirm("Une nouvelle version est disponible. Recharger ?")) {
+          window.location.reload();
+        }
+      }
+    </script>
+  </body>
 </html>
 ```
 
@@ -180,7 +213,7 @@
   "categories": ["education", "productivity"],
   "lang": "fr",
   "dir": "ltr",
-  
+
   "icons": [
     {
       "src": "/icons/icon-72x72.png",
@@ -231,7 +264,7 @@
       "purpose": "maskable any"
     }
   ],
-  
+
   "shortcuts": [
     {
       "name": "Nouveau Cours",
@@ -270,7 +303,7 @@
       ]
     }
   ],
-  
+
   "file_handlers": [
     {
       "action": "/import",
@@ -281,7 +314,7 @@
       }
     }
   ],
-  
+
   "share_target": {
     "action": "/share",
     "method": "POST",
@@ -298,7 +331,7 @@
       ]
     }
   },
-  
+
   "protocol_handlers": [
     {
       "protocol": "web+funlearning",
@@ -314,98 +347,90 @@
 
 ```javascript
 // ===== CONFIGURATION =====
-const CACHE_VERSION = 'v1.8.0';
+const CACHE_VERSION = "v1.8.0";
 const STATIC_CACHE = `funlearning-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE = `funlearning-dynamic-${CACHE_VERSION}`;
 const OFFLINE_CACHE = `funlearning-offline-${CACHE_VERSION}`;
 
 // Ressources critiques à mettre en cache immédiatement
 const STATIC_ASSETS = [
-  '/',
-  '/offline',
-  '/manifest.json',
-  '/css/critical.css',
-  '/js/app.js',
-  '/fonts/inter-var.woff2',
-  '/icons/icon-192x192.png',
-  '/icons/icon-512x512.png'
+  "/",
+  "/offline",
+  "/manifest.json",
+  "/css/critical.css",
+  "/js/app.js",
+  "/fonts/inter-var.woff2",
+  "/icons/icon-192x192.png",
+  "/icons/icon-512x512.png",
 ];
 
 // Pages importantes pour navigation offline
-const OFFLINE_PAGES = [
-  '/',
-  '/courses',
-  '/exercises',
-  '/progress',
-  '/profile'
-];
+const OFFLINE_PAGES = ["/", "/courses", "/exercises", "/progress", "/profile"];
 
 // APIs à mettre en cache avec TTL
 const API_CACHE_CONFIG = {
-  '/api/courses': { ttl: 3600000, strategy: 'stale-while-revalidate' }, // 1h
-  '/api/exercises': { ttl: 1800000, strategy: 'cache-first' }, // 30min
-  '/api/user/progress': { ttl: 300000, strategy: 'network-first' }, // 5min
-  '/api/content': { ttl: 7200000, strategy: 'stale-while-revalidate' } // 2h
+  "/api/courses": { ttl: 3600000, strategy: "stale-while-revalidate" }, // 1h
+  "/api/exercises": { ttl: 1800000, strategy: "cache-first" }, // 30min
+  "/api/user/progress": { ttl: 300000, strategy: "network-first" }, // 5min
+  "/api/content": { ttl: 7200000, strategy: "stale-while-revalidate" }, // 2h
 };
 
 // ===== INSTALLATION =====
-self.addEventListener('install', event => {
-  console.log('[SW] Installation...');
-  
+self.addEventListener("install", (event) => {
+  console.log("[SW] Installation...");
+
   event.waitUntil(
     (async () => {
       // Cache des ressources statiques
       const staticCache = await caches.open(STATIC_CACHE);
       await staticCache.addAll(STATIC_ASSETS);
-      
+
       // Cache des pages offline
       const offlineCache = await caches.open(OFFLINE_CACHE);
       await offlineCache.addAll(OFFLINE_PAGES);
-      
+
       // Activation forcée
       await self.skipWaiting();
-      
-      console.log('[SW] Installation terminée');
+
+      console.log("[SW] Installation terminée");
     })()
   );
 });
 
 // ===== ACTIVATION =====
-self.addEventListener('activate', event => {
-  console.log('[SW] Activation...');
-  
+self.addEventListener("activate", (event) => {
+  console.log("[SW] Activation...");
+
   event.waitUntil(
     (async () => {
       // Nettoyage des anciens caches
       const cacheNames = await caches.keys();
-      const oldCaches = cacheNames.filter(name => 
-        name.includes('funlearning') && !name.includes(CACHE_VERSION)
+      const oldCaches = cacheNames.filter(
+        (name) => name.includes("funlearning") && !name.includes(CACHE_VERSION)
       );
-      
-      await Promise.all(
-        oldCaches.map(cacheName => caches.delete(cacheName))
-      );
-      
+
+      await Promise.all(oldCaches.map((cacheName) => caches.delete(cacheName)));
+
       // Prise de contrôle des clients
       await self.clients.claim();
-      
-      console.log('[SW] Activation terminée');
+
+      console.log("[SW] Activation terminée");
     })()
   );
 });
 
 // ===== INTERCESSION FETCH =====
-self.addEventListener('fetch', event => {
+self.addEventListener("fetch", (event) => {
   const { request } = event;
   const url = new URL(request.url);
-  
+
   // Ignorer les requêtes non-HTTP
-  if (!url.protocol.startsWith('http')) return;
-  
+  if (!url.protocol.startsWith("http")) return;
+
   // Choisir la stratégie selon le type de requête
-  if (url.pathname.startsWith('/api/')) {
+  if (url.pathname.startsWith("/api/")) {
     event.respondWith(handleAPIRequest(request));
-  } else if (request.destination === 'document') {
+  } else if (request.destination === "document") {
     event.respondWith(handlePageRequest(request));
   } else if (isStaticAsset(request)) {
     event.respondWith(handleStaticRequest(request));
@@ -422,13 +447,13 @@ self.addEventListener('fetch', event => {
 async function handleAPIRequest(request) {
   const url = new URL(request.url);
   const config = getAPIConfig(url.pathname);
-  
+
   switch (config.strategy) {
-    case 'network-first':
+    case "network-first":
       return networkFirst(request, DYNAMIC_CACHE, config.ttl);
-    case 'cache-first':
+    case "cache-first":
       return cacheFirst(request, DYNAMIC_CACHE, config.ttl);
-    case 'stale-while-revalidate':
+    case "stale-while-revalidate":
       return staleWhileRevalidate(request, DYNAMIC_CACHE, config.ttl);
     default:
       return networkOnly(request);
@@ -442,25 +467,28 @@ async function handlePageRequest(request) {
   try {
     // Essayer le réseau d'abord
     const networkResponse = await fetch(request);
-    
+
     if (networkResponse.ok) {
       // Mettre en cache la page
       const cache = await caches.open(DYNAMIC_CACHE);
       cache.put(request, networkResponse.clone());
       return networkResponse;
     }
-    
-    throw new Error('Network response not ok');
+
+    throw new Error("Network response not ok");
   } catch (error) {
     // Fallback vers le cache
     const cachedResponse = await caches.match(request);
     if (cachedResponse) {
       return cachedResponse;
     }
-    
+
     // Fallback vers page offline
     const offlineCache = await caches.open(OFFLINE_CACHE);
-    return offlineCache.match('/offline') || new Response('Page non disponible hors ligne');
+    return (
+      offlineCache.match("/offline") ||
+      new Response("Page non disponible hors ligne")
+    );
   }
 }
 
@@ -472,7 +500,7 @@ async function handleStaticRequest(request) {
   if (cachedResponse && !isExpired(cachedResponse)) {
     return cachedResponse;
   }
-  
+
   try {
     const networkResponse = await fetch(request);
     if (networkResponse.ok) {
@@ -480,10 +508,10 @@ async function handleStaticRequest(request) {
       cache.put(request, networkResponse.clone());
       return networkResponse;
     }
-    
-    return cachedResponse || new Response('Ressource non disponible');
+
+    return cachedResponse || new Response("Ressource non disponible");
   } catch (error) {
-    return cachedResponse || new Response('Ressource non disponible');
+    return cachedResponse || new Response("Ressource non disponible");
   }
 }
 
@@ -506,10 +534,12 @@ async function networkFirst(request, cacheName, ttl) {
       await updateCache(request, networkResponse.clone(), cacheName, ttl);
       return networkResponse;
     }
-    throw new Error('Network response not ok');
+    throw new Error("Network response not ok");
   } catch (error) {
     const cachedResponse = await caches.match(request);
-    return cachedResponse || new Response('Service non disponible', { status: 503 });
+    return (
+      cachedResponse || new Response("Service non disponible", { status: 503 })
+    );
   }
 }
 
@@ -518,7 +548,7 @@ async function networkFirst(request, cacheName, ttl) {
  */
 async function cacheFirst(request, cacheName, ttl) {
   const cachedResponse = await caches.match(request);
-  
+
   if (cachedResponse && !isExpired(cachedResponse, ttl)) {
     // Mettre à jour en arrière-plan si nécessaire
     if (shouldUpdateInBackground(cachedResponse, ttl)) {
@@ -526,16 +556,20 @@ async function cacheFirst(request, cacheName, ttl) {
     }
     return cachedResponse;
   }
-  
+
   try {
     const networkResponse = await fetch(request);
     if (networkResponse.ok) {
       await updateCache(request, networkResponse.clone(), cacheName, ttl);
       return networkResponse;
     }
-    return cachedResponse || new Response('Service non disponible', { status: 503 });
+    return (
+      cachedResponse || new Response("Service non disponible", { status: 503 })
+    );
   } catch (error) {
-    return cachedResponse || new Response('Service non disponible', { status: 503 });
+    return (
+      cachedResponse || new Response("Service non disponible", { status: 503 })
+    );
   }
 }
 
@@ -544,25 +578,25 @@ async function cacheFirst(request, cacheName, ttl) {
  */
 async function staleWhileRevalidate(request, cacheName, ttl) {
   const cachedResponse = await caches.match(request);
-  
+
   // Toujours essayer de mettre à jour en arrière-plan
-  const networkPromise = fetch(request).then(response => {
+  const networkPromise = fetch(request).then((response) => {
     if (response.ok) {
       updateCache(request, response.clone(), cacheName, ttl);
     }
     return response;
   });
-  
+
   // Retourner le cache immédiatement si disponible
   if (cachedResponse) {
     return cachedResponse;
   }
-  
+
   // Sinon attendre le réseau
   try {
     return await networkPromise;
   } catch (error) {
-    return new Response('Service non disponible', { status: 503 });
+    return new Response("Service non disponible", { status: 503 });
   }
 }
 
@@ -581,7 +615,7 @@ function getAPIConfig(pathname) {
       return config;
     }
   }
-  return { ttl: 300000, strategy: 'network-first' }; // 5min par défaut
+  return { ttl: 300000, strategy: "network-first" }; // 5min par défaut
 }
 
 function isStaticAsset(request) {
@@ -592,30 +626,30 @@ function isStaticAsset(request) {
 async function updateCache(request, response, cacheName, ttl) {
   const cache = await caches.open(cacheName);
   const responseToCache = response.clone();
-  
+
   // Ajouter timestamp pour TTL
-  responseToCache.headers.set('sw-cache-timestamp', Date.now().toString());
-  responseToCache.headers.set('sw-cache-ttl', ttl.toString());
-  
+  responseToCache.headers.set("sw-cache-timestamp", Date.now().toString());
+  responseToCache.headers.set("sw-cache-ttl", ttl.toString());
+
   await cache.put(request, responseToCache);
 }
 
 function isExpired(response, ttl) {
-  const timestamp = response.headers.get('sw-cache-timestamp');
-  const cacheTtl = response.headers.get('sw-cache-ttl');
-  
+  const timestamp = response.headers.get("sw-cache-timestamp");
+  const cacheTtl = response.headers.get("sw-cache-ttl");
+
   if (!timestamp || !cacheTtl) return false;
-  
+
   const age = Date.now() - parseInt(timestamp);
   return age > parseInt(cacheTtl);
 }
 
 function shouldUpdateInBackground(response, ttl) {
-  const timestamp = response.headers.get('sw-cache-timestamp');
+  const timestamp = response.headers.get("sw-cache-timestamp");
   if (!timestamp) return true;
-  
+
   const age = Date.now() - parseInt(timestamp);
-  return age > (ttl * 0.7); // Mettre à jour à 70% du TTL
+  return age > ttl * 0.7; // Mettre à jour à 70% du TTL
 }
 
 async function updateInBackground(request, cacheName, ttl) {
@@ -625,30 +659,30 @@ async function updateInBackground(request, cacheName, ttl) {
       await updateCache(request, response, cacheName, ttl);
     }
   } catch (error) {
-    console.log('[SW] Background update failed:', error);
+    console.log("[SW] Background update failed:", error);
   }
 }
 
 // ===== BACKGROUND SYNC =====
-self.addEventListener('sync', event => {
-  if (event.tag === 'background-sync') {
+self.addEventListener("sync", (event) => {
+  if (event.tag === "background-sync") {
     event.waitUntil(doBackgroundSync());
   }
 });
 
 async function doBackgroundSync() {
-  console.log('[SW] Background sync...');
-  
+  console.log("[SW] Background sync...");
+
   try {
     // Synchroniser les données en attente
     await syncPendingData();
-    
+
     // Mettre à jour le contenu critique
     await updateCriticalContent();
-    
-    console.log('[SW] Background sync terminé');
+
+    console.log("[SW] Background sync terminé");
   } catch (error) {
-    console.error('[SW] Background sync échoué:', error);
+    console.error("[SW] Background sync échoué:", error);
     throw error; // Retry automatique
   }
 }
@@ -656,19 +690,19 @@ async function doBackgroundSync() {
 async function syncPendingData() {
   // Récupérer les données en attente depuis IndexedDB
   const pendingActions = await getPendingActions();
-  
+
   for (const action of pendingActions) {
     try {
       await fetch(action.url, {
         method: action.method,
         headers: action.headers,
-        body: action.body
+        body: action.body,
       });
-      
+
       // Marquer comme synchronisé
       await markActionSynced(action.id);
     } catch (error) {
-      console.error('[SW] Sync action failed:', action, error);
+      console.error("[SW] Sync action failed:", action, error);
     }
   }
 }
@@ -676,11 +710,11 @@ async function syncPendingData() {
 async function updateCriticalContent() {
   // Mettre à jour le contenu critique en arrière-plan
   const criticalUrls = [
-    '/api/user/progress',
-    '/api/courses/latest',
-    '/api/exercises/featured'
+    "/api/user/progress",
+    "/api/courses/latest",
+    "/api/exercises/featured",
   ];
-  
+
   for (const url of criticalUrls) {
     try {
       const response = await fetch(url);
@@ -689,7 +723,7 @@ async function updateCriticalContent() {
         cache.put(url, response.clone());
       }
     } catch (error) {
-      console.log('[SW] Failed to update:', url, error);
+      console.log("[SW] Failed to update:", url, error);
     }
   }
 }
@@ -705,40 +739,36 @@ async function markActionSynced(actionId) {
 }
 
 // ===== PUSH NOTIFICATIONS =====
-self.addEventListener('push', event => {
+self.addEventListener("push", (event) => {
   if (!event.data) return;
-  
+
   const data = event.data.json();
   const options = {
     body: data.body,
-    icon: '/icons/icon-192x192.png',
-    badge: '/icons/badge-72x72.png',
-    tag: data.tag || 'general',
+    icon: "/icons/icon-192x192.png",
+    badge: "/icons/badge-72x72.png",
+    tag: data.tag || "general",
     renotify: true,
     requireInteraction: data.requireInteraction || false,
     actions: data.actions || [],
-    data: data.data || {}
+    data: data.data || {},
   };
-  
-  event.waitUntil(
-    self.registration.showNotification(data.title, options)
-  );
+
+  event.waitUntil(self.registration.showNotification(data.title, options));
 });
 
-self.addEventListener('notificationclick', event => {
+self.addEventListener("notificationclick", (event) => {
   event.notification.close();
-  
+
   const action = event.action;
   const data = event.notification.data;
-  
-  event.waitUntil(
-    clients.openWindow(data.url || '/')
-  );
+
+  event.waitUntil(clients.openWindow(data.url || "/"));
 });
 
 // ===== MESSAGE HANDLING =====
-self.addEventListener('message', event => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") {
     self.skipWaiting();
   }
 });
@@ -749,8 +779,8 @@ self.addEventListener('message', event => {
 **[FILE]** Créer `src/lib/offline/offlineManager.ts` :
 
 ```ts
-import { writable } from 'svelte/store';
-import { browser } from '$app/environment';
+import { writable } from "svelte/store";
+import { browser } from "$app/environment";
 
 // ===== TYPES =====
 export interface OfflineAction {
@@ -778,7 +808,7 @@ export const syncStatus = writable<SyncStatus>({
   isSyncing: false,
   pendingActions: 0,
   lastSync: null,
-  syncErrors: []
+  syncErrors: [],
 });
 
 // ===== OFFLINE MANAGER =====
@@ -798,7 +828,7 @@ export class OfflineManager {
   // ===== INITIALISATION =====
   private async initializeDB() {
     return new Promise<void>((resolve, reject) => {
-      const request = indexedDB.open('FunLearningOffline', 1);
+      const request = indexedDB.open("FunLearningOffline", 1);
 
       request.onerror = () => reject(request.error);
       request.onsuccess = () => {
@@ -810,52 +840,56 @@ export class OfflineManager {
         const db = (event.target as IDBOpenDBRequest).result;
 
         // Store pour actions en attente
-        if (!db.objectStoreNames.contains('pendingActions')) {
-          const store = db.createObjectStore('pendingActions', { keyPath: 'id' });
-          store.createIndex('timestamp', 'timestamp');
-          store.createIndex('type', 'type');
+        if (!db.objectStoreNames.contains("pendingActions")) {
+          const store = db.createObjectStore("pendingActions", {
+            keyPath: "id",
+          });
+          store.createIndex("timestamp", "timestamp");
+          store.createIndex("type", "type");
         }
 
         // Store pour données en cache
-        if (!db.objectStoreNames.contains('cachedData')) {
-          const store = db.createObjectStore('cachedData', { keyPath: 'key' });
-          store.createIndex('timestamp', 'timestamp');
-          store.createIndex('expiry', 'expiry');
+        if (!db.objectStoreNames.contains("cachedData")) {
+          const store = db.createObjectStore("cachedData", { keyPath: "key" });
+          store.createIndex("timestamp", "timestamp");
+          store.createIndex("expiry", "expiry");
         }
 
         // Store pour état de synchronisation
-        if (!db.objectStoreNames.contains('syncState')) {
-          db.createObjectStore('syncState', { keyPath: 'key' });
+        if (!db.objectStoreNames.contains("syncState")) {
+          db.createObjectStore("syncState", { keyPath: "key" });
         }
       };
     });
   }
 
   private setupNetworkListeners() {
-    window.addEventListener('online', () => {
+    window.addEventListener("online", () => {
       this.updateOnlineStatus(true);
       this.triggerSync();
     });
 
-    window.addEventListener('offline', () => {
+    window.addEventListener("offline", () => {
       this.updateOnlineStatus(false);
     });
   }
 
   private updateOnlineStatus(isOnline: boolean) {
-    syncStatus.update(status => ({
+    syncStatus.update((status) => ({
       ...status,
-      isOnline
+      isOnline,
     }));
   }
 
   // ===== GESTION ACTIONS OFFLINE =====
-  async queueAction(action: Omit<OfflineAction, 'id' | 'timestamp' | 'retryCount'>): Promise<string> {
+  async queueAction(
+    action: Omit<OfflineAction, "id" | "timestamp" | "retryCount">
+  ): Promise<string> {
     const actionWithId: OfflineAction = {
       id: crypto.randomUUID(),
       timestamp: Date.now(),
       retryCount: 0,
-      ...action
+      ...action,
     };
 
     await this.storeAction(actionWithId);
@@ -873,8 +907,8 @@ export class OfflineManager {
     if (!this.db) await this.initializeDB();
 
     return new Promise((resolve, reject) => {
-      const transaction = this.db!.transaction(['pendingActions'], 'readwrite');
-      const store = transaction.objectStore('pendingActions');
+      const transaction = this.db!.transaction(["pendingActions"], "readwrite");
+      const store = transaction.objectStore("pendingActions");
 
       const request = store.add(action);
       request.onsuccess = () => resolve();
@@ -886,8 +920,8 @@ export class OfflineManager {
     if (!this.db) await this.initializeDB();
 
     return new Promise((resolve, reject) => {
-      const transaction = this.db!.transaction(['pendingActions'], 'readonly');
-      const store = transaction.objectStore('pendingActions');
+      const transaction = this.db!.transaction(["pendingActions"], "readonly");
+      const store = transaction.objectStore("pendingActions");
 
       const request = store.getAll();
       request.onsuccess = () => resolve(request.result);
@@ -899,8 +933,8 @@ export class OfflineManager {
     if (!this.db) return;
 
     return new Promise((resolve, reject) => {
-      const transaction = this.db!.transaction(['pendingActions'], 'readwrite');
-      const store = transaction.objectStore('pendingActions');
+      const transaction = this.db!.transaction(["pendingActions"], "readwrite");
+      const store = transaction.objectStore("pendingActions");
 
       const request = store.delete(actionId);
       request.onsuccess = () => resolve();
@@ -913,7 +947,11 @@ export class OfflineManager {
     if (this.syncInProgress || !navigator.onLine) return;
 
     this.syncInProgress = true;
-    syncStatus.update(status => ({ ...status, isSyncing: true, syncErrors: [] }));
+    syncStatus.update((status) => ({
+      ...status,
+      isSyncing: true,
+      syncErrors: [],
+    }));
 
     try {
       const actions = await this.getPendingActions();
@@ -929,16 +967,16 @@ export class OfflineManager {
         }
       }
 
-      syncStatus.update(status => ({
+      syncStatus.update((status) => ({
         ...status,
         lastSync: new Date(),
-        syncErrors: errors
+        syncErrors: errors,
       }));
 
       this.updatePendingCount();
     } finally {
       this.syncInProgress = false;
-      syncStatus.update(status => ({ ...status, isSyncing: false }));
+      syncStatus.update((status) => ({ ...status, isSyncing: false }));
     }
   }
 
@@ -946,10 +984,10 @@ export class OfflineManager {
     const response = await fetch(action.endpoint, {
       method: action.method,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         // Ajouter headers d'authentification si nécessaire
       },
-      body: action.data ? JSON.stringify(action.data) : undefined
+      body: action.data ? JSON.stringify(action.data) : undefined,
     });
 
     if (!response.ok) {
@@ -957,20 +995,26 @@ export class OfflineManager {
     }
   }
 
-  private async handleActionError(action: OfflineAction, error: Error): Promise<void> {
+  private async handleActionError(
+    action: OfflineAction,
+    error: Error
+  ): Promise<void> {
     const updatedAction = {
       ...action,
-      retryCount: action.retryCount + 1
+      retryCount: action.retryCount + 1,
     };
 
     if (updatedAction.retryCount >= action.maxRetries) {
       // Abandonner après max retries
       await this.removeAction(action.id);
-      console.error('Action abandonnée après max retries:', action, error);
+      console.error("Action abandonnée après max retries:", action, error);
     } else {
       // Programmer un retry avec backoff exponential
-      const delay = Math.min(1000 * Math.pow(2, updatedAction.retryCount), 30000);
-      
+      const delay = Math.min(
+        1000 * Math.pow(2, updatedAction.retryCount),
+        30000
+      );
+
       setTimeout(() => {
         this.updateStoredAction(updatedAction);
         this.triggerSync();
@@ -982,8 +1026,8 @@ export class OfflineManager {
     if (!this.db) return;
 
     return new Promise((resolve, reject) => {
-      const transaction = this.db!.transaction(['pendingActions'], 'readwrite');
-      const store = transaction.objectStore('pendingActions');
+      const transaction = this.db!.transaction(["pendingActions"], "readwrite");
+      const store = transaction.objectStore("pendingActions");
 
       const request = store.put(action);
       request.onsuccess = () => resolve();
@@ -993,9 +1037,9 @@ export class OfflineManager {
 
   private async updatePendingCount(): Promise<void> {
     const actions = await this.getPendingActions();
-    syncStatus.update(status => ({
+    syncStatus.update((status) => ({
       ...status,
-      pendingActions: actions.length
+      pendingActions: actions.length,
     }));
   }
 
@@ -1010,19 +1054,23 @@ export class OfflineManager {
   }
 
   // ===== CACHE MANAGEMENT =====
-  async cacheData(key: string, data: unknown, ttl: number = 3600000): Promise<void> {
+  async cacheData(
+    key: string,
+    data: unknown,
+    ttl: number = 3600000
+  ): Promise<void> {
     if (!this.db) await this.initializeDB();
 
     const cacheEntry = {
       key,
       data,
       timestamp: Date.now(),
-      expiry: Date.now() + ttl
+      expiry: Date.now() + ttl,
     };
 
     return new Promise((resolve, reject) => {
-      const transaction = this.db!.transaction(['cachedData'], 'readwrite');
-      const store = transaction.objectStore('cachedData');
+      const transaction = this.db!.transaction(["cachedData"], "readwrite");
+      const store = transaction.objectStore("cachedData");
 
       const request = store.put(cacheEntry);
       request.onsuccess = () => resolve();
@@ -1034,8 +1082,8 @@ export class OfflineManager {
     if (!this.db) await this.initializeDB();
 
     return new Promise((resolve, reject) => {
-      const transaction = this.db!.transaction(['cachedData'], 'readonly');
-      const store = transaction.objectStore('cachedData');
+      const transaction = this.db!.transaction(["cachedData"], "readonly");
+      const store = transaction.objectStore("cachedData");
 
       const request = store.get(key);
       request.onsuccess = () => {
@@ -1062,8 +1110,8 @@ export class OfflineManager {
     if (!this.db) return;
 
     return new Promise((resolve, reject) => {
-      const transaction = this.db!.transaction(['cachedData'], 'readwrite');
-      const store = transaction.objectStore('cachedData');
+      const transaction = this.db!.transaction(["cachedData"], "readwrite");
+      const store = transaction.objectStore("cachedData");
 
       const request = store.delete(key);
       request.onsuccess = () => resolve();
@@ -1075,7 +1123,7 @@ export class OfflineManager {
   async cleanup(): Promise<void> {
     // Nettoyer les données expirées
     await this.cleanupExpiredCache();
-    
+
     // Nettoyer les actions échouées anciennes
     await this.cleanupOldFailedActions();
   }
@@ -1084,9 +1132,9 @@ export class OfflineManager {
     if (!this.db) return;
 
     return new Promise((resolve, reject) => {
-      const transaction = this.db!.transaction(['cachedData'], 'readwrite');
-      const store = transaction.objectStore('cachedData');
-      const index = store.index('expiry');
+      const transaction = this.db!.transaction(["cachedData"], "readwrite");
+      const store = transaction.objectStore("cachedData");
+      const index = store.index("expiry");
 
       const range = IDBKeyRange.upperBound(Date.now());
       const request = index.openCursor(range);
@@ -1107,10 +1155,13 @@ export class OfflineManager {
 
   private async cleanupOldFailedActions(): Promise<void> {
     const actions = await this.getPendingActions();
-    const oneWeekAgo = Date.now() - (7 * 24 * 60 * 60 * 1000);
+    const oneWeekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
 
     for (const action of actions) {
-      if (action.timestamp < oneWeekAgo && action.retryCount >= action.maxRetries) {
+      if (
+        action.timestamp < oneWeekAgo &&
+        action.retryCount >= action.maxRetries
+      ) {
         await this.removeAction(action.id);
       }
     }
@@ -1124,16 +1175,16 @@ export const offlineManager = new OfflineManager();
 export function createOfflineAction(
   type: string,
   endpoint: string,
-  method: string = 'POST',
+  method: string = "POST",
   data?: unknown,
   maxRetries: number = 3
-): Omit<OfflineAction, 'id' | 'timestamp' | 'retryCount'> {
+): Omit<OfflineAction, "id" | "timestamp" | "retryCount"> {
   return {
     type,
     endpoint,
     method,
     data,
-    maxRetries
+    maxRetries,
   };
 }
 
@@ -1152,7 +1203,7 @@ export async function offlineFirstRequest<T>(
 
   try {
     const response = await fetch(url, options);
-    
+
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
     }

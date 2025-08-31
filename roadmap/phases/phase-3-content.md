@@ -14,6 +14,7 @@
 ### 📝 **Architecture de Contenu**
 
 **Stack de Contenu :**
+
 - **Markdown Processing** : marked.js pour parsing performant
 - **Sécurisation** : DOMPurify pour sanitization XSS
 - **Syntax Highlighting** : highlight.js pour code samples
@@ -21,6 +22,7 @@
 - **Types sécurisés** : TypeScript strict pour toutes les entités
 
 **Principes de Conception :**
+
 - **Content as Code** : Contenu versionné et évolutif
 - **Sécurité first** : Sanitization obligatoire de tout HTML
 - **Performance** : Lazy loading et cache des transformations
@@ -30,11 +32,13 @@
 ### 🏗️ **Architecture des Données**
 
 **Modèle Hiérarchique :**
+
 ```
 Matières → Niveaux → Compétences → Cours → Leçons
 ```
 
 **Types Extensibles :**
+
 - **BaseEntity** : ID, timestamps, metadata communs
 - **Matiere** : Disciplines (Math, Français, etc.)
 - **NiveauEducatif** : Classes (6ème, 5ème, etc.)
@@ -45,6 +49,7 @@ Matières → Niveaux → Compétences → Cours → Leçons
 ### 🚀 **Approche Qualité & Performance**
 
 **Optimisations :**
+
 - **Parsing cache** : HTML généré mis en cache
 - **Tree shaking** : Import sélectif des utilitaires
 - **Code splitting** : Routes chargées à la demande
@@ -52,6 +57,7 @@ Matières → Niveaux → Compétences → Cours → Leçons
 - **Bundle analysis** : Monitoring de la taille
 
 **Sécurité :**
+
 - **XSS Protection** : DOMPurify sur tout contenu utilisateur
 - **Content validation** : Schémas Zod pour validation
 - **Type safety** : TypeScript strict sur toutes les interfaces
@@ -62,18 +68,21 @@ Matières → Niveaux → Compétences → Cours → Leçons
 ## 📚 **Références Modulaires**
 
 ### **[REF]** Types et validation : **[content-types.md](../references/data/content-types.md)**
+
 - ✅ Types TypeScript pour contenu éducatif complet
 - ✅ Validation Zod et système de migration
 - ✅ Structure évolutive pour compétences et cours
 - ✅ Interfaces pour exercices et progression
 
 ### **[REF]** Système temps réel : **[realtime-system.md](../references/data/realtime-system.md)**
+
 - ✅ Cache intelligent avec TTL et invalidation
 - ✅ RealtimeDataManager pour Firestore
 - ✅ Stores réactifs avec cleanup automatique
 - ✅ Optimisations de performance réseau
 
 ### **[REF]** Composants UI : **[component-patterns.md](../references/ui/component-patterns.md)**
+
 - ✅ Design system avec tokens CSS cohérents
 - ✅ Composants de base (Button, Card, Input, Modal)
 - ✅ Composants spécialisés pour l'apprentissage
@@ -95,7 +104,7 @@ Matières → Niveaux → Compétences → Cours → Leçons
 **[FILE]** Créer `src/lib/types/content.ts` :
 
 ```ts
-import { z } from 'zod';
+import { z } from "zod";
 
 // ===== ENTITÉ DE BASE =====
 export const BaseEntitySchema = z.object({
@@ -103,7 +112,7 @@ export const BaseEntitySchema = z.object({
   createdAt: z.string().datetime(),
   updatedAt: z.string().datetime(),
   version: z.number().int().positive().default(1),
-  metadata: z.record(z.unknown()).optional()
+  metadata: z.record(z.unknown()).optional(),
 });
 
 export type BaseEntity = z.infer<typeof BaseEntitySchema>;
@@ -116,7 +125,7 @@ export const MatiereSchema = BaseEntitySchema.extend({
   icone: z.string().min(1),
   description: z.string().max(500).optional(),
   ordre: z.number().int().min(0).default(0),
-  actif: z.boolean().default(true)
+  actif: z.boolean().default(true),
 });
 
 export type Matiere = z.infer<typeof MatiereSchema>;
@@ -129,7 +138,7 @@ export const NiveauEducatifSchema = BaseEntitySchema.extend({
   cycleId: z.string().optional(),
   ageMin: z.number().int().min(3).max(25).optional(),
   ageMax: z.number().int().min(3).max(25).optional(),
-  actif: z.boolean().default(true)
+  actif: z.boolean().default(true),
 });
 
 export type NiveauEducatif = z.infer<typeof NiveauEducatifSchema>;
@@ -143,9 +152,9 @@ export const CompetenceSchema = BaseEntitySchema.extend({
   prerequis: z.array(z.string()).default([]),
   objectifs: z.array(z.string()).min(1),
   dureeEstimee: z.number().int().min(1).max(480), // en minutes
-  difficulte: z.enum(['facile', 'moyen', 'difficile']).default('moyen'),
+  difficulte: z.enum(["facile", "moyen", "difficile"]).default("moyen"),
   tags: z.array(z.string()).default([]),
-  actif: z.boolean().default(true)
+  actif: z.boolean().default(true),
 });
 
 export type Competence = z.infer<typeof CompetenceSchema>;
@@ -159,13 +168,17 @@ export const CourseSchema = BaseEntitySchema.extend({
   contenuHtml: z.string().optional(), // Cache de la conversion
   ordre: z.number().int().min(0).default(0),
   dureeEstimee: z.number().int().min(1).max(240), // en minutes
-  type: z.enum(['cours', 'exercice', 'evaluation']).default('cours'),
-  ressources: z.array(z.object({
-    nom: z.string(),
-    url: z.string().url(),
-    type: z.enum(['video', 'pdf', 'lien', 'image'])
-  })).default([]),
-  actif: z.boolean().default(true)
+  type: z.enum(["cours", "exercice", "evaluation"]).default("cours"),
+  ressources: z
+    .array(
+      z.object({
+        nom: z.string(),
+        url: z.string().url(),
+        type: z.enum(["video", "pdf", "lien", "image"]),
+      })
+    )
+    .default([]),
+  actif: z.boolean().default(true),
 });
 
 export type Course = z.infer<typeof CourseSchema>;
@@ -177,9 +190,15 @@ export const LessonSchema = BaseEntitySchema.extend({
   contenuMarkdown: z.string().min(1),
   contenuHtml: z.string().optional(),
   ordre: z.number().int().min(0).default(0),
-  type: z.enum(['introduction', 'explication', 'exemple', 'exercice', 'synthese']),
+  type: z.enum([
+    "introduction",
+    "explication",
+    "exemple",
+    "exercice",
+    "synthese",
+  ]),
   dureeEstimee: z.number().int().min(1).max(120),
-  actif: z.boolean().default(true)
+  actif: z.boolean().default(true),
 });
 
 export type Lesson = z.infer<typeof LessonSchema>;
@@ -200,7 +219,7 @@ export const schemas = {
   NiveauEducatif: NiveauEducatifSchema,
   Competence: CompetenceSchema,
   Course: CourseSchema,
-  Lesson: LessonSchema
+  Lesson: LessonSchema,
 } as const;
 ```
 
@@ -209,10 +228,10 @@ export const schemas = {
 **[FILE]** Créer `src/lib/utils/content.ts` :
 
 ```ts
-import { marked } from 'marked';
-import DOMPurify from 'dompurify';
-import hljs from 'highlight.js';
-import type { Course, Lesson } from '$lib/types/content';
+import { marked } from "marked";
+import DOMPurify from "dompurify";
+import hljs from "highlight.js";
+import type { Course, Lesson } from "$lib/types/content";
 
 // Configuration de marked avec sécurité
 marked.setOptions({
@@ -221,27 +240,47 @@ marked.setOptions({
       try {
         return hljs.highlight(code, { language: lang }).value;
       } catch (err) {
-        console.warn('Erreur de coloration syntaxique:', err);
+        console.warn("Erreur de coloration syntaxique:", err);
       }
     }
     return hljs.highlightAuto(code).value;
   },
   breaks: true,
-  gfm: true
+  gfm: true,
 });
 
 // Configuration DOMPurify sécurisée
 const purifyConfig = {
   ALLOWED_TAGS: [
-    'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-    'p', 'br', 'strong', 'em', 'u', 'del',
-    'ul', 'ol', 'li',
-    'blockquote', 'pre', 'code',
-    'a', 'img',
-    'table', 'thead', 'tbody', 'tr', 'th', 'td'
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "p",
+    "br",
+    "strong",
+    "em",
+    "u",
+    "del",
+    "ul",
+    "ol",
+    "li",
+    "blockquote",
+    "pre",
+    "code",
+    "a",
+    "img",
+    "table",
+    "thead",
+    "tbody",
+    "tr",
+    "th",
+    "td",
   ],
-  ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'id'],
-  ALLOW_DATA_ATTR: false
+  ALLOWED_ATTR: ["href", "src", "alt", "title", "class", "id"],
+  ALLOW_DATA_ATTR: false,
 };
 
 /**
@@ -251,13 +290,13 @@ export function markdownToHtml(markdown: string): string {
   try {
     // 1. Parser le Markdown
     const rawHtml = marked.parse(markdown);
-    
+
     // 2. Sécuriser le HTML
     const cleanHtml = DOMPurify.sanitize(rawHtml, purifyConfig);
-    
+
     return cleanHtml;
   } catch (error) {
-    console.error('Erreur de conversion Markdown:', error);
+    console.error("Erreur de conversion Markdown:", error);
     return '<p class="error">Erreur de chargement du contenu</p>';
   }
 }
@@ -268,10 +307,10 @@ export function markdownToHtml(markdown: string): string {
 export function generateSlug(title: string): string {
   return title
     .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '') // Supprimer les accents
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '');
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // Supprimer les accents
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
 /**
@@ -286,19 +325,21 @@ export function estimateReadingTime(markdown: string): number {
 /**
  * Extrait les en-têtes d'un contenu Markdown pour la navigation
  */
-export function extractHeaders(markdown: string): Array<{id: string, level: number, text: string}> {
+export function extractHeaders(
+  markdown: string
+): Array<{ id: string; level: number; text: string }> {
   const headerRegex = /^(#{1,6})\s+(.+)$/gm;
   const headers = [];
   let match;
-  
+
   while ((match = headerRegex.exec(markdown)) !== null) {
     const level = match[1].length;
     const text = match[2].trim();
     const id = generateSlug(text);
-    
+
     headers.push({ id, level, text });
   }
-  
+
   return headers;
 }
 
@@ -306,25 +347,25 @@ export function extractHeaders(markdown: string): Array<{id: string, level: numb
  * Cache des conversions HTML pour optimiser les performances
  */
 class ContentCache {
-  private cache = new Map<string, { html: string, timestamp: number }>();
+  private cache = new Map<string, { html: string; timestamp: number }>();
   private readonly TTL = 5 * 60 * 1000; // 5 minutes
 
   get(key: string): string | null {
     const cached = this.cache.get(key);
     if (!cached) return null;
-    
+
     if (Date.now() - cached.timestamp > this.TTL) {
       this.cache.delete(key);
       return null;
     }
-    
+
     return cached.html;
   }
 
   set(key: string, html: string): void {
     this.cache.set(key, {
       html,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   }
 
@@ -345,7 +386,7 @@ export function processCourse(course: Course): Course {
 
   const cacheKey = `course-${course.id}-${course.updatedAt}`;
   let html = contentCache.get(cacheKey);
-  
+
   if (!html) {
     html = markdownToHtml(course.contenuMarkdown);
     contentCache.set(cacheKey, html);
@@ -353,7 +394,7 @@ export function processCourse(course: Course): Course {
 
   return {
     ...course,
-    contenuHtml: html
+    contenuHtml: html,
   };
 }
 ```
@@ -363,8 +404,13 @@ export function processCourse(course: Course): Course {
 **[FILE]** Créer `src/lib/stores/content.ts` :
 
 ```ts
-import { writable, derived, readable } from 'svelte/store';
-import type { Matiere, NiveauEducatif, Competence, Course } from '$lib/types/content';
+import { writable, derived, readable } from "svelte/store";
+import type {
+  Matiere,
+  NiveauEducatif,
+  Competence,
+  Course,
+} from "$lib/types/content";
 
 // ===== STORES DE DONNÉES =====
 export const matieres = writable<Matiere[]>([]);
@@ -380,91 +426,91 @@ export const currentCompetence = writable<string | null>(null);
 // ===== STORES DÉRIVÉS =====
 export const matiereActive = derived(
   [matieres, currentMatiere],
-  ([$matieres, $currentMatiere]) => 
-    $matieres.find(m => m.id === $currentMatiere)
+  ([$matieres, $currentMatiere]) =>
+    $matieres.find((m) => m.id === $currentMatiere)
 );
 
 export const niveauActif = derived(
   [niveaux, currentNiveau],
-  ([$niveaux, $currentNiveau]) => 
-    $niveaux.find(n => n.id === $currentNiveau)
+  ([$niveaux, $currentNiveau]) => $niveaux.find((n) => n.id === $currentNiveau)
 );
 
 export const competencesFiltered = derived(
   [competences, currentMatiere, currentNiveau],
-  ([$competences, $matiere, $niveau]) => 
-    $competences.filter(c => 
-      (!$matiere || c.matiereId === $matiere) &&
-      (!$niveau || c.niveauId === $niveau)
+  ([$competences, $matiere, $niveau]) =>
+    $competences.filter(
+      (c) =>
+        (!$matiere || c.matiereId === $matiere) &&
+        (!$niveau || c.niveauId === $niveau)
     )
 );
 
 export const coursesFiltered = derived(
   [courses, currentCompetence],
-  ([$courses, $competence]) => 
-    $courses.filter(c => !$competence || c.competenceId === $competence)
+  ([$courses, $competence]) =>
+    $courses.filter((c) => !$competence || c.competenceId === $competence)
 );
 
 // ===== DONNÉES DE TEST =====
 export const mockData = readable({
   matieres: [
     {
-      id: 'math',
-      nom: 'Mathématiques',
-      code: 'MATH',
-      couleur: '#3B82F6',
-      icone: '🔢',
-      description: 'Découvrez les merveilles des mathématiques',
+      id: "math",
+      nom: "Mathématiques",
+      code: "MATH",
+      couleur: "#3B82F6",
+      icone: "🔢",
+      description: "Découvrez les merveilles des mathématiques",
       ordre: 1,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      actif: true
+      actif: true,
     },
     {
-      id: 'francais',
-      nom: 'Français',
-      code: 'FR',
-      couleur: '#EF4444',
-      icone: '📚',
-      description: 'Maîtrisez la langue française',
+      id: "francais",
+      nom: "Français",
+      code: "FR",
+      couleur: "#EF4444",
+      icone: "📚",
+      description: "Maîtrisez la langue française",
       ordre: 2,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      actif: true
-    }
+      actif: true,
+    },
   ] as Matiere[],
-  
+
   niveaux: [
     {
-      id: '6eme',
-      nom: '6ème',
-      code: '6E',
+      id: "6eme",
+      nom: "6ème",
+      code: "6E",
       ordre: 1,
       ageMin: 11,
       ageMax: 12,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      actif: true
+      actif: true,
     },
     {
-      id: '5eme',
-      nom: '5ème',
-      code: '5E',
+      id: "5eme",
+      nom: "5ème",
+      code: "5E",
       ordre: 2,
       ageMin: 12,
       ageMax: 13,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      actif: true
-    }
-  ] as NiveauEducatif[]
+      actif: true,
+    },
+  ] as NiveauEducatif[],
 });
 
 // ===== ACTIONS =====
 export const contentActions = {
   // Initialiser avec les données de test
   loadMockData() {
-    mockData.subscribe(data => {
+    mockData.subscribe((data) => {
       matieres.set(data.matieres);
       niveaux.set(data.niveaux);
     });
@@ -491,7 +537,7 @@ export const contentActions = {
     currentMatiere.set(null);
     currentNiveau.set(null);
     currentCompetence.set(null);
-  }
+  },
 };
 ```
 
@@ -501,8 +547,8 @@ export const contentActions = {
 
 ```svelte
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { matieres, niveaux, contentActions } from '$lib/stores/content';
+  import { onMount } from "svelte";
+  import { matieres, niveaux, contentActions } from "$lib/stores/content";
 
   onMount(() => {
     contentActions.loadMockData();
@@ -523,8 +569,8 @@ export const contentActions = {
     <h2>Matières disponibles</h2>
     <div class="grid">
       {#each $matieres as matiere (matiere.id)}
-        <a 
-          href="/content/{matiere.code.toLowerCase()}" 
+        <a
+          href="/content/{matiere.code.toLowerCase()}"
           class="matiere-card"
           style="--couleur: {matiere.couleur}"
         >
@@ -626,9 +672,9 @@ export const contentActions = {
 
 ```svelte
 <script lang="ts">
-  import { page } from '$app/stores';
-  import { onMount } from 'svelte';
-  import { matiereActive, niveaux, contentActions } from '$lib/stores/content';
+  import { page } from "$app/stores";
+  import { onMount } from "svelte";
+  import { matiereActive, niveaux, contentActions } from "$lib/stores/content";
 
   $: matiereCode = $page.params.matiere;
 
@@ -636,12 +682,12 @@ export const contentActions = {
     contentActions.loadMockData();
     // Rechercher la matière par code
     // Note: ici on devrait faire une vraie recherche
-    contentActions.selectMatiere('math'); // Simplification pour l'exemple
+    contentActions.selectMatiere("math"); // Simplification pour l'exemple
   });
 </script>
 
 <svelte:head>
-  <title>{$matiereActive?.nom || 'Matière'} - FunLearning</title>
+  <title>{$matiereActive?.nom || "Matière"} - FunLearning</title>
 </svelte:head>
 
 {#if $matiereActive}
@@ -656,7 +702,7 @@ export const contentActions = {
       <h2>Choisissez votre niveau</h2>
       <div class="niveaux-grid">
         {#each $niveaux as niveau (niveau.id)}
-          <a 
+          <a
             href="/content/{matiereCode}/{niveau.code.toLowerCase()}"
             class="niveau-card"
           >
@@ -683,7 +729,11 @@ export const contentActions = {
   .matiere-header {
     text-align: center;
     padding: 3rem 0;
-    background: linear-gradient(135deg, var(--couleur), color-mix(in srgb, var(--couleur) 60%, white));
+    background: linear-gradient(
+      135deg,
+      var(--couleur),
+      color-mix(in srgb, var(--couleur) 60%, white)
+    );
     border-radius: 12px;
     color: white;
     margin-bottom: 3rem;
@@ -740,37 +790,39 @@ export const contentActions = {
 **[FILE]** Créer `src/lib/utils/content.test.ts` :
 
 ```ts
-import { describe, it, expect } from 'vitest';
-import { markdownToHtml, generateSlug, estimateReadingTime } from './content';
+import { describe, it, expect } from "vitest";
+import { markdownToHtml, generateSlug, estimateReadingTime } from "./content";
 
-describe('Content Utils', () => {
-  describe('markdownToHtml', () => {
-    it('should convert basic markdown', () => {
-      const markdown = '# Hello\n\nThis is **bold**.';
+describe("Content Utils", () => {
+  describe("markdownToHtml", () => {
+    it("should convert basic markdown", () => {
+      const markdown = "# Hello\n\nThis is **bold**.";
       const html = markdownToHtml(markdown);
-      expect(html).toContain('<h1>Hello</h1>');
-      expect(html).toContain('<strong>bold</strong>');
+      expect(html).toContain("<h1>Hello</h1>");
+      expect(html).toContain("<strong>bold</strong>");
     });
 
-    it('should sanitize dangerous HTML', () => {
+    it("should sanitize dangerous HTML", () => {
       const markdown = '<script>alert("xss")</script>';
       const html = markdownToHtml(markdown);
-      expect(html).not.toContain('<script>');
+      expect(html).not.toContain("<script>");
     });
   });
 
-  describe('generateSlug', () => {
-    it('should create URL-friendly slugs', () => {
-      expect(generateSlug('Les Mathématiques Avancées')).toBe('les-mathematiques-avancees');
-      expect(generateSlug('Français 6ème')).toBe('francais-6eme');
+  describe("generateSlug", () => {
+    it("should create URL-friendly slugs", () => {
+      expect(generateSlug("Les Mathématiques Avancées")).toBe(
+        "les-mathematiques-avancees"
+      );
+      expect(generateSlug("Français 6ème")).toBe("francais-6eme");
     });
   });
 
-  describe('estimateReadingTime', () => {
-    it('should estimate reading time', () => {
-      const shortText = 'Hello world';
-      const longText = 'word '.repeat(400); // 400 mots
-      
+  describe("estimateReadingTime", () => {
+    it("should estimate reading time", () => {
+      const shortText = "Hello world";
+      const longText = "word ".repeat(400); // 400 mots
+
       expect(estimateReadingTime(shortText)).toBe(1);
       expect(estimateReadingTime(longText)).toBe(2); // 400/200 = 2 minutes
     });
@@ -781,20 +833,20 @@ describe('Content Utils', () => {
 **[FILE]** Créer `tests/e2e/content.spec.ts` :
 
 ```ts
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test.describe('Content Navigation', () => {
-  test('should display content hub', async ({ page }) => {
-    await page.goto('/content');
-    await expect(page.locator('h1')).toContainText('Explorer le contenu');
-    await expect(page.locator('.matiere-card')).toHaveCount(2);
+test.describe("Content Navigation", () => {
+  test("should display content hub", async ({ page }) => {
+    await page.goto("/content");
+    await expect(page.locator("h1")).toContainText("Explorer le contenu");
+    await expect(page.locator(".matiere-card")).toHaveCount(2);
   });
 
-  test('should navigate to matiere page', async ({ page }) => {
-    await page.goto('/content');
-    await page.click('text=Mathématiques');
-    await expect(page).toHaveURL('/content/math');
-    await expect(page.locator('h1')).toContainText('Mathématiques');
+  test("should navigate to matiere page", async ({ page }) => {
+    await page.goto("/content");
+    await page.click("text=Mathématiques");
+    await expect(page).toHaveURL("/content/math");
+    await expect(page.locator("h1")).toContainText("Mathématiques");
   });
 });
 ```

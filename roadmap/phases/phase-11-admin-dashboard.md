@@ -14,6 +14,7 @@
 ### ⚙️ **Dashboard Architecture**
 
 **Interface d'Administration :**
+
 - **Multi-role Management** : Super Admin, Admin, Instructor, Moderator
 - **Real-time Analytics** : Métriques temps réel avec WebSockets
 - **Content Management** : CRUD complet cours/exercices/utilisateurs
@@ -21,6 +22,7 @@
 - **Bulk Operations** : Actions en masse optimisées
 
 **Analytics Avancées :**
+
 - **Learning Analytics** : Patterns d'apprentissage et efficacité
 - **User Behavior** : Parcours utilisateurs et points d'abandon
 - **Content Performance** : Engagement et taux de complétion
@@ -30,6 +32,7 @@
 ### 📊 **Data Visualization & Reporting**
 
 **Tableaux de Bord :**
+
 - **Executive Dashboard** : KPIs stratégiques et vue d'ensemble
 - **Operational Dashboard** : Métriques opérationnelles temps réel
 - **Content Dashboard** : Performance contenu et engagement
@@ -37,6 +40,7 @@
 - **Technical Dashboard** : Monitoring système et performance
 
 **Reporting Système :**
+
 - **Automated Reports** : Rapports automatiques programmés
 - **Custom Reports** : Générateur rapports personnalisés
 - **Export Capabilities** : PDF, Excel, CSV avec formatage
@@ -46,6 +50,7 @@
 ### 🔐 **Security & Access Control**
 
 **Gestion Permissions :**
+
 - **Role-Based Access Control (RBAC)** : Permissions granulaires
 - **Resource-Level Security** : Contrôle accès par ressource
 - **Audit Trail** : Traçabilité complète des actions admin
@@ -53,6 +58,7 @@
 - **API Security** : Protection APIs avec rate limiting
 
 **Monitoring Sécurité :**
+
 - **Failed Login Detection** : Détection tentatives intrusion
 - **Suspicious Activity** : Alertes comportements anormaux
 - **Data Access Logging** : Log accès données sensibles
@@ -62,6 +68,7 @@
 ### 🏗️ **Approche Qualité & Performance**
 
 **Performance Admin :**
+
 - **Lazy Loading** : Chargement données à la demande
 - **Virtual Scrolling** : Pagination virtualisée grandes listes
 - **Background Processing** : Tâches lourdes en arrière-plan
@@ -73,12 +80,14 @@
 ## 📚 **Références Modulaires**
 
 ### **[REF]** Admin Core : **[admin-core.md](../references/admin/admin-core.md)**
+
 - ✅ Architecture RBAC complète
 - ✅ Interface d'administration responsive
 - ✅ Gestion utilisateurs et permissions
 - ✅ Audit trail et sécurité
 
 ### **[REF]** Analytics Dashboard : **[analytics-dashboard.md](../references/admin/analytics-dashboard.md)**
+
 - ✅ Tableaux de bord temps réel
 - ✅ Visualisations données avancées
 - ✅ Système de reporting automatisé
@@ -93,17 +102,25 @@
 **[FILE]** Créer `src/lib/admin/adminStore.ts` :
 
 ```ts
-import { writable, derived } from 'svelte/store';
-import { z } from 'zod';
-import type { UserProfile } from '$lib/firebase/collections';
+import { writable, derived } from "svelte/store";
+import { z } from "zod";
+import type { UserProfile } from "$lib/firebase/collections";
 
 // ===== TYPES ADMIN =====
-export const AdminRoleSchema = z.enum(['super_admin', 'admin', 'instructor', 'moderator', 'viewer']);
+export const AdminRoleSchema = z.enum([
+  "super_admin",
+  "admin",
+  "instructor",
+  "moderator",
+  "viewer",
+]);
 export type AdminRole = z.infer<typeof AdminRoleSchema>;
 
 export const AdminPermissionSchema = z.object({
   resource: z.string(),
-  actions: z.array(z.enum(['create', 'read', 'update', 'delete', 'publish', 'moderate']))
+  actions: z.array(
+    z.enum(["create", "read", "update", "delete", "publish", "moderate"])
+  ),
 });
 
 export const AdminUserSchema = z.object({
@@ -115,7 +132,7 @@ export const AdminUserSchema = z.object({
   isActive: z.boolean(),
   lastLogin: z.string().optional(),
   createdAt: z.string(),
-  updatedAt: z.string()
+  updatedAt: z.string(),
 });
 
 export const SystemStatsSchema = z.object({
@@ -131,8 +148,8 @@ export const SystemStatsSchema = z.object({
     cpu: z.number(),
     memory: z.number(),
     disk: z.number(),
-    uptime: z.number()
-  })
+    uptime: z.number(),
+  }),
 });
 
 export type AdminUser = z.infer<typeof AdminUserSchema>;
@@ -150,7 +167,7 @@ interface AdminState {
 
 interface AdminNotification {
   id: string;
-  type: 'info' | 'warning' | 'error' | 'success';
+  type: "info" | "warning" | "error" | "success";
   title: string;
   message: string;
   timestamp: Date;
@@ -158,7 +175,7 @@ interface AdminNotification {
   actions?: Array<{
     label: string;
     action: string;
-    variant: 'primary' | 'secondary' | 'danger';
+    variant: "primary" | "secondary" | "danger";
   }>;
 }
 
@@ -169,15 +186,21 @@ export const adminState = writable<AdminState>({
   systemStats: null,
   notifications: [],
   isLoading: false,
-  error: null
+  error: null,
 });
 
 // Derived stores pour faciliter l'accès
-export const currentAdminUser = derived(adminState, $state => $state.currentUser);
-export const adminUsers = derived(adminState, $state => $state.users);
-export const systemStats = derived(adminState, $state => $state.systemStats);
-export const adminNotifications = derived(adminState, $state => $state.notifications);
-export const isAdminLoading = derived(adminState, $state => $state.isLoading);
+export const currentAdminUser = derived(
+  adminState,
+  ($state) => $state.currentUser
+);
+export const adminUsers = derived(adminState, ($state) => $state.users);
+export const systemStats = derived(adminState, ($state) => $state.systemStats);
+export const adminNotifications = derived(
+  adminState,
+  ($state) => $state.notifications
+);
+export const isAdminLoading = derived(adminState, ($state) => $state.isLoading);
 
 // ===== ADMIN MANAGER =====
 export class AdminManager {
@@ -188,16 +211,16 @@ export class AdminManager {
    * Initialise la session admin
    */
   async initialize(user: UserProfile): Promise<void> {
-    adminState.update(state => ({ ...state, isLoading: true, error: null }));
+    adminState.update((state) => ({ ...state, isLoading: true, error: null }));
 
     try {
       // Vérifier permissions admin
       const adminUser = await this.validateAdminUser(user);
-      
+
       // Charger données initiales
       const [users, stats] = await Promise.all([
         this.loadUsers(),
-        this.loadSystemStats()
+        this.loadSystemStats(),
       ]);
 
       // Établir connexion temps réel
@@ -206,19 +229,18 @@ export class AdminManager {
       // Démarrer refresh périodique
       this.startPeriodicRefresh();
 
-      adminState.update(state => ({
+      adminState.update((state) => ({
         ...state,
         currentUser: adminUser,
         users,
         systemStats: stats,
-        isLoading: false
+        isLoading: false,
       }));
-
     } catch (error) {
-      adminState.update(state => ({
+      adminState.update((state) => ({
         ...state,
         isLoading: false,
-        error: error.message
+        error: error.message,
       }));
       throw error;
     }
@@ -228,14 +250,14 @@ export class AdminManager {
    * Valide qu'un utilisateur a des permissions admin
    */
   private async validateAdminUser(user: UserProfile): Promise<AdminUser> {
-    const response = await fetch('/api/admin/validate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId: user.id })
+    const response = await fetch("/api/admin/validate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId: user.id }),
     });
 
     if (!response.ok) {
-      throw new Error('Accès admin non autorisé');
+      throw new Error("Accès admin non autorisé");
     }
 
     const adminUser = await response.json();
@@ -246,9 +268,9 @@ export class AdminManager {
    * Charge la liste des utilisateurs
    */
   async loadUsers(): Promise<AdminUser[]> {
-    const response = await fetch('/api/admin/users');
-    if (!response.ok) throw new Error('Erreur chargement utilisateurs');
-    
+    const response = await fetch("/api/admin/users");
+    if (!response.ok) throw new Error("Erreur chargement utilisateurs");
+
     const users = await response.json();
     return z.array(AdminUserSchema).parse(users);
   }
@@ -257,9 +279,9 @@ export class AdminManager {
    * Charge les statistiques système
    */
   async loadSystemStats(): Promise<SystemStats> {
-    const response = await fetch('/api/admin/stats');
-    if (!response.ok) throw new Error('Erreur chargement statistiques');
-    
+    const response = await fetch("/api/admin/stats");
+    if (!response.ok) throw new Error("Erreur chargement statistiques");
+
     const stats = await response.json();
     return SystemStatsSchema.parse(stats);
   }
@@ -268,46 +290,49 @@ export class AdminManager {
    * Gestion utilisateurs
    */
   async createUser(userData: Partial<AdminUser>): Promise<AdminUser> {
-    const response = await fetch('/api/admin/users', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userData)
+    const response = await fetch("/api/admin/users", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
     });
 
-    if (!response.ok) throw new Error('Erreur création utilisateur');
-    
+    if (!response.ok) throw new Error("Erreur création utilisateur");
+
     const newUser = AdminUserSchema.parse(await response.json());
-    
-    adminState.update(state => ({
+
+    adminState.update((state) => ({
       ...state,
-      users: [...state.users, newUser]
+      users: [...state.users, newUser],
     }));
 
     this.addNotification({
-      type: 'success',
-      title: 'Utilisateur créé',
-      message: `${newUser.name} a été ajouté avec succès`
+      type: "success",
+      title: "Utilisateur créé",
+      message: `${newUser.name} a été ajouté avec succès`,
     });
 
     return newUser;
   }
 
-  async updateUser(userId: string, updates: Partial<AdminUser>): Promise<AdminUser> {
+  async updateUser(
+    userId: string,
+    updates: Partial<AdminUser>
+  ): Promise<AdminUser> {
     const response = await fetch(`/api/admin/users/${userId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updates)
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updates),
     });
 
-    if (!response.ok) throw new Error('Erreur mise à jour utilisateur');
-    
+    if (!response.ok) throw new Error("Erreur mise à jour utilisateur");
+
     const updatedUser = AdminUserSchema.parse(await response.json());
-    
-    adminState.update(state => ({
+
+    adminState.update((state) => ({
       ...state,
-      users: state.users.map(user => 
+      users: state.users.map((user) =>
         user.id === userId ? updatedUser : user
-      )
+      ),
     }));
 
     return updatedUser;
@@ -315,41 +340,44 @@ export class AdminManager {
 
   async deleteUser(userId: string): Promise<void> {
     const response = await fetch(`/api/admin/users/${userId}`, {
-      method: 'DELETE'
+      method: "DELETE",
     });
 
-    if (!response.ok) throw new Error('Erreur suppression utilisateur');
-    
-    adminState.update(state => ({
+    if (!response.ok) throw new Error("Erreur suppression utilisateur");
+
+    adminState.update((state) => ({
       ...state,
-      users: state.users.filter(user => user.id !== userId)
+      users: state.users.filter((user) => user.id !== userId),
     }));
 
     this.addNotification({
-      type: 'info',
-      title: 'Utilisateur supprimé',
-      message: 'L\'utilisateur a été supprimé avec succès'
+      type: "info",
+      title: "Utilisateur supprimé",
+      message: "L'utilisateur a été supprimé avec succès",
     });
   }
 
   /**
    * Gestion permissions
    */
-  async updateUserPermissions(userId: string, permissions: AdminPermissionSchema[]): Promise<void> {
+  async updateUserPermissions(
+    userId: string,
+    permissions: AdminPermissionSchema[]
+  ): Promise<void> {
     const response = await fetch(`/api/admin/users/${userId}/permissions`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ permissions })
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ permissions }),
     });
 
-    if (!response.ok) throw new Error('Erreur mise à jour permissions');
-    
+    if (!response.ok) throw new Error("Erreur mise à jour permissions");
+
     // Mettre à jour localement
-    adminState.update(state => ({
+    adminState.update((state) => ({
       ...state,
-      users: state.users.map(user => 
+      users: state.users.map((user) =>
         user.id === userId ? { ...user, permissions } : user
-      )
+      ),
     }));
   }
 
@@ -358,12 +386,13 @@ export class AdminManager {
     if (!currentUser) return false;
 
     // Super admin a tous les droits
-    if (currentUser.role === 'super_admin') return true;
+    if (currentUser.role === "super_admin") return true;
 
     // Vérifier permissions spécifiques
-    return currentUser.permissions.some(permission => 
-      permission.resource === resource && 
-      permission.actions.includes(action as any)
+    return currentUser.permissions.some(
+      (permission) =>
+        permission.resource === resource &&
+        permission.actions.includes(action as any)
     );
   }
 
@@ -371,12 +400,14 @@ export class AdminManager {
    * Analytics en temps réel
    */
   private async connectRealtime(adminId: string): Promise<void> {
-    const wsUrl = `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}/api/admin/ws?adminId=${adminId}`;
-    
+    const wsUrl = `${window.location.protocol === "https:" ? "wss:" : "ws:"}//${
+      window.location.host
+    }/api/admin/ws?adminId=${adminId}`;
+
     this.websocket = new WebSocket(wsUrl);
 
     this.websocket.onopen = () => {
-      console.log('Admin WebSocket connecté');
+      console.log("Admin WebSocket connecté");
     };
 
     this.websocket.onmessage = (event) => {
@@ -385,48 +416,48 @@ export class AdminManager {
     };
 
     this.websocket.onclose = () => {
-      console.log('Admin WebSocket fermé');
+      console.log("Admin WebSocket fermé");
       // Reconnexion automatique après 5s
       setTimeout(() => this.connectRealtime(adminId), 5000);
     };
 
     this.websocket.onerror = (error) => {
-      console.error('Erreur WebSocket admin:', error);
+      console.error("Erreur WebSocket admin:", error);
     };
   }
 
   private handleRealtimeUpdate(data: any): void {
     switch (data.type) {
-      case 'stats_update':
-        adminState.update(state => ({
+      case "stats_update":
+        adminState.update((state) => ({
           ...state,
-          systemStats: SystemStatsSchema.parse(data.stats)
+          systemStats: SystemStatsSchema.parse(data.stats),
         }));
         break;
 
-      case 'user_activity':
+      case "user_activity":
         this.addNotification({
-          type: 'info',
-          title: 'Activité utilisateur',
-          message: data.message
+          type: "info",
+          title: "Activité utilisateur",
+          message: data.message,
         });
         break;
 
-      case 'system_alert':
+      case "system_alert":
         this.addNotification({
           type: data.severity,
-          title: 'Alerte système',
+          title: "Alerte système",
           message: data.message,
-          actions: data.actions
+          actions: data.actions,
         });
         break;
 
-      case 'user_update':
-        adminState.update(state => ({
+      case "user_update":
+        adminState.update((state) => ({
           ...state,
-          users: state.users.map(user => 
+          users: state.users.map((user) =>
             user.id === data.user.id ? AdminUserSchema.parse(data.user) : user
-          )
+          ),
         }));
         break;
     }
@@ -435,35 +466,37 @@ export class AdminManager {
   /**
    * Notifications admin
    */
-  private addNotification(notification: Omit<AdminNotification, 'id' | 'timestamp' | 'isRead'>): void {
+  private addNotification(
+    notification: Omit<AdminNotification, "id" | "timestamp" | "isRead">
+  ): void {
     const fullNotification: AdminNotification = {
       id: crypto.randomUUID(),
       timestamp: new Date(),
       isRead: false,
-      ...notification
+      ...notification,
     };
 
-    adminState.update(state => ({
+    adminState.update((state) => ({
       ...state,
-      notifications: [fullNotification, ...state.notifications].slice(0, 50) // Limiter à 50
+      notifications: [fullNotification, ...state.notifications].slice(0, 50), // Limiter à 50
     }));
   }
 
   markNotificationRead(notificationId: string): void {
-    adminState.update(state => ({
+    adminState.update((state) => ({
       ...state,
-      notifications: state.notifications.map(notification =>
-        notification.id === notificationId 
+      notifications: state.notifications.map((notification) =>
+        notification.id === notificationId
           ? { ...notification, isRead: true }
           : notification
-      )
+      ),
     }));
   }
 
   clearNotifications(): void {
-    adminState.update(state => ({
+    adminState.update((state) => ({
       ...state,
-      notifications: []
+      notifications: [],
     }));
   }
 
@@ -474,12 +507,12 @@ export class AdminManager {
     this.refreshInterval = setInterval(async () => {
       try {
         const stats = await this.loadSystemStats();
-        adminState.update(state => ({
+        adminState.update((state) => ({
           ...state,
-          systemStats: stats
+          systemStats: stats,
         }));
       } catch (error) {
-        console.error('Erreur refresh stats:', error);
+        console.error("Erreur refresh stats:", error);
       }
     }, 30000); // Refresh toutes les 30s
   }
@@ -504,14 +537,14 @@ export class AdminManager {
       systemStats: null,
       notifications: [],
       isLoading: false,
-      error: null
+      error: null,
     });
   }
 
   // ===== UTILS =====
   getCurrentUser(): AdminUser | null {
     let currentUser: AdminUser | null = null;
-    adminState.subscribe(state => {
+    adminState.subscribe((state) => {
       currentUser = state.currentUser;
     })();
     return currentUser;
@@ -520,62 +553,71 @@ export class AdminManager {
   /**
    * Export des données pour rapports
    */
-  async exportData(type: 'users' | 'stats' | 'analytics', format: 'csv' | 'xlsx' | 'pdf'): Promise<Blob> {
+  async exportData(
+    type: "users" | "stats" | "analytics",
+    format: "csv" | "xlsx" | "pdf"
+  ): Promise<Blob> {
     const response = await fetch(`/api/admin/export/${type}?format=${format}`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Accept': format === 'csv' ? 'text/csv' : 
-                 format === 'xlsx' ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' :
-                 'application/pdf'
-      }
+        Accept:
+          format === "csv"
+            ? "text/csv"
+            : format === "xlsx"
+            ? "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            : "application/pdf",
+      },
     });
 
-    if (!response.ok) throw new Error('Erreur export données');
-    
+    if (!response.ok) throw new Error("Erreur export données");
+
     return response.blob();
   }
 
   /**
    * Actions en masse
    */
-  async bulkUpdateUsers(userIds: string[], updates: Partial<AdminUser>): Promise<void> {
-    const response = await fetch('/api/admin/users/bulk', {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userIds, updates })
+  async bulkUpdateUsers(
+    userIds: string[],
+    updates: Partial<AdminUser>
+  ): Promise<void> {
+    const response = await fetch("/api/admin/users/bulk", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userIds, updates }),
     });
 
-    if (!response.ok) throw new Error('Erreur mise à jour en masse');
+    if (!response.ok) throw new Error("Erreur mise à jour en masse");
 
     // Recharger les utilisateurs
     const users = await this.loadUsers();
-    adminState.update(state => ({ ...state, users }));
+    adminState.update((state) => ({ ...state, users }));
 
     this.addNotification({
-      type: 'success',
-      title: 'Mise à jour en masse',
-      message: `${userIds.length} utilisateurs mis à jour`
+      type: "success",
+      title: "Mise à jour en masse",
+      message: `${userIds.length} utilisateurs mis à jour`,
     });
   }
 
   async bulkDeleteUsers(userIds: string[]): Promise<void> {
-    const response = await fetch('/api/admin/users/bulk', {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userIds })
+    const response = await fetch("/api/admin/users/bulk", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userIds }),
     });
 
-    if (!response.ok) throw new Error('Erreur suppression en masse');
+    if (!response.ok) throw new Error("Erreur suppression en masse");
 
-    adminState.update(state => ({
+    adminState.update((state) => ({
       ...state,
-      users: state.users.filter(user => !userIds.includes(user.id))
+      users: state.users.filter((user) => !userIds.includes(user.id)),
     }));
 
     this.addNotification({
-      type: 'info',
-      title: 'Suppression en masse',
-      message: `${userIds.length} utilisateurs supprimés`
+      type: "info",
+      title: "Suppression en masse",
+      message: `${userIds.length} utilisateurs supprimés`,
     });
   }
 }
@@ -585,31 +627,49 @@ export const adminManager = new AdminManager();
 
 // ===== RBAC HELPERS =====
 export const ROLE_PERMISSIONS = {
-  super_admin: ['*'], // Tous les droits
+  super_admin: ["*"], // Tous les droits
   admin: [
-    'users.read', 'users.create', 'users.update', 'users.delete',
-    'courses.read', 'courses.create', 'courses.update', 'courses.delete', 'courses.publish',
-    'exercises.read', 'exercises.create', 'exercises.update', 'exercises.delete',
-    'analytics.read', 'system.read'
+    "users.read",
+    "users.create",
+    "users.update",
+    "users.delete",
+    "courses.read",
+    "courses.create",
+    "courses.update",
+    "courses.delete",
+    "courses.publish",
+    "exercises.read",
+    "exercises.create",
+    "exercises.update",
+    "exercises.delete",
+    "analytics.read",
+    "system.read",
   ],
   instructor: [
-    'courses.read', 'courses.create', 'courses.update', 'courses.publish',
-    'exercises.read', 'exercises.create', 'exercises.update',
-    'users.read', 'analytics.read'
+    "courses.read",
+    "courses.create",
+    "courses.update",
+    "courses.publish",
+    "exercises.read",
+    "exercises.create",
+    "exercises.update",
+    "users.read",
+    "analytics.read",
   ],
   moderator: [
-    'courses.read', 'courses.moderate',
-    'exercises.read', 'exercises.moderate',
-    'users.read', 'users.moderate'
+    "courses.read",
+    "courses.moderate",
+    "exercises.read",
+    "exercises.moderate",
+    "users.read",
+    "users.moderate",
   ],
-  viewer: [
-    'courses.read', 'exercises.read', 'users.read', 'analytics.read'
-  ]
+  viewer: ["courses.read", "exercises.read", "users.read", "analytics.read"],
 } as const;
 
 export function hasPermission(role: AdminRole, permission: string): boolean {
   const rolePermissions = ROLE_PERMISSIONS[role];
-  return rolePermissions.includes('*') || rolePermissions.includes(permission);
+  return rolePermissions.includes("*") || rolePermissions.includes(permission);
 }
 ```
 
@@ -662,13 +722,13 @@ export function hasPermission(role: AdminRole, permission: string): boolean {
   // ===== METHODS =====
   async function loadAnalytics() {
     if (isLoading) return;
-    
+
     isLoading = true;
     error = null;
 
     try {
       const response = await fetch(`/api/admin/analytics?range=${timeRange}&metrics=${Array.from(selectedMetrics).join(',')}`);
-      
+
       if (!response.ok) {
         throw new Error('Erreur chargement analytics');
       }
@@ -731,9 +791,9 @@ export function hasPermission(role: AdminRole, permission: string): boolean {
       <!-- Sélecteur période -->
       <div class="analytics-dashboard__time-range">
         <label for="timeRange">Période:</label>
-        <select 
-          id="timeRange" 
-          bind:value={timeRange} 
+        <select
+          id="timeRange"
+          bind:value={timeRange}
           on:change={loadAnalytics}
           class="analytics-dashboard__select"
         >
@@ -835,7 +895,7 @@ export function hasPermission(role: AdminRole, permission: string): boolean {
           <div class="analytics-dashboard__kpi-value">{Math.round(stats.completionRate * 100)}%</div>
           <div class="analytics-dashboard__kpi-label">Taux de complétion</div>
           <div class="analytics-dashboard__kpi-change">
-            {stats.completionRate > 0.7 ? '✅' : stats.completionRate > 0.5 ? '⚠️' : '❌'} 
+            {stats.completionRate > 0.7 ? '✅' : stats.completionRate > 0.5 ? '⚠️' : '❌'}
             Objectif: 70%
           </div>
         </div>
@@ -847,7 +907,7 @@ export function hasPermission(role: AdminRole, permission: string): boolean {
           <div class="analytics-dashboard__kpi-value">{Math.round(stats.errorRate * 100 * 100) / 100}%</div>
           <div class="analytics-dashboard__kpi-label">Taux d'erreur</div>
           <div class="analytics-dashboard__kpi-change">
-            {stats.errorRate < 0.01 ? '✅' : stats.errorRate < 0.05 ? '⚠️' : '❌'} 
+            {stats.errorRate < 0.01 ? '✅' : stats.errorRate < 0.05 ? '⚠️' : '❌'}
             Cible: < 1%
           </div>
         </div>
@@ -903,7 +963,7 @@ export function hasPermission(role: AdminRole, permission: string): boolean {
           data={analytics.completionTrends}
           options={{
             scales: {
-              y: { 
+              y: {
                 beginAtZero: true,
                 max: 100,
                 ticks: {
@@ -1249,17 +1309,17 @@ export function hasPermission(role: AdminRole, permission: string): boolean {
     border-radius: var(--radius-sm);
     font-size: var(--font-size-xs);
     font-weight: 500;
-    
+
     &--error {
       background: var(--color-error-100);
       color: var(--color-error-800);
     }
-    
+
     &--warning {
       background: var(--color-warning-100);
       color: var(--color-warning-800);
     }
-    
+
     &--info {
       background: var(--color-primary-100);
       color: var(--color-primary-800);
@@ -1316,12 +1376,12 @@ export function hasPermission(role: AdminRole, permission: string): boolean {
       flex-direction: column;
       gap: var(--space-3);
     }
-    
+
     .analytics-dashboard__controls {
       width: 100%;
       justify-content: space-between;
     }
-    
+
     .analytics-dashboard__charts,
     .analytics-dashboard__tables {
       grid-template-columns: 1fr;
@@ -1333,16 +1393,16 @@ export function hasPermission(role: AdminRole, permission: string): boolean {
       padding: var(--space-4);
       gap: var(--space-4);
     }
-    
+
     .analytics-dashboard__kpis {
       grid-template-columns: 1fr;
     }
-    
+
     .analytics-dashboard__metric-toggles {
       flex-direction: column;
       align-items: flex-start;
     }
-    
+
     .analytics-dashboard__export {
       flex-direction: column;
       width: 100%;
