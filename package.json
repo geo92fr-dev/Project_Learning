@@ -17,14 +17,16 @@
     "test:critical": "vitest run --reporter=verbose tests/unit/auth.critical.test.js tests/unit/firebase.integration.test.js tests/unit/ui.critical.test.js",
     "test:commit": "npm run test:critical",
     "test:coverage": "vitest run --coverage.enabled --coverage.provider c8",
-    "validate": "npm run test:unit && npm run check",
     "lighthouse": "npm run build && lhci autorun",
     "lighthouse:collect": "npm run build && lhci collect",
     "lighthouse:assert": "lhci assert",
     "perf:test": "node tools/performance/lighthouse-runner.cjs",
     "perf:full": "npm run lighthouse",
-    "dev:ia": "node ../MyDevFramework/tools/orchestrateur/dev-ia-orchestrator.js",
-    "quality:gates": "node tools/quality/quality-gates.cjs",
+    "dev:ia": "node scripts/dev-ia.cjs",
+    "roadmap:check": "node scripts/roadmap-checker.cjs",
+    "quality:gates": "node scripts/quality-gates.cjs",
+    "validation:cbd": "echo 'CBD validation intégrée dans dev:ia'",
+    "validate": "npm run roadmap:check && npm run test:critical && npm run check",
     "docs:generate": "node ../MyDevFramework/tools/documentation/docs-generator.js",
     "docs:validate": "npm run docs:generate && git diff --exit-code --quiet docs/ src/README.md tests/README.md || echo 'Documentation mise à jour'",
     "analyze:postmortem": "node ../MyDevFramework/tools/learning/postmortem-learning.js",
@@ -40,6 +42,8 @@
     "@playwright/test": "^1.28.1",
     "@sveltejs/adapter-auto": "^2.1.1",
     "@sveltejs/kit": "^1.20.4",
+    "@types/dompurify": "^3.0.5",
+    "@types/marked": "^5.0.2",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "@vitest/coverage-c8": "^0.33.0",
@@ -59,7 +63,10 @@
     "vitest": "^0.32.2"
   },
   "dependencies": {
-    "firebase": "^10.14.1"
+    "dompurify": "^3.2.6",
+    "firebase": "^10.14.1",
+    "highlight.js": "^11.11.1",
+    "marked": "^16.2.1"
   },
   "type": "module",
   "author": "Raphaël GEOFFROY <geo92fr@gmail.com>"

@@ -1,4 +1,5 @@
-import { c as create_ssr_component, a as subscribe, d as add_attribute, e as escape } from "../../../chunks/ssr.js";
+import { s as subscribe } from "../../../chunks/utils.js";
+import { c as create_ssr_component, d as add_attribute, e as escape } from "../../../chunks/ssr.js";
 import { g as goto, a as authStore } from "../../../chunks/navigation.js";
 const _page_svelte_svelte_type_style_lang = "";
 const css = {

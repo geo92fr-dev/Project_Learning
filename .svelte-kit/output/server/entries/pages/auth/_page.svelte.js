@@ -1,4 +1,5 @@
-import { c as create_ssr_component, a as subscribe, b as createEventDispatcher, v as validate_component } from "../../../chunks/ssr.js";
+import { s as subscribe } from "../../../chunks/utils.js";
+import { c as create_ssr_component, a as createEventDispatcher, v as validate_component } from "../../../chunks/ssr.js";
 import { a as authStore, g as goto } from "../../../chunks/navigation.js";
 import "firebase/auth";
 const LoginForm_svelte_svelte_type_style_lang = "";

@@ -1,4 +1,4 @@
-import { w as writable } from "./index.js";
+import { w as writable } from "./index2.js";
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
