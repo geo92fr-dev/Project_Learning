@@ -8,19 +8,19 @@ export const mockAuth = {
   signInWithEmailAndPassword: async (email: string, password: string) => {
     return {
       user: {
-        uid: 'test-uid',
+        uid: "test-uid",
         email,
-        displayName: email.split('@')[0]
-      }
+        displayName: email.split("@")[0],
+      },
     };
   },
   createUserWithEmailAndPassword: async (email: string, password: string) => {
     return {
       user: {
-        uid: 'test-uid',
+        uid: "test-uid",
         email,
-        displayName: email.split('@')[0]
-      }
+        displayName: email.split("@")[0],
+      },
     };
   },
   signOut: async () => {
@@ -34,12 +34,12 @@ export const mockAuth = {
   signInWithPopup: async () => {
     return {
       user: {
-        uid: 'google-test-uid',
-        email: 'test@gmail.com',
-        displayName: 'Test User'
-      }
+        uid: "google-test-uid",
+        email: "test@gmail.com",
+        displayName: "Test User",
+      },
     };
-  }
+  },
 };
 
 // Mock Firebase
@@ -47,7 +47,7 @@ export const firebase = {
   auth: () => mockAuth,
   initializeApp: () => ({}),
   getApps: () => [],
-  apps: []
+  apps: [],
 };
 
 // Export par défaut pour compatibilité

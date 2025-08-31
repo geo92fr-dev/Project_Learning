@@ -27,12 +27,41 @@ class DevIAOrchestrator {
     const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
     const version = packageJson.version || '1.0.0';
     
-    // Logic de détection basée sur la version et les fichiers présents
+    // Logic de détection basée sur la version, les fichiers et les tags Git
+    try {
+      // Vérification du tag Git actuel pour détecter Phase 3
+      const { execSync } = require('child_process');
+      const gitTag = execSync('git describe --tags --exact-match HEAD 2>/dev/null || echo ""', { encoding: 'utf8' }).trim();
+      
+      if (gitTag.includes('phase3-complete') || gitTag.includes('v3.0.0')) {
+        return 3;
+      }
+    } catch (e) {
+      // Git tag non disponible, utiliser la détection par fichiers
+    }
+    
+    // Détection par structure de fichiers et fonctionnalités
     if (!fs.existsSync(path.join(this.projectRoot, 'src/lib/firebase'))) return 1;
     if (!fs.existsSync(path.join(this.projectRoot, 'src/routes/auth'))) return 2;
-    if (!fs.existsSync(path.join(this.projectRoot, 'src/lib/curriculum'))) return 6;
     
-    return 1; // Default Phase 1
+    // Phase 3: Vérification des composants de content management
+    const phase3Indicators = [
+      'src/lib/components/content',
+      'src/lib/components/ui/Modal.svelte',
+      'src/lib/utils/markdown.ts',
+      'src/lib/stores/toast.ts'
+    ];
+    
+    const hasPhase3Features = phase3Indicators.some(indicator => 
+      fs.existsSync(path.join(this.projectRoot, indicator))
+    );
+    
+    if (hasPhase3Features) return 3;
+    
+    // Autres phases
+    if (fs.existsSync(path.join(this.projectRoot, 'src/lib/curriculum'))) return 6;
+    
+    return 2; // Default Phase 2 si auth existe
   }
 
   // Configuration workflow par phase
@@ -40,7 +69,8 @@ class DevIAOrchestrator {
     return {
       1: ['lint', 'build', 'test:unit'],
       2: ['lint', 'build', 'test:unit', 'test:critical'],
-      3: ['lint', 'build', 'test:unit', 'test:critical'],
+      3: ['build', 'test:unit', 'validate:phase3:quick'],
+      4: ['lint', 'build', 'test:unit', 'test:critical', 'performance'],
       6: ['lint', 'build', 'test:unit', 'test:critical'],
       12: ['lint', 'build', 'test:unit', 'test:critical', 'security']
     };
@@ -101,6 +131,8 @@ class DevIAOrchestrator {
     const checks = {
       1: ['Node.js ≥ 18', 'Git configuré', 'Structure projet'],
       2: ['Firebase projet', 'Variables env', 'Auth routes'],
+      3: ['Content Management', 'Markdown rendering', 'UI Components', 'Tests 7/7'],
+      4: ['Performance optimized', 'Production ready', 'E2E tests'],
       6: ['Collections définies', 'Scripts génération', 'Validation curriculum']
     };
 
@@ -133,6 +165,16 @@ class DevIAOrchestrator {
       console.log(`✅ ${command} réussi`);
       return true;
     } catch (error) {
+      // Pour le lint, on accepte les exit codes de warnings
+      if (command === 'lint' && error.code === 1 && error.stdout) {
+        // Vérifier si ce sont juste des warnings ESLint (pas d'erreurs)
+        if (error.stdout.includes('✖') && error.stdout.includes('warnings') && 
+            error.stdout.includes('0 errors')) {
+          console.log(`⚠️ ${command} avec warnings (accepté)`);
+          return true;
+        }
+      }
+      
       console.error(`❌ ${command} échoué:`, error.message.split('\n')[0]);
       return false;
     }

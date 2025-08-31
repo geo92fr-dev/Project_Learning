@@ -1,6 +1,8 @@
 import { e as error } from "../../../../../../chunks/index2.js";
 import { g as get_store_value } from "../../../../../../chunks/utils.js";
-const load = async ({ params }) => {
+const load = async ({
+  params
+}) => {
   try {
     const { matiere, niveau, competence } = params;
     if (!matiere || !niveau || !competence || typeof matiere !== "string" || typeof niveau !== "string" || typeof competence !== "string" || matiere.trim() === "" || niveau.trim() === "" || competence.trim() === "") {
@@ -12,11 +14,15 @@ const load = async ({ params }) => {
     const contentModule = await import("../../../../../../chunks/content.js");
     const contentStore = contentModule.default;
     const mockDataValue = get_store_value(contentStore.mockData);
-    const matiereData = mockDataValue.matieres.find((m) => m.id === matiereId);
+    const matiereData = mockDataValue.matieres.find(
+      (m) => m.id === matiereId
+    );
     if (!matiereData) {
       throw error(404, `Matière "${matiere}" non trouvée`);
     }
-    const niveauData = mockDataValue.niveaux.find((n) => n.id === niveauId);
+    const niveauData = mockDataValue.niveaux.find(
+      (n) => n.id === niveauId
+    );
     if (!niveauData) {
       throw error(404, `Niveau "${niveau}" non trouvé`);
     }
@@ -24,7 +30,10 @@ const load = async ({ params }) => {
       (c) => c.id === competenceId && c.matiereId === matiereId && c.niveauId === niveauId
     );
     if (!competenceData) {
-      throw error(404, `Compétence "${competence}" non trouvée pour ${matiere}/${niveau}`);
+      throw error(
+        404,
+        `Compétence "${competence}" non trouvée pour ${matiere}/${niveau}`
+      );
     }
     const courses = mockDataValue.courses.filter((course) => course.competenceId === competenceId).sort((a, b) => a.ordre - b.ordre);
     const relatedCompetences = mockDataValue.competences.filter(
@@ -32,7 +41,10 @@ const load = async ({ params }) => {
     );
     const stats = {
       nombreCours: courses.length,
-      dureeTotal: courses.reduce((total, course) => total + course.dureeEstimee, 0),
+      dureeTotal: courses.reduce(
+        (total, course) => total + course.dureeEstimee,
+        0
+      ),
       progression: 0,
       // À implémenter avec le système de progression
       prerequisSatisfaits: competenceData.prerequis?.length || 0

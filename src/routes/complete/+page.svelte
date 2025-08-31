@@ -1,50 +1,53 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import EmailAuth from '$lib/components/auth/EmailAuth.svelte';
-  import GoogleAuth from '$lib/components/auth/GoogleAuth.svelte';
-  import Toast from '$lib/components/ui/Toast.svelte';
-  import { authStore, currentUser } from '$lib/stores/auth';
-  import { toastActions } from '$lib/stores/toast';
-  import { learningProgress, progressActions } from '$lib/stores/progress';
+  import { onMount } from "svelte";
+  import EmailAuth from "$lib/components/auth/EmailAuth.svelte";
+  import GoogleAuth from "$lib/components/auth/GoogleAuth.svelte";
+  import Toast from "$lib/components/ui/Toast.svelte";
+  import { authStore, currentUser } from "$lib/stores/auth";
+  import { toastActions } from "$lib/stores/toast";
+  import { learningProgress, progressActions } from "$lib/stores/progress";
 
   let showEmailAuth = false;
   let completionPercentage = 100;
 
   onMount(() => {
     // Marquer Phase 3 comme complète
-    progressActions.updatePhase('phase3', 20);
-    
+    progressActions.updatePhase("phase3", 20);
+
     // Simulation de la progression complète
-    progressActions.updatePhase('phase1', 10);
-    progressActions.updatePhase('phase2', 15);
-    
+    progressActions.updatePhase("phase1", 10);
+    progressActions.updatePhase("phase2", 15);
+
     // Message de bienvenue
-    toastActions.success('🎉 Phase 3 Terminée !', 'Système de gestion de contenu opérationnel');
+    toastActions.success(
+      "🎉 Phase 3 Terminée !",
+      "Système de gestion de contenu opérationnel"
+    );
   });
 
   function handleAuthSuccess(event) {
     const { email, name } = event.detail;
-    
-    authStore.update(state => ({
+
+    authStore.update((state) => ({
       ...state,
       user: { id: `user-${Date.now()}`, email, name },
       loading: false,
-      error: null
+      error: null,
     }));
 
-    toastActions.success('Connexion réussie !', `Bienvenue ${name || email}`);
+    toastActions.success("Connexion réussie !", `Bienvenue ${name || email}`);
     showEmailAuth = false;
   }
 
   function handleSignOut() {
-    authStore.update(state => ({
+    authStore.update((state) => ({
       ...state,
       user: null,
       loading: false,
-      error: null
+      error: null,
     }));
-    
-    toastActions.info('Déconnexion', 'À bientôt !');
+
+    toastActions.info("Déconnexion", "À bientôt !");
   }
 
   $: user = $currentUser;
@@ -76,33 +79,57 @@
       <div class="progress-card completed">
         <h3>Phase 1 - Fondations</h3>
         <div class="progress-bar">
-          <div class="progress-fill" style="width: {progress.phase1.percentage}%"></div>
+          <div
+            class="progress-fill"
+            style="width: {progress.phase1.percentage}%"
+          />
         </div>
-        <span>{progress.phase1.current}/{progress.phase1.total} ({progress.phase1.percentage}%)</span>
+        <span
+          >{progress.phase1.current}/{progress.phase1.total} ({progress.phase1
+            .percentage}%)</span
+        >
       </div>
 
       <div class="progress-card completed">
         <h3>Phase 2 - Développement</h3>
         <div class="progress-bar">
-          <div class="progress-fill" style="width: {progress.phase2.percentage}%"></div>
+          <div
+            class="progress-fill"
+            style="width: {progress.phase2.percentage}%"
+          />
         </div>
-        <span>{progress.phase2.current}/{progress.phase2.total} ({progress.phase2.percentage}%)</span>
+        <span
+          >{progress.phase2.current}/{progress.phase2.total} ({progress.phase2
+            .percentage}%)</span
+        >
       </div>
 
       <div class="progress-card completed">
         <h3>Phase 3 - Contenu ✨</h3>
         <div class="progress-bar">
-          <div class="progress-fill" style="width: {progress.phase3.percentage}%"></div>
+          <div
+            class="progress-fill"
+            style="width: {progress.phase3.percentage}%"
+          />
         </div>
-        <span>{progress.phase3.current}/{progress.phase3.total} ({progress.phase3.percentage}%)</span>
+        <span
+          >{progress.phase3.current}/{progress.phase3.total} ({progress.phase3
+            .percentage}%)</span
+        >
       </div>
 
       <div class="progress-card overall completed">
         <h3>🎯 Progression Globale</h3>
         <div class="progress-bar">
-          <div class="progress-fill" style="width: {progress.overall.percentage}%"></div>
+          <div
+            class="progress-fill"
+            style="width: {progress.overall.percentage}%"
+          />
         </div>
-        <span>{progress.overall.current}/{progress.overall.total} ({progress.overall.percentage}%)</span>
+        <span
+          >{progress.overall.current}/{progress.overall.total} ({progress
+            .overall.percentage}%)</span
+        >
       </div>
     </div>
   </div>
@@ -150,7 +177,7 @@
 
   <div class="auth-demo">
     <h2>🔐 Démonstration d'Authentification</h2>
-    
+
     {#if user}
       <div class="user-info">
         <div class="user-avatar">👤</div>
@@ -166,18 +193,18 @@
     {:else}
       <div class="auth-options">
         <GoogleAuth on:auth-success={handleAuthSuccess} />
-        
+
         <div class="auth-divider">
           <span>ou</span>
         </div>
-        
-        <button 
+
+        <button
           class="email-toggle-btn"
-          on:click={() => showEmailAuth = !showEmailAuth}
+          on:click={() => (showEmailAuth = !showEmailAuth)}
         >
-          {showEmailAuth ? '🔼 Masquer' : '📧 Email / Mot de passe'}
+          {showEmailAuth ? "🔼 Masquer" : "📧 Email / Mot de passe"}
         </button>
-        
+
         {#if showEmailAuth}
           <div class="email-auth-container">
             <EmailAuth on:auth-success={handleAuthSuccess} />
@@ -222,7 +249,8 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      sans-serif;
   }
 
   .hero-section {
@@ -237,7 +265,7 @@
   }
 
   .hero-section::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -352,7 +380,11 @@
   }
 
   .overall .progress-fill {
-    background: linear-gradient(90deg, rgba(255,255,255,0.8), rgba(255,255,255,1));
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.8),
+      rgba(255, 255, 255, 1)
+    );
   }
 
   .features-section {
@@ -468,7 +500,7 @@
   }
 
   .auth-divider::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     left: 0;

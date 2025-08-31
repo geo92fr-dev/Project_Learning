@@ -1,15 +1,15 @@
 // 🚀 FunLearning V3.0 - Markdown Processing with Security
 // Conversion Markdown → HTML sécurisée avec DOMPurify et highlight.js
 
-import { marked } from 'marked';
-import DOMPurify from 'dompurify';
-import { JSDOM } from 'jsdom';
-import hljs from 'highlight.js';
+import { marked } from "marked";
+import DOMPurify from "dompurify";
+import { JSDOM } from "jsdom";
+import hljs from "highlight.js";
 
 // Initialiser DOMPurify pour l'environnement serveur
-const window = new JSDOM('').window;
+const window = new JSDOM("").window;
 const purify = DOMPurify(window as any);
-import type { MarkdownOptions, MarkdownContent } from '../types/content.js';
+import type { MarkdownOptions, MarkdownContent } from "../types/content.js";
 
 // ===== CONFIGURATION MARKED =====
 const configureMarked = (options: MarkdownOptions = {}) => {
@@ -21,19 +21,19 @@ const configureMarked = (options: MarkdownOptions = {}) => {
   // Configuration du renderer pour le syntax highlighting
   if (options.enableCodeHighlight) {
     const renderer = new marked.Renderer();
-    
-    renderer.code = function({ text, lang }: { text: string; lang?: string }) {
+
+    renderer.code = function ({ text, lang }: { text: string; lang?: string }) {
       if (lang && hljs.getLanguage(lang)) {
         try {
           const highlighted = hljs.highlight(text, { language: lang }).value;
           return `<pre><code class="hljs language-${lang}">${highlighted}</code></pre>`;
         } catch (err) {
-          console.warn('Highlight error:', err);
+          console.warn("Highlight error:", err);
         }
       }
       return `<pre><code>${text}</code></pre>`;
     };
-    
+
     marked.setOptions({ renderer });
   }
 };
@@ -42,34 +42,61 @@ const configureMarked = (options: MarkdownOptions = {}) => {
 const configureDOMPurify = (options: MarkdownOptions = {}) => {
   const allowedTags = options.allowedTags ?? [
     // Structure de base
-    'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-    'p', 'br', 'hr', 'div', 'span',
-    
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "p",
+    "br",
+    "hr",
+    "div",
+    "span",
+
     // Texte enrichi
-    'strong', 'b', 'em', 'i', 'u', 's', 'mark',
-    'sup', 'sub', 'small',
-    
+    "strong",
+    "b",
+    "em",
+    "i",
+    "u",
+    "s",
+    "mark",
+    "sup",
+    "sub",
+    "small",
+
     // Listes
-    'ul', 'ol', 'li',
-    
+    "ul",
+    "ol",
+    "li",
+
     // Liens et médias
-    'a', 'img',
-    
+    "a",
+    "img",
+
     // Tableaux
-    'table', 'thead', 'tbody', 'tr', 'th', 'td',
-    
+    "table",
+    "thead",
+    "tbody",
+    "tr",
+    "th",
+    "td",
+
     // Code
-    'code', 'pre', 'kbd',
-    
+    "code",
+    "pre",
+    "kbd",
+
     // Citations
-    'blockquote',
+    "blockquote",
   ];
 
   return {
     ALLOWED_TAGS: allowedTags,
-    ALLOWED_ATTR: ['href', 'src', 'alt', 'class', 'id', 'title'],
+    ALLOWED_ATTR: ["href", "src", "alt", "class", "id", "title"],
     FORBID_SCRIPTS: true,
-    FORBID_TAGS: ['script', 'object', 'embed'],
+    FORBID_TAGS: ["script", "object", "embed"],
     KEEP_CONTENT: true,
   };
 };
@@ -80,29 +107,29 @@ const configureDOMPurify = (options: MarkdownOptions = {}) => {
  * Convertit le Markdown en HTML sécurisé
  */
 export async function markdownToHtml(
-  markdown: string, 
+  markdown: string,
   options: MarkdownOptions = {}
 ): Promise<string> {
-  if (!markdown || typeof markdown !== 'string') {
-    return '';
+  if (!markdown || typeof markdown !== "string") {
+    return "";
   }
 
   try {
     // Configuration de marked
     configureMarked(options);
-    
+
     // Conversion Markdown → HTML
     const rawHtml = await marked(markdown);
-    
+
     // Sanitization avec DOMPurify
     if (options.sanitizeHtml !== false) {
       const purifyConfig = configureDOMPurify(options);
       return purify.sanitize(rawHtml, purifyConfig);
     }
-    
+
     return rawHtml;
   } catch (error) {
-    console.error('Erreur conversion Markdown:', error);
+    console.error("Erreur conversion Markdown:", error);
     return `<p class="error">Erreur de conversion du contenu</p>`;
   }
 }
@@ -113,12 +140,12 @@ export async function markdownToHtml(
 export function generateSlug(title: string): string {
   return title
     .toLowerCase()
-    .normalize('NFD') // Décompose les caractères accentués
-    .replace(/[\u0300-\u036f]/g, '') // Supprime les accents
-    .replace(/[^a-z0-9\s-]/g, '') // Garde uniquement lettres, chiffres, espaces, tirets
-    .replace(/\s+/g, '-') // Remplace espaces par tirets
-    .replace(/-+/g, '-') // Évite les tirets multiples
-    .replace(/^-|-$/g, ''); // Supprime tirets en début/fin
+    .normalize("NFD") // Décompose les caractères accentués
+    .replace(/[\u0300-\u036f]/g, "") // Supprime les accents
+    .replace(/[^a-z0-9\s-]/g, "") // Garde uniquement lettres, chiffres, espaces, tirets
+    .replace(/\s+/g, "-") // Remplace espaces par tirets
+    .replace(/-+/g, "-") // Évite les tirets multiples
+    .replace(/^-|-$/g, ""); // Supprime tirets en début/fin
 }
 
 /**
@@ -140,23 +167,24 @@ export function extractTableOfContents(html: string): Array<{
   anchor: string;
 }> {
   const toc: Array<{ level: number; title: string; anchor: string }> = [];
-  
+
   // Pattern pour détecter les headers avec IDs
-  const headerPattern = /<h([1-6])(?:\s+id=["']([^"']+)["'])?[^>]*>([^<]+)<\/h[1-6]>/gi;
+  const headerPattern =
+    /<h([1-6])(?:\s+id=["']([^"']+)["'])?[^>]*>([^<]+)<\/h[1-6]>/gi;
   let match;
-  
+
   while ((match = headerPattern.exec(html)) !== null) {
     const level = parseInt(match[1]);
     const id = match[2] || generateSlug(match[3]);
     const title = match[3].trim();
-    
+
     toc.push({
       level,
       title,
       anchor: id,
     });
   }
-  
+
   return toc;
 }
 
@@ -181,7 +209,7 @@ export async function processMarkdownContent(
   options: MarkdownOptions = {}
 ): Promise<MarkdownContent & { html: string; toc: any[] }> {
   const { content, metadata } = markdownContent;
-  
+
   // Conversion avec options par défaut sécurisées
   const defaultOptions: MarkdownOptions = {
     enableCodeHighlight: true,
@@ -190,17 +218,17 @@ export async function processMarkdownContent(
     breaks: true,
     ...options,
   };
-  
+
   let html = await markdownToHtml(content, defaultOptions);
-  
+
   // Ajout des IDs aux headers si nécessaire
   if (defaultOptions.headingIds) {
     html = addHeaderIds(html);
   }
-  
+
   // Extraction de la table des matières
   const toc = extractTableOfContents(html);
-  
+
   return {
     ...markdownContent,
     html,
@@ -223,8 +251,8 @@ export function hasUnsafeContent(markdown: string): boolean {
     /<embed/i,
     /<form/i,
   ];
-  
-  return dangerousPatterns.some(pattern => pattern.test(markdown));
+
+  return dangerousPatterns.some((pattern) => pattern.test(markdown));
 }
 
 /**
@@ -232,12 +260,12 @@ export function hasUnsafeContent(markdown: string): boolean {
  */
 export function sanitizeMarkdown(markdown: string): string {
   return markdown
-    .replace(/<script[\s\S]*?<\/script>/gi, '')
-    .replace(/javascript:/gi, '')
-    .replace(/on\w+\s*=\s*["'][^"']*["']/gi, '')
-    .replace(/<iframe[\s\S]*?<\/iframe>/gi, '')
-    .replace(/<object[\s\S]*?<\/object>/gi, '')
-    .replace(/<embed[\s\S]*?<\/embed>/gi, '');
+    .replace(/<script[\s\S]*?<\/script>/gi, "")
+    .replace(/javascript:/gi, "")
+    .replace(/on\w+\s*=\s*["'][^"']*["']/gi, "")
+    .replace(/<iframe[\s\S]*?<\/iframe>/gi, "")
+    .replace(/<object[\s\S]*?<\/object>/gi, "")
+    .replace(/<embed[\s\S]*?<\/embed>/gi, "");
 }
 
 // ===== CACHE DE TRANSFORMATION =====
@@ -263,23 +291,23 @@ export async function markdownToHtmlCached(
   if (!cacheKey) {
     return markdownToHtml(markdown, options);
   }
-  
+
   const now = Date.now();
   const cached = markdownCache[cacheKey];
-  
+
   // Vérification du cache
-  if (cached && (now - cached.timestamp) < CACHE_TTL) {
+  if (cached && now - cached.timestamp < CACHE_TTL) {
     return cached.html;
   }
-  
+
   // Conversion et mise en cache
   const html = await markdownToHtml(markdown, options);
   markdownCache[cacheKey] = {
     html,
     timestamp: now,
-    version: '1.0',
+    version: "1.0",
   };
-  
+
   return html;
 }
 
@@ -287,7 +315,7 @@ export async function markdownToHtmlCached(
  * Vide le cache de transformation
  */
 export function clearMarkdownCache(): void {
-  Object.keys(markdownCache).forEach(key => {
+  Object.keys(markdownCache).forEach((key) => {
     delete markdownCache[key];
   });
 }
@@ -302,15 +330,16 @@ export function getCacheStats(): {
 } {
   const entries = Object.keys(markdownCache);
   const now = Date.now();
-  
+
   return {
     entries: entries.length,
     totalSize: entries.reduce((size, key) => {
       return size + markdownCache[key].html.length;
     }, 0),
-    oldestEntry: entries.length > 0 
-      ? Math.min(...entries.map(key => now - markdownCache[key].timestamp))
-      : 0,
+    oldestEntry:
+      entries.length > 0
+        ? Math.min(...entries.map((key) => now - markdownCache[key].timestamp))
+        : 0,
   };
 }
 

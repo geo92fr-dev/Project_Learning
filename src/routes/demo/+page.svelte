@@ -1,69 +1,73 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount } from "svelte";
 
   let mounted = false;
 
   const demoFeatures = [
     {
-      id: 'markdown',
-      title: 'Système de Contenu Markdown',
-      description: 'Rendu de contenu éducatif avec sanitisation XSS, coloration syntaxique et table des matières automatique',
-      icon: '📝',
-      path: '/demo/markdown',
+      id: "markdown",
+      title: "Système de Contenu Markdown",
+      description:
+        "Rendu de contenu éducatif avec sanitisation XSS, coloration syntaxique et table des matières automatique",
+      icon: "📝",
+      path: "/demo/markdown",
       features: [
-        'Parsing Markdown sécurisé',
-        'Coloration syntaxique automatique',
-        'Table des matières interactive',
-        'Support des tableaux et équations',
-        'Cache intelligent des rendus'
+        "Parsing Markdown sécurisé",
+        "Coloration syntaxique automatique",
+        "Table des matières interactive",
+        "Support des tableaux et équations",
+        "Cache intelligent des rendus",
       ],
-      status: 'ready'
+      status: "ready",
     },
     {
-      id: 'exercise',
-      title: 'Exercices Interactifs',
-      description: 'QCM intelligents avec feedback en temps réel, progression visuelle et évaluation automatique',
-      icon: '🎯',
-      path: '/demo/exercise',
+      id: "exercise",
+      title: "Exercices Interactifs",
+      description:
+        "QCM intelligents avec feedback en temps réel, progression visuelle et évaluation automatique",
+      icon: "🎯",
+      path: "/demo/exercise",
       features: [
-        'Questions à choix multiples',
-        'Validation en temps réel',
-        'Feedback pédagogique',
-        'Calcul automatique du score',
-        'Navigation intuitive'
+        "Questions à choix multiples",
+        "Validation en temps réel",
+        "Feedback pédagogique",
+        "Calcul automatique du score",
+        "Navigation intuitive",
       ],
-      status: 'ready'
+      status: "ready",
     },
     {
-      id: 'content-management',
-      title: 'Gestion de Contenu',
-      description: 'Architecture complète pour la création, organisation et diffusion de contenu pédagogique',
-      icon: '📚',
-      path: '/content',
+      id: "content-management",
+      title: "Gestion de Contenu",
+      description:
+        "Architecture complète pour la création, organisation et diffusion de contenu pédagogique",
+      icon: "📚",
+      path: "/content",
       features: [
-        'Hiérarchie Matières → Niveaux → Compétences',
-        'Types de contenu flexibles',
-        'Métadonnées enrichies',
-        'Validation Zod intégrée',
-        'Store réactif Svelte'
+        "Hiérarchie Matières → Niveaux → Compétences",
+        "Types de contenu flexibles",
+        "Métadonnées enrichies",
+        "Validation Zod intégrée",
+        "Store réactif Svelte",
       ],
-      status: 'ready'
+      status: "ready",
     },
     {
-      id: 'components',
-      title: 'Composants Réutilisables',
-      description: 'Bibliothèque de composants UI optimisés pour l\'apprentissage et l\'accessibilité',
-      icon: '🧩',
-      path: '/demo/components',
+      id: "components",
+      title: "Composants Réutilisables",
+      description:
+        "Bibliothèque de composants UI optimisés pour l'apprentissage et l'accessibilité",
+      icon: "🧩",
+      path: "/demo/components",
       features: [
-        'MarkdownRenderer avancé',
-        'QCMCard interactive',
-        'EmailAuth sécurisé',
-        'AuthComplete élégant',
-        'Design system cohérent'
+        "MarkdownRenderer avancé",
+        "QCMCard interactive",
+        "EmailAuth sécurisé",
+        "AuthComplete élégant",
+        "Design system cohérent",
       ],
-      status: 'in-progress'
-    }
+      status: "in-progress",
+    },
   ];
 
   onMount(() => {
@@ -73,7 +77,10 @@
 
 <svelte:head>
   <title>Phase 3 - Démonstrations - FunLearning</title>
-  <meta name="description" content="Découvrez les fonctionnalités de la Phase 3 : système de contenu Markdown, exercices interactifs et composants avancés" />
+  <meta
+    name="description"
+    content="Découvrez les fonctionnalités de la Phase 3 : système de contenu Markdown, exercices interactifs et composants avancés"
+  />
 </svelte:head>
 
 <div class="demo-hub">
@@ -85,10 +92,10 @@
           Content Management & Markdown
         </h1>
         <p class="hero-description">
-          Système complet de gestion de contenu éducatif avec rendu Markdown sécurisé, 
-          exercices interactifs et composants réutilisables.
+          Système complet de gestion de contenu éducatif avec rendu Markdown
+          sécurisé, exercices interactifs et composants réutilisables.
         </p>
-        
+
         <div class="hero-stats">
           <div class="stat-item">
             <span class="stat-number">113</span>
@@ -110,10 +117,10 @@
   <main class="demo-grid-section">
     <div class="container">
       <h2>🚀 Fonctionnalités Disponibles</h2>
-      
+
       <div class="demos-grid">
         {#each demoFeatures as demo, index}
-          <div 
+          <div
             class="demo-card"
             class:mounted
             style="animation-delay: {index * 0.1}s"
@@ -121,23 +128,23 @@
             <div class="demo-header">
               <div class="demo-icon">{demo.icon}</div>
               <div class="demo-status {demo.status}">
-                {demo.status === 'ready' ? '✅ Prêt' : '🚧 En cours'}
+                {demo.status === "ready" ? "✅ Prêt" : "🚧 En cours"}
               </div>
             </div>
-            
+
             <div class="demo-content">
               <h3>{demo.title}</h3>
               <p class="demo-description">{demo.description}</p>
-              
+
               <ul class="demo-features">
                 {#each demo.features as feature}
                   <li>{feature}</li>
                 {/each}
               </ul>
             </div>
-            
+
             <div class="demo-actions">
-              {#if demo.status === 'ready'}
+              {#if demo.status === "ready"}
                 <a href={demo.path} class="btn btn-primary">
                   Essayer la démo
                 </a>
@@ -146,7 +153,7 @@
                   Bientôt disponible
                 </button>
               {/if}
-              
+
               <button class="btn btn-outline" on:click={() => {}}>
                 Voir le code
               </button>
@@ -161,7 +168,7 @@
     <div class="container">
       <div class="tech-overview">
         <h2>🔧 Architecture Technique</h2>
-        
+
         <div class="tech-grid">
           <div class="tech-category">
             <h3>📝 Contenu</h3>
@@ -172,17 +179,21 @@
               <li><strong>marked-highlight</strong> - Intégration optimisée</li>
             </ul>
           </div>
-          
+
           <div class="tech-category">
             <h3>🎯 Exercices</h3>
             <ul>
               <li><strong>QCMCard</strong> - Composant question interactif</li>
-              <li><strong>EventDispatcher</strong> - Communication composants</li>
+              <li>
+                <strong>EventDispatcher</strong> - Communication composants
+              </li>
               <li><strong>CSS Animations</strong> - Feedback visuel</li>
-              <li><strong>State Management</strong> - Progression utilisateur</li>
+              <li>
+                <strong>State Management</strong> - Progression utilisateur
+              </li>
             </ul>
           </div>
-          
+
           <div class="tech-category">
             <h3>🔒 Sécurité</h3>
             <ul>
@@ -192,7 +203,7 @@
               <li><strong>CSP Headers</strong> - Politique de contenu</li>
             </ul>
           </div>
-          
+
           <div class="tech-category">
             <h3>⚡ Performance</h3>
             <ul>
@@ -210,7 +221,7 @@
   <section class="progress-section">
     <div class="container">
       <h2>📊 Progression Phase 3</h2>
-      
+
       <div class="progress-overview">
         <div class="progress-item">
           <div class="progress-header">
@@ -218,40 +229,40 @@
             <span class="progress-percentage">100%</span>
           </div>
           <div class="progress-bar">
-            <div class="progress-fill" style="width: 100%"></div>
+            <div class="progress-fill" style="width: 100%" />
           </div>
           <p>✅ Parsing, sanitisation, coloration syntaxique, cache</p>
         </div>
-        
+
         <div class="progress-item">
           <div class="progress-header">
             <h3>Exercices Interactifs</h3>
             <span class="progress-percentage">95%</span>
           </div>
           <div class="progress-bar">
-            <div class="progress-fill" style="width: 95%"></div>
+            <div class="progress-fill" style="width: 95%" />
           </div>
           <p>✅ QCM, validation, scoring, feedback - 🔄 Finalisation</p>
         </div>
-        
+
         <div class="progress-item">
           <div class="progress-header">
             <h3>Composants UI</h3>
             <span class="progress-percentage">90%</span>
           </div>
           <div class="progress-bar">
-            <div class="progress-fill" style="width: 90%"></div>
+            <div class="progress-fill" style="width: 90%" />
           </div>
           <p>✅ MarkdownRenderer, QCMCard, Auth - 🔄 Optimisations</p>
         </div>
-        
+
         <div class="progress-item">
           <div class="progress-header">
             <h3>Tests & Validation</h3>
             <span class="progress-percentage">95%</span>
           </div>
           <div class="progress-bar">
-            <div class="progress-fill" style="width: 95%"></div>
+            <div class="progress-fill" style="width: 95%" />
           </div>
           <p>✅ 113/119 tests passés - Excellent taux de réussite</p>
         </div>
@@ -264,17 +275,15 @@
       <div class="footer-content">
         <h3>🎯 Prochaines Étapes</h3>
         <p>
-          La Phase 3 Content Management est pratiquement terminée avec un excellent taux de réussite. 
-          Prochaine étape : <strong>Phase 4 - Pédagogie Avancée</strong> avec pré-évaluation et métacognition.
+          La Phase 3 Content Management est pratiquement terminée avec un
+          excellent taux de réussite. Prochaine étape : <strong
+            >Phase 4 - Pédagogie Avancée</strong
+          > avec pré-évaluation et métacognition.
         </p>
-        
+
         <div class="footer-actions">
-          <a href="/roadmap" class="btn btn-primary">
-            Voir la Roadmap
-          </a>
-          <a href="/tests" class="btn btn-outline">
-            Résultats des Tests
-          </a>
+          <a href="/roadmap" class="btn btn-primary"> Voir la Roadmap </a>
+          <a href="/tests" class="btn btn-outline"> Résultats des Tests </a>
         </div>
       </div>
     </div>
@@ -456,7 +465,7 @@
   }
 
   .demo-features li::before {
-    content: '▸';
+    content: "▸";
     position: absolute;
     left: 0;
     color: #007bff;

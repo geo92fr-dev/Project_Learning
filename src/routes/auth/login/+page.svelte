@@ -1,49 +1,54 @@
 <script>
-  import { onMount } from 'svelte';
-  import { goto } from '$app/navigation';
-  import GoogleAuth from '$lib/components/GoogleAuth.svelte';
-  import { user, isAuthenticated } from '$lib/stores/googleAuth.js';
-  
+  import { onMount } from "svelte";
+  import { goto } from "$app/navigation";
+  import GoogleAuth from "$lib/components/GoogleAuth.svelte";
+  import { user, isAuthenticated } from "$lib/stores/googleAuth.js";
+
   let mounted = false;
-  let successMessage = '';
-  let errorMessage = '';
-  
+  let successMessage = "";
+  let errorMessage = "";
+
   onMount(() => {
     mounted = true;
-    console.log('✅ Page de connexion chargée');
-    
+    console.log("✅ Page de connexion chargée");
+
     // Rediriger si déjà connecté
     if ($isAuthenticated) {
-      goto('/dashboard');
+      goto("/dashboard");
     }
   });
-  
+
   // Réagir aux changements d'état d'authentification
   $: if (mounted && $isAuthenticated) {
-    goto('/dashboard');
+    goto("/dashboard");
   }
-  
+
   function handleAuthSuccess(event) {
-    console.log('🎉 Succès d\'authentification:', event.detail);
-    successMessage = `Bienvenue ${event.detail.user?.displayName || event.detail.user?.email || ''}!`;
-    errorMessage = '';
-    
+    console.log("🎉 Succès d'authentification:", event.detail);
+    successMessage = `Bienvenue ${
+      event.detail.user?.displayName || event.detail.user?.email || ""
+    }!`;
+    errorMessage = "";
+
     // Redirection automatique vers dashboard
     setTimeout(() => {
-      goto('/dashboard');
+      goto("/dashboard");
     }, 1000);
   }
-  
+
   function handleAuthError(event) {
-    console.error('❌ Erreur d\'authentification:', event.detail);
-    errorMessage = event.detail.error || 'Erreur inconnue';
-    successMessage = '';
+    console.error("❌ Erreur d'authentification:", event.detail);
+    errorMessage = event.detail.error || "Erreur inconnue";
+    successMessage = "";
   }
 </script>
 
 <svelte:head>
   <title>Connexion - FunLearning</title>
-  <meta name="description" content="Connectez-vous à FunLearning avec votre compte Google" />
+  <meta
+    name="description"
+    content="Connectez-vous à FunLearning avec votre compte Google"
+  />
 </svelte:head>
 
 <main class="login-container">
@@ -68,7 +73,7 @@
       {/if}
 
       <div class="auth-section">
-        <GoogleAuth 
+        <GoogleAuth
           buttonText="Se connecter avec Google"
           size="large"
           showUserInfo={false}
@@ -84,7 +89,7 @@
     </div>
   {:else}
     <div class="loading-container">
-      <div class="spinner"></div>
+      <div class="spinner" />
       <p>Chargement...</p>
     </div>
   {/if}
@@ -192,8 +197,12 @@
   }
 
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 
   @keyframes slideUp {
@@ -212,7 +221,7 @@
       padding: 1.5rem;
       margin: 0.5rem;
     }
-    
+
     .login-header h1 {
       font-size: 1.5rem;
     }

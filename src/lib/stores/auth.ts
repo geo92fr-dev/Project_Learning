@@ -1,4 +1,4 @@
-import { writable, type Writable } from 'svelte/store';
+import { writable, type Writable } from "svelte/store";
 
 export interface User {
   id: string;
@@ -18,7 +18,7 @@ export interface AuthState {
 export const authStore: Writable<AuthState> = writable({
   user: null,
   loading: false,
-  error: null
+  error: null,
 });
 
 // Store pour l'utilisateur actuel (raccourci)
@@ -36,35 +36,35 @@ authStore.subscribe((state) => {
 // Actions pour l'authentification
 export const authActions = {
   signIn: (user: User) => {
-    authStore.update(state => ({
+    authStore.update((state) => ({
       ...state,
       user,
       loading: false,
-      error: null
+      error: null,
     }));
   },
 
   signOut: () => {
-    authStore.update(state => ({
+    authStore.update((state) => ({
       ...state,
       user: null,
       loading: false,
-      error: null
+      error: null,
     }));
   },
 
   setLoading: (loading: boolean) => {
-    authStore.update(state => ({
+    authStore.update((state) => ({
       ...state,
-      loading
+      loading,
     }));
   },
 
   setError: (error: string | null) => {
-    authStore.update(state => ({
+    authStore.update((state) => ({
       ...state,
       error,
-      loading: false
+      loading: false,
     }));
-  }
+  },
 };

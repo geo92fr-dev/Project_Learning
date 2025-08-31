@@ -1,103 +1,122 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount } from "svelte";
 
   let mounted = false;
 
   const phases = [
     {
-      id: 'phase-1',
-      title: 'Phase 1',
-      subtitle: 'Framework & Fondations',
-      status: 'completed',
+      id: "phase-1",
+      title: "Phase 1",
+      subtitle: "Framework & Fondations",
+      status: "completed",
       progress: 100,
-      description: 'Infrastructure technique de base et architecture SvelteKit',
-      duration: 'Terminée',
+      description: "Infrastructure technique de base et architecture SvelteKit",
+      duration: "Terminée",
       features: [
-        'Architecture SvelteKit avec TypeScript',
-        'Configuration Vite optimisée',
-        'Structure modulaire des composants',
-        'System de routing dynamique',
-        'Configuration des outils de développement'
+        "Architecture SvelteKit avec TypeScript",
+        "Configuration Vite optimisée",
+        "Structure modulaire des composants",
+        "System de routing dynamique",
+        "Configuration des outils de développement",
       ],
-      technologies: ['SvelteKit', 'TypeScript', 'Vite', 'Node.js'],
-      deliverables: ['Architecture projet', 'Configuration build', 'Structure de base']
+      technologies: ["SvelteKit", "TypeScript", "Vite", "Node.js"],
+      deliverables: [
+        "Architecture projet",
+        "Configuration build",
+        "Structure de base",
+      ],
     },
     {
-      id: 'phase-2',
-      title: 'Phase 2',
-      subtitle: 'Authentication & Firebase',
-      status: 'completed',
+      id: "phase-2",
+      title: "Phase 2",
+      subtitle: "Authentication & Firebase",
+      status: "completed",
       progress: 100,
-      description: 'Système d\'authentification complet avec Google OAuth et Email',
-      duration: 'Terminée',
+      description:
+        "Système d'authentification complet avec Google OAuth et Email",
+      duration: "Terminée",
       features: [
-        'Authentification Google OAuth',
-        'Authentification par Email/Mot de passe',
-        'Gestion des états utilisateur',
-        'Stores réactifs Svelte',
-        'Protection des routes',
-        'Interface utilisateur complète'
+        "Authentification Google OAuth",
+        "Authentification par Email/Mot de passe",
+        "Gestion des états utilisateur",
+        "Stores réactifs Svelte",
+        "Protection des routes",
+        "Interface utilisateur complète",
       ],
-      technologies: ['Firebase Auth', 'Google OAuth', 'Svelte Stores', 'CSS3'],
-      deliverables: ['Composants Auth', 'Stores utilisateur', 'Pages authentification']
+      technologies: ["Firebase Auth", "Google OAuth", "Svelte Stores", "CSS3"],
+      deliverables: [
+        "Composants Auth",
+        "Stores utilisateur",
+        "Pages authentification",
+      ],
     },
     {
-      id: 'phase-3',
-      title: 'Phase 3',
-      subtitle: 'Content Management & Markdown',
-      status: 'current',
+      id: "phase-3",
+      title: "Phase 3",
+      subtitle: "Content Management & Markdown",
+      status: "current",
       progress: 95,
-      description: 'Système de gestion de contenu avec rendu Markdown sécurisé',
-      duration: 'En finalisation',
+      description: "Système de gestion de contenu avec rendu Markdown sécurisé",
+      duration: "En finalisation",
       features: [
-        'Parsing Markdown avec marked.js',
-        'Sanitisation XSS avec DOMPurify',
-        'Coloration syntaxique automatique',
-        'Exercices interactifs (QCM)',
-        'Composants de contenu réutilisables',
-        'Cache intelligent des rendus'
+        "Parsing Markdown avec marked.js",
+        "Sanitisation XSS avec DOMPurify",
+        "Coloration syntaxique automatique",
+        "Exercices interactifs (QCM)",
+        "Composants de contenu réutilisables",
+        "Cache intelligent des rendus",
       ],
-      technologies: ['marked.js', 'DOMPurify', 'highlight.js', 'Zod'],
-      deliverables: ['Système Markdown', 'Composants exercices', 'Pages démo']
+      technologies: ["marked.js", "DOMPurify", "highlight.js", "Zod"],
+      deliverables: ["Système Markdown", "Composants exercices", "Pages démo"],
     },
     {
-      id: 'phase-4',
-      title: 'Phase 4',
-      subtitle: 'Pédagogie Avancée',
-      status: 'planned',
+      id: "phase-4",
+      title: "Phase 4",
+      subtitle: "Pédagogie Avancée",
+      status: "planned",
       progress: 0,
-      description: 'Outils pédagogiques avancés avec pré-évaluation et métacognition',
-      duration: 'À venir',
+      description:
+        "Outils pédagogiques avancés avec pré-évaluation et métacognition",
+      duration: "À venir",
       features: [
-        'Pré-évaluation des compétences',
-        'Parcours adaptatifs personnalisés',
-        'Outils de métacognition',
-        'Feedback pédagogique intelligent',
-        'Analytics d\'apprentissage',
-        'Recommandations automatiques'
+        "Pré-évaluation des compétences",
+        "Parcours adaptatifs personnalisés",
+        "Outils de métacognition",
+        "Feedback pédagogique intelligent",
+        "Analytics d'apprentissage",
+        "Recommandations automatiques",
       ],
-      technologies: ['ML/AI Integration', 'Analytics', 'Adaptive Learning', 'Data Viz'],
-      deliverables: ['Moteur adaptatif', 'Outils métacognition', 'Dashboard analytics']
+      technologies: [
+        "ML/AI Integration",
+        "Analytics",
+        "Adaptive Learning",
+        "Data Viz",
+      ],
+      deliverables: [
+        "Moteur adaptatif",
+        "Outils métacognition",
+        "Dashboard analytics",
+      ],
     },
     {
-      id: 'phase-5',
-      title: 'Phase 5',
-      subtitle: 'Production & Performance',
-      status: 'planned',
+      id: "phase-5",
+      title: "Phase 5",
+      subtitle: "Production & Performance",
+      status: "planned",
       progress: 0,
-      description: 'Optimisation, déploiement et mise en production',
-      duration: 'À planifier',
+      description: "Optimisation, déploiement et mise en production",
+      duration: "À planifier",
       features: [
-        'Optimisation des performances',
-        'Configuration de production',
-        'Monitoring et observabilité',
-        'Système de cache avancé',
-        'CDN et distribution globale',
-        'Tests de charge et stress'
+        "Optimisation des performances",
+        "Configuration de production",
+        "Monitoring et observabilité",
+        "Système de cache avancé",
+        "CDN et distribution globale",
+        "Tests de charge et stress",
       ],
-      technologies: ['Docker', 'CI/CD', 'Monitoring', 'CDN', 'Load Balancing'],
-      deliverables: ['Build production', 'Pipeline CI/CD', 'Infrastructure']
-    }
+      technologies: ["Docker", "CI/CD", "Monitoring", "CDN", "Load Balancing"],
+      deliverables: ["Build production", "Pipeline CI/CD", "Infrastructure"],
+    },
   ];
 
   const currentStats = {
@@ -106,7 +125,7 @@
     coverage: 95,
     components: 12,
     features: 8,
-    phases: 5
+    phases: 5,
   };
 
   onMount(() => {
@@ -114,27 +133,38 @@
   });
 
   function getStatusColor(status: string): string {
-    switch(status) {
-      case 'completed': return '#28a745';
-      case 'current': return '#007bff';
-      case 'planned': return '#6c757d';
-      default: return '#6c757d';
+    switch (status) {
+      case "completed":
+        return "#28a745";
+      case "current":
+        return "#007bff";
+      case "planned":
+        return "#6c757d";
+      default:
+        return "#6c757d";
     }
   }
 
   function getStatusText(status: string): string {
-    switch(status) {
-      case 'completed': return '✅ Terminée';
-      case 'current': return '🚧 En cours';
-      case 'planned': return '📋 Planifiée';
-      default: return 'Non définie';
+    switch (status) {
+      case "completed":
+        return "✅ Terminée";
+      case "current":
+        return "🚧 En cours";
+      case "planned":
+        return "📋 Planifiée";
+      default:
+        return "Non définie";
     }
   }
 </script>
 
 <svelte:head>
   <title>Roadmap - FunLearning Project</title>
-  <meta name="description" content="Roadmap complète du projet FunLearning : de l'architecture aux fonctionnalités avancées" />
+  <meta
+    name="description"
+    content="Roadmap complète du projet FunLearning : de l'architecture aux fonctionnalités avancées"
+  />
 </svelte:head>
 
 <div class="roadmap-page">
@@ -146,13 +176,16 @@
           Roadmap FunLearning
         </h1>
         <p class="header-description">
-          Parcours de développement complet : de l'infrastructure technique aux fonctionnalités 
-          pédagogiques avancées, découvrez notre approche structurée et progressive.
+          Parcours de développement complet : de l'infrastructure technique aux
+          fonctionnalités pédagogiques avancées, découvrez notre approche
+          structurée et progressive.
         </p>
-        
+
         <div class="stats-overview">
           <div class="stat-card">
-            <div class="stat-number">{currentStats.passingTests}/{currentStats.totalTests}</div>
+            <div class="stat-number">
+              {currentStats.passingTests}/{currentStats.totalTests}
+            </div>
             <div class="stat-label">Tests réussis</div>
           </div>
           <div class="stat-card">
@@ -176,21 +209,24 @@
     <div class="container">
       <div class="phases-timeline">
         {#each phases as phase, index}
-          <div 
+          <div
             class="phase-card"
             class:mounted
-            class:completed={phase.status === 'completed'}
-            class:current={phase.status === 'current'}
-            class:planned={phase.status === 'planned'}
+            class:completed={phase.status === "completed"}
+            class:current={phase.status === "current"}
+            class:planned={phase.status === "planned"}
             style="animation-delay: {index * 0.2}s"
           >
             <div class="phase-timeline-marker">
-              <div class="timeline-dot" style="background-color: {getStatusColor(phase.status)}"></div>
+              <div
+                class="timeline-dot"
+                style="background-color: {getStatusColor(phase.status)}"
+              />
               {#if index < phases.length - 1}
-                <div class="timeline-line"></div>
+                <div class="timeline-line" />
               {/if}
             </div>
-            
+
             <div class="phase-content">
               <div class="phase-header">
                 <div class="phase-title-section">
@@ -198,25 +234,30 @@
                   <h3 class="phase-subtitle">{phase.subtitle}</h3>
                 </div>
                 <div class="phase-status">
-                  <span class="status-badge" style="background-color: {getStatusColor(phase.status)}">
+                  <span
+                    class="status-badge"
+                    style="background-color: {getStatusColor(phase.status)}"
+                  >
                     {getStatusText(phase.status)}
                   </span>
                   <span class="phase-duration">{phase.duration}</span>
                 </div>
               </div>
-              
+
               <div class="phase-progress">
                 <div class="progress-bar">
-                  <div 
-                    class="progress-fill" 
-                    style="width: {phase.progress}%; background-color: {getStatusColor(phase.status)}"
-                  ></div>
+                  <div
+                    class="progress-fill"
+                    style="width: {phase.progress}%; background-color: {getStatusColor(
+                      phase.status
+                    )}"
+                  />
                 </div>
                 <span class="progress-text">{phase.progress}%</span>
               </div>
-              
+
               <p class="phase-description">{phase.description}</p>
-              
+
               <div class="phase-details">
                 <div class="features-section">
                   <h4>🎯 Fonctionnalités clés</h4>
@@ -226,7 +267,7 @@
                     {/each}
                   </ul>
                 </div>
-                
+
                 <div class="tech-section">
                   <h4>🔧 Technologies</h4>
                   <div class="tech-tags">
@@ -235,7 +276,7 @@
                     {/each}
                   </div>
                 </div>
-                
+
                 <div class="deliverables-section">
                   <h4>📦 Livrables</h4>
                   <div class="deliverables-tags">
@@ -245,17 +286,13 @@
                   </div>
                 </div>
               </div>
-              
-              {#if phase.status === 'completed'}
+
+              {#if phase.status === "completed"}
                 <div class="phase-actions">
-                  <a href="/demo" class="btn btn-success">
-                    Voir les démos
-                  </a>
-                  <button class="btn btn-outline">
-                    Détails techniques
-                  </button>
+                  <a href="/demo" class="btn btn-success"> Voir les démos </a>
+                  <button class="btn btn-outline"> Détails techniques </button>
                 </div>
-              {:else if phase.status === 'current'}
+              {:else if phase.status === "current"}
                 <div class="phase-actions">
                   <a href="/demo" class="btn btn-primary">
                     Tester les fonctionnalités
@@ -281,41 +318,41 @@
   <section class="roadmap-insights">
     <div class="container">
       <h2>💡 Approche & Méthodologie</h2>
-      
+
       <div class="insights-grid">
         <div class="insight-card">
           <div class="insight-icon">🏗️</div>
           <h3>Architecture Progressive</h3>
           <p>
-            Chaque phase construit sur les fondations de la précédente, 
+            Chaque phase construit sur les fondations de la précédente,
             garantissant une architecture solide et évolutive.
           </p>
         </div>
-        
+
         <div class="insight-card">
           <div class="insight-icon">🧪</div>
           <h3>Développement Piloté par les Tests</h3>
           <p>
-            113 tests automatisés garantissent la fiabilité et facilitent 
-            les évolutions futures du code.
+            113 tests automatisés garantissent la fiabilité et facilitent les
+            évolutions futures du code.
           </p>
         </div>
-        
+
         <div class="insight-card">
           <div class="insight-icon">🔒</div>
           <h3>Sécurité by Design</h3>
           <p>
-            Sanitisation XSS, authentification sécurisée et validation 
-            stricte des données à tous les niveaux.
+            Sanitisation XSS, authentification sécurisée et validation stricte
+            des données à tous les niveaux.
           </p>
         </div>
-        
+
         <div class="insight-card">
           <div class="insight-icon">⚡</div>
           <h3>Performance Optimisée</h3>
           <p>
-            Cache intelligent, lazy loading et optimisations bundle 
-            pour une expérience utilisateur fluide.
+            Cache intelligent, lazy loading et optimisations bundle pour une
+            expérience utilisateur fluide.
           </p>
         </div>
       </div>
@@ -327,20 +364,15 @@
       <div class="footer-content">
         <h3>🚀 État Actuel du Projet</h3>
         <p>
-          <strong>Phase 3 bientôt terminée !</strong> Le système de gestion de contenu avec Markdown 
-          est opérationnel à 95%. Prochaine étape : les outils pédagogiques avancés de la Phase 4.
+          <strong>Phase 3 bientôt terminée !</strong> Le système de gestion de contenu
+          avec Markdown est opérationnel à 95%. Prochaine étape : les outils pédagogiques
+          avancés de la Phase 4.
         </p>
-        
+
         <div class="footer-actions">
-          <a href="/demo" class="btn btn-primary">
-            Essayer les démos
-          </a>
-          <a href="/tests" class="btn btn-outline">
-            Voir les tests
-          </a>
-          <a href="/" class="btn btn-outline">
-            Retour accueil
-          </a>
+          <a href="/demo" class="btn btn-primary"> Essayer les démos </a>
+          <a href="/tests" class="btn btn-outline"> Voir les tests </a>
+          <a href="/" class="btn btn-outline"> Retour accueil </a>
         </div>
       </div>
     </div>
@@ -605,7 +637,7 @@
   }
 
   .features-list li::before {
-    content: '▸';
+    content: "▸";
     position: absolute;
     left: 0;
     color: #007bff;

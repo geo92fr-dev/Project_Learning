@@ -1,32 +1,42 @@
 <script lang="ts">
-  import { toasts, toastActions, type ToastMessage } from '$lib/stores/toast';
-  import { slide } from 'svelte/transition';
-  import { quintOut } from 'svelte/easing';
+  import { toasts, toastActions, type ToastMessage } from "$lib/stores/toast";
+  import { slide } from "svelte/transition";
+  import { quintOut } from "svelte/easing";
 
-  function getIcon(type: ToastMessage['type']): string {
+  function getIcon(type: ToastMessage["type"]): string {
     switch (type) {
-      case 'success': return '✅';
-      case 'error': return '❌';
-      case 'warning': return '⚠️';
-      case 'info': return 'ℹ️';
-      default: return '📢';
+      case "success":
+        return "✅";
+      case "error":
+        return "❌";
+      case "warning":
+        return "⚠️";
+      case "info":
+        return "ℹ️";
+      default:
+        return "📢";
     }
   }
 
-  function getColorClass(type: ToastMessage['type']): string {
+  function getColorClass(type: ToastMessage["type"]): string {
     switch (type) {
-      case 'success': return 'toast-success';
-      case 'error': return 'toast-error';
-      case 'warning': return 'toast-warning';
-      case 'info': return 'toast-info';
-      default: return 'toast-info';
+      case "success":
+        return "toast-success";
+      case "error":
+        return "toast-error";
+      case "warning":
+        return "toast-warning";
+      case "info":
+        return "toast-info";
+      default:
+        return "toast-info";
     }
   }
 </script>
 
 <div class="toast-container">
   {#each $toasts as toast (toast.id)}
-    <div 
+    <div
       class="toast {getColorClass(toast.type)}"
       transition:slide={{ duration: 300, easing: quintOut }}
     >
@@ -41,7 +51,7 @@
           {/if}
         </div>
         {#if toast.dismissible}
-          <button 
+          <button
             class="toast-close"
             on:click={() => toastActions.remove(toast.id)}
             aria-label="Fermer"

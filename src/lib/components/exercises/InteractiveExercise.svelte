@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-  import QCMCard from '$lib/components/exercises/QCMCard.svelte';
-  import MarkdownRenderer from '$lib/components/MarkdownRenderer.svelte';
+  import { createEventDispatcher } from "svelte";
+  import QCMCard from "$lib/components/exercises/QCMCard.svelte";
+  import MarkdownRenderer from "$lib/components/MarkdownRenderer.svelte";
 
   const dispatch = createEventDispatcher<{
     complete: { score: number; answers: Record<string, any> };
@@ -9,9 +9,10 @@
   }>();
 
   export let exerciseData = {
-    id: 'math-fractions-demo',
-    title: 'Les Fractions : Exercice Interactif',
-    description: 'Testez vos connaissances sur les fractions avec ces questions interactives',
+    id: "math-fractions-demo",
+    title: "Les Fractions : Exercice Interactif",
+    description:
+      "Testez vos connaissances sur les fractions avec ces questions interactives",
     instruction: `# 🧮 Exercice : Les Fractions
 
 Répondez aux questions suivantes pour tester votre compréhension des fractions.
@@ -24,46 +25,46 @@ Répondez aux questions suivantes pour tester votre compréhension des fractions
 *Temps recommandé : 10 minutes*`,
     questions: [
       {
-        id: 'q1',
-        question: 'Quelle fraction représente la moitié d\'une pizza ?',
+        id: "q1",
+        question: "Quelle fraction représente la moitié d'une pizza ?",
         options: [
-          { id: 'a', text: '1/4', isCorrect: false },
-          { id: 'b', text: '1/2', isCorrect: true },
-          { id: 'c', text: '2/4', isCorrect: false },
-          { id: 'd', text: '1/3', isCorrect: false }
-        ]
+          { id: "a", text: "1/4", isCorrect: false },
+          { id: "b", text: "1/2", isCorrect: true },
+          { id: "c", text: "2/4", isCorrect: false },
+          { id: "d", text: "1/3", isCorrect: false },
+        ],
       },
       {
-        id: 'q2', 
-        question: 'Comment simplifier la fraction 6/8 ?',
+        id: "q2",
+        question: "Comment simplifier la fraction 6/8 ?",
         options: [
-          { id: 'a', text: '2/3', isCorrect: false },
-          { id: 'b', text: '3/4', isCorrect: true },
-          { id: 'c', text: '1/2', isCorrect: false },
-          { id: 'd', text: '6/8 est déjà simplifiée', isCorrect: false }
-        ]
+          { id: "a", text: "2/3", isCorrect: false },
+          { id: "b", text: "3/4", isCorrect: true },
+          { id: "c", text: "1/2", isCorrect: false },
+          { id: "d", text: "6/8 est déjà simplifiée", isCorrect: false },
+        ],
       },
       {
-        id: 'q3',
-        question: 'Que donne 1/4 + 1/4 ?',
+        id: "q3",
+        question: "Que donne 1/4 + 1/4 ?",
         options: [
-          { id: 'a', text: '2/8', isCorrect: false },
-          { id: 'b', text: '1/2', isCorrect: true },
-          { id: 'c', text: '2/4', isCorrect: false },
-          { id: 'd', text: '1/8', isCorrect: false }
-        ]
+          { id: "a", text: "2/8", isCorrect: false },
+          { id: "b", text: "1/2", isCorrect: true },
+          { id: "c", text: "2/4", isCorrect: false },
+          { id: "d", text: "1/8", isCorrect: false },
+        ],
       },
       {
-        id: 'q4',
-        question: 'Laquelle de ces fractions est la plus grande ?',
+        id: "q4",
+        question: "Laquelle de ces fractions est la plus grande ?",
         options: [
-          { id: 'a', text: '1/3', isCorrect: false },
-          { id: 'b', text: '1/4', isCorrect: false },
-          { id: 'c', text: '1/2', isCorrect: true },
-          { id: 'd', text: '1/5', isCorrect: false }
-        ]
-      }
-    ]
+          { id: "a", text: "1/3", isCorrect: false },
+          { id: "b", text: "1/4", isCorrect: false },
+          { id: "c", text: "1/2", isCorrect: true },
+          { id: "d", text: "1/5", isCorrect: false },
+        ],
+      },
+    ],
   };
 
   let currentQuestionIndex = 0;
@@ -73,30 +74,31 @@ Répondez aux questions suivantes pour tester votre compréhension des fractions
   let score = 0;
 
   $: currentQuestion = exerciseData.questions[currentQuestionIndex];
-  $: progress = ((currentQuestionIndex + 1) / exerciseData.questions.length) * 100;
+  $: progress =
+    ((currentQuestionIndex + 1) / exerciseData.questions.length) * 100;
   $: canProceed = answers[currentQuestion?.id];
 
   function handleAnswer(event: CustomEvent) {
     const { questionId, selectedOption, isCorrect } = event.detail;
-    
+
     answers[questionId] = {
       selectedOption,
       isCorrect,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     // Dispatch progress
-    dispatch('progress', {
+    dispatch("progress", {
       current: Object.keys(answers).length,
-      total: exerciseData.questions.length
+      total: exerciseData.questions.length,
     });
   }
 
   function validateCurrentAnswer() {
     if (!currentQuestion || !answers[currentQuestion.id]) return;
-    
+
     showResults[currentQuestion.id] = true;
-    
+
     setTimeout(() => {
       if (currentQuestionIndex < exerciseData.questions.length - 1) {
         nextQuestion();
@@ -120,16 +122,18 @@ Répondez aux questions suivantes pour tester votre compréhension des fractions
 
   function completeExercise() {
     exerciseComplete = true;
-    
+
     // Calculate score
     score = exerciseData.questions.reduce((total, question) => {
       const answer = answers[question.id];
       return total + (answer?.isCorrect ? 1 : 0);
     }, 0);
 
-    const percentage = Math.round((score / exerciseData.questions.length) * 100);
+    const percentage = Math.round(
+      (score / exerciseData.questions.length) * 100
+    );
 
-    dispatch('complete', { score: percentage, answers });
+    dispatch("complete", { score: percentage, answers });
   }
 
   function resetExercise() {
@@ -149,10 +153,10 @@ Répondez aux questions suivantes pour tester votre compréhension des fractions
   <header class="exercise-header">
     <h1>{exerciseData.title}</h1>
     <p class="exercise-description">{exerciseData.description}</p>
-    
+
     <div class="progress-container">
       <div class="progress-bar">
-        <div class="progress-fill" style="width: {progress}%"></div>
+        <div class="progress-fill" style="width: {progress}%" />
       </div>
       <span class="progress-text">
         Question {currentQuestionIndex + 1} sur {exerciseData.questions.length}
@@ -178,13 +182,14 @@ Répondez aux questions suivantes pour tester votre compréhension des fractions
               class:active={index === currentQuestionIndex}
               class:answered={answers[question.id]}
               class:correct={answers[question.id]?.isCorrect}
-              class:incorrect={answers[question.id] && !answers[question.id].isCorrect}
+              class:incorrect={answers[question.id] &&
+                !answers[question.id].isCorrect}
               on:click={() => goToQuestion(index)}
             >
               {index + 1}
               {#if answers[question.id]}
                 <span class="tab-indicator">
-                  {answers[question.id].isCorrect ? '✓' : '✗'}
+                  {answers[question.id].isCorrect ? "✓" : "✗"}
                 </span>
               {/if}
             </button>
@@ -227,17 +232,11 @@ Répondez aux questions suivantes pour tester votre compréhension des fractions
             Valider la réponse
           </button>
         {:else if currentQuestionIndex < exerciseData.questions.length - 1}
-          <button
-            class="btn btn-primary"
-            on:click={nextQuestion}
-          >
+          <button class="btn btn-primary" on:click={nextQuestion}>
             Question suivante →
           </button>
         {:else}
-          <button
-            class="btn btn-success"
-            on:click={completeExercise}
-          >
+          <button class="btn btn-success" on:click={completeExercise}>
             Terminer l'exercice
           </button>
         {/if}
@@ -250,7 +249,11 @@ Répondez aux questions suivantes pour tester votre compréhension des fractions
         <h2>🎉 Exercice terminé !</h2>
         <div class="score-display">
           <div class="score-circle">
-            <span class="score-number">{Math.round((score / exerciseData.questions.length) * 100)}%</span>
+            <span class="score-number"
+              >{Math.round(
+                (score / exerciseData.questions.length) * 100
+              )}%</span
+            >
             <span class="score-label">Score</span>
           </div>
         </div>
@@ -264,19 +267,25 @@ Répondez aux questions suivantes pour tester votre compréhension des fractions
             <div class="result-item">
               <div class="result-header">
                 <span class="question-number">Q{index + 1}</span>
-                <span class="result-indicator {answer?.isCorrect ? 'correct' : 'incorrect'}">
-                  {answer?.isCorrect ? '✓' : '✗'}
+                <span
+                  class="result-indicator {answer?.isCorrect
+                    ? 'correct'
+                    : 'incorrect'}"
+                >
+                  {answer?.isCorrect ? "✓" : "✗"}
                 </span>
               </div>
               <p class="result-question">{question.question}</p>
               <div class="result-answer">
                 <strong>Votre réponse :</strong>
-                {question.options.find(opt => opt.id === answer?.selectedOption)?.text}
+                {question.options.find(
+                  (opt) => opt.id === answer?.selectedOption
+                )?.text}
               </div>
               {#if !answer?.isCorrect}
                 <div class="result-correct">
                   <strong>Bonne réponse :</strong>
-                  {question.options.find(opt => opt.isCorrect)?.text}
+                  {question.options.find((opt) => opt.isCorrect)?.text}
                 </div>
               {/if}
             </div>
@@ -288,7 +297,10 @@ Répondez aux questions suivantes pour tester votre compréhension des fractions
         <button class="btn btn-primary" on:click={resetExercise}>
           Recommencer l'exercice
         </button>
-        <button class="btn btn-secondary" on:click={() => window.history.back()}>
+        <button
+          class="btn btn-secondary"
+          on:click={() => window.history.back()}
+        >
           Retour aux cours
         </button>
       </div>
@@ -593,7 +605,8 @@ Répondez aux questions suivantes pour tester votre compréhension des fractions
     color: #495057;
   }
 
-  .result-answer, .result-correct {
+  .result-answer,
+  .result-correct {
     margin-bottom: 0.5rem;
     color: #6c757d;
   }

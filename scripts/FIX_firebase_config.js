@@ -1,66 +1,70 @@
 // 🔧 FIX_firebase_config.js - Correction Configuration Firebase
 // Approche TDD : Correction guidée par les tests
 
-import { readFileSync, writeFileSync } from 'fs';
-import { execSync } from 'child_process';
+import { readFileSync, writeFileSync } from "fs";
+import { execSync } from "child_process";
 
 class FirebaseConfigFixer {
   constructor() {
-    this.configPath = './src/lib/firebase/config.js';
-    this.envPath = './.env';
-    this.backupPath = './src/lib/firebase/config.js.backup';
+    this.configPath = "./src/lib/firebase/config.js";
+    this.envPath = "./.env";
+    this.backupPath = "./src/lib/firebase/config.js.backup";
   }
 
   async fixConfiguration() {
-    console.log('🔧 Correction Configuration Firebase - Approche TDD');
-    console.log('═'.repeat(65));
+    console.log("🔧 Correction Configuration Firebase - Approche TDD");
+    console.log("═".repeat(65));
 
     // Étape 1: Vérifier tests d'abord (RED phase)
     await this.runTestsRed();
-    
+
     // Étape 2: Backup configuration actuelle
     await this.backupCurrentConfig();
-    
+
     // Étape 3: Guider création projet Firebase
     await this.guideFirebaseSetup();
-    
+
     // Étape 4: Mettre à jour configuration (GREEN phase)
     await this.updateConfiguration();
-    
+
     // Étape 5: Valider tests passent (GREEN validation)
     await this.runTestsGreen();
-    
+
     // Étape 6: Recommandations finales
     await this.finalRecommendations();
   }
 
   async runTestsRed() {
-    console.log('\n🔴 PHASE RED: Vérification échec tests...');
-    
+    console.log("\n🔴 PHASE RED: Vérification échec tests...");
+
     try {
-      execSync('npm run test -- tests/firebase/auth.test.js', { stdio: 'pipe' });
-      console.log('⚠️  Tests passent déjà - configuration peut être partiellement correcte');
+      execSync("npm run test -- tests/firebase/auth.test.js", {
+        stdio: "pipe",
+      });
+      console.log(
+        "⚠️  Tests passent déjà - configuration peut être partiellement correcte"
+      );
     } catch (error) {
-      console.log('✅ Tests échouent comme attendu - prêt pour correction');
+      console.log("✅ Tests échouent comme attendu - prêt pour correction");
     }
   }
 
   async backupCurrentConfig() {
-    console.log('\n💾 Sauvegarde configuration actuelle...');
-    
+    console.log("\n💾 Sauvegarde configuration actuelle...");
+
     try {
-      const currentConfig = readFileSync(this.configPath, 'utf8');
+      const currentConfig = readFileSync(this.configPath, "utf8");
       writeFileSync(this.backupPath, currentConfig);
       console.log(`✅ Backup créé: ${this.backupPath}`);
     } catch (error) {
-      console.error('❌ Erreur backup:', error.message);
+      console.error("❌ Erreur backup:", error.message);
     }
   }
 
   async guideFirebaseSetup() {
-    console.log('\n🚀 Guide Configuration Firebase');
-    console.log('═'.repeat(45));
-    
+    console.log("\n🚀 Guide Configuration Firebase");
+    console.log("═".repeat(45));
+
     console.log(`
 🔥 ÉTAPES OBLIGATOIRES:
 
@@ -86,15 +90,17 @@ class FirebaseConfigFixer {
 ⚠️  SÉCURITÉ: Ces clés iront dans .env avec préfixe VITE_
     `);
 
-    console.log('\n⏸️  Script en pause - Configurez Firebase puis relancez avec les vraies clés');
-    
+    console.log(
+      "\n⏸️  Script en pause - Configurez Firebase puis relancez avec les vraies clés"
+    );
+
     // Créer template .env si n'existe pas
     await this.createEnvTemplate();
   }
 
   async createEnvTemplate() {
-    console.log('\n📝 Création template .env...');
-    
+    console.log("\n📝 Création template .env...");
+
     const envTemplate = `# 🔥 Configuration Firebase - FunLearning
 # Remplacez par vos vraies clés Firebase
 
@@ -115,20 +121,20 @@ VITE_APP_VERSION="1.0.0"
 `;
 
     try {
-      const envExists = readFileSync(this.envPath, 'utf8');
-      if (!envExists.includes('VITE_FIREBASE_API_KEY')) {
-        writeFileSync(this.envPath, envTemplate, { flag: 'a' });
-        console.log('✅ Variables Firebase ajoutées à .env');
+      const envExists = readFileSync(this.envPath, "utf8");
+      if (!envExists.includes("VITE_FIREBASE_API_KEY")) {
+        writeFileSync(this.envPath, envTemplate, { flag: "a" });
+        console.log("✅ Variables Firebase ajoutées à .env");
       }
     } catch (error) {
       writeFileSync(this.envPath, envTemplate);
-      console.log('✅ Fichier .env créé avec template Firebase');
+      console.log("✅ Fichier .env créé avec template Firebase");
     }
   }
 
   async updateConfiguration() {
-    console.log('\n🟢 PHASE GREEN: Mise à jour configuration...');
-    
+    console.log("\n🟢 PHASE GREEN: Mise à jour configuration...");
+
     const newConfig = `// 🔥 Firebase Configuration - FunLearning V2.0
 // Configuration SSR-Safe selon DOC_CoPilot_Practices
 // Mise à jour avec vraies clés Firebase
@@ -202,22 +208,22 @@ export default { app, auth };
 `;
 
     writeFileSync(this.configPath, newConfig);
-    console.log('✅ Configuration mise à jour avec variables d\'environnement');
+    console.log("✅ Configuration mise à jour avec variables d'environnement");
   }
 
   async runTestsGreen() {
-    console.log('\n🟢 PHASE GREEN: Validation tests...');
-    
-    console.log('⚠️  Pour valider les tests, vous devez:');
-    console.log('1. Remplir les vraies clés dans .env');
-    console.log('2. Exécuter: npm run test -- tests/firebase/auth.test.js');
-    console.log('3. Vérifier que tous les tests passent');
+    console.log("\n🟢 PHASE GREEN: Validation tests...");
+
+    console.log("⚠️  Pour valider les tests, vous devez:");
+    console.log("1. Remplir les vraies clés dans .env");
+    console.log("2. Exécuter: npm run test -- tests/firebase/auth.test.js");
+    console.log("3. Vérifier que tous les tests passent");
   }
 
   async finalRecommendations() {
-    console.log('\n🎯 RECOMMANDATIONS FINALES');
-    console.log('═'.repeat(35));
-    
+    console.log("\n🎯 RECOMMANDATIONS FINALES");
+    console.log("═".repeat(35));
+
     console.log(`
 ✅ PROCHAINES ÉTAPES:
 

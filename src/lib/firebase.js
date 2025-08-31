@@ -9,20 +9,20 @@ export const firebaseConfig = {
   projectId: "demo-project",
   storageBucket: "demo-project.appspot.com",
   messagingSenderId: "123456789",
-  appId: "demo-app-id"
+  appId: "demo-app-id",
 };
 
 // Initialisation différée de Firebase
 export async function initializeFirebase() {
   if (!app) {
     try {
-      const { initializeApp } = await import('firebase/app');
-      const { getAuth } = await import('firebase/auth');
-      
+      const { initializeApp } = await import("firebase/app");
+      const { getAuth } = await import("firebase/auth");
+
       app = initializeApp(firebaseConfig);
       auth = getAuth(app);
     } catch (error) {
-      console.warn('Firebase non disponible en mode démo:', error);
+      console.warn("Firebase non disponible en mode démo:", error);
       // Mode simulation pour les tests et développement
       auth = createMockAuth();
     }
@@ -41,24 +41,24 @@ function createMockAuth() {
     signInWithEmailAndPassword: async (email, password) => {
       return {
         user: {
-          uid: 'demo-uid',
+          uid: "demo-uid",
           email,
-          displayName: email.split('@')[0]
-        }
+          displayName: email.split("@")[0],
+        },
       };
     },
     createUserWithEmailAndPassword: async (email, password) => {
       return {
         user: {
-          uid: 'demo-uid',
+          uid: "demo-uid",
           email,
-          displayName: email.split('@')[0]
-        }
+          displayName: email.split("@")[0],
+        },
       };
     },
     signOut: async () => {
       return Promise.resolve();
-    }
+    },
   };
 }
 

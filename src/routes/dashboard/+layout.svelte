@@ -1,33 +1,33 @@
 <script>
-  import { onMount } from 'svelte';
-  import { goto } from '$app/navigation';
-  import { user, isAuthenticated, loading } from '$lib/stores/googleAuth.js';
-  
+  import { onMount } from "svelte";
+  import { goto } from "$app/navigation";
+  import { user, isAuthenticated, loading } from "$lib/stores/googleAuth.js";
+
   export let data;
-  
+
   let mounted = false;
-  
+
   onMount(() => {
     mounted = true;
-    
+
     // Vérifier l'authentification après le chargement
     const checkAuth = () => {
       if (!$loading && !$isAuthenticated) {
-        console.log('🔒 Utilisateur non authentifié, redirection vers login');
-        goto('/auth/login');
+        console.log("🔒 Utilisateur non authentifié, redirection vers login");
+        goto("/auth/login");
       }
     };
-    
+
     // Vérification immédiate
     checkAuth();
-    
+
     // Écouter les changements d'état d'authentification
     const unsubscribe = isAuthenticated.subscribe((authenticated) => {
       if (mounted && !$loading && !authenticated) {
-        goto('/auth/login');
+        goto("/auth/login");
       }
     });
-    
+
     return unsubscribe;
   });
 </script>
@@ -39,7 +39,7 @@
 {#if mounted}
   {#if $loading}
     <div class="loading-container">
-      <div class="spinner"></div>
+      <div class="spinner" />
       <p>Vérification de l'authentification...</p>
     </div>
   {:else if $isAuthenticated}
@@ -50,27 +50,31 @@
             <h1>🎯 FunLearning</h1>
           </div>
           <div class="nav-user">
-            <span>Bonjour, {$user?.displayName || $user?.email || 'Utilisateur'}</span>
-            <button class="logout-btn" on:click={() => goto('/auth/login')}>
+            <span
+              >Bonjour, {$user?.displayName ||
+                $user?.email ||
+                "Utilisateur"}</span
+            >
+            <button class="logout-btn" on:click={() => goto("/auth/login")}>
               Déconnexion
             </button>
           </div>
         </nav>
       </header>
-      
+
       <main class="dashboard-content">
         <slot />
       </main>
     </div>
   {:else}
     <div class="redirecting-container">
-      <div class="spinner"></div>
+      <div class="spinner" />
       <p>Redirection vers la page de connexion...</p>
     </div>
   {/if}
 {:else}
   <div class="loading-container">
-    <div class="spinner"></div>
+    <div class="spinner" />
     <p>Chargement...</p>
   </div>
 {/if}
@@ -157,8 +161,12 @@
   }
 
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 
   @media (max-width: 768px) {
@@ -167,7 +175,7 @@
       flex-direction: column;
       gap: 1rem;
     }
-    
+
     .dashboard-content {
       padding: 1rem;
     }

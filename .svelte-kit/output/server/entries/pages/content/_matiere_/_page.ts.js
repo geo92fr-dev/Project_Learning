@@ -16,12 +16,16 @@ const load = async ({ params }) => {
       throw error(404, `Matière "${matiere}" non trouvée`);
     }
     const niveaux = mockDataValue.niveaux;
-    const competences = mockDataValue.competences.filter((c) => c.matiereId === matiereId);
+    const competences = mockDataValue.competences.filter(
+      (c) => c.matiereId === matiereId
+    );
     const stats = {
       nombreNiveaux: niveaux.length,
       nombreCompetences: competences.length,
       nombreCours: mockDataValue.courses.filter((course) => {
-        const competence = competences.find((c) => c.id === course.competenceId);
+        const competence = competences.find(
+          (c) => c.id === course.competenceId
+        );
         return competence !== void 0;
       }).length
     };

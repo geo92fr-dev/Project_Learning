@@ -1,48 +1,50 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher } from "svelte";
 
   const dispatch = createEventDispatcher();
 
-  let email = '';
-  let password = '';
-  let confirmPassword = '';
+  let email = "";
+  let password = "";
+  let confirmPassword = "";
   let isSignUp = false;
   let loading = false;
-  let error = '';
+  let error = "";
 
   async function handleEmailAuth() {
     if (!email || !password) {
-      error = 'Veuillez remplir tous les champs';
+      error = "Veuillez remplir tous les champs";
       return;
     }
 
     if (isSignUp && password !== confirmPassword) {
-      error = 'Les mots de passe ne correspondent pas';
+      error = "Les mots de passe ne correspondent pas";
       return;
     }
 
     if (password.length < 6) {
-      error = 'Le mot de passe doit contenir au moins 6 caractères';
+      error = "Le mot de passe doit contenir au moins 6 caractères";
       return;
     }
 
     loading = true;
-    error = '';
+    error = "";
 
     try {
       // Simulation d'authentification (à remplacer par Firebase)
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       const userData = {
         email,
-        name: email.split('@')[0],
-        method: isSignUp ? 'signup' : 'signin'
+        name: email.split("@")[0],
+        method: isSignUp ? "signup" : "signin",
       };
 
-      dispatch('auth-success', userData);
+      dispatch("auth-success", userData);
     } catch (err) {
-      error = isSignUp ? 'Erreur lors de l\'inscription' : 'Erreur lors de la connexion';
-      console.error('Auth error:', err);
+      error = isSignUp
+        ? "Erreur lors de l'inscription"
+        : "Erreur lors de la connexion";
+      console.error("Auth error:", err);
     } finally {
       loading = false;
     }
@@ -50,15 +52,15 @@
 
   function toggleMode() {
     isSignUp = !isSignUp;
-    error = '';
-    confirmPassword = '';
+    error = "";
+    confirmPassword = "";
   }
 </script>
 
 <div class="email-auth">
   <form on:submit|preventDefault={handleEmailAuth} class="auth-form">
-    <h3>{isSignUp ? 'Créer un compte' : 'Se connecter'}</h3>
-    
+    <h3>{isSignUp ? "Créer un compte" : "Se connecter"}</h3>
+
     {#if error}
       <div class="error-message">
         {error}
@@ -107,16 +109,23 @@
 
     <button type="submit" class="auth-button" disabled={loading}>
       {#if loading}
-        <span class="loading-spinner"></span>
-        {isSignUp ? 'Inscription...' : 'Connexion...'}
+        <span class="loading-spinner" />
+        {isSignUp ? "Inscription..." : "Connexion..."}
       {:else}
-        {isSignUp ? '✉️ Créer mon compte' : '🔐 Se connecter'}
+        {isSignUp ? "✉️ Créer mon compte" : "🔐 Se connecter"}
       {/if}
     </button>
 
     <div class="toggle-mode">
-      <button type="button" class="toggle-button" on:click={toggleMode} disabled={loading}>
-        {isSignUp ? 'Déjà un compte ? Se connecter' : 'Pas de compte ? S\'inscrire'}
+      <button
+        type="button"
+        class="toggle-button"
+        on:click={toggleMode}
+        disabled={loading}
+      >
+        {isSignUp
+          ? "Déjà un compte ? Se connecter"
+          : "Pas de compte ? S'inscrire"}
       </button>
     </div>
   </form>
@@ -229,8 +238,12 @@
   }
 
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 
   .toggle-mode {
@@ -269,7 +282,8 @@
       font-size: 1.3rem;
     }
 
-    input, .auth-button {
+    input,
+    .auth-button {
       font-size: 0.95rem;
     }
   }

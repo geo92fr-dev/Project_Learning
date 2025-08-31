@@ -33,13 +33,16 @@
 ## 🎯 **Objectif et Principe**
 
 ### **Mission du CBD**
+
 Ce document définit le **protocole de vérification automatique** que l'IA doit suivre **AVANT** d'exécuter toute action demandée par l'utilisateur.
 
 ### **🤝 Principe fondamental**
+
 - **Utilisateur** = Chef de projet (définit QUOI faire)
 - **IA** = Exécutant expert (définit COMMENT faire + vérifications)
 
 ### **🎯 Objectifs**
+
 - ✅ Éviter les erreurs communes
 - ✅ Maintenir la cohérence architecturale
 - ✅ Assurer la qualité du code
@@ -52,6 +55,7 @@ Ce document définit le **protocole de vérification automatique** que l'IA doit
 > **🎯 RÈGLE FONDAMENTALE :** Approche TDD (Test-Driven Development) **OBLIGATOIRE** - Écrire les tests AVANT le code fonctionnel
 
 ### **Format de Prompt Obligatoire**
+
 Chaque demande DOIT contenir ces balises :
 
 ```markdown
@@ -64,6 +68,7 @@ Chaque demande DOIT contenir ces balises :
 ```
 
 ### **🚨 Format Spécial pour Tests URL (OBLIGATOIRE)**
+
 ```markdown
 [CONTEXT] Validation Phase X.Y selon DOC_CoPilot_Practices
 [TDD] Tests automatisés validés pour cette fonctionnalité
@@ -75,6 +80,7 @@ Chaque demande DOIT contenir ces balises :
 ```
 
 ### **Exemple Complet avec TDD**
+
 ```markdown
 [CONTEXT] Phase 1.8 - Authentification Firebase
 [TDD] Tests auth créés et validant les scénarios edge cases
@@ -121,7 +127,7 @@ graph TD
 ```
 📁 roadmap/
 ├── ROADMAP_LEARNING_SUMMARY.md      # Niveau 1: Vue d'ensemble exécutive
-├── ROADMAP_LEARNING.md               # Niveau 2: Détail des phases  
+├── ROADMAP_LEARNING.md               # Niveau 2: Détail des phases
 └── phases/                           # Niveau 3: Détail granulaire
     ├── Phase_01_Setup.md
     ├── Phase_02_Firebase.md
@@ -159,7 +165,7 @@ graph TD
 [VALIDATION] ✅ Niveau 2 confirmé
 
 🎯 ÉTAPE 3: Validation Niveau 3 (Phase Détaillée)
-[FILE] roadmap/phases/Phase_XX_[nom].md
+[FILE] roadmap/phases/Phase*XX*[nom].md
 [CHECK] Tasks granulaires définies
 [CHECK] Critères d'acceptation mesurables
 [CHECK] Scripts de validation prêts
@@ -174,7 +180,7 @@ graph TD
 [CONTEXT] POST-PHASE - Évaluation déviations et alignement
 
 🔍 ÉTAPE 1: Analyse Écarts Phase Terminée
-[FILE] roadmap/phases/Phase_XX_[nom].md
+[FILE] roadmap/phases/Phase*XX*[nom].md
 [COMPARE] Objectifs planifiés vs réalisés
 [MEASURE] Métriques attendues vs obtenues
 [IDENTIFY] Déviations et causes racines
@@ -218,7 +224,7 @@ npm run roadmap:phase-start
 🔍 Vérification alignement roadmap 3 niveaux...
 ═══════════════════════════════════════════════════════════
 🟢 Niveau 1 (Summary): 95.2%
-🟢 Niveau 2 (Roadmap): 89.7%  
+🟢 Niveau 2 (Roadmap): 89.7%
 🟢 Niveau 3 (Phase): 92.1%
 🟢 Alignement Croisé: 88.9%
 ═══════════════════════════════════════════════════════════
@@ -234,7 +240,7 @@ npm run roadmap:phase-end
 
 📊 Analyse déviations Phase 3 terminée...
 ═══════════════════════════════════════════════════════════
-✅ Objectifs Atteints: 4/4 
+✅ Objectifs Atteints: 4/4
 🟡 Métriques: Coverage 87% (+2% vs 85% cible)
 🔴 Timeline: 18 jours (+3 jours vs 15 estimés)
 ═══════════════════════════════════════════════════════════
@@ -255,6 +261,7 @@ npm run roadmap:phase-end
 **OBLIGATOIRE** : Toute demande qui dévie de la roadmap définie DOIT déclencher ce processus :
 
 #### **📊 Étape 1 : Analyse d'Impact Automatique**
+
 ```markdown
 🔍 ANALYSE D'IMPACT DÉTECTÉE
 
@@ -263,6 +270,7 @@ npm run roadmap:phase-end
 **Déviation Détectée** : [Description de l'écart]
 
 �📋 IMPACT ANALYSIS :
+
 - 🎯 **Objectifs Phase** : [Impact sur objectifs actuels]
 - ⏱️ **Planning** : [Retard estimé en jours]
 - 🔗 **Dépendances** : [Autres phases impactées]
@@ -271,22 +279,26 @@ npm run roadmap:phase-end
 - 💰 **Effort** : [Complexité supplémentaire 1-5]
 
 ⚠️ RISQUES IDENTIFIÉS :
+
 - [Risque 1 avec niveau de criticité]
 - [Risque 2 avec niveau de criticité]
 
 🎯 RECOMMANDATIONS :
+
 - Option A : [Adapter dans phase actuelle]
 - Option B : [Reporter à phase ultérieure]
 - Option C : [Modifier roadmap globalement]
 ```
 
 #### **📝 Étape 2 : Proposition de Mise à Jour Roadmap**
+
 ```markdown
 📋 PROPOSITION MISE À JOUR ROADMAP
 
 **Modifications Suggérées** :
 
 🔄 Phase [X.Y] Modifiée :
+
 - Ancien objectif : [...]
 - Nouvel objectif : [...]
 - Durée : [ancien] → [nouveau]
@@ -299,12 +311,14 @@ npm run roadmap:phase-end
 | P[Y] | [date] | [date] | +[X] jours |
 
 🎯 Validation Modifiée :
+
 - Nouveaux critères : [liste]
 - Tests supplémentaires : [liste]
 - Scripts à adapter : [liste]
 
 ❓ CONFIRMATION REQUISE :
 Acceptez-vous ces modifications de roadmap ?
+
 - [ ] ✅ OUI - Procéder avec la nouvelle roadmap
 - [ ] ❌ NON - Garder roadmap actuelle et reporter
 - [ ] 🔄 MODIFIER - Ajuster la proposition
@@ -322,8 +336,9 @@ En attente de votre décision sur la proposition de modification roadmap.
 AUCUNE ACTION ne sera entreprise sans votre confirmation explicite.
 
 Pour continuer, répondez avec :
+
 - "✅ CONFIRME" - Accepter les modifications
-- "❌ REFUSE" - Garder roadmap actuelle  
+- "❌ REFUSE" - Garder roadmap actuelle
 - "🔄 AJUSTE [détails]" - Modifier la proposition
 ```
 
@@ -335,71 +350,86 @@ Pour continuer, répondez avec :
 # ROADMAP [PROJECT] SUMMARY
 
 ## 🎯 Vision Exécutive
+
 **Objectif Stratégique :** [Vision 1 phrase]
 **Timeline Globale :** [Date début] → [Date fin estimée]
 **Budget/Effort :** [Estimation globale]
 
 ## 📊 Jalons Majeurs
+
 - **🚀 MVP Ready :** [Date] - [Critères]
-- **📱 Beta Release :** [Date] - [Critères]  
+- **📱 Beta Release :** [Date] - [Critères]
 - **🌟 Production :** [Date] - [Critères]
 - **🎨 V2 Features :** [Date] - [Critères]
 
 ## 📈 KPIs Globaux
+
 - **Performance :** [Objectif]
 - **Qualité :** [Objectif]
 - **Adoption :** [Objectif]
 
 ## 🚨 Risques Stratégiques
+
 - **[Risque 1] :** [Impact] - [Mitigation]
 - **[Risque 2] :** [Impact] - [Mitigation]
 
 ## 📊 Dashboard Exécutif
+
 - **Avancement Global :** [%]
 - **Budget Consommé :** [%]
 - **Risques Actifs :** [Nombre]
 - **Timeline Respect :** [%]
 ```
 
-##### **Template Phase_XX_[nom].md**
+##### **Template Phase*XX*[nom].md**
 
 ```markdown
 # PHASE [XX] - [NOM PHASE]
 
 ## 🎯 Objectifs Phase
+
 **Objectif Principal :** [1 phrase claire]
 **Durée Estimée :** [X jours]
 **Dépendances :** [Phase(s) précédente(s)]
 
 ## ✅ Critères de Validation
+
 ### Fonctionnels
+
 - [ ] [Critère fonctionnel 1]
 - [ ] [Critère fonctionnel 2]
 
-### Techniques  
+### Techniques
+
 - [ ] [Critère technique 1]
 - [ ] [Critère technique 2]
 
 ### Qualité
+
 - [ ] Coverage tests : [X%]
 - [ ] Performance : [Critère]
 - [ ] Sécurité : [Critère]
 
 ## 📊 Métriques Spécifiques
+
 - **Complexité :** [Métrique]
 - **Vélocité :** [Métrique]
 - **Bugs :** [Limite acceptée]
 
 ## 🔄 Tasks Granulaires
+
 ### Sprint 1
+
 - [ ] [Task 1] - [Estimation]
 - [ ] [Task 2] - [Estimation]
 
-### Sprint 2  
+### Sprint 2
+
 - [ ] [Task 3] - [Estimation]
 - [ ] [Task 4] - [Estimation]
 
 ## 🎯 Definition of Done Phase
+
 - [ ] Tous critères fonctionnels validés
 - [ ] Toutes métriques qualité atteintes
 - [ ] Documentation mise à jour
@@ -435,7 +465,7 @@ npm run roadmap:phase-start
 🔍 Vérification alignement roadmap 3 niveaux...
 ═══════════════════════════════════════════════════════════
 🟢 Niveau 1 (Summary): 95.2%
-🟢 Niveau 2 (Roadmap): 89.7%  
+🟢 Niveau 2 (Roadmap): 89.7%
 🟢 Niveau 3 (Phase): 92.1%
 🟢 Alignement Croisé: 88.9%
 ═══════════════════════════════════════════════════════════
@@ -451,7 +481,7 @@ npm run roadmap:phase-end
 
 📊 Analyse déviations Phase 3 terminée...
 ═══════════════════════════════════════════════════════════
-✅ Objectifs Atteints: 4/4 
+✅ Objectifs Atteints: 4/4
 🟡 Métriques: Coverage 87% (+2% vs 85% cible)
 🔴 Timeline: 18 jours (+3 jours vs 15 estimés)
 ═══════════════════════════════════════════════════════════
@@ -487,17 +517,17 @@ npm run roadmap:learning-from-deviations
 
 ### **📋 Checklist de Vérification Enrichie**
 
-| Phase | Vérification | Commande/Action | ✅ |
-|-------|--------------|-----------------|---|
-| 0 | **Documentation centrale** | Consulter [DOC_README.md](./DOC_README.md) | □ |
-| 0.5 | **🎯 TDD OBLIGATOIRE** | Tests écrits AVANT code fonctionnel | □ |
-| 1 | **Conformité roadmap** | Vérifier alignement avec DOC_ROADMAP_LEARNING.md | □ |
-| 2 | **Références modulaires** | Identifier documents à mettre à jour | □ |
-| 3 | Contexte identifié | Référence roadmap | □ |
-| 4 | Environnement prêt | `npm run check:env` | □ |
-| 5 | Structure respectée | Validation architecture | □ |
-| 6 | Sécurité OK | `npm audit` | □ |
-| 7 | **Tests TDD passants** | `npm run test` + validation cycle RED-GREEN-REFACTOR | □ |
+| Phase | Vérification               | Commande/Action                                      | ✅  |
+| ----- | -------------------------- | ---------------------------------------------------- | --- |
+| 0     | **Documentation centrale** | Consulter [DOC_README.md](./DOC_README.md)           | □   |
+| 0.5   | **🎯 TDD OBLIGATOIRE**     | Tests écrits AVANT code fonctionnel                  | □   |
+| 1     | **Conformité roadmap**     | Vérifier alignement avec DOC_ROADMAP_LEARNING.md     | □   |
+| 2     | **Références modulaires**  | Identifier documents à mettre à jour                 | □   |
+| 3     | Contexte identifié         | Référence roadmap                                    | □   |
+| 4     | Environnement prêt         | `npm run check:env`                                  | □   |
+| 5     | Structure respectée        | Validation architecture                              | □   |
+| 6     | Sécurité OK                | `npm audit`                                          | □   |
+| 7     | **Tests TDD passants**     | `npm run test` + validation cycle RED-GREEN-REFACTOR | □   |
 
 ### **🌐 Tests d'URL et Validation Visuelle - OBLIGATOIRE**
 
@@ -506,8 +536,10 @@ npm run roadmap:learning-from-deviations
 #### **📋 Protocole de Validation Obligatoire**
 
 1. **🔍 Vérification Console** - **TOUJOURS EN PREMIER**
+
    ```markdown
    ✅ OBLIGATOIRE : Examiner la console du navigateur pour :
+
    - ❌ Erreurs JavaScript (rouge)
    - ⚠️ Avertissements TypeScript/Svelte (orange)
    - 🔗 Erreurs de chargement de ressources (404, etc.)
@@ -515,8 +547,10 @@ npm run roadmap:learning-from-deviations
    ```
 
 2. **👁️ Vérification Visuelle** - **ENSUITE SEULEMENT**
+
    ```markdown
    ✅ OBLIGATOIRE : Vérifier dans le Web Viewer :
+
    - 🎨 Rendu visuel correct (pas de mise en page cassée)
    - 📱 Responsive design fonctionnel
    - 🔘 Interactions utilisateur (boutons, liens, navigation)
@@ -525,25 +559,29 @@ npm run roadmap:learning-from-deviations
    ```
 
 3. **📝 Rapport de Validation**
+
    ```markdown
    ✅ TEMPLATE OBLIGATOIRE de conclusion :
-   
+
    **🌐 VALIDATION URL : [URL_TESTÉE]**
-   
+
    **Console :**
+
    - Erreurs JS : [Aucune / Listées ci-dessous]
    - Avertissements : [Aucun / Listés ci-dessous]
    - Ressources : [Toutes chargées / Problèmes détectés]
-   
+
    **Visuel :**
+
    - Rendu : [✅ Correct / ❌ Problèmes détectés]
    - Navigation : [✅ Fonctionnelle / ❌ Liens cassés]
    - Responsive : [✅ OK / ❌ Ajustements nécessaires]
-   
+
    **Conclusion :** [✅ VALIDÉ / ⚠️ AVEC RÉSERVES / ❌ ÉCHEC]
    ```
 
 #### **🚨 Conséquences du Non-Respect**
+
 - **ERREUR CRITIQUE** : Conclure "tout est parfait" sans vérifier console/visuel
 - **RÉSULTAT** : Bugs cachés, régressions non détectées, expérience utilisateur dégradée
 - **OBLIGATION** : Toujours faire ces vérifications AVANT de valider une URL
@@ -567,19 +605,23 @@ npm run roadmap:learning-from-deviations
 #### **🚫 Erreurs Critiques à Éviter - Exemples Réels**
 
 **❌ ERREUR TYPE 1 : Saut d'étape console**
+
 ```markdown
 MAUVAIS COMPORTEMENT :
+
 - Ouvrir URL avec open_simple_browser
 - Conclure "rendu correct" immédiatement
 - Ignorer get_terminal_output
 
 BON COMPORTEMENT :
+
 1. get_terminal_output AVANT open_simple_browser
 2. Analyser toutes les erreurs détectées
 3. Corriger les erreurs AVANT validation visuelle
 ```
 
 **❌ ERREUR TYPE 2 : Conclusion hâtive**
+
 ```markdown
 MAUVAIS :
 "✅ Rendu correct de la page matière"
@@ -590,12 +632,13 @@ BON :
 ```
 
 **❌ ERREUR TYPE 3 : Ignorance des erreurs 500**
+
 ```markdown
 MAUVAIS :
 Voir erreur 500 et continuer comme si de rien n'était
 
 BON :
-"🚨 ERREUR 500 DÉTECTÉE - ARRÊT IMMÉDIAT 
+"🚨 ERREUR 500 DÉTECTÉE - ARRÊT IMMÉDIAT
 Correction obligatoire avant poursuite"
 ```
 
@@ -623,14 +666,17 @@ graph TD
 ## 🔍 VALIDATION COMPLÈTE SELON DOC_COPILOT
 
 ### **1️⃣ VÉRIFICATION CONSOLE**
+
 **Terminal Output :**
 ```
+
 [Copier-coller EXACT du terminal]
+
 ```
 
 **Analyse :**
 - ❌ Erreurs critiques : [Liste détaillée OU "Aucune"]
-- ⚠️ Avertissements : [Liste détaillée OU "Aucun"]  
+- ⚠️ Avertissements : [Liste détaillée OU "Aucun"]
 - 🔗 Ressources : [Statut chargement]
 
 ### **2️⃣ VÉRIFICATION VISUELLE**
@@ -688,47 +734,59 @@ graph TD
 **Tags**: [#database #auth #performance #security]
 
 ## Contexte et Problème
+
 [Description du contexte business/technique qui nécessite une décision]
 
 ## Contraintes et Forces
+
 - Contrainte 1 (ex: Budget limité)
-- Contrainte 2 (ex: Délai court)  
+- Contrainte 2 (ex: Délai court)
 - Force 1 (ex: Facilité de maintenance)
 - Force 2 (ex: Performance requise)
 
 ## Solutions Considérées
+
 ### Option 1: [Nom de la solution]
+
 - ✅ Avantages: ...
 - ❌ Inconvénients: ...
 - 💰 Coût: ...
 
 ### Option 2: [Nom de la solution]
+
 - ✅ Avantages: ...
 - ❌ Inconvénients: ...
 - 💰 Coût: ...
 
 ## Décision
+
 [Solution choisie et justification détaillée]
 
 ## Conséquences
+
 ### Positives
+
 - ✅ Bénéfice 1
 - ✅ Bénéfice 2
 
-### Négatives  
+### Négatives
+
 - ⚠️ Risque 1 + Plan de mitigation
 - ⚠️ Risque 2 + Plan de mitigation
 
 ### Neutres
+
 - 📝 Point d'attention 1
 - 📝 Point d'attention 2
 
 ## Implémentation
+
 - [ ] Étape 1: [Action concrète]
-- [ ] Étape 2: [Action concrète]  
+- [ ] Étape 2: [Action concrète]
 - [ ] Étape 3: [Validation]
 
 ## Liens
+
 - [Référence technique 1]
 - [ADR connexe: ADR-XXX]
 - [Documentation: DOC_XXX.md]
@@ -740,7 +798,7 @@ graph TD
 docs/ADR/
 ├── README.md                          # Index de tous les ADR
 ├── ADR-001-database-choice.md         # Firestore vs PostgreSQL
-├── ADR-002-auth-strategy.md           # Firebase Auth vs Supabase  
+├── ADR-002-auth-strategy.md           # Firebase Auth vs Supabase
 ├── ADR-003-frontend-framework.md      # SvelteKit vs Next.js
 ├── ADR-004-state-management.md        # Stores Svelte vs Redux
 ├── ADR-005-testing-strategy.md        # Vitest vs Jest + Playwright
@@ -761,24 +819,29 @@ docs/ADR/
 **Tags**: #database #firebase #mvp #scalability
 
 ## Contexte et Problème
+
 Besoin d'une base de données pour stocker le contenu éducatif (matières, compétences, exercices) et la progression utilisateur. Choix entre solution relationnelle classique (PostgreSQL) et NoSQL serverless (Firestore).
 
 ## Contraintes et Forces
+
 - ⏱️ Délai MVP: 6 semaines
-- 💰 Budget initial limité  
+- 💰 Budget initial limité
 - 🎯 Scalabilité future requise (10k+ utilisateurs)
 - 🔐 Authentification intégrée souhaitée
 - 📱 Support temps réel pour progression
 
 ## Solutions Considérées
+
 ### Option 1: PostgreSQL + Supabase
+
 - ✅ Requêtes SQL complexes
 - ✅ Relations normalisées
 - ❌ Configuration complexe
 - ❌ Coût serveur dès le début
 - 💰 ~$25/mois minimum
 
-### Option 2: Firestore + Firebase Auth  
+### Option 2: Firestore + Firebase Auth
+
 - ✅ Serverless (pas de gestion serveur)
 - ✅ Authentification intégrée
 - ✅ Temps réel natif
@@ -788,32 +851,39 @@ Besoin d'une base de données pour stocker le contenu éducatif (matières, comp
 - 💰 Gratuit puis pay-as-you-go
 
 ## Décision
+
 **Firestore + Firebase Auth** pour accélérer le MVP et bénéficier de l'écosystème Firebase intégré.
 
 ## Conséquences
+
 ### Positives
+
 - ✅ MVP livrable en 6 semaines (vs 8-10 avec PostgreSQL)
-- ✅ Authentification Google intégrée 
+- ✅ Authentification Google intégrée
 - ✅ Synchronisation temps réel automatique
 - ✅ Pas de serveur à maintenir
 
 ### Négatives
+
 - ⚠️ **Coût imprévisible** → Mitigation: Monitoring quotidien + alertes à 80% du budget
 - ⚠️ **Vendor lock-in Firebase** → Mitigation: Abstraction services dans `/lib/database/`
 - ⚠️ **Requêtes limitées** → Mitigation: Dénormalisation adaptée + cache local
 
-### Neutres  
+### Neutres
+
 - 📝 Apprentissage courbe Firestore rules
 - 📝 Migration future possible vers PostgreSQL si nécessaire
 
 ## Implémentation
+
 - [x] Configuration Firebase projet
-- [x] Setup Firestore rules de sécurité  
+- [x] Setup Firestore rules de sécurité
 - [x] Abstraction services database (`/lib/firebase/`)
 - [x] Monitoring coûts (alertes Slack)
 - [ ] Documentation patterns Firestore (`DOC_Firebase_Patterns.md`)
 
 ## Liens
+
 - [Firebase Pricing](https://firebase.google.com/pricing)
 - [ADR connexe: ADR-002-auth-strategy.md]
 - [Documentation: DOC_Firebase_Setup.md]
@@ -823,84 +893,101 @@ Besoin d'une base de données pour stocker le contenu éducatif (matières, comp
 
 ```javascript
 // scripts/generate-adr.js - Générateur ADR automatique
-const fs = require('fs');
-const path = require('path');
-const readline = require('readline');
+const fs = require("fs");
+const path = require("path");
+const readline = require("readline");
 
 class ADRGenerator {
   constructor() {
-    this.adrDir = path.join(__dirname, '../docs/ADR');
-    this.templatePath = path.join(this.adrDir, 'template-ADR.md');
+    this.adrDir = path.join(__dirname, "../docs/ADR");
+    this.templatePath = path.join(this.adrDir, "template-ADR.md");
     this.rl = readline.createInterface({
       input: process.stdin,
-      output: process.stdout
+      output: process.stdout,
     });
   }
-  
+
   async generateADR() {
-    console.log('🏗️ Générateur ADR - Architecture Decision Record\n');
-    
-    const title = await this.ask('📝 Titre de la décision: ');
-    const tags = await this.ask('🏷️ Tags (séparés par des espaces): ');
-    const context = await this.ask('📋 Contexte (problème à résoudre): ');
-    
+    console.log("🏗️ Générateur ADR - Architecture Decision Record\n");
+
+    const title = await this.ask("📝 Titre de la décision: ");
+    const tags = await this.ask("🏷️ Tags (séparés par des espaces): ");
+    const context = await this.ask("📋 Contexte (problème à résoudre): ");
+
     const adrNumber = this.getNextADRNumber();
-    const fileName = `ADR-${adrNumber.toString().padStart(3, '0')}-${title.toLowerCase().replace(/\s+/g, '-')}.md`;
-    
+    const fileName = `ADR-${adrNumber.toString().padStart(3, "0")}-${title
+      .toLowerCase()
+      .replace(/\s+/g, "-")}.md`;
+
     const adrContent = this.generateADRContent({
       number: adrNumber,
       title,
-      tags: tags.split(' ').map(tag => `#${tag}`).join(' '),
+      tags: tags
+        .split(" ")
+        .map((tag) => `#${tag}`)
+        .join(" "),
       context,
-      date: new Date().toISOString().split('T')[0]
+      date: new Date().toISOString().split("T")[0],
     });
-    
+
     fs.writeFileSync(path.join(this.adrDir, fileName), adrContent);
     this.updateADRIndex(adrNumber, title, fileName);
-    
+
     console.log(`✅ ADR créé: docs/ADR/${fileName}`);
-    console.log(`📝 À compléter: Solutions considérées, Décision, Conséquences`);
-    
+    console.log(
+      `📝 À compléter: Solutions considérées, Décision, Conséquences`
+    );
+
     this.rl.close();
   }
-  
+
   ask(question) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.rl.question(question, resolve);
     });
   }
-  
+
   getNextADRNumber() {
-    const adrFiles = fs.readdirSync(this.adrDir)
-      .filter(file => file.startsWith('ADR-') && file.endsWith('.md'))
-      .map(file => parseInt(file.match(/ADR-(\d+)/)[1]))
+    const adrFiles = fs
+      .readdirSync(this.adrDir)
+      .filter((file) => file.startsWith("ADR-") && file.endsWith(".md"))
+      .map((file) => parseInt(file.match(/ADR-(\d+)/)[1]))
       .sort((a, b) => b - a);
-    
+
     return adrFiles.length > 0 ? adrFiles[0] + 1 : 1;
   }
-  
+
   generateADRContent(data) {
-    const template = fs.readFileSync(this.templatePath, 'utf8');
+    const template = fs.readFileSync(this.templatePath, "utf8");
     return template
-      .replace('{{NUMBER}}', data.number.toString().padStart(3, '0'))
-      .replace('{{TITLE}}', data.title)
-      .replace('{{DATE}}', data.date)
-      .replace('{{TAGS}}', data.tags)
-      .replace('{{CONTEXT}}', data.context);
+      .replace("{{NUMBER}}", data.number.toString().padStart(3, "0"))
+      .replace("{{TITLE}}", data.title)
+      .replace("{{DATE}}", data.date)
+      .replace("{{TAGS}}", data.tags)
+      .replace("{{CONTEXT}}", data.context);
   }
-  
+
   updateADRIndex(number, title, fileName) {
-    const indexPath = path.join(this.adrDir, 'README.md');
-    let indexContent = fs.existsSync(indexPath) ? fs.readFileSync(indexPath, 'utf8') : this.createADRIndexTemplate();
-    
-    const newEntry = `| ADR-${number.toString().padStart(3, '0')} | [${title}](${fileName}) | Proposé | ${new Date().toISOString().split('T')[0]} |`;
-    
+    const indexPath = path.join(this.adrDir, "README.md");
+    let indexContent = fs.existsSync(indexPath)
+      ? fs.readFileSync(indexPath, "utf8")
+      : this.createADRIndexTemplate();
+
+    const newEntry = `| ADR-${number
+      .toString()
+      .padStart(3, "0")} | [${title}](${fileName}) | Proposé | ${
+      new Date().toISOString().split("T")[0]
+    } |`;
+
     // Insérer avant la ligne de fermeture du tableau
-    indexContent = indexContent.replace('<!-- NEW_ADR_HERE -->', `${newEntry}\n<!-- NEW_ADR_HERE -->`);
-    
+    indexContent = indexContent.replace(
+      "<!-- NEW_ADR_HERE -->",
+      `${newEntry}\n<!-- NEW_ADR_HERE -->`
+    );
+
     fs.writeFileSync(indexPath, indexContent);
   }
-  
+
   createADRIndexTemplate() {
     return `# Architecture Decision Records (ADR)
 
@@ -947,7 +1034,7 @@ npm run adr:new --interactive
 
 # Exemple de session IA interactive :
 ✨ Générateur ADR Intelligent
-📍 Contexte détecté : Nouveau composant d'authentification  
+📍 Contexte détecté : Nouveau composant d'authentification
 ❓ Quelle décision technique doit être documentée ?
    > Choix de la librairie d'authentification
 
@@ -1007,16 +1094,16 @@ fi
 // tools/adr-auto-detect.js - Détection intelligente
 class ADRAutoDetector {
   static triggers = {
-    'package.json': ['dependencies', 'devDependencies'],
-    'config/*': ['database', 'auth', 'api'],
-    'src/lib/*': ['new framework', 'new library'],
-    'docker*': ['deployment', 'infrastructure'],
-    'README.md': ['architecture change']
+    "package.json": ["dependencies", "devDependencies"],
+    "config/*": ["database", "auth", "api"],
+    "src/lib/*": ["new framework", "new library"],
+    "docker*": ["deployment", "infrastructure"],
+    "README.md": ["architecture change"],
   };
-  
+
   static async detectADRNeed(changedFiles) {
     const suggestions = [];
-    
+
     for (const file of changedFiles) {
       const trigger = this.matchTrigger(file);
       if (trigger) {
@@ -1024,16 +1111,16 @@ class ADRAutoDetector {
         suggestions.push(suggestion);
       }
     }
-    
+
     return suggestions;
   }
-  
+
   static async generateSuggestion(file, trigger) {
     return {
       title: `Decision needed for ${trigger} in ${file}`,
       context: `Change detected in ${file} affecting ${trigger}`,
       priority: this.calculatePriority(file, trigger),
-      autoGenerate: true
+      autoGenerate: true,
     };
   }
 }
@@ -1124,27 +1211,27 @@ Le système ADR est maintenant intégré dans l'orchestrateur principal :
 class DevIAOrchestrator {
   async executeOperation(operation) {
     // ... autres vérifications
-    
+
     // Vérification ADR automatique
     const adrCheck = await this.checkADRNeeded(operation);
     if (adrCheck.required && !adrCheck.created) {
-      console.log('⚠️  ADR requis pour cette opération');
+      console.log("⚠️  ADR requis pour cette opération");
       console.log(`💡 Utilisez: npm run adr:new --interactive`);
-      
+
       if (operation.blocking) {
-        throw new Error('ADR requis avant de continuer');
+        throw new Error("ADR requis avant de continuer");
       }
     }
-    
+
     // ... suite de l'opération
   }
-  
+
   async checkADRNeeded(operation) {
     const suggestions = await ADRAutoDetector.detectADRNeed(operation.files);
     return {
       required: suggestions.length > 0,
       suggestions,
-      created: false // À implémenter selon le flux
+      created: false, // À implémenter selon le flux
     };
   }
 }
@@ -1195,11 +1282,13 @@ git commit -m "Update Firebase configuration for new features"
 ```
 
 #### **✅ Obligatoire Après Chaque Implémentation**
+
 - **[DOC_README.md](./DOC_README.md)** - Hub central (ce document liste TOUS les autres)
 - **[DOC_ROADMAP_LEARNING.md](./DOC_ROADMAP_LEARNING.md)** - Progression phases
 - **Références modulaires concernées** - Selon domaine impacté
 
 #### **🔄 Conditionnel Selon Type de Modification**
+
 Consulter la section **"🎯 Workflow de Validation CBD"** dans [DOC_README.md](./DOC_README.md) pour la liste complète des documents à vérifier selon le type de changement.
 
 #### **🤖 Automatisation Documentation (Recommandé)**
@@ -1207,11 +1296,13 @@ Consulter la section **"🎯 Workflow de Validation CBD"** dans [DOC_README.md](
 **💡 Problème identifié** : La maintenance manuelle des README pour chaque dossier devient fastidieuse et source d'obsolescence.
 
 **🚀 Solution : Génération Automatique**
+
 - **Script automatisé** : `npm run docs:generate`
 - **Templates dynamiques** : Extraction d'informations depuis commentaires spéciaux
 - **Intégration orchestrateur** : Validation cohérence documentation automatique
 
 **📝 Commentaires Spéciaux Standardisés**
+
 ```javascript
 /**
  * @criticality HIGH|MEDIUM|LOW
@@ -1223,6 +1314,7 @@ Consulter la section **"🎯 Workflow de Validation CBD"** dans [DOC_README.md](
 ```
 
 **🛠️ Script de Génération Automatique**
+
 ```bash
 [CMD] npm run docs:generate           # Génère tous les README
 [CMD] npm run docs:validate          # Vérifie cohérence documentation
@@ -1230,6 +1322,7 @@ Consulter la section **"🎯 Workflow de Validation CBD"** dans [DOC_README.md](
 ```
 
 **🔗 Intégration CBD**
+
 - Vérification automatique documentation dans `npm run dev:ia`
 - Alerte si commentaires manquants sur nouveaux fichiers
 - Validation cohérence README vs code réel
@@ -1239,6 +1332,7 @@ Consulter la section **"🎯 Workflow de Validation CBD"** dans [DOC_README.md](
 ## 📝 **Templates de Prompts**
 
 ### **🏗️ Template ADR - Décision Architecturale**
+
 ```markdown
 [CONTEXT] ADR - [Titre de la décision]
 [PROBLEM] [Description du problème technique à résoudre]
@@ -1252,6 +1346,7 @@ Consulter la section **"🎯 Workflow de Validation CBD"** dans [DOC_README.md](
 ```
 
 **Exemple concret** :
+
 ```markdown
 [CONTEXT] ADR - Choix solution de monitoring
 [PROBLEM] Besoin de tracking erreurs et performance en production
@@ -1265,6 +1360,7 @@ Consulter la section **"🎯 Workflow de Validation CBD"** dans [DOC_README.md](
 ```
 
 ### **📋 Template Validation avec ADR**
+
 ```markdown
 [CONTEXT] Phase X.Y - [Fonctionnalité]
 [ADR-CHECK] Vérifier ADR existants liés à cette implémentation
@@ -1277,6 +1373,7 @@ Consulter la section **"🎯 Workflow de Validation CBD"** dans [DOC_README.md](
 ```
 
 ### **🔍 Déviation de Roadmap (Template Spécialisé)**
+
 ```markdown
 [CONTEXT] DÉVIATION ROADMAP - [Description de la demande]
 [ROADMAP-CURRENT] Phase X.Y - [Objectif actuel]
@@ -1288,6 +1385,7 @@ Consulter la section **"🎯 Workflow de Validation CBD"** dans [DOC_README.md](
 ```
 
 **Exemple concret** :
+
 ```markdown
 [CONTEXT] DÉVIATION ROADMAP - Ajout système de notifications push
 [ROADMAP-CURRENT] Phase 2.3 - Interface contenu Markdown
@@ -1299,6 +1397,7 @@ Consulter la section **"🎯 Workflow de Validation CBD"** dans [DOC_README.md](
 ```
 
 ### **�🔧 Création de Composant**
+
 ```markdown
 [CONTEXT] Phase X.Y - Nom de la fonctionnalité
 [FILE] src/components/MonComposant.svelte
@@ -1309,6 +1408,7 @@ Consulter la section **"🎯 Workflow de Validation CBD"** dans [DOC_README.md](
 ```
 
 ### **� Post-Mortem Rapide (Template CoPilot)**
+
 ```markdown
 [CONTEXT] POST-MORTEM - [Titre du problème]
 [PROBLEM] [Description brève du problème rencontré]
@@ -1323,6 +1423,7 @@ Consulter la section **"🎯 Workflow de Validation CBD"** dans [DOC_README.md](
 ```
 
 **Exemple concret** :
+
 ```markdown
 [CONTEXT] POST-MORTEM - Erreur import Firebase dans Vitest
 [PROBLEM] Tests échouent avec "Cannot find module 'firebase/app'"
@@ -1337,6 +1438,7 @@ Consulter la section **"🎯 Workflow de Validation CBD"** dans [DOC_README.md](
 ```
 
 ### **�🐛 Correction de Bug**
+
 ```markdown
 [CONTEXT] Fix bug #123 - Description du problème
 [FILE] src/path/to/buggy-file.ts
@@ -1347,14 +1449,16 @@ Consulter la section **"🎯 Workflow de Validation CBD"** dans [DOC_README.md](
 ```
 
 ### **📚 Documentation**
+
 ```markdown
 [CONTEXT] Documentation pour fonctionnalité X
-[FILE] DOC_FEATURE_X.md
+[FILE] DOC*FEATURE_X.md
 [CMD] npm run docs:build
-[CHECK] Documentation claire et à jour avec préfixe DOC_
+[CHECK] Documentation claire et à jour avec préfixe DOC*
 ```
 
 ### **🔄 Refactoring**
+
 ```markdown
 [CONTEXT] Refactoring module X pour améliorer performance
 [FILE] src/lib/modules/X.ts
@@ -1373,6 +1477,7 @@ Consulter la section **"🎯 Workflow de Validation CBD"** dans [DOC_README.md](
 ### **📋 Exemple : Génération d'un Cours de Maths (Phase 3)**
 
 #### **🧮 Contenu Éducatif - Fractions 6ème**
+
 ```markdown
 [CONTEXT] Phase 3.2 - Génération contenu "Fractions 6ème"
 [FILE] src/routes/mathematiques/6eme/fractions/+page.svelte
@@ -1381,33 +1486,37 @@ Consulter la section **"🎯 Workflow de Validation CBD"** dans [DOC_README.md](
 [CMD] npm run generate:content --mvp --matiere mathematiques --niveau 6eme --competence fractions
 [TEST] npm run test:content --filter "Fractions 6ème"
 [CHECK]
+
 - Le contenu est généré dans Firestore (`competences/maths-6eme-fractions`)
 - La page s'affiche sans erreur (`npm run dev`)
 - Les exercices interactifs fonctionnent
 - La progression est sauvegardée dans le profil utilisateur
-[ADR-CHECK] Vérifier ADR-003 (Choix Firestore pour le contenu)
-[ROADMAP-STATUS] Phase 3.2 - Contenu mathématiques ✅
+  [ADR-CHECK] Vérifier ADR-003 (Choix Firestore pour le contenu)
+  [ROADMAP-STATUS] Phase 3.2 - Contenu mathématiques ✅
 ```
 
 #### **🎯 Validation Spécifique du Contenu Éducatif**
+
 ```markdown
 [CONTEXT] Validation contenu éducatif généré - Fractions 6ème
-[PEDAGOGICAL-CHECK] 
+[PEDAGOGICAL-CHECK]
+
 - Progression logique : introduction → exemples → exercices → évaluation
 - Niveau approprié : vocabulaire 6ème, concepts accessibles
 - Interactivité : feedback immédiat, aide contextuelle
-[TECHNICAL-CHECK]
+  [TECHNICAL-CHECK]
 - Performance : chargement < 2s, responsive design
 - Accessibilité : ARIA labels, navigation clavier
 - Data : sauvegarde progression, analytics apprentissage
-[FILE] src/tests/content/maths-6eme-fractions.test.js
-[CMD] npm run test:pedagogical --subject=maths --level=6eme
-[CHECK] Contenu validé pédagogiquement et techniquement
+  [FILE] src/tests/content/maths-6eme-fractions.test.js
+  [CMD] npm run test:pedagogical --subject=maths --level=6eme
+  [CHECK] Contenu validé pédagogiquement et techniquement
 ```
 
 ### **🔐 Exemple : Système d'Authentification Éducatif (Phase 2)**
 
 #### **👥 Gestion des Profils Élèves/Professeurs**
+
 ```markdown
 [CONTEXT] Phase 2.4 - Authentification multi-rôles éducatifs
 [FILE] src/lib/auth/roles.js
@@ -1417,127 +1526,138 @@ Consulter la section **"🎯 Workflow de Validation CBD"** dans [DOC_README.md](
 [CMD] npm run setup:auth-roles --education
 [TEST] npm run test:auth-roles --all-scenarios
 [CHECK]
+
 - Inscription avec sélection de rôle
 - Profils différenciés (élève: progression, prof: classes)
 - Permissions granulaires (création cours, suivi élèves)
 - Interface adaptée par rôle
-[ADR-CHECK] Vérifier ADR-002 (Stratégie authentification Firebase)
-[SECURITY-CHECK] npm run test:security-roles
+  [ADR-CHECK] Vérifier ADR-002 (Stratégie authentification Firebase)
+  [SECURITY-CHECK] npm run test:security-roles
 ```
 
 #### **📊 Tableau de Bord Professeur**
+
 ```markdown
 [CONTEXT] Phase 3.4 - Interface professeur avec suivi classe
 [FILE] src/routes/(app)/professeur/dashboard/+page.svelte
 [FILE] src/lib/components/analytics/ClassProgress.svelte
 [FILE] src/lib/firebase/classroom.js
 [FEATURES]
+
 - Vue d'ensemble progression classe
 - Détection difficultés individuelles
 - Recommandations pédagogiques automatisées
 - Export rapports parents
-[CMD] npm run dev:teacher-dashboard
-[TEST] npm run test:dashboard --role=professeur
-[CHECK]
+  [CMD] npm run dev:teacher-dashboard
+  [TEST] npm run test:dashboard --role=professeur
+  [CHECK]
 - Données temps réel depuis Firestore
 - Graphiques performants (Chart.js)
 - Interface responsive tablette/ordinateur
 - Respect RGPD pour données élèves
-[ADR-CHECK] Vérifier ADR-008 (Stratégie analytics et performance)
+  [ADR-CHECK] Vérifier ADR-008 (Stratégie analytics et performance)
 ```
 
 ### **🎨 Exemple : Interface Ludique et Adaptive (Phase 4)**
 
 #### **🏆 Système de Gamification**
+
 ```markdown
 [CONTEXT] Phase 4.1 - Gamification apprentissage avec badges/points
 [FILE] src/lib/components/gamification/BadgeSystem.svelte
 [FILE] src/lib/components/gamification/ProgressRing.svelte
 [FILE] src/lib/stores/gamification.js
 [FEATURES]
+
 - Système de points par matière
 - Badges de progression (bronze, argent, or)
 - Défis hebdomadaires personnalisés
 - Classements amicaux (non compétitifs)
-[CMD] npm run generate:gamification --age-group=college
-[TEST] npm run test:gamification --comprehensive
-[CHECK]
+  [CMD] npm run generate:gamification --age-group=college
+  [TEST] npm run test:gamification --comprehensive
+  [CHECK]
 - Motivation maintenue sans stress
 - Balance progression individuelle/sociale
 - Accessibilité (pas de dépendance couleurs)
 - Performance animations (60fps)
-[PEDAGOGY-CHECK] Validation impact positif apprentissage
-[ADR-CHECK] Nouveau ADR requis pour stratégie gamification
+  [PEDAGOGY-CHECK] Validation impact positif apprentissage
+  [ADR-CHECK] Nouveau ADR requis pour stratégie gamification
 ```
 
 #### **🧠 Adaptativité IA pour Personnalisation**
+
 ```markdown
 [CONTEXT] Phase 4.3 - Personnalisation parcours par IA
 [FILE] src/lib/ai/adaptiveEngine.js
 [FILE] src/lib/components/adaptive/PersonalizedContent.svelte
 [ALGORITHM]
+
 - Analyse patterns erreurs élève
 - Adaptation niveau difficulté temps réel
 - Recommandations contenu personnalisées
 - Prédiction risque décrochage
-[CMD] npm run setup:adaptive-ai --provider=openai
-[TEST] npm run test:ai-adaptation --scenarios=multiple
-[CHECK]
+  [CMD] npm run setup:adaptive-ai --provider=openai
+  [TEST] npm run test:ai-adaptation --scenarios=multiple
+  [CHECK]
 - Personnalisation efficace sans effet "bulle"
 - Transparence algorithme pour professeurs
 - Respect éthique IA éducative
 - Performance < 500ms pour suggestions
-[ETHICS-CHECK] Validation comité éthique IA éducative
-[ADR-CHECK] ADR-012 requis pour choix provider IA
+  [ETHICS-CHECK] Validation comité éthique IA éducative
+  [ADR-CHECK] ADR-012 requis pour choix provider IA
 ```
 
 ### **📱 Exemple : Déploiement Production Éducatif (Phase 5)**
 
 #### **🚀 Mise en Production avec Monitoring Spécialisé**
+
 ```markdown
 [CONTEXT] Phase 5.2 - Déploiement production environnement éducatif
 [FILE] .github/workflows/deploy-education.yml
 [FILE] monitoring/education-metrics.js
 [DEPLOYMENT]
+
 - Multi-environnements (dev, staging, production)
 - Rollback automatique si erreurs critiques
 - CDN optimisé pour contenu éducatif lourd
 - Sauvegarde données élèves sécurisée
-[CMD] npm run deploy:production --education --safety-checks
-[TEST] npm run test:production-readiness --full-suite
-[CHECK]
+  [CMD] npm run deploy:production --education --safety-checks
+  [TEST] npm run test:production-readiness --full-suite
+  [CHECK]
 - Performance < 2s chargement cours
 - Disponibilité 99.9% heures scolaires
 - Conformité RGPD/FERPA données éducatives
 - Monitoring spécialisé (temps apprentissage, abandons)
-[COMPLIANCE-CHECK] Audit sécurité données éducatives
-[ADR-CHECK] Vérifier ADR-006 (Choix plateforme déploiement)
+  [COMPLIANCE-CHECK] Audit sécurité données éducatives
+  [ADR-CHECK] Vérifier ADR-006 (Choix plateforme déploiement)
 ```
 
 #### **📈 Analytics Pédagogiques et Conformité**
+
 ```markdown
 [CONTEXT] Phase 5.3 - Analytics respectueux vie privée élèves
 [FILE] src/lib/analytics/educationMetrics.js
 [FILE] src/lib/privacy/dataProtection.js
 [METRICS]
+
 - Temps apprentissage effectif (sans identification)
 - Patterns difficultés par concept
 - Efficacité méthodes pédagogiques
 - Satisfaction élèves/professeurs
-[PRIVACY]
+  [PRIVACY]
 - Anonymisation automatique données
 - Consentement parental explicite
 - Exportation données sur demande
 - Suppression automatique fin scolarité
-[CMD] npm run setup:education-analytics --privacy-first
-[TEST] npm run test:privacy-compliance --rgpd
-[CHECK]
+  [CMD] npm run setup:education-analytics --privacy-first
+  [TEST] npm run test:privacy-compliance --rgpd
+  [CHECK]
 - Insights pédagogiques précieux sans intrusion
 - Conformité légale totale
 - Transparence algorithmes pour utilisateurs
 - Contrôle données par établissements
-[LEGAL-CHECK] Validation juriste spécialisé EdTech
-[ADR-CHECK] ADR-013 requis pour stratégie privacy-by-design
+  [LEGAL-CHECK] Validation juriste spécialisé EdTech
+  [ADR-CHECK] ADR-013 requis pour stratégie privacy-by-design
 ```
 
 ### **🔧 Scripts Spécialisés FunLearning**
@@ -1673,7 +1793,7 @@ npm run test:production-health-check
 ═══════════════════════════════════════════════════════════
 ✅ Site accessible: 200 OK
 ✅ Authentification fonctionnelle
-✅ Base de données connectée  
+✅ Base de données connectée
 ✅ Functions Firebase opérationnelles
 ✅ Performance dans les normes (< 3s)
 ✅ Pas d'erreurs JavaScript console
@@ -1703,7 +1823,7 @@ backups/
 
 🎯 POLITIQUE DE RÉTENTION:
 • Backups quotidiens: 7 jours
-• Backups pre-release: 30 jours  
+• Backups pre-release: 30 jours
 • Backups majeurs (v1.x): 1 an
 • Backups critiques: Permanent
 ```
@@ -1712,72 +1832,78 @@ backups/
 
 ```javascript
 // scripts/backup/create-backup.js
-const admin = require('firebase-admin');
-const fs = require('fs');
+const admin = require("firebase-admin");
+const fs = require("fs");
 
 class FirebaseBackupManager {
   constructor() {
-    this.timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    this.timestamp = new Date().toISOString().replace(/[:.]/g, "-");
     this.backupDir = `backups/backup-${this.timestamp}`;
   }
 
   async createFullBackup() {
-    console.log('📦 Création backup complet Firebase...');
-    
+    console.log("📦 Création backup complet Firebase...");
+
     // 1. Export Firestore
     await this.exportFirestore();
-    
+
     // 2. Backup Storage files
     await this.backupStorage();
-    
+
     // 3. Export configuration
     await this.exportConfig();
-    
+
     // 4. Create manifest
     await this.createManifest();
-    
+
     console.log(`✅ Backup complet créé: ${this.backupDir}`);
     return this.backupDir;
   }
 
   async exportFirestore() {
     const db = admin.firestore();
-    const collections = ['users', 'courses', 'exercises', 'progress', 'settings'];
-    
+    const collections = [
+      "users",
+      "courses",
+      "exercises",
+      "progress",
+      "settings",
+    ];
+
     for (const collection of collections) {
       const snapshot = await db.collection(collection).get();
       const data = [];
-      
-      snapshot.forEach(doc => {
+
+      snapshot.forEach((doc) => {
         data.push({ id: doc.id, ...doc.data() });
       });
-      
+
       fs.writeFileSync(
         `${this.backupDir}/firestore-${collection}.json`,
         JSON.stringify(data, null, 2)
       );
-      
+
       console.log(`✅ Collection ${collection}: ${data.length} documents`);
     }
   }
 
   async restoreFromBackup(backupPath) {
     console.log(`🔄 Restauration depuis: ${backupPath}`);
-    
+
     // Logique de restauration avec validation
     const manifest = JSON.parse(fs.readFileSync(`${backupPath}/manifest.json`));
-    
+
     // Vérification compatibilité version
     if (!this.isCompatibleVersion(manifest.version)) {
       throw new Error(`Version incompatible: ${manifest.version}`);
     }
-    
+
     // Restauration séquentielle avec points de contrôle
     await this.restoreFirestore(backupPath);
     await this.restoreStorage(backupPath);
     await this.restoreConfig(backupPath);
-    
-    console.log('✅ Restauration terminée avec succès');
+
+    console.log("✅ Restauration terminée avec succès");
   }
 }
 
@@ -1816,6 +1942,7 @@ npm run rollback:emergency
 📝 VALIDATION POST-ROLLBACK - CHECK OBLIGATOIRE
 
 🎯 Tests Fonctionnels Critiques:
+
 - [ ] Page d'accueil charge correctement
 - [ ] Authentification utilisateur fonctionne
 - [ ] Cours et exercices accessibles
@@ -1823,6 +1950,7 @@ npm run rollback:emergency
 - [ ] Notifications système opérationnelles
 
 🔧 Tests Techniques:
+
 - [ ] Console navigateur sans erreurs critiques
 - [ ] API Firebase répond correctement
 - [ ] Performance < 3s chargement initial
@@ -1830,14 +1958,16 @@ npm run rollback:emergency
 - [ ] Monitoring ne remonte pas d'alertes
 
 📊 Validation Business:
+
 - [ ] Fonctionnalités payantes accessibles
 - [ ] Analytics tracking fonctionne
 - [ ] Support utilisateur notifié
 - [ ] Communication utilisateurs si nécessaire
 
 ⚠️ Actions Post-Rollback:
+
 - [ ] Post-mortem planifié (< 24h)
-- [ ] Analyse cause racine (< 48h)  
+- [ ] Analyse cause racine (< 48h)
 - [ ] Plan correction avant next release
 - [ ] Documentation incident mise à jour
 ```
@@ -1849,6 +1979,7 @@ npm run rollback:emergency
 Pour créer rapidement de nouveaux scripts standardisés, utilisez ces templates :
 
 #### **🐛 TEMPLATE_debug.js**
+
 ```bash
 # Créer un nouveau script de debug
 cp scripts/TEMPLATE_debug.js scripts/DEBUG_[votre_probleme].js
@@ -1856,6 +1987,7 @@ cp scripts/TEMPLATE_debug.js scripts/DEBUG_[votre_probleme].js
 ```
 
 #### **✅ TEMPLATE_validation.js**
+
 ```bash
 # Créer un nouveau script de validation
 cp scripts/TEMPLATE_validation.js scripts/VALID_[votre_cible].js
@@ -1888,8 +2020,9 @@ scripts/templates/
 // scripts/templates/TEMPLATE_validation_phase1.js
 module.exports = {
   phase: "Phase 1 - Setup & Foundation",
-  description: "Validation de l'environnement de développement et des outils de base",
-  
+  description:
+    "Validation de l'environnement de développement et des outils de base",
+
   checks: [
     {
       name: "Node.js Version",
@@ -1898,56 +2031,59 @@ module.exports = {
         const version = output.match(/v(\d+)\./)?.[1];
         return parseInt(version) >= 18;
       },
-      errorHelp: "Installer Node.js 18+ : https://nodejs.org"
+      errorHelp: "Installer Node.js 18+ : https://nodejs.org",
     },
     {
       name: "Package Manager",
       command: "npm --version",
       validator: (output) => output.trim().length > 0,
-      errorHelp: "npm run audit pour vérifier l'installation"
+      errorHelp: "npm run audit pour vérifier l'installation",
     },
     {
       name: "Git Configuration",
       command: "git config --list",
-      validator: (output) => output.includes('user.name') && output.includes('user.email'),
-      errorHelp: "Configurer Git : git config --global user.name 'Your Name'"
+      validator: (output) =>
+        output.includes("user.name") && output.includes("user.email"),
+      errorHelp: "Configurer Git : git config --global user.name 'Your Name'",
     },
     {
       name: "VS Code Extensions",
       command: "code --list-extensions",
       validator: (output) => {
-        const required = ['svelte.svelte-vscode', 'bradlc.vscode-tailwindcss'];
-        return required.every(ext => output.includes(ext));
+        const required = ["svelte.svelte-vscode", "bradlc.vscode-tailwindcss"];
+        return required.every((ext) => output.includes(ext));
       },
-      errorHelp: "Installer les extensions requises : Svelte, Tailwind CSS"
+      errorHelp: "Installer les extensions requises : Svelte, Tailwind CSS",
     },
     {
       name: "Project Structure",
       command: "ls -la",
       validator: () => {
-        const fs = require('fs');
-        return fs.existsSync('package.json') && 
-               fs.existsSync('src/') && 
-               fs.existsSync('vite.config.js');
+        const fs = require("fs");
+        return (
+          fs.existsSync("package.json") &&
+          fs.existsSync("src/") &&
+          fs.existsSync("vite.config.js")
+        );
       },
-      errorHelp: "Structure manquante. Exécuter : npm create svelte@latest"
-    }
+      errorHelp: "Structure manquante. Exécuter : npm create svelte@latest",
+    },
   ],
-  
+
   report: (results) => {
-    const passed = results.filter(r => r.success).length;
+    const passed = results.filter((r) => r.success).length;
     const total = results.length;
-    
+
     return {
       phase: "Phase 1",
       score: `${passed}/${total}`,
       readyForNext: passed === total,
       nextPhase: passed === total ? "Phase 2 - Firebase & Auth" : null,
       recommendations: results
-        .filter(r => !r.success)
-        .map(r => `❌ ${r.name}: ${r.errorHelp}`)
+        .filter((r) => !r.success)
+        .map((r) => `❌ ${r.name}: ${r.errorHelp}`),
     };
-  }
+  },
 };
 ```
 
@@ -1958,70 +2094,78 @@ module.exports = {
 module.exports = {
   phase: "Phase 2 - Firebase & Auth",
   description: "Validation de l'authentification Firebase et de la sécurité",
-  
+
   checks: [
     {
       name: "Firebase Project Initialized",
       command: "firebase projects:list",
-      validator: (output) => !output.includes('No projects found'),
-      errorHelp: "Créer un projet Firebase : firebase init"
+      validator: (output) => !output.includes("No projects found"),
+      errorHelp: "Créer un projet Firebase : firebase init",
     },
     {
       name: "Firebase Configuration",
       command: "cat src/lib/firebase.js",
       validator: (output) => {
-        return output.includes('initializeApp') && 
-               output.includes('getAuth') && 
-               output.includes('getFirestore');
+        return (
+          output.includes("initializeApp") &&
+          output.includes("getAuth") &&
+          output.includes("getFirestore")
+        );
       },
-      errorHelp: "Configurer Firebase dans src/lib/firebase.js"
+      errorHelp: "Configurer Firebase dans src/lib/firebase.js",
     },
     {
       name: "Environment Variables",
       command: "env | grep VITE_FIREBASE",
       validator: (output) => {
-        const required = ['VITE_FIREBASE_API_KEY', 'VITE_FIREBASE_PROJECT_ID'];
-        return required.every(env => output.includes(env));
+        const required = ["VITE_FIREBASE_API_KEY", "VITE_FIREBASE_PROJECT_ID"];
+        return required.every((env) => output.includes(env));
       },
-      errorHelp: "Configurer les variables d'environnement Firebase dans .env"
+      errorHelp: "Configurer les variables d'environnement Firebase dans .env",
     },
     {
       name: "Auth Routes Protection",
       command: "npm run test:auth-routes",
-      validator: (output) => output.includes('✓'),
-      errorHelp: "Implémenter la protection des routes : +layout.server.js"
+      validator: (output) => output.includes("✓"),
+      errorHelp: "Implémenter la protection des routes : +layout.server.js",
     },
     {
       name: "No Hardcoded Secrets",
       command: "grep -r 'AIza' src/ || echo 'Clean'",
-      validator: (output) => output.includes('Clean'),
-      errorHelp: "Déplacer les clés API vers les variables d'environnement"
+      validator: (output) => output.includes("Clean"),
+      errorHelp: "Déplacer les clés API vers les variables d'environnement",
     },
     {
       name: "Firestore Rules",
       command: "firebase firestore:rules get",
-      validator: (output) => output.includes('request.auth'),
-      errorHelp: "Configurer les règles de sécurité Firestore"
-    }
+      validator: (output) => output.includes("request.auth"),
+      errorHelp: "Configurer les règles de sécurité Firestore",
+    },
   ],
-  
+
   report: (results) => {
-    const authReady = results.find(r => r.name === 'Auth Routes Protection')?.success;
-    const securityScore = results.filter(r => 
-      r.name.includes('Secret') || r.name.includes('Rules')
-    ).filter(r => r.success).length;
-    
+    const authReady = results.find(
+      (r) => r.name === "Auth Routes Protection"
+    )?.success;
+    const securityScore = results
+      .filter((r) => r.name.includes("Secret") || r.name.includes("Rules"))
+      .filter((r) => r.success).length;
+
     return {
       phase: "Phase 2",
       authReady,
       securityScore: `${securityScore}/2`,
-      readyForNext: results.every(r => r.success),
+      readyForNext: results.every((r) => r.success),
       nextPhase: "Phase 3 - Core Features",
       criticalIssues: results
-        .filter(r => !r.success && (r.name.includes('Secret') || r.name.includes('Rules')))
-        .map(r => `🚨 CRITIQUE: ${r.name}`)
+        .filter(
+          (r) =>
+            !r.success &&
+            (r.name.includes("Secret") || r.name.includes("Rules"))
+        )
+        .map((r) => `🚨 CRITIQUE: ${r.name}`),
     };
-  }
+  },
 };
 ```
 
@@ -2032,63 +2176,72 @@ module.exports = {
 module.exports = {
   phase: "Phase 3 - Core Features",
   description: "Validation des fonctionnalités principales et de l'UX",
-  
+
   checks: [
     {
       name: "Component Architecture",
       command: "find src/lib/components -name '*.svelte' | wc -l",
       validator: (output) => parseInt(output.trim()) >= 5,
-      errorHelp: "Créer au moins 5 composants de base (Button, Modal, Form, etc.)"
+      errorHelp:
+        "Créer au moins 5 composants de base (Button, Modal, Form, etc.)",
     },
     {
       name: "Store Management",
       command: "ls src/lib/stores/",
       validator: () => {
-        const fs = require('fs');
-        return fs.existsSync('src/lib/stores/auth.js') && 
-               fs.existsSync('src/lib/stores/user.js');
+        const fs = require("fs");
+        return (
+          fs.existsSync("src/lib/stores/auth.js") &&
+          fs.existsSync("src/lib/stores/user.js")
+        );
       },
-      errorHelp: "Implémenter les stores Svelte pour l'état global"
+      errorHelp: "Implémenter les stores Svelte pour l'état global",
     },
     {
       name: "API Integration",
       command: "grep -r 'fetch(' src/",
-      validator: (output) => output.split('\n').length >= 3,
-      errorHelp: "Implémenter au moins 3 appels API différents"
+      validator: (output) => output.split("\n").length >= 3,
+      errorHelp: "Implémenter au moins 3 appels API différents",
     },
     {
       name: "Error Handling",
       command: "grep -r 'try.*catch' src/",
-      validator: (output) => output.split('\n').length >= 5,
-      errorHelp: "Ajouter la gestion d'erreurs dans les appels asynchrones"
+      validator: (output) => output.split("\n").length >= 5,
+      errorHelp: "Ajouter la gestion d'erreurs dans les appels asynchrones",
     },
     {
       name: "Form Validation",
       command: "npm run test:forms",
-      validator: (output) => output.includes('✓'),
-      errorHelp: "Implémenter la validation des formulaires"
+      validator: (output) => output.includes("✓"),
+      errorHelp: "Implémenter la validation des formulaires",
     },
     {
       name: "Responsive Design",
       command: "grep -r 'sm:' src/",
-      validator: (output) => output.split('\n').length >= 10,
-      errorHelp: "Ajouter des classes Tailwind responsive (sm:, md:, lg:)"
-    }
+      validator: (output) => output.split("\n").length >= 10,
+      errorHelp: "Ajouter des classes Tailwind responsive (sm:, md:, lg:)",
+    },
   ],
-  
+
   report: (results) => {
-    const coreFeatures = results.filter(r => 
-      ['Component Architecture', 'Store Management', 'API Integration'].includes(r.name)
-    ).filter(r => r.success).length;
-    
+    const coreFeatures = results
+      .filter((r) =>
+        [
+          "Component Architecture",
+          "Store Management",
+          "API Integration",
+        ].includes(r.name)
+      )
+      .filter((r) => r.success).length;
+
     return {
       phase: "Phase 3",
       coreFeatures: `${coreFeatures}/3`,
-      uxScore: results.filter(r => r.success).length,
+      uxScore: results.filter((r) => r.success).length,
       readyForNext: coreFeatures === 3,
-      nextPhase: "Phase 4 - Advanced Features"
+      nextPhase: "Phase 4 - Advanced Features",
     };
-  }
+  },
 };
 ```
 
@@ -2096,45 +2249,48 @@ module.exports = {
 
 ```javascript
 // scripts/templates/generator.js
-const readline = require('readline');
-const fs = require('fs');
-const path = require('path');
+const readline = require("readline");
+const fs = require("fs");
+const path = require("path");
 
 class TemplateGenerator {
   constructor() {
     this.phases = {
-      1: 'Setup & Foundation',
-      2: 'Firebase & Auth', 
-      3: 'Core Features',
-      4: 'Advanced Features',
-      5: 'Polish & Deploy'
+      1: "Setup & Foundation",
+      2: "Firebase & Auth",
+      3: "Core Features",
+      4: "Advanced Features",
+      5: "Polish & Deploy",
     };
   }
-  
+
   async generatePhaseTemplate() {
     const rl = readline.createInterface({
       input: process.stdin,
-      output: process.stdout
+      output: process.stdout,
     });
-    
-    console.log('🎯 Générateur de Template Spécialisé\n');
-    
-    const phase = await this.ask(rl, 'Quelle phase ? (1-5): ');
-    const type = await this.ask(rl, 'Type ? (validation/debug/test): ');
-    const focus = await this.ask(rl, 'Focus spécifique ? (ex: auth, api, ui): ');
-    
+
+    console.log("🎯 Générateur de Template Spécialisé\n");
+
+    const phase = await this.ask(rl, "Quelle phase ? (1-5): ");
+    const type = await this.ask(rl, "Type ? (validation/debug/test): ");
+    const focus = await this.ask(
+      rl,
+      "Focus spécifique ? (ex: auth, api, ui): "
+    );
+
     const template = this.createSpecializedTemplate(phase, type, focus);
     const fileName = `TEMPLATE_${type}_phase${phase}_${focus}.js`;
-    
+
     fs.writeFileSync(path.join(__dirname, fileName), template);
     console.log(`✅ Template créé : ${fileName}`);
-    
+
     rl.close();
   }
-  
+
   createSpecializedTemplate(phase, type, focus) {
     const phaseConfig = this.getPhaseSpecificConfig(phase, focus);
-    
+
     return `// Auto-generated specialized template for Phase ${phase} - ${focus}
 module.exports = {
   phase: "Phase ${phase} - ${this.phases[phase]}",
@@ -2142,7 +2298,9 @@ module.exports = {
   description: "Validation spécialisée pour ${focus} en Phase ${phase}",
   
   checks: [
-${phaseConfig.checks.map(check => `    ${JSON.stringify(check, null, 4)}`).join(',\n')}
+${phaseConfig.checks
+  .map((check) => `    ${JSON.stringify(check, null, 4)}`)
+  .join(",\n")}
   ],
   
   report: (results) => {
@@ -2150,9 +2308,9 @@ ${phaseConfig.checks.map(check => `    ${JSON.stringify(check, null, 4)}`).join(
   }
 };`;
   }
-  
+
   ask(rl, question) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       rl.question(question, resolve);
     });
   }
@@ -2169,7 +2327,7 @@ new TemplateGenerator().generatePhaseTemplate();
 {
   "scripts": {
     "validate:phase1": "node scripts/templates/TEMPLATE_validation_phase1.js",
-    "validate:phase2": "node scripts/templates/TEMPLATE_validation_phase2.js", 
+    "validate:phase2": "node scripts/templates/TEMPLATE_validation_phase2.js",
     "validate:phase3": "node scripts/templates/TEMPLATE_validation_phase3.js",
     "validate:current-phase": "node scripts/detect-current-phase.js && npm run validate:phase$CURRENT_PHASE",
     "generate:template": "node scripts/templates/generator.js",
@@ -2179,6 +2337,7 @@ new TemplateGenerator().generatePhaseTemplate();
 ```
 
 #### **🧪 TEMPLATE_test.js**
+
 ```bash
 # Créer une nouvelle suite de tests
 cp scripts/TEMPLATE_test.js scripts/TEST_[votre_suite].js
@@ -2186,6 +2345,7 @@ cp scripts/TEMPLATE_test.js scripts/TEST_[votre_suite].js
 ```
 
 #### **🔧 TEMPLATE_utility.js**
+
 ```bash
 # Créer un nouvel utilitaire
 cp scripts/TEMPLATE_utility.js scripts/UTIL_[votre_fonction].js
@@ -2195,6 +2355,7 @@ cp scripts/TEMPLATE_utility.js scripts/UTIL_[votre_fonction].js
 ### **📄 Documentation Standardisée**
 
 #### **📝 TEMPLATE_document.md**
+
 ```bash
 # Créer une nouvelle documentation
 cp scripts/TEMPLATE_document.md DOC_[votre_sujet].md
@@ -2202,6 +2363,7 @@ cp scripts/TEMPLATE_document.md DOC_[votre_sujet].md
 ```
 
 #### **⚙️ DOC_TEMPLATE_config.md**
+
 ```bash
 # Template pour documenter une configuration
 cp DOC_TEMPLATE_config.md DOC_CONFIG_[service].md
@@ -2211,22 +2373,24 @@ cp DOC_TEMPLATE_config.md DOC_CONFIG_[service].md
 ### **🚀 Prompts d'Usage des Templates**
 
 #### **🐛 Créer un Script de Debug**
+
 ```markdown
 [CONTEXT] Phase X.Y - Diagnostic du problème [DESCRIPTION]
-[FILE] scripts/DEBUG_[probleme].js
+[FILE] scripts/DEBUG*[probleme].js
 [TEMPLATE] Utiliser TEMPLATE_debug.js comme base
-[CMD] cp scripts/TEMPLATE_debug.js scripts/DEBUG_[probleme].js
+[CMD] cp scripts/TEMPLATE_debug.js scripts/DEBUG*[probleme].js
 [EDIT] Adapter les méthodes collectDiagnosticInfo() et performDiagnostic()
-[TEST] node scripts/DEBUG_[probleme].js --verbose
+[TEST] node scripts/DEBUG\_[probleme].js --verbose
 [CHECK] Le script collecte les infos et génère un rapport détaillé
 ```
 
 #### **✅ Créer un Script de Validation**
+
 ```markdown
 [CONTEXT] Phase X.Y - Validation de [CIBLE]
-[FILE] scripts/VALID_[cible].js
+[FILE] scripts/VALID*[cible].js
 [TEMPLATE] Utiliser TEMPLATE_validation.js comme base
-[CMD] cp scripts/TEMPLATE_validation.js scripts/VALID_[cible].js
+[CMD] cp scripts/TEMPLATE_validation.js scripts/VALID*[cible].js
 [EDIT] Implémenter performValidation() avec vos critères spécifiques
 [PACKAGE] Ajouter script dans package.json: "validate:[cible]"
 [TEST] npm run validate:[cible]
@@ -2234,9 +2398,10 @@ cp DOC_TEMPLATE_config.md DOC_CONFIG_[service].md
 ```
 
 ### **⚙️ Configuration Service**
+
 ```markdown
 [CONTEXT] Configuration service Z
-[FILE] CONFIG_[service].js
+[FILE] CONFIG\_[service].js
 [CMD] npm run config:validate
 [TEST] npm run test:config
 [CHECK] Service configuré et fonctionnel
@@ -2247,6 +2412,7 @@ cp DOC_TEMPLATE_config.md DOC_CONFIG_[service].md
 ## 🗺️ **Templates Spécialisés par Phase Roadmap**
 
 ### **🚀 Phase 0 : Setup & Architecture**
+
 ```markdown
 [CONTEXT] Phase 0.X - [Description de l'étape]
 [FILE] [chemin_exact_selon_roadmap]
@@ -2257,6 +2423,7 @@ cp DOC_TEMPLATE_config.md DOC_CONFIG_[service].md
 ```
 
 ### **🔐 Phase 1 : Firebase & Auth Google**
+
 ```markdown
 [CONTEXT] Phase 1.X - [Étape authentification]
 [FILE] [fichier_auth_ou_firebase]
@@ -2268,6 +2435,7 @@ cp DOC_TEMPLATE_config.md DOC_CONFIG_[service].md
 ```
 
 ### **📚 Phase 2 : Contenu & Interface Dynamique**
+
 ```markdown
 [CONTEXT] Phase 2.X - [Composant ou contenu]
 [FILE] [composant_ou_route_svelte]
@@ -2279,6 +2447,7 @@ cp DOC_TEMPLATE_config.md DOC_CONFIG_[service].md
 ```
 
 ### **🧠 Phase 2.5 : Pédagogie Avancée**
+
 ```markdown
 [CONTEXT] Phase 2.5.X - [Fonctionnalité pédagogique]
 [FILE] [module_pedagogique]
@@ -2290,6 +2459,7 @@ cp DOC_TEMPLATE_config.md DOC_CONFIG_[service].md
 ```
 
 ### **🎮 Phase 3 : Exercices & Progression**
+
 ```markdown
 [CONTEXT] Phase 3.X - [Exercice ou progression]
 [FILE] [component_exercice]
@@ -2301,6 +2471,7 @@ cp DOC_TEMPLATE_config.md DOC_CONFIG_[service].md
 ```
 
 ### **📱 Phase 4 : PWA & Offline**
+
 ```markdown
 [CONTEXT] Phase 4.X - [Fonctionnalité PWA]
 [FILE] [service_worker_ou_manifest]
@@ -2312,6 +2483,7 @@ cp DOC_TEMPLATE_config.md DOC_CONFIG_[service].md
 ```
 
 ### **⚙️ Phase 5 : Admin & Import**
+
 ```markdown
 [CONTEXT] Phase 5.X - [Interface admin]
 [FILE] [route_admin_ou_import]
@@ -2323,6 +2495,7 @@ cp DOC_TEMPLATE_config.md DOC_CONFIG_[service].md
 ```
 
 ### **🚀 Phase 6 : Polish & Performance**
+
 ```markdown
 [CONTEXT] Phase 6.X - [Optimisation]
 [FILE] [fichier_optimisation]
@@ -2341,16 +2514,16 @@ cp DOC_TEMPLATE_config.md DOC_CONFIG_[service].md
 
 Chaque phase DOIT être validée avant de passer à la suivante :
 
-| Phase | Commande Validation | Critères de Réussite |
-|-------|-------------------|---------------------|
-| **P0** | `npm run validate 0` | ✅ SvelteKit + TS + Tests configurés |
-| **P1** | `npm run validate 1` | ✅ Auth Google + Firebase opérationnels |
-| **P2** | `npm run validate 2` | ✅ Interface dynamique + Markdown |
-| **P2.5** | `npm run validate 2.5` | ✅ Pédagogie avancée intégrée |
-| **P3** | `npm run validate 3` | ✅ Exercices interactifs + Progression |
-| **P4** | `npm run validate 4` | ✅ PWA installable + Offline |
-| **P5** | `npm run validate 5` | ✅ Admin + Import fonctionnels |
-| **P6** | `npm run validate 6` | ✅ Lighthouse > 90 + Production ready |
+| Phase    | Commande Validation    | Critères de Réussite                    |
+| -------- | ---------------------- | --------------------------------------- |
+| **P0**   | `npm run validate 0`   | ✅ SvelteKit + TS + Tests configurés    |
+| **P1**   | `npm run validate 1`   | ✅ Auth Google + Firebase opérationnels |
+| **P2**   | `npm run validate 2`   | ✅ Interface dynamique + Markdown       |
+| **P2.5** | `npm run validate 2.5` | ✅ Pédagogie avancée intégrée           |
+| **P3**   | `npm run validate 3`   | ✅ Exercices interactifs + Progression  |
+| **P4**   | `npm run validate 4`   | ✅ PWA installable + Offline            |
+| **P5**   | `npm run validate 5`   | ✅ Admin + Import fonctionnels          |
+| **P6**   | `npm run validate 6`   | ✅ Lighthouse > 90 + Production ready   |
 
 ### **🔄 Workflow de Validation Inter-Phase**
 
@@ -2374,37 +2547,45 @@ graph TD
 ### **📁 Chemins Fichiers par Phase (selon roadmap)**
 
 #### **Phase 0 : Setup**
+
 - `src/app.html`, `src/routes/+layout.svelte`
 - `config/` (eslint, prettier, vitest, playwright)
 - `scripts/validate-phase.js`
 
 #### **Phase 1 : Firebase & Auth**
+
 - `src/lib/firebase/` (client.ts, admin.ts)
 - `src/routes/auth/` (+page.svelte, +page.server.ts)
 - `src/hooks.server.ts`
 
 #### **Phase 2 : Contenu & Interface**
+
 - `src/routes/cours/` (+page.svelte, +layout.svelte)
 - `src/lib/components/` (Header, Navigation, MarkdownRenderer)
 - `src/lib/stores/` (user.ts, courses.ts)
 
 #### **Phase 2.5 : Pédagogie**
+
 - `src/lib/pedagogy/` (PreEvaluation, Metacognition, Resources)
 - `src/routes/evaluation/`, `src/routes/metacognition/`
 
 #### **Phase 3 : Exercices**
+
 - `src/lib/components/exercises/` (QCM, Quiz, Progress)
 - `src/routes/exercices/`, `src/lib/stores/progress.ts`
 
 #### **Phase 4 : PWA**
+
 - `static/manifest.json`, `src/service-worker.ts`
 - `src/lib/offline/` (cache strategies, sync)
 
 #### **Phase 5 : Admin**
+
 - `src/routes/admin/` (dashboard, import, content management)
 - `src/lib/admin/` (utilities, validators)
 
 #### **Phase 6 : Polish**
+
 - Optimisations bundle, lazy loading, lighthouse
 - `src/lib/performance/`, tests E2E complets
 
@@ -2442,7 +2623,7 @@ tests/[feature-name].test.js
 npm run test -- [feature-name]
 ❌ EXPECTED: Test doit échouer car fonctionnalité n'existe pas
 
-# 3. Écrire le code minimal (GREEN)  
+# 3. Écrire le code minimal (GREEN)
 # Implémenter uniquement ce qui fait passer le test
 
 # 4. Vérifier que le test passe (GREEN)
@@ -2464,36 +2645,42 @@ npm run test:integration
 
 ```javascript
 // tests/auth/login.test.js - ÉCRIT EN PREMIER
-import { describe, it, expect, beforeEach } from 'vitest';
-import { LoginManager } from '../src/lib/auth/LoginManager.js';
+import { describe, it, expect, beforeEach } from "vitest";
+import { LoginManager } from "../src/lib/auth/LoginManager.js";
 
-describe('LoginManager - TDD Approach', () => {
+describe("LoginManager - TDD Approach", () => {
   let loginManager;
-  
+
   beforeEach(() => {
     loginManager = new LoginManager();
   });
 
   // TEST 1 - RED PHASE
-  it('should reject empty email', async () => {
-    const result = await loginManager.authenticate('', 'password123');
+  it("should reject empty email", async () => {
+    const result = await loginManager.authenticate("", "password123");
     expect(result.success).toBe(false);
-    expect(result.error).toContain('email requis');
+    expect(result.error).toContain("email requis");
   });
 
-  // TEST 2 - RED PHASE  
-  it('should reject invalid email format', async () => {
-    const result = await loginManager.authenticate('invalid-email', 'password123');
+  // TEST 2 - RED PHASE
+  it("should reject invalid email format", async () => {
+    const result = await loginManager.authenticate(
+      "invalid-email",
+      "password123"
+    );
     expect(result.success).toBe(false);
-    expect(result.error).toContain('format email invalide');
+    expect(result.error).toContain("format email invalide");
   });
 
   // TEST 3 - RED PHASE
-  it('should authenticate valid student credentials', async () => {
-    const result = await loginManager.authenticate('eleve@test.com', 'password123');
+  it("should authenticate valid student credentials", async () => {
+    const result = await loginManager.authenticate(
+      "eleve@test.com",
+      "password123"
+    );
     expect(result.success).toBe(true);
-    expect(result.user.role).toBe('student');
-    expect(result.user.permissions).toContain('access_courses');
+    expect(result.user.role).toBe("student");
+    expect(result.user.permissions).toContain("access_courses");
   });
 });
 
@@ -2507,32 +2694,32 @@ describe('LoginManager - TDD Approach', () => {
 
 ```javascript
 // tests/exercises/QuizEngine.test.js - ÉCRIT EN PREMIER
-describe('QuizEngine - TDD Educational Features', () => {
+describe("QuizEngine - TDD Educational Features", () => {
   // TEST PÉDAGOGIQUE SPÉCIFIQUE
-  it('should provide adaptive feedback based on wrong answers', async () => {
+  it("should provide adaptive feedback based on wrong answers", async () => {
     const quiz = new QuizEngine({
-      question: 'Combien font 2+2?',
+      question: "Combien font 2+2?",
       correctAnswer: 4,
-      adaptiveFeedback: true
+      adaptiveFeedback: true,
     });
 
     const result = await quiz.checkAnswer(5);
-    
+
     expect(result.isCorrect).toBe(false);
-    expect(result.feedback).toContain('proche de la bonne réponse');
-    expect(result.hint).toContain('essaie de compter');
+    expect(result.feedback).toContain("proche de la bonne réponse");
+    expect(result.hint).toContain("essaie de compter");
     expect(result.encouragement).toBeDefined();
   });
 
   // TEST PROGRESSION ÉLÈVE
-  it('should track student progress and adapt difficulty', async () => {
+  it("should track student progress and adapt difficulty", async () => {
     const quiz = new QuizEngine({ adaptiveDifficulty: true });
-    
+
     // Simuler 3 bonnes réponses consécutives
-    await quiz.processAnswer('q1', 'correct');
-    await quiz.processAnswer('q2', 'correct'); 
-    await quiz.processAnswer('q3', 'correct');
-    
+    await quiz.processAnswer("q1", "correct");
+    await quiz.processAnswer("q2", "correct");
+    await quiz.processAnswer("q3", "correct");
+
     const nextQuestion = await quiz.getNextQuestion();
     expect(nextQuestion.difficulty).toBeGreaterThan(1);
     expect(nextQuestion.metadata.adaptedForStudent).toBe(true);
@@ -2549,15 +2736,15 @@ describe('QuizEngine - TDD Educational Features', () => {
     // Cycle TDD complet
     "tdd:start": "node scripts/tdd/start-tdd-cycle.js",
     "tdd:red": "npm run test:watch -- --reporter=minimal",
-    "tdd:green": "npm run test -- --reporter=verbose", 
+    "tdd:green": "npm run test -- --reporter=verbose",
     "tdd:refactor": "npm run lint:fix && npm run format",
     "tdd:validate": "npm run test:all && npm run test:integration",
-    
+
     // Création automatique de tests
     "test:create": "node scripts/tdd/create-test-template.js",
     "test:watch": "vitest --watch",
     "test:coverage-live": "vitest --coverage --watch",
-    
+
     // Validation TDD
     "tdd:check-coverage": "node scripts/tdd/check-tdd-coverage.js",
     "tdd:check-cycle": "node scripts/tdd/validate-tdd-cycle.js"
@@ -2567,13 +2754,13 @@ describe('QuizEngine - TDD Educational Features', () => {
 
 #### **🎯 Métriques TDD Obligatoires**
 
-| Métrique TDD | Seuil Minimum | Validation |
-|--------------|---------------|------------|
-| **Tests écrits AVANT code** | 100% nouvelles features | Audit Git commits |
-| **Couverture tests** | 90% minimum | `npm run test:coverage` |
-| **Tests passants** | 100% | CI/CD bloquant |
-| **Cycle RED-GREEN-REFACTOR** | Respecté | Review code obligatoire |
-| **Tests d'intégration** | 80% scenarios critiques | Tests automatisés |
+| Métrique TDD                 | Seuil Minimum           | Validation              |
+| ---------------------------- | ----------------------- | ----------------------- |
+| **Tests écrits AVANT code**  | 100% nouvelles features | Audit Git commits       |
+| **Couverture tests**         | 90% minimum             | `npm run test:coverage` |
+| **Tests passants**           | 100%                    | CI/CD bloquant          |
+| **Cycle RED-GREEN-REFACTOR** | Respecté                | Review code obligatoire |
+| **Tests d'intégration**      | 80% scenarios critiques | Tests automatisés       |
 
 #### **🚨 Contrôles TDD Automatiques**
 
@@ -2625,6 +2812,7 @@ npm run tdd:validate-workflow
 ### **🔐 Vérifications Sécurité Obligatoires**
 
 #### **Avant chaque action :**
+
 - [ ] **Pas de secrets en dur** dans le code
 - [ ] **Variables d'environnement** utilisées pour config sensible
 - [ ] **Validation des inputs** utilisateur (XSS, injection)
@@ -2632,12 +2820,14 @@ npm run tdd:validate-workflow
 - [ ] **Audit dépendances** : `npm audit --audit-level moderate`
 
 #### **🏗️ Architecture SvelteKit**
+
 - [ ] **Conventions de nommage** respectées (`+page.svelte`, `+layout.svelte`)
 - [ ] **Structure de dossiers** : `src/lib/`, `src/routes/`, `src/app.html`
 - [ ] **Types TypeScript** dans `src/lib/types/`
 - [ ] **Tests** dans `tests/` avec Vitest + Playwright
 
 #### **📄 Conventions de Nommage des Fichiers**
+
 - [ ] **Documentation** : `DOC_[SUJET]_[SPECIFICITE].md`
   - Exemples : `DOC_CBD.md`, `DOC_ROADMAP_LEARNING.md`, `DOC_API_AUTH.md`
 - [ ] **Scripts de Debug** : `DEBUG_[FONCTION].js`
@@ -2655,6 +2845,7 @@ npm run tdd:validate-workflow
 - [ ] **Exceptions** : Fichiers système (`package.json`, `.gitignore`, etc.)
 
 #### **♿ Accessibilité**
+
 - [ ] **Attributs ARIA** pour composants interactifs
 - [ ] **Navigation clavier** fonctionnelle
 - [ ] **Contraste** respecté (WCAG 2.1)
@@ -2662,12 +2853,12 @@ npm run tdd:validate-workflow
 
 ### **📊 Métriques Qualité**
 
-| Métrique | Seuil Minimum | Commande |
-|----------|---------------|----------|
-| Couverture tests | 80% | `npm run test:coverage` |
-| Performance Lighthouse | >90 | `npm run audit:perf` |
-| Accessibilité | 100% | `npm run audit:a11y` |
-| Sécurité | 0 vulnérabilité haute | `npm audit` |
+| Métrique               | Seuil Minimum         | Commande                |
+| ---------------------- | --------------------- | ----------------------- |
+| Couverture tests       | 80%                   | `npm run test:coverage` |
+| Performance Lighthouse | >90                   | `npm run audit:perf`    |
+| Accessibilité          | 100%                  | `npm run audit:a11y`    |
+| Sécurité               | 0 vulnérabilité haute | `npm audit`             |
 
 ---
 
@@ -2678,6 +2869,7 @@ npm run tdd:validate-workflow
 ### **🔍 Protocole de Débogage Systématique**
 
 1. **📊 Collecte d'informations**
+
    ```bash
    [CMD] npm run debug:info
    [CMD] git status
@@ -2685,11 +2877,13 @@ npm run tdd:validate-workflow
    ```
 
 2. **🎯 Isolation du problème**
+
    - Reproduire l'erreur dans un cas minimal
    - Identifier la cause racine (code, config, environnement)
    - Créer un test qui reproduit le bug
 
 3. **🔧 Résolution guidée**
+
    - Proposer hypothèses de solution
    - Tester une hypothèse à la fois
    - Valider avec tests de non-régression
@@ -2701,6 +2895,7 @@ npm run tdd:validate-workflow
    ```
 
 ### **📝 Template Debug**
+
 ```markdown
 [DEBUG-MODE]
 [CONTEXT] Bug identifié dans X
@@ -2721,6 +2916,7 @@ npm run tdd:validate-workflow
 ##### **❌ Erreur : "Firebase: Permission denied"**
 
 **🔍 Diagnostic :**
+
 ```bash
 # Vérifier la configuration Firebase
 npm run debug:firebase-permissions
@@ -2731,6 +2927,7 @@ cat firestore.rules
 ```
 
 **🔧 Solution :**
+
 ```bash
 # 1. Corriger les règles Firestore
 nano firestore.rules
@@ -2744,6 +2941,7 @@ firebase firestore:rules test
 ```
 
 **✅ Validation :**
+
 ```bash
 # Test de sécurité automatisé
 npm run test:firebase-security
@@ -2755,6 +2953,7 @@ firebase auth:test --uid=test-user
 ##### **❌ Erreur : "Firebase: Network request failed"**
 
 **🔍 Diagnostic :**
+
 ```bash
 # Vérifier la connectivité
 npm run debug:firebase-network
@@ -2764,6 +2963,7 @@ cat src/lib/firebase.js | grep -E "(apiKey|authDomain|projectId)"
 ```
 
 **🔧 Solution :**
+
 ```bash
 # 1. Vérifier les variables d'environnement
 echo $VITE_FIREBASE_API_KEY
@@ -2781,6 +2981,7 @@ npm run test:firebase-connection
 ##### **❌ Erreur : "ReferenceError: window is not defined"**
 
 **🔍 Diagnostic :**
+
 ```bash
 # Identifier les imports problématiques
 grep -r "window\." src/
@@ -2788,9 +2989,10 @@ npm run debug:ssr-issues
 ```
 
 **🔧 Solution :**
+
 ```javascript
 // Méthode 1: Import conditionnel
-import { browser } from '$app/environment';
+import { browser } from "$app/environment";
 
 if (browser) {
   // Code utilisant window
@@ -2798,14 +3000,15 @@ if (browser) {
 
 // Méthode 2: Import dynamique
 onMount(async () => {
-  if (typeof window !== 'undefined') {
-    const { Chart } = await import('chart.js');
+  if (typeof window !== "undefined") {
+    const { Chart } = await import("chart.js");
     // Utiliser Chart
   }
 });
 ```
 
 **✅ Validation :**
+
 ```bash
 # Test build complet
 npm run build && npm run preview
@@ -2817,6 +3020,7 @@ npm run test:ssr
 ##### **❌ Erreur : "Cannot resolve dependency"**
 
 **🔍 Diagnostic :**
+
 ```bash
 # Analyser les dépendances
 npm ls --depth=0
@@ -2827,6 +3031,7 @@ npm audit --audit-level moderate
 ```
 
 **🔧 Solution :**
+
 ```bash
 # 1. Nettoyer et réinstaller
 rm -rf node_modules package-lock.json
@@ -2844,6 +3049,7 @@ npm info <package-name> peerDependencies
 ##### **❌ Erreur : "Test timeout exceeded"**
 
 **🔍 Diagnostic :**
+
 ```bash
 # Identifier les tests lents
 npm run test -- --reporter=verbose --timeout=10000
@@ -2853,18 +3059,19 @@ npm run debug:test-performance
 ```
 
 **🔧 Solution :**
+
 ```javascript
 // Dans vitest.config.js
 export default defineConfig({
   test: {
     timeout: 30000, // Augmenter le timeout
     testTimeout: 30000,
-    hookTimeout: 30000
-  }
+    hookTimeout: 30000,
+  },
 });
 
 // Ou dans le test spécifique
-test('async operation', async () => {
+test("async operation", async () => {
   // ...
 }, 30000); // timeout spécifique
 ```
@@ -2892,8 +3099,8 @@ test('async operation', async () => {
 
 ```javascript
 // tools/debug-info.js - Collecte d'informations système
-const fs = require('fs');
-const { execSync } = require('child_process');
+const fs = require("fs");
+const { execSync } = require("child_process");
 
 class SystemDebugger {
   static async generateReport() {
@@ -2901,43 +3108,46 @@ class SystemDebugger {
       timestamp: new Date().toISOString(),
       system: {
         node: process.version,
-        npm: execSync('npm --version', { encoding: 'utf8' }).trim(),
-        os: process.platform
+        npm: execSync("npm --version", { encoding: "utf8" }).trim(),
+        os: process.platform,
       },
       project: {
-        name: JSON.parse(fs.readFileSync('package.json')).name,
+        name: JSON.parse(fs.readFileSync("package.json")).name,
         dependencies: this.checkDependencies(),
         firebase: this.checkFirebaseConfig(),
-        git: this.checkGitStatus()
+        git: this.checkGitStatus(),
       },
-      errors: this.collectRecentErrors()
+      errors: this.collectRecentErrors(),
     };
-    
-    console.log('🔍 Debug Report Generated:');
+
+    console.log("🔍 Debug Report Generated:");
     console.log(JSON.stringify(report, null, 2));
-    
-    fs.writeFileSync('debug-report.json', JSON.stringify(report, null, 2));
+
+    fs.writeFileSync("debug-report.json", JSON.stringify(report, null, 2));
     return report;
   }
-  
+
   static checkDependencies() {
     try {
-      return execSync('npm ls --depth=0 --json', { encoding: 'utf8', stdio: 'pipe' });
+      return execSync("npm ls --depth=0 --json", {
+        encoding: "utf8",
+        stdio: "pipe",
+      });
     } catch (error) {
       return { error: error.message };
     }
   }
-  
+
   static checkFirebaseConfig() {
     try {
-      const config = fs.readFileSync('src/lib/firebase.js', 'utf8');
+      const config = fs.readFileSync("src/lib/firebase.js", "utf8");
       return {
-        configured: config.includes('initializeApp'),
-        hasAuth: config.includes('getAuth'),
-        hasFirestore: config.includes('getFirestore')
+        configured: config.includes("initializeApp"),
+        hasAuth: config.includes("getAuth"),
+        hasFirestore: config.includes("getFirestore"),
       };
     } catch {
-      return { error: 'Firebase config not found' };
+      return { error: "Firebase config not found" };
     }
   }
 }
@@ -2955,16 +3165,18 @@ SystemDebugger.generateReport();
 > **Règle d'or** : Valider chaque phase avec un MVP minimal avant de scaler
 
 #### **📊 Approche Progressive Recommandée**
+
 ```bash
 # Phase X - Stratégie MVP
 [STEP-1] 1 matière (ex: Mathématiques) ✅
-[STEP-2] 1 niveau (ex: 6ème) ✅  
+[STEP-2] 1 niveau (ex: 6ème) ✅
 [STEP-3] 1 compétence complète ✅
 [VALIDATE] Tests + validation utilisateur ✅
 [SCALE] Extension à toutes les matières 🚀
 ```
 
 **Avantages de cette approche** :
+
 - ✅ **Détection précoce** des problèmes d'architecture
 - ✅ **Feedback utilisateur** rapide sur MVP
 - ✅ **Réduction risques** avant investissement complet
@@ -2974,53 +3186,52 @@ SystemDebugger.generateReport();
 
 ```javascript
 // scripts/validate-phase.js - Validation automatique par phase
-const { execSync } = require('child_process');
-const fs = require('fs');
-const chalk = require('chalk');
+const { execSync } = require("child_process");
+const fs = require("fs");
+const chalk = require("chalk");
 
 const phase = process.argv[2];
-const mvpMode = process.argv.includes('--mvp');
+const mvpMode = process.argv.includes("--mvp");
 
 if (!phase) {
-  console.error(chalk.red('❌ Usage: npm run validate:phase <number> [--mvp]'));
+  console.error(chalk.red("❌ Usage: npm run validate:phase <number> [--mvp]"));
   process.exit(1);
 }
 
 console.log(chalk.blue(`✅ Validation de la phase ${phase}...`));
 
 // Configuration MVP vs Full
-const testSuite = mvpMode ? 'mvp' : 'full';
-const lintLevel = mvpMode ? 'warn' : 'error';
+const testSuite = mvpMode ? "mvp" : "full";
+const lintLevel = mvpMode ? "warn" : "error";
 
 try {
   // 1. Tests spécifiques à la phase
   console.log(chalk.yellow(`🧪 Tests phase ${phase} (${testSuite})...`));
-  execSync(`npm run test:phase-${phase}:${testSuite}`, { stdio: 'inherit' });
-  
+  execSync(`npm run test:phase-${phase}:${testSuite}`, { stdio: "inherit" });
+
   // 2. Linting avec niveau adapté
   console.log(chalk.yellow(`🔍 Linting (${lintLevel})...`));
-  execSync(`npm run lint:${lintLevel}`, { stdio: 'inherit' });
-  
+  execSync(`npm run lint:${lintLevel}`, { stdio: "inherit" });
+
   // 3. Validation structure selon phase
   console.log(chalk.yellow(`🏗️ Validation structure phase ${phase}...`));
-  execSync(`npm run validate:structure:phase-${phase}`, { stdio: 'inherit' });
-  
+  execSync(`npm run validate:structure:phase-${phase}`, { stdio: "inherit" });
+
   // 4. Tests de régression sur phases précédentes
   if (phase > 1 && !mvpMode) {
-    console.log(chalk.yellow(`🔄 Tests régression phases 1-${phase-1}...`));
-    execSync(`npm run test:regression:1-${phase-1}`, { stdio: 'inherit' });
+    console.log(chalk.yellow(`🔄 Tests régression phases 1-${phase - 1}...`));
+    execSync(`npm run test:regression:1-${phase - 1}`, { stdio: "inherit" });
   }
-  
+
   // 5. Génération rapport validation
   generateValidationReport(phase, mvpMode);
-  
+
   console.log(chalk.green(`🎉 Phase ${phase} validée avec succès !`));
-  
+
   // 6. Suggestions pour phase suivante
   if (!mvpMode) {
     suggestNextPhase(phase);
   }
-  
 } catch (error) {
   console.error(chalk.red(`❌ Échec validation phase ${phase}`));
   console.error(error.message);
@@ -3030,14 +3241,23 @@ try {
 function generateValidationReport(phase, mvpMode) {
   const report = {
     phase,
-    mode: mvpMode ? 'MVP' : 'FULL',
+    mode: mvpMode ? "MVP" : "FULL",
     timestamp: new Date().toISOString(),
-    status: 'PASSED',
-    nextSteps: mvpMode ? [`Étendre au mode FULL`, `Valider avec utilisateurs`] : [`Prêt pour phase ${parseInt(phase) + 1}`]
+    status: "PASSED",
+    nextSteps: mvpMode
+      ? [`Étendre au mode FULL`, `Valider avec utilisateurs`]
+      : [`Prêt pour phase ${parseInt(phase) + 1}`],
   };
-  
-  fs.writeFileSync(`validation-reports/phase-${phase}-${report.mode.toLowerCase()}.json`, JSON.stringify(report, null, 2));
-  console.log(chalk.green(`📊 Rapport généré: validation-reports/phase-${phase}-${report.mode.toLowerCase()}.json`));
+
+  fs.writeFileSync(
+    `validation-reports/phase-${phase}-${report.mode.toLowerCase()}.json`,
+    JSON.stringify(report, null, 2)
+  );
+  console.log(
+    chalk.green(
+      `📊 Rapport généré: validation-reports/phase-${phase}-${report.mode.toLowerCase()}.json`
+    )
+  );
 }
 
 function suggestNextPhase(phase) {
@@ -3056,25 +3276,25 @@ function suggestNextPhase(phase) {
   "scripts": {
     "validate:phase": "node scripts/validate-phase.js",
     "validate:mvp": "npm run validate:phase -- --mvp",
-    
+
     // Tests par phase - MVP
     "test:phase-1:mvp": "vitest --config vitest.phase-1.mvp.config.js",
     "test:phase-2:mvp": "vitest --config vitest.phase-2.mvp.config.js",
     "test:phase-3:mvp": "vitest --config vitest.phase-3.mvp.config.js",
-    
-    // Tests par phase - FULL  
+
+    // Tests par phase - FULL
     "test:phase-1:full": "vitest --config vitest.phase-1.full.config.js",
-    "test:phase-2:full": "vitest --config vitest.phase-2.full.config.js", 
+    "test:phase-2:full": "vitest --config vitest.phase-2.full.config.js",
     "test:phase-3:full": "vitest --config vitest.phase-3.full.config.js",
-    
+
     // Validation structure
     "validate:structure:phase-1": "node scripts/validate-structure-phase-1.js",
     "validate:structure:phase-2": "node scripts/validate-structure-phase-2.js",
-    
+
     // Tests régression
     "test:regression:1-2": "npm run test:phase-1:full && npm run test:phase-2:full",
     "test:regression:1-3": "npm run test:regression:1-2 && npm run test:phase-3:full",
-    
+
     // Linting adaptatif
     "lint:warn": "eslint . --max-warnings 10",
     "lint:error": "eslint . --max-warnings 0"
@@ -3088,40 +3308,53 @@ function suggestNextPhase(phase) {
 
 ```javascript
 // scripts/generate-content.js - Générateur automatisé MVP puis Scale
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 class ContentGenerator {
   constructor() {
-    this.mvpMode = process.argv.includes('--mvp');
-    this.matieres = this.mvpMode ? ['mathematiques'] : ['mathematiques', 'francais', 'histoire-geo', 'sciences', 'anglais', 'arts-techno'];
-    this.niveaux = this.mvpMode ? ['6eme'] : ['6eme', '5eme', '4eme', '3eme'];
+    this.mvpMode = process.argv.includes("--mvp");
+    this.matieres = this.mvpMode
+      ? ["mathematiques"]
+      : [
+          "mathematiques",
+          "francais",
+          "histoire-geo",
+          "sciences",
+          "anglais",
+          "arts-techno",
+        ];
+    this.niveaux = this.mvpMode ? ["6eme"] : ["6eme", "5eme", "4eme", "3eme"];
   }
-  
+
   async generateAll() {
-    console.log(`🎯 Mode: ${this.mvpMode ? 'MVP (1 matière, 1 niveau)' : 'FULL (toutes matières)'}`);
-    
+    console.log(
+      `🎯 Mode: ${
+        this.mvpMode ? "MVP (1 matière, 1 niveau)" : "FULL (toutes matières)"
+      }`
+    );
+
     for (const matiere of this.matieres) {
       for (const niveau of this.niveaux) {
         await this.generateMatiereNiveau(matiere, niveau);
       }
     }
-    
+
     await this.generateValidationTests();
     this.generateReport();
   }
-  
+
   async generateMatiereNiveau(matiere, niveau) {
     console.log(`📖 Génération: ${matiere} - ${niveau}`);
-    
-    const competences = this.mvpMode ? 
-      await this.generateCompetencesMVP(matiere, niveau) :
-      await this.generateCompetencesFull(matiere, niveau);
-    
+
+    const competences = this.mvpMode
+      ? await this.generateCompetencesMVP(matiere, niveau)
+      : await this.generateCompetencesFull(matiere, niveau);
+
     await this.saveToFirestore(matiere, niveau, competences);
     await this.generateTypeScript(matiere, niveau, competences);
   }
-  
+
   async generateCompetencesMVP(matiere, niveau) {
     // MVP: 3 compétences essentielles seulement
     return [
@@ -3129,12 +3362,12 @@ class ContentGenerator {
         id: `${matiere}-${niveau}-competence-1`,
         nom: `Compétence MVP 1 - ${matiere}`,
         description: "Compétence de test pour validation MVP",
-        exercices: await this.generateExercicesMVP()
+        exercices: await this.generateExercicesMVP(),
       },
       // 2 autres compétences similaires...
     ];
   }
-  
+
   async generateCompetencesFull(matiere, niveau) {
     // FULL: 20+ compétences complètes par niveau
     const competences = [];
@@ -3143,52 +3376,72 @@ class ContentGenerator {
         id: `${matiere}-${niveau}-competence-${i}`,
         nom: `Compétence ${i} - ${matiere} ${niveau}`,
         description: await this.generateDescriptionIA(matiere, niveau, i),
-        exercices: await this.generateExercicesFull(matiere, niveau, i)
+        exercices: await this.generateExercicesFull(matiere, niveau, i),
       });
     }
     return competences;
   }
-  
+
   async generateValidationTests() {
     console.log(`🧪 Génération tests validation...`);
-    
+
     const testTemplate = `
 // Auto-generated validation tests
-describe('${this.mvpMode ? 'MVP' : 'FULL'} Content Validation', () => {
-  ${this.matieres.map(matiere => `
+describe('${this.mvpMode ? "MVP" : "FULL"} Content Validation', () => {
+  ${this.matieres
+    .map(
+      (matiere) => `
   describe('${matiere}', () => {
-    ${this.niveaux.map(niveau => `
+    ${this.niveaux
+      .map(
+        (niveau) => `
     test('${niveau} - has required competences', async () => {
       const competences = await getCompetences('${matiere}', '${niveau}');
-      expect(competences.length).toBeGreaterThan(${this.mvpMode ? '2' : '15'});
-    });`).join('')}
-  });`).join('')}
+      expect(competences.length).toBeGreaterThan(${this.mvpMode ? "2" : "15"});
+    });`
+      )
+      .join("")}
+  });`
+    )
+    .join("")}
 });`;
-    
-    fs.writeFileSync(`tests/generated-content-${this.mvpMode ? 'mvp' : 'full'}.test.js`, testTemplate);
+
+    fs.writeFileSync(
+      `tests/generated-content-${this.mvpMode ? "mvp" : "full"}.test.js`,
+      testTemplate
+    );
   }
-  
+
   generateReport() {
     const report = {
-      mode: this.mvpMode ? 'MVP' : 'FULL',
+      mode: this.mvpMode ? "MVP" : "FULL",
       generated: {
         matieres: this.matieres.length,
         niveaux: this.niveaux.length,
-        totalCompetences: this.matieres.length * this.niveaux.length * (this.mvpMode ? 3 : 20)
+        totalCompetences:
+          this.matieres.length * this.niveaux.length * (this.mvpMode ? 3 : 20),
       },
       timestamp: new Date().toISOString(),
-      nextSteps: this.mvpMode ? 
-        ['Valider MVP avec utilisateurs', 'Lancer génération FULL si validation OK'] :
-        ['Déployer en production', 'Monitoring utilisation']
+      nextSteps: this.mvpMode
+        ? [
+            "Valider MVP avec utilisateurs",
+            "Lancer génération FULL si validation OK",
+          ]
+        : ["Déployer en production", "Monitoring utilisation"],
     };
-    
-    fs.writeFileSync(`reports/content-generation-${report.mode.toLowerCase()}.json`, JSON.stringify(report, null, 2));
-    console.log(`📊 Rapport: reports/content-generation-${report.mode.toLowerCase()}.json`);
+
+    fs.writeFileSync(
+      `reports/content-generation-${report.mode.toLowerCase()}.json`,
+      JSON.stringify(report, null, 2)
+    );
+    console.log(
+      `📊 Rapport: reports/content-generation-${report.mode.toLowerCase()}.json`
+    );
   }
 }
 
 // Usage
-// npm run generate:content --mvp     (MVP: 1 matière, 1 niveau)  
+// npm run generate:content --mvp     (MVP: 1 matière, 1 niveau)
 // npm run generate:content           (FULL: toutes matières)
 new ContentGenerator().generateAll();
 ```
@@ -3203,16 +3456,16 @@ new ContentGenerator().generateAll();
     "generate:mvp": "node scripts/generate-content.js --mvp",
     "validate:mvp": "npm run generate:mvp && npm run validate:phase 6 --mvp",
     "test:mvp": "npm run test:phase-6:mvp",
-    
+
     // Phase 2: Scale after MVP validation
     "generate:full": "node scripts/generate-content.js",
     "validate:full": "npm run generate:full && npm run validate:phase 6",
     "test:full": "npm run test:phase-6:full",
-    
+
     // Phase 3: Deploy after full validation
     "deploy:mvp": "npm run validate:mvp && npm run deploy:staging",
     "deploy:full": "npm run validate:full && npm run deploy:production",
-    
+
     // Validation pipeline complète
     "pipeline:mvp": "npm run generate:mvp && npm run test:mvp && npm run deploy:mvp",
     "pipeline:full": "npm run generate:full && npm run test:full && npm run deploy:full"
@@ -3228,7 +3481,7 @@ Ajouter dans `package.json` :
 {
   "scripts": {
     "validate:cbd": "node scripts/validate-cbd.js",
-    "check:env": "node scripts/check-environment.js", 
+    "check:env": "node scripts/check-environment.js",
     "check:structure": "node scripts/check-structure.js",
     "check:deps": "npm ls --depth=0",
     "test:full": "npm run lint && npm run test && npm run test:e2e",
@@ -3274,15 +3527,15 @@ jobs:
 
 ### **🏷️ Préfixes Obligatoires**
 
-| Préfixe | Usage | Exemples |
-|---------|-------|----------|
-| `DOC_` | Documentation | `DOC_CBD.md`, `DOC_API.md` |
-| `DEBUG_` | Scripts de debug | `DEBUG_info_collector.js`, `DEBUG_performance.js` |
-| `VALID_` | Scripts de validation | `VALID_environment.js`, `VALID_code_quality.js` |
-| `CONFIG_` | Fichiers de configuration | `CONFIG_database.json`, `CONFIG_api.js` |
-| `TEMPLATE_` | Templates/modèles | `TEMPLATE_component.svelte`, `TEMPLATE_test.js` |
-| `TEST_` | Suites de tests | `TEST_unit_models.js`, `TEST_integration_api.js` |
-| `UTIL_` | Utilitaires/helpers | `UTIL_file_cleaner.js`, `UTIL_data_converter.js` |
+| Préfixe     | Usage                     | Exemples                                          |
+| ----------- | ------------------------- | ------------------------------------------------- |
+| `DOC_`      | Documentation             | `DOC_CBD.md`, `DOC_API.md`                        |
+| `DEBUG_`    | Scripts de debug          | `DEBUG_info_collector.js`, `DEBUG_performance.js` |
+| `VALID_`    | Scripts de validation     | `VALID_environment.js`, `VALID_code_quality.js`   |
+| `CONFIG_`   | Fichiers de configuration | `CONFIG_database.json`, `CONFIG_api.js`           |
+| `TEMPLATE_` | Templates/modèles         | `TEMPLATE_component.svelte`, `TEMPLATE_test.js`   |
+| `TEST_`     | Suites de tests           | `TEST_unit_models.js`, `TEST_integration_api.js`  |
+| `UTIL_`     | Utilitaires/helpers       | `UTIL_file_cleaner.js`, `UTIL_data_converter.js`  |
 
 ### **📁 Organisation par Catégorie**
 
@@ -3315,6 +3568,7 @@ project/
 ### **🎯 Philosophie : De la Vérification à la Prévention**
 
 Le CBD v2.0 évolue d'un système de **contrôle réactif** vers un **système préventif autonome** qui :
+
 - ✅ **Anticipe** les problèmes avant qu'ils surviennent
 - ✅ **Apprend** de chaque interaction pour s'améliorer
 - ✅ **Automatise** l'ensemble du workflow de développement
@@ -3327,6 +3581,7 @@ Le CBD v2.0 évolue d'un système de **contrôle réactif** vers un **système p
 **Concept** : Une seule commande qui encapsule l'ensemble du processus de développement guidé par l'IA.
 
 **Workflow Automatisé** :
+
 ```mermaid
 graph TD
     A[Prompt utilisateur avec balises] --> B[npm run dev:ia]
@@ -3344,6 +3599,7 @@ graph TD
 ```
 
 #### **📝 Template de Prompt Orchestré**
+
 ```markdown
 [CONTEXT] Phase X.Y - [Description]
 [FILE] [chemin/fichier]
@@ -3357,12 +3613,15 @@ graph TD
 #### **� Script dev:ia - Orchestrateur Central**
 
 **Fonctionnalités Avancées** :
+
 ```javascript
 // Exemple d'implémentation du script dev:ia
 const orchestrator = {
   // Phase 1: Validation et parsing du prompt
-  validatePrompt: () => { /* Vérification balises obligatoires */ },
-  
+  validatePrompt: () => {
+    /* Vérification balises obligatoires */
+  },
+
   // Phase 2: Exécution du workflow Mermaid automatiquement
   executeWorkflow: async () => {
     await this.validateCBD();
@@ -3372,19 +3631,22 @@ const orchestrator = {
     await this.analyzeQuality();
     return this.shouldCommit();
   },
-  
+
   // Phase 3: Gestion des blocages avec interaction minimale
-  handleBlockage: (issue) => { 
+  handleBlockage: (issue) => {
     this.logPostMortem(issue);
     return this.suggestResolution(issue);
   },
-  
+
   // Phase 4: Commit intelligent avec métadonnées
-  smartCommit: () => { /* Génération message + métadonnées */ }
+  smartCommit: () => {
+    /* Génération message + métadonnées */
+  },
 };
 ```
 
 **Avantages de l'Orchestrateur Unique** :
+
 - ✅ **Charge cognitive réduite** : Une seule commande à retenir
 - ✅ **Workflow automatisé** : Suit le diagramme Mermaid sans intervention
 - ✅ **Interaction minimale** : Humain sollicité uniquement si blocage
@@ -3397,6 +3659,7 @@ const orchestrator = {
 **Concept** : Au lieu de simplement vérifier la qualité, le système l'**impose** via des gates bloquantes.
 
 **Pipeline CI/CD Renforcée** :
+
 ```yaml
 # .github/workflows/quality-gates.yml
 quality-gates:
@@ -3409,15 +3672,15 @@ quality-gates:
           echo "❌ BLOCAGE: Couverture ${coverage} < 85% requis"
           exit 1
         fi
-    
-    - name: Complexity Gate  
+
+    - name: Complexity Gate
       run: |
         complexity=$(npm run analyze:complexity)
         if [ $complexity -gt 10 ]; then
           echo "❌ BLOCAGE: Complexité ${complexity} > 10 max"
           exit 1
         fi
-    
+
     - name: Security Gate
       run: |
         npm audit --audit-level high
@@ -3428,17 +3691,19 @@ quality-gates:
 ```
 
 **Niveaux de Qualité Configurables** :
+
 ```javascript
 // CONFIG_quality_gates.js
 const QUALITY_GATES = {
-  'phase-0': { complexity: 5, coverage: 70, security: 'medium' },
-  'phase-1': { complexity: 7, coverage: 80, security: 'high' },
-  'phase-2': { complexity: 8, coverage: 85, security: 'high' },
-  'production': { complexity: 10, coverage: 95, security: 'critical' }
+  "phase-0": { complexity: 5, coverage: 70, security: "medium" },
+  "phase-1": { complexity: 7, coverage: 80, security: "high" },
+  "phase-2": { complexity: 8, coverage: 85, security: "high" },
+  production: { complexity: 10, coverage: 95, security: "critical" },
 };
 ```
 
 **Outils Intégrés** :
+
 - **ESLint** avec règles personnalisées par phase
 - **SonarQube** pour la détection de code smells
 - **Snyk** pour les vulnérabilités de sécurité
@@ -3447,15 +3712,15 @@ const QUALITY_GATES = {
 
 #### **📊 Métriques de Qualité par Phase**
 
-| Phase | Couverture Tests | Complexité Max | Vulnérabilités | Performance |
-|-------|------------------|----------------|----------------|-------------|
-| **P0** | ≥ 70% | ≤ 5 | 0 haute | N/A |
-| **P1** | ≥ 80% | ≤ 7 | 0 haute | N/A |
-| **P2** | ≥ 85% | ≤ 8 | 0 haute | > 80 |
-| **P3** | ≥ 85% | ≤ 8 | 0 haute | > 85 |
-| **P4** | ≥ 90% | ≤ 9 | 0 haute | > 90 |
-| **P5** | ≥ 90% | ≤ 9 | 0 haute | > 90 |
-| **P6** | ≥ 95% | ≤ 10 | 0 toutes | > 95 |
+| Phase  | Couverture Tests | Complexité Max | Vulnérabilités | Performance |
+| ------ | ---------------- | -------------- | -------------- | ----------- |
+| **P0** | ≥ 70%            | ≤ 5            | 0 haute        | N/A         |
+| **P1** | ≥ 80%            | ≤ 7            | 0 haute        | N/A         |
+| **P2** | ≥ 85%            | ≤ 8            | 0 haute        | > 80        |
+| **P3** | ≥ 85%            | ≤ 8            | 0 haute        | > 85        |
+| **P4** | ≥ 90%            | ≤ 9            | 0 haute        | > 90        |
+| **P5** | ≥ 90%            | ≤ 9            | 0 haute        | > 90        |
+| **P6** | ≥ 95%            | ≤ 10           | 0 toutes       | > 95        |
 
 ### **🧠 3. Système d'Auto-Amélioration : Learning Loop**
 
@@ -3478,6 +3743,7 @@ const QUALITY_GATES = {
 ```
 
 **Exemple Concret** :
+
 ```markdown
 ## 📝 Post-Mortem Rapide - 31/08/2025 Import Firebase dans Tests
 
@@ -3493,7 +3759,6 @@ const QUALITY_GATES = {
 ```javascript
 // Integration dans UTIL_dev_ia_orchestrator.js - Version Simplifiée
 class PostMortemManager {
-  
   // Log automatique lors d'erreurs - API Simplifiée
   static logPostMortem(error, context = {}) {
     const report = {
@@ -3503,159 +3768,163 @@ class PostMortemManager {
       rootCause: this.extractRootCause(error),
       quickFix: context.appliedFix || "Fix à documenter",
       prevention: this.suggestPrevention(error),
-      impact: this.assessImpact(error, context)
+      impact: this.assessImpact(error, context),
     };
-    
+
     // Écriture immédiate dans LOG_POSTMORTEM.md
     this.appendToPostMortems(report);
-    
+
     // Amélioration proactive du framework
     this.updatePreventionRules(report);
-    
+
     console.log(`📝 Post-mortem généré: ${report.title}`);
     return report;
   }
-  
+
   static generateTitle(error, context) {
-    const date = new Date().toLocaleDateString('fr-FR');
+    const date = new Date().toLocaleDateString("fr-FR");
     const component = context.component || this.detectComponent(error);
     const type = this.classifyError(error);
     return `${date} ${type} - ${component}`;
   }
-  
+
   static extractContext(error, context) {
     if (context.userDescription) return context.userDescription;
-    
+
     // Extraction automatique du contexte
-    const stackLines = error.stack?.split('\n') || [];
-    const relevantLine = stackLines.find(line => line.includes('src/'));
-    
+    const stackLines = error.stack?.split("\n") || [];
+    const relevantLine = stackLines.find((line) => line.includes("src/"));
+
     if (relevantLine) {
       const file = relevantLine.match(/src\/[^:]+/)?.[0];
       return `Erreur dans ${file}: ${error.message?.slice(0, 60)}...`;
     }
-    
-    return error.message?.slice(0, 80) || 'Erreur non spécifiée';
+
+    return error.message?.slice(0, 80) || "Erreur non spécifiée";
   }
-  
+
   static extractRootCause(error) {
     // Patterns d'erreurs communes simplifiés
     const patterns = {
-      'MODULE_NOT_FOUND': 'Dépendance manquante ou path incorrect',
-      'ECONNREFUSED': 'Service non démarré (Firebase/serveur)',
-      'Permission denied': 'Problème droits fichiers/config',
-      'Cannot read property': 'Variable undefined - vérifier initialisation',
-      'Unexpected token': 'Erreur syntaxe JSON/JS',
-      'CORS': 'Configuration CORS manquante',
-      'fetch failed': 'Problème réseau ou API endpoint',
-      'Invalid hook call': 'Hook React/Svelte hors composant',
-      'timeout': 'Opération trop lente - optimiser',
-      'out of memory': 'Fuite mémoire ou données trop volumineuses'
+      MODULE_NOT_FOUND: "Dépendance manquante ou path incorrect",
+      ECONNREFUSED: "Service non démarré (Firebase/serveur)",
+      "Permission denied": "Problème droits fichiers/config",
+      "Cannot read property": "Variable undefined - vérifier initialisation",
+      "Unexpected token": "Erreur syntaxe JSON/JS",
+      CORS: "Configuration CORS manquante",
+      "fetch failed": "Problème réseau ou API endpoint",
+      "Invalid hook call": "Hook React/Svelte hors composant",
+      timeout: "Opération trop lente - optimiser",
+      "out of memory": "Fuite mémoire ou données trop volumineuses",
     };
-    
+
     const errorText = `${error.message} ${error.stack}`.toLowerCase();
-    
+
     for (const [pattern, cause] of Object.entries(patterns)) {
       if (errorText.includes(pattern.toLowerCase())) {
         return cause;
       }
     }
-    
-    return 'Cause à analyser manuellement';
+
+    return "Cause à analyser manuellement";
   }
-  
+
   static suggestPrevention(error) {
     const prevention = {
-      'MODULE_NOT_FOUND': 'Ajouter vérification dépendances dans validation environnement',
-      'ECONNREFUSED': 'Ajouter check services dans script startup',
-      'Permission denied': 'Documenter permissions requises dans README',
-      'Cannot read property': 'Ajouter validation TypeScript/PropTypes',
-      'Unexpected token': 'Configurer linter/prettier plus strict',
-      'CORS': 'Template config CORS dans setup projet',
-      'fetch failed': 'Ajouter retry logic et timeout handling',
-      'Invalid hook call': 'Linter rules pour hooks + documentation',
-      'timeout': 'Profiling performance + optimisation automatique',
-      'out of memory': 'Monitoring mémoire + alertes préventives'
+      MODULE_NOT_FOUND:
+        "Ajouter vérification dépendances dans validation environnement",
+      ECONNREFUSED: "Ajouter check services dans script startup",
+      "Permission denied": "Documenter permissions requises dans README",
+      "Cannot read property": "Ajouter validation TypeScript/PropTypes",
+      "Unexpected token": "Configurer linter/prettier plus strict",
+      CORS: "Template config CORS dans setup projet",
+      "fetch failed": "Ajouter retry logic et timeout handling",
+      "Invalid hook call": "Linter rules pour hooks + documentation",
+      timeout: "Profiling performance + optimisation automatique",
+      "out of memory": "Monitoring mémoire + alertes préventives",
     };
-    
-    const errorText = error.message?.toLowerCase() || '';
-    
+
+    const errorText = error.message?.toLowerCase() || "";
+
     for (const [pattern, action] of Object.entries(prevention)) {
       if (errorText.includes(pattern.toLowerCase())) {
         return action;
       }
     }
-    
-    return 'Analyser pattern pour éviter récurrence';
+
+    return "Analyser pattern pour éviter récurrence";
   }
-  
+
   static assessImpact(error, context) {
     const duration = context.duration || this.estimateDuration(error);
     const complexity = context.complexity || this.estimateComplexity(error);
-    
+
     return {
       timeWasted: duration,
       complexity: `${complexity}/5`,
       severity: this.classifySeverity(error),
-      formatted: `${duration}, Complexité: ${complexity}/5`
+      formatted: `${duration}, Complexité: ${complexity}/5`,
     };
   }
-  
+
   static estimateDuration(error) {
     // Estimation basée sur le type d'erreur
     const durationMap = {
-      'MODULE_NOT_FOUND': '10min',
-      'ECONNREFUSED': '15min', 
-      'Permission denied': '20min',
-      'Cannot read property': '30min',
-      'CORS': '45min',
-      'timeout': '60min'
+      MODULE_NOT_FOUND: "10min",
+      ECONNREFUSED: "15min",
+      "Permission denied": "20min",
+      "Cannot read property": "30min",
+      CORS: "45min",
+      timeout: "60min",
     };
-    
-    const errorText = error.message?.toLowerCase() || '';
-    
+
+    const errorText = error.message?.toLowerCase() || "";
+
     for (const [pattern, duration] of Object.entries(durationMap)) {
       if (errorText.includes(pattern.toLowerCase())) {
         return duration;
       }
     }
-    
-    return '30min'; // Défaut
+
+    return "30min"; // Défaut
   }
-  
+
   static estimateComplexity(error) {
     // Complexité 1-5 basée sur le type d'erreur
     const complexityMap = {
-      'MODULE_NOT_FOUND': 2,
-      'ECONNREFUSED': 2,
-      'Permission denied': 3,
-      'Cannot read property': 3,
-      'CORS': 4,
-      'timeout': 4,
-      'out of memory': 5
+      MODULE_NOT_FOUND: 2,
+      ECONNREFUSED: 2,
+      "Permission denied": 3,
+      "Cannot read property": 3,
+      CORS: 4,
+      timeout: 4,
+      "out of memory": 5,
     };
-    
-    const errorText = error.message?.toLowerCase() || '';
-    
+
+    const errorText = error.message?.toLowerCase() || "";
+
     for (const [pattern, complexity] of Object.entries(complexityMap)) {
       if (errorText.includes(pattern.toLowerCase())) {
         return complexity;
       }
     }
-    
+
     return 3; // Défaut
   }
-  
+
   static appendToPostMortems(report) {
-    const fs = require('fs');
-    const path = require('path');
-    const logPath = path.join(process.cwd(), 'LOG_POSTMORTEM.md');
-    
+    const fs = require("fs");
+    const path = require("path");
+    const logPath = path.join(process.cwd(), "LOG_POSTMORTEM.md");
+
     // Créer le fichier s'il n'existe pas
     if (!fs.existsSync(logPath)) {
-      fs.writeFileSync(logPath, '# 📝 Log Post-Mortem - Apprentissage Continu\n\n');
+      fs.writeFileSync(
+        logPath,
+        "# 📝 Log Post-Mortem - Apprentissage Continu\n\n"
+      );
     }
-    
+
     // Format simplifié pour l'ajout
     const entry = `
 ## 📝 Post-Mortem Rapide - ${report.title}
@@ -3668,10 +3937,10 @@ class PostMortemManager {
 
 ---
 `;
-    
+
     fs.appendFileSync(logPath, entry);
   }
-  
+
   static updatePreventionRules(report) {
     // Mise à jour automatique des règles de prévention
     // TODO: Intégrer dans les templates de validation
@@ -3690,11 +3959,11 @@ class DevIAOrchestrator {
         phase: operation.phase,
         component: operation.component,
         appliedFix: operation.attemptedFix,
-        userDescription: operation.description
+        userDescription: operation.description,
       });
-      
+
       // Optionnel: Re-throw si l'erreur est critique
-      if (postMortem.impact.severity === 'critical') {
+      if (postMortem.impact.severity === "critical") {
         throw error;
       }
     }
@@ -3714,7 +3983,7 @@ class DevIAOrchestrator {
     "postmortem:trends": "node tools/postmortem-trend-analysis.js",
     "postmortem:cleanup": "node tools/postmortem-cleanup.js",
     "postmortem:export": "node tools/postmortem-export.js",
-    
+
     // Intégration workflow
     "dev:with-postmortem": "npm run dev 2>&1 | npm run postmortem:auto-capture",
     "test:with-postmortem": "npm run test 2>&1 | npm run postmortem:auto-capture",
@@ -3729,143 +3998,155 @@ class DevIAOrchestrator {
 // tools/postmortem-statistics.js - Analytics simplifiées
 class PostMortemAnalytics {
   static async generateStats() {
-    const fs = require('fs');
-    const logPath = 'LOG_POSTMORTEM.md';
-    
+    const fs = require("fs");
+    const logPath = "LOG_POSTMORTEM.md";
+
     if (!fs.existsSync(logPath)) {
-      console.log('❌ Aucun log post-mortem trouvé');
+      console.log("❌ Aucun log post-mortem trouvé");
       return;
     }
-    
-    const content = fs.readFileSync(logPath, 'utf8');
+
+    const content = fs.readFileSync(logPath, "utf8");
     const entries = this.parseEntries(content);
-    
+
     const stats = {
       total: entries.length,
       byComplexity: this.groupByComplexity(entries),
       byTimeImpact: this.groupByTimeImpact(entries),
       topCauses: this.getTopCauses(entries),
       preventionSuccess: this.calculatePreventionSuccess(entries),
-      trends: this.analyzeTrends(entries)
+      trends: this.analyzeTrends(entries),
     };
-    
+
     this.displayStats(stats);
     return stats;
   }
-  
+
   static parseEntries(content) {
     const entries = [];
-    const sections = content.split('## 📝 Post-Mortem Rapide').slice(1);
-    
-    sections.forEach(section => {
+    const sections = content.split("## 📝 Post-Mortem Rapide").slice(1);
+
+    sections.forEach((section) => {
       const entry = this.parseEntry(section);
       if (entry) entries.push(entry);
     });
-    
+
     return entries;
   }
-  
+
   static parseEntry(section) {
-    const lines = section.split('\n');
+    const lines = section.split("\n");
     const entry = {};
-    
-    lines.forEach(line => {
-      if (line.startsWith('**Contexte**')) {
-        entry.context = line.replace('**Contexte** :', '').trim();
-      } else if (line.startsWith('**Cause Racine**')) {
-        entry.rootCause = line.replace('**Cause Racine** :', '').trim();
-      } else if (line.startsWith('**Impact**')) {
+
+    lines.forEach((line) => {
+      if (line.startsWith("**Contexte**")) {
+        entry.context = line.replace("**Contexte** :", "").trim();
+      } else if (line.startsWith("**Cause Racine**")) {
+        entry.rootCause = line.replace("**Cause Racine** :", "").trim();
+      } else if (line.startsWith("**Impact**")) {
         entry.impact = this.parseImpact(line);
       }
     });
-    
+
     return Object.keys(entry).length > 0 ? entry : null;
   }
-  
+
   static parseImpact(impactLine) {
     const match = impactLine.match(/(\d+)min.*Complexité.*(\d+)/);
-    return match ? {
-      timeMinutes: parseInt(match[1]),
-      complexity: parseInt(match[2])
-    } : { timeMinutes: 30, complexity: 3 };
+    return match
+      ? {
+          timeMinutes: parseInt(match[1]),
+          complexity: parseInt(match[2]),
+        }
+      : { timeMinutes: 30, complexity: 3 };
   }
-  
+
   static groupByComplexity(entries) {
     const groups = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       if (entry.impact?.complexity) {
         groups[entry.impact.complexity]++;
       }
     });
     return groups;
   }
-  
+
   static getTopCauses(entries) {
     const causes = {};
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       if (entry.rootCause) {
         causes[entry.rootCause] = (causes[entry.rootCause] || 0) + 1;
       }
     });
-    
+
     return Object.entries(causes)
-      .sort(([,a], [,b]) => b - a)
+      .sort(([, a], [, b]) => b - a)
       .slice(0, 5)
       .map(([cause, count]) => ({ cause, count }));
   }
-  
+
   static displayStats(stats) {
-    console.log('\n📊 STATISTIQUES POST-MORTEM\n');
-    console.log('═'.repeat(60));
+    console.log("\n📊 STATISTIQUES POST-MORTEM\n");
+    console.log("═".repeat(60));
     console.log(`📋 Total Post-Mortems: ${stats.total}`);
-    
-    console.log('\n🎯 Répartition par complexité:');
+
+    console.log("\n🎯 Répartition par complexité:");
     Object.entries(stats.byComplexity).forEach(([complexity, count]) => {
-      const percentage = stats.total > 0 ? ((count / stats.total) * 100).toFixed(1) : 0;
-      const bar = '█'.repeat(Math.round(percentage / 5));
+      const percentage =
+        stats.total > 0 ? ((count / stats.total) * 100).toFixed(1) : 0;
+      const bar = "█".repeat(Math.round(percentage / 5));
       console.log(`  ${complexity}/5: ${count} (${percentage}%) ${bar}`);
     });
-    
-    console.log('\n🔥 Top 5 causes récurrentes:');
+
+    console.log("\n🔥 Top 5 causes récurrentes:");
     stats.topCauses.forEach((item, index) => {
       console.log(`  ${index + 1}. ${item.cause} (${item.count}x)`);
     });
-    
-    const avgTime = stats.total > 0 ? 
-      (stats.byTimeImpact.totalMinutes / stats.total).toFixed(0) : 0;
+
+    const avgTime =
+      stats.total > 0
+        ? (stats.byTimeImpact.totalMinutes / stats.total).toFixed(0)
+        : 0;
     console.log(`\n⏱️  Temps perdu moyen: ${avgTime}min par incident`);
-    console.log(`💰 Temps total perdu: ${stats.byTimeImpact.totalMinutes}min (${(stats.byTimeImpact.totalMinutes / 60).toFixed(1)}h)`);
-    
-    console.log('═'.repeat(60));
-    
+    console.log(
+      `💰 Temps total perdu: ${stats.byTimeImpact.totalMinutes}min (${(
+        stats.byTimeImpact.totalMinutes / 60
+      ).toFixed(1)}h)`
+    );
+
+    console.log("═".repeat(60));
+
     // Recommandations automatiques
     this.generateRecommendations(stats);
   }
-  
+
   static generateRecommendations(stats) {
-    console.log('\n💡 RECOMMANDATIONS AUTOMATIQUES:\n');
-    
+    console.log("\n💡 RECOMMANDATIONS AUTOMATIQUES:\n");
+
     // Analyse de la complexité
     const highComplexity = stats.byComplexity[4] + stats.byComplexity[5];
     if (highComplexity > stats.total * 0.3) {
-      console.log('🔴 PRIORITÉ: Trop d\'erreurs complexes (4-5/5)');
-      console.log('   → Revoir la documentation et formation équipe');
+      console.log("🔴 PRIORITÉ: Trop d'erreurs complexes (4-5/5)");
+      console.log("   → Revoir la documentation et formation équipe");
     }
-    
+
     // Analyse des causes récurrentes
     if (stats.topCauses.length > 0 && stats.topCauses[0].count > 3) {
       console.log(`🟡 ATTENTION: Cause récurrente détectée`);
-      console.log(`   → "${stats.topCauses[0].cause}" (${stats.topCauses[0].count}x)`);
-      console.log('   → Implémenter solution préventive automatisée');
+      console.log(
+        `   → "${stats.topCauses[0].cause}" (${stats.topCauses[0].count}x)`
+      );
+      console.log("   → Implémenter solution préventive automatisée");
     }
-    
+
     // Analyse temporelle
-    if (stats.byTimeImpact.totalMinutes > 180) { // 3h+
-      console.log('🟠 EFFICACITÉ: Temps perdu élevé');
-      console.log('   → Prioriser l\'automatisation des corrections fréquentes');
+    if (stats.byTimeImpact.totalMinutes > 180) {
+      // 3h+
+      console.log("🟠 EFFICACITÉ: Temps perdu élevé");
+      console.log("   → Prioriser l'automatisation des corrections fréquentes");
     }
-    
-    console.log('');
+
+    console.log("");
   }
 }
 
@@ -3894,47 +4175,45 @@ npm run dev:with-postmortem
 ```javascript
 // Dans UTIL_dev_ia_orchestrator.js - Version simplifiée
 class DevIAOrchestrator {
-  
   async runCommand(command, options = {}) {
     const operation = {
       command,
       phase: this.detectCurrentPhase(),
       timestamp: new Date().toISOString(),
-      ...options
+      ...options,
     };
-    
+
     try {
       console.log(`🚀 Exécution: ${command}`);
-      
+
       const result = await this.executeCommand(command);
-      
+
       // Success: optionnellement log success patterns
       if (options.logSuccess) {
         this.logSuccessPattern(operation, result);
       }
-      
+
       return result;
-      
     } catch (error) {
       // Auto-génération post-mortem
       const postMortem = PostMortemManager.logPostMortem(error, {
         phase: operation.phase,
         command: operation.command,
         userDescription: `Échec commande: ${command}`,
-        appliedFix: options.attemptedFix
+        appliedFix: options.attemptedFix,
       });
-      
+
       console.log(`📝 Post-mortem créé: ${postMortem.title}`);
-      
+
       // Optionnel: Suggestions de récupération
       if (postMortem.prevention) {
         console.log(`💡 Prévention suggérée: ${postMortem.prevention}`);
       }
-      
+
       throw error;
     }
   }
-  
+
   // Analyse des patterns de succès pour améliorer les préventions
   logSuccessPattern(operation, result) {
     // TODO: Log des patterns qui fonctionnent bien
@@ -3942,62 +4221,67 @@ class DevIAOrchestrator {
   }
 }
 ```
+
       if (error.message.includes(pattern)) {
         return cause;
       }
     }
-    
+
     return error.message.split('\n')[0]; // Première ligne de l'erreur
-  }
-  
-  static suggestPrevention(error) {
-    const preventions = {
-      'MODULE_NOT_FOUND': 'Ajouter vérification dépendances dans VALID_environment.js',
-      'ECONNREFUSED': 'Ajouter check services dans scripts/check-services.js',
-      'Permission denied': 'Documenter setup permissions dans README',
-      'Cannot read property': 'Renforcer validation TypeScript',
-      'Unexpected token': 'Configurer ESLint plus strict',
-      'CORS': 'Template configuration CORS dans setup'
-    };
-    
+
+}
+
+static suggestPrevention(error) {
+const preventions = {
+'MODULE_NOT_FOUND': 'Ajouter vérification dépendances dans VALID_environment.js',
+'ECONNREFUSED': 'Ajouter check services dans scripts/check-services.js',
+'Permission denied': 'Documenter setup permissions dans README',
+'Cannot read property': 'Renforcer validation TypeScript',
+'Unexpected token': 'Configurer ESLint plus strict',
+'CORS': 'Template configuration CORS dans setup'
+};
+
     for (const [pattern, prevention] of Object.entries(preventions)) {
       if (error.message.includes(pattern)) {
         return prevention;
       }
     }
-    
+
     return 'Analyser et documenter la prévention spécifique';
-  }
-  
-  static assessImpact(error, context) {
-    const factors = {
-      timeSpent: context.timeSpent || 0,
-      complexity: context.complexity || 1,
-      recurrence: context.isRecurrent ? 2 : 1
-    };
-    
+
+}
+
+static assessImpact(error, context) {
+const factors = {
+timeSpent: context.timeSpent || 0,
+complexity: context.complexity || 1,
+recurrence: context.isRecurrent ? 2 : 1
+};
+
     // Score simple : 1-5
-    const score = Math.min(5, Math.max(1, 
+    const score = Math.min(5, Math.max(1,
       Math.round((factors.timeSpent / 30) + factors.complexity + factors.recurrence)
     ));
-    
+
     const labels = {
       1: '⚡ Minimal (< 15min)',
-      2: '🟡 Faible (15-30min)', 
+      2: '🟡 Faible (15-30min)',
       3: '🟠 Moyen (30min-1h)',
       4: '🔴 Élevé (1-2h)',
       5: '💥 Critique (> 2h)'
     };
-    
+
     return `${score}/5 - ${labels[score]}`;
-  }
-  
-  static appendToPostMortems(report) {
-    const fs = require('fs');
-    const path = require('path');
-    
+
+}
+
+static appendToPostMortems(report) {
+const fs = require('fs');
+const path = require('path');
+
     const logPath = path.join(process.cwd(), 'LOG_POSTMORTEM.md');
     const postMortemEntry = `
+
 ## � Post-Mortem Rapide - ${new Date().toLocaleDateString()} ${report.context}
 
 **Contexte** : ${report.context} - ${report.component}
@@ -4005,28 +4289,30 @@ class DevIAOrchestrator {
 **Solution Appliquée** : ${report.quickFix}
 **Action Préventive** : ${report.prevention}
 **Impact** : ${report.impact}
-${report.autoGenerated ? '*[Auto-généré]*' : ''}
+${report.autoGenerated ? '_[Auto-généré]_' : ''}
 
 ---
+
 `;
-    
+
     // Créer fichier si inexistant
     if (!fs.existsSync(logPath)) {
       fs.writeFileSync(logPath, '# 📝 Log Post-Mortem - Apprentissage Continu\n\n');
     }
-    
+
     fs.appendFileSync(logPath, postMortemEntry);
-  }
-  
-  static updatePreventionRules(report) {
-    // Auto-amélioration : ajouter règles de prévention
-    const rulePath = path.join(process.cwd(), 'scripts/auto-prevention-rules.json');
-    
+
+}
+
+static updatePreventionRules(report) {
+// Auto-amélioration : ajouter règles de prévention
+const rulePath = path.join(process.cwd(), 'scripts/auto-prevention-rules.json');
+
     let rules = {};
     if (fs.existsSync(rulePath)) {
       rules = JSON.parse(fs.readFileSync(rulePath, 'utf8'));
     }
-    
+
     const ruleKey = this.generateRuleKey(report.rootCause);
     rules[ruleKey] = {
       pattern: report.rootCause,
@@ -4034,49 +4320,53 @@ ${report.autoGenerated ? '*[Auto-généré]*' : ''}
       occurrences: (rules[ruleKey]?.occurrences || 0) + 1,
       lastSeen: report.timestamp
     };
-    
+
     fs.writeFileSync(rulePath, JSON.stringify(rules, null, 2));
-  }
-  
-  static generateRuleKey(cause) {
-    return cause.toLowerCase()
-      .replace(/[^a-z0-9]/g, '_')
-      .replace(/_+/g, '_')
-      .substring(0, 50);
-  }
+
+}
+
+static generateRuleKey(cause) {
+return cause.toLowerCase()
+.replace(/[^a-z0-9]/g, '_')
+.replace(/_+/g, '\_')
+.substring(0, 50);
+}
 }
 
 // Usage automatique dans l'orchestrateur
 class DevIAOrchestrator {
-  async handleError(error, context) {
-    // Log post-mortem automatique
-    PostMortemManager.logPostMortem(error, {
-      phase: this.currentPhase,
-      component: context.component,
-      timeSpent: Date.now() - this.startTime,
-      complexity: context.complexity || 2,
-      appliedFix: context.fix || "À documenter",
-      isRecurrent: await this.checkRecurrence(error)
-    });
-    
+async handleError(error, context) {
+// Log post-mortem automatique
+PostMortemManager.logPostMortem(error, {
+phase: this.currentPhase,
+component: context.component,
+timeSpent: Date.now() - this.startTime,
+complexity: context.complexity || 2,
+appliedFix: context.fix || "À documenter",
+isRecurrent: await this.checkRecurrence(error)
+});
+
     // Proposer amélioration
     await this.suggestImprovements(error);
-  }
-  
-  async suggestImprovements(error) {
-    const suggestions = PostMortemManager.generateImprovements(error);
-    
+
+}
+
+async suggestImprovements(error) {
+const suggestions = PostMortemManager.generateImprovements(error);
+
     if (suggestions.length > 0) {
       console.log('\n🎯 Suggestions d\'amélioration CBD:');
       suggestions.forEach((suggestion, i) => {
         console.log(`${i + 1}. ${suggestion}`);
       });
-      
+
       console.log('\n💡 Appliquer avec: npm run cbd:improve');
     }
-  }
+
 }
-```
+}
+
+````
 
 #### **📦 Scripts NPM Post-Mortem**
 
@@ -4091,42 +4381,42 @@ class DevIAOrchestrator {
     "cbd:improve": "npm run postmortem:analyze && npm run postmortem:improve"
   }
 }
-```
+````
 
 #### **📊 Analyse Automatique des Patterns**
 
 ```javascript
 // scripts/analyze-postmortems.js - Détection patterns automatique
-const fs = require('fs');
+const fs = require("fs");
 
 class PostMortemAnalyzer {
   analyzePatterns() {
     const postMortems = this.parsePostMortems();
     const patterns = this.detectPatterns(postMortems);
-    
+
     return {
       topIssues: this.getTopIssues(postMortems),
       recurrentProblems: this.getRecurrentProblems(patterns),
       improvementSuggestions: this.generateImprovements(patterns),
-      stats: this.generateStats(postMortems)
+      stats: this.generateStats(postMortems),
     };
   }
-  
+
   generateImprovements(patterns) {
     const improvements = [];
-    
+
     // Si > 3 erreurs même type → nouveau check
     Object.entries(patterns).forEach(([pattern, count]) => {
       if (count >= 3) {
         improvements.push({
-          type: 'prevention',
-          priority: 'high',
+          type: "prevention",
+          priority: "high",
           action: `Ajouter check automatique pour: ${pattern}`,
-          impact: `Réduction estimée: ${count} incidents évités`
+          impact: `Réduction estimée: ${count} incidents évités`,
         });
       }
     });
-    
+
     return improvements;
   }
 }
@@ -4145,6 +4435,7 @@ npm run cbd:improve              # Appliquer améliorations suggérées
 #### **🔄 Cycle d'Amélioration Continue**
 
 **Processus Automatisé** :
+
 1. **Détection** : Chaque échec de validation génère une entrée post-mortem
 2. **Analyse** : L'IA analyse les patterns récurrents
 3. **Proposition** : Suggestion d'amélioration du CBD basée sur les données
@@ -4164,8 +4455,9 @@ npm run cbd:improve              # Appliquer améliorations suggérées
 ```
 
 **Exemples de Patterns Détectés** :
+
 - **Échecs récurrents** sur même type de composant → Nouveau template
-- **Oublis fréquents** de certaines vérifications → Checklist renforcée  
+- **Oublis fréquents** de certaines vérifications → Checklist renforcée
 - **Erreurs spécifiques** à une phase → Quality gate additionnelle
 - **Déviations roadmap** répétées → Process de validation amélioré
 
@@ -4174,6 +4466,7 @@ npm run cbd:improve              # Appliquer améliorations suggérées
 #### **📊 Dashboard de Métriques en Temps Réel**
 
 **Métriques Trackées** :
+
 - Taux de réussite des validations CBD
 - Temps moyen de développement par phase
 - Évolution de la qualité de code
@@ -4182,31 +4475,40 @@ npm run cbd:improve              # Appliquer améliorations suggérées
 
 #### **🎯 Objectifs d'Efficacité**
 
-| Métrique | Baseline | Objectif Q1 | Objectif Q2 |
-|----------|----------|-------------|-------------|
-| Temps validation | 5 min | 30 sec | 10 sec |
-| Taux d'erreur | 10% | 5% | 1% |
-| Couverture tests | 80% | 90% | 95% |
-| Déviations roadmap | 20% | 10% | 5% |
-| Satisfaction dev | 3/5 | 4/5 | 4.5/5 |
+| Métrique           | Baseline | Objectif Q1 | Objectif Q2 |
+| ------------------ | -------- | ----------- | ----------- |
+| Temps validation   | 5 min    | 30 sec      | 10 sec      |
+| Taux d'erreur      | 10%      | 5%          | 1%          |
+| Couverture tests   | 80%      | 90%         | 95%         |
+| Déviations roadmap | 20%      | 10%         | 5%          |
+| Satisfaction dev   | 3/5      | 4/5         | 4.5/5       |
 
 #### **🚀 Intégration VS Code/IDE**
 
 **Extension CBD Intelligente** :
+
 ```javascript
 // Fonctionnalités extension VS Code
 const cbdExtension = {
   // Validation en temps réel du prompt
-  validatePromptOnType: () => { /* Highlight balises manquantes */ },
-  
+  validatePromptOnType: () => {
+    /* Highlight balises manquantes */
+  },
+
   // Suggestions contextuelles
-  suggestTemplate: (context) => { /* Template selon phase détectée */ },
-  
+  suggestTemplate: (context) => {
+    /* Template selon phase détectée */
+  },
+
   // Exécution directe dev:ia
-  runOrchestrator: () => { /* npm run dev:ia depuis l'IDE */ },
-  
+  runOrchestrator: () => {
+    /* npm run dev:ia depuis l'IDE */
+  },
+
   // Affichage métriques qualité en sidebar
-  showQualityMetrics: () => { /* Dashboard intégré */ }
+  showQualityMetrics: () => {
+    /* Dashboard intégré */
+  },
 };
 ```
 
@@ -4215,6 +4517,7 @@ const cbdExtension = {
 #### **🧠 Assistant IA Contextuel**
 
 **Capacités Avancées** :
+
 - ✅ **Prédiction** : Anticipe les problèmes potentiels
 - ✅ **Suggestion** : Propose des améliorations proactives
 - ✅ **Optimisation** : Recommande des refactorings
@@ -4223,6 +4526,7 @@ const cbdExtension = {
 #### **📝 Templates Dynamiques**
 
 **Adaptation Contextuelle** :
+
 - Templates qui évoluent selon la phase actuelle
 - Suggestions personnalisées basées sur l'historique
 - Validation intelligente des déviations
@@ -4231,6 +4535,7 @@ const cbdExtension = {
 #### **🔮 Prédiction Proactive**
 
 **Algorithmes de Prédiction** :
+
 ```javascript
 const predictiveAnalysis = {
   // Analyse des patterns pour prédire les échecs
@@ -4238,16 +4543,16 @@ const predictiveAnalysis = {
     const riskFactors = this.analyzeRiskFactors(context);
     return this.calculateFailureProbability(riskFactors);
   },
-  
+
   // Suggestion d'actions préventives
   suggestPrevention: (predictions) => {
-    return predictions.map(p => this.generatePreventiveAction(p));
+    return predictions.map((p) => this.generatePreventiveAction(p));
   },
-  
+
   // Optimisation continue des workflows
   optimizeWorkflow: (metrics) => {
     return this.identifyBottlenecks(metrics);
-  }
+  },
 };
 ```
 
@@ -4256,13 +4561,14 @@ const predictiveAnalysis = {
 #### **⚡ npm run dev:ia - La Commande Ultime**
 
 **Encapsulation Complète** :
+
 ```bash
 # Une seule commande qui remplace tout
 npm run dev:ia
 
 # Équivalent à :
 # npm run validate:cbd
-# npm run validate:roadmap  
+# npm run validate:roadmap
 # npm run check:env
 # npm run lint
 # npm run test:coverage
@@ -4274,6 +4580,7 @@ npm run dev:ia
 ```
 
 **Interaction Minimale** :
+
 - ✅ **Succès** : Commit automatique + rapport de succès
 - ⚠️ **Warning** : Continuer avec notification
 - ❌ **Blocage** : Stop + diagnostic + suggestions + attente confirmation
@@ -4281,6 +4588,7 @@ npm run dev:ia
 #### **🎯 Réduction Charge Cognitive**
 
 **Avant (Charge Cognitive Élevée)** :
+
 ```bash
 # Développeur doit se souvenir de 15+ commandes
 npm run validate:cbd
@@ -4295,6 +4603,7 @@ git push
 ```
 
 **Après (Charge Cognitive Minimale)** :
+
 ```bash
 # Une seule commande à retenir
 npm run dev:ia
@@ -4302,7 +4611,7 @@ npm run dev:ia
 # L'IA gère automatiquement :
 # - Toutes les validations
 # - Tous les tests
-# - Tous les audits  
+# - Tous les audits
 # - Le commit intelligent
 # - Le push sécurisé
 # - Le post-mortem
@@ -4316,6 +4625,7 @@ npm run dev:ia
 ### **🚨 Erreurs Courantes**
 
 #### **❌ "Module not found: firebase"**
+
 ```bash
 [DIAGNOSTIC] npm ls firebase
 [SOLUTION] npm install firebase
@@ -4323,6 +4633,7 @@ npm run dev:ia
 ```
 
 #### **❌ "Permission denied"**
+
 ```bash
 [DIAGNOSTIC] ls -la (Linux) / icacls (Windows)
 [SOLUTION] Vérifier droits dossier ou relancer en admin
@@ -4330,6 +4641,7 @@ npm run dev:ia
 ```
 
 #### **❌ "Tests fail on Windows"**
+
 ```bash
 [DIAGNOSTIC] Vérifier chemins (\\ vs /)
 [SOLUTION] Utiliser path.join() ou path.resolve()
@@ -4337,6 +4649,7 @@ npm run dev:ia
 ```
 
 #### **� "Déviation de roadmap détectée"**
+
 ```bash
 [DIAGNOSTIC] npm run validate:roadmap
 [ANALYSE] Réviser l'impact sur planning et architecture
@@ -4366,6 +4679,7 @@ npm run dev:ia
 ## 📚 **Références**
 
 ### **📖 Documentation Essentielle**
+
 - **[DOC_README.md](./DOC_README.md)** - 🏠 **HUB CENTRAL** - Index complet de toute la documentation
 - [CBD - Check Before Doing](./DOC_CBD.md) - 🔍 Ce document de validation
 - [Roadmap FunLearning V1.0](./DOC_ROADMAP_LEARNING.md) - 🗺️ Coordinateur principal
@@ -4374,6 +4688,7 @@ npm run dev:ia
 - [Configuration Git Remote](./DOC_GIT_REMOTE_CONFIG.md) - ⚙️ Setup Git
 
 ### **🏗️ Références Modulaires Techniques**
+
 - [Firebase & Auth](./roadmap/references/auth/firebase-auth.md) - 🔐 Authentification
 - [Types & Données](./roadmap/references/data/content-types.md) - 💾 Structures données
 - [Système Temps Réel](./roadmap/references/data/realtime-system.md) - ⚡ Real-time
@@ -4382,11 +4697,13 @@ npm run dev:ia
 - [Stratégie Tests](./roadmap/references/testing/testing-strategy.md) - 🧪 Qualité
 
 ### **🌐 Ressources Externes**
+
 - [SvelteKit Docs](https://kit.svelte.dev)
 - [Firebase Integration](https://firebase.google.com/docs/web)
 - [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/)
 
 ### **🛠️ Outils Recommandés**
+
 - **Linting** : ESLint + Prettier
 - **Tests** : Vitest + Playwright
 - **Git** : Husky + Commitlint
@@ -4395,14 +4712,14 @@ npm run dev:ia
 
 ### **📝 Lexique des Balises**
 
-| Balise | Usage | Exemple |
-|--------|-------|---------|
-| `[CONTEXT]` | Phase/contexte de la roadmap | `[CONTEXT] Phase 1.8 - Auth Firebase` |
-| `[FILE]` | Fichier à créer/modifier | `[FILE] src/routes/+page.svelte` |
-| `[CMD]` | Commande terminal | `[CMD] npm run dev` |
-| `[TEST]` | Test à exécuter | `[TEST] npm run test:auth` |
-| `[CHECK]` | Critère de validation | `[CHECK] Connexion fonctionne` |
-| `[DEBUG-MODE]` | Activation mode debug | Protocole détaillé |
+| Balise         | Usage                        | Exemple                               |
+| -------------- | ---------------------------- | ------------------------------------- |
+| `[CONTEXT]`    | Phase/contexte de la roadmap | `[CONTEXT] Phase 1.8 - Auth Firebase` |
+| `[FILE]`       | Fichier à créer/modifier     | `[FILE] src/routes/+page.svelte`      |
+| `[CMD]`        | Commande terminal            | `[CMD] npm run dev`                   |
+| `[TEST]`       | Test à exécuter              | `[TEST] npm run test:auth`            |
+| `[CHECK]`      | Critère de validation        | `[CHECK] Connexion fonctionne`        |
+| `[DEBUG-MODE]` | Activation mode debug        | Protocole détaillé                    |
 
 ---
 
@@ -4413,19 +4730,22 @@ npm run dev:ia
 Le dossier `scripts/` suit une architecture standardisée pour l'orchestration autonome :
 
 #### **📋 Convention de Nommage**
+
 ```
 CATEGORY_description.js
 ```
 
-| Catégorie | Préfixe | Usage | Exemple |
-|-----------|---------|-------|---------|
-| **Validation** | `VALID_` | Scripts de vérification et contrôle qualité | `VALID_cbd.js` |
-| **Utilitaires** | `UTIL_` | Scripts d'orchestration et automation | `UTIL_dev_ia_orchestrator.js` |
-| **Debug** | `DEBUG_` | Scripts de diagnostic et collecte d'infos | `DEBUG_info_collector.js` |
-| **Templates** | `TEMPLATE_` | Modèles pour créer nouveaux scripts | `TEMPLATE_validation.js` |
+| Catégorie       | Préfixe     | Usage                                       | Exemple                       |
+| --------------- | ----------- | ------------------------------------------- | ----------------------------- |
+| **Validation**  | `VALID_`    | Scripts de vérification et contrôle qualité | `VALID_cbd.js`                |
+| **Utilitaires** | `UTIL_`     | Scripts d'orchestration et automation       | `UTIL_dev_ia_orchestrator.js` |
+| **Debug**       | `DEBUG_`    | Scripts de diagnostic et collecte d'infos   | `DEBUG_info_collector.js`     |
+| **Templates**   | `TEMPLATE_` | Modèles pour créer nouveaux scripts         | `TEMPLATE_validation.js`      |
 
 #### **🚀 Orchestrateur Central**
+
 L'**orchestrateur Dev:IA** (`UTIL_dev_ia_orchestrator.js`) implémente le **cerveau centralisé** :
+
 - **Une commande unique** : `npm run dev:ia`
 - **Workflow automatisé** : CBD → Roadmap → Git → Qualité → Commit
 - **Auto-apprentissage** : Post-mortem et amélioration continue
@@ -4434,24 +4754,27 @@ L'**orchestrateur Dev:IA** (`UTIL_dev_ia_orchestrator.js`) implémente le **cerv
 ### **✅ Création de Nouveaux Scripts**
 
 #### **Template pour Script de Validation**
+
 ```markdown
 [CONTEXT] Phase X.Y - Validation de [COMPOSANT]
-[FILE] scripts/VALID_[composant].js
+[FILE] scripts/VALID\_[composant].js
 [TEMPLATE] Copier scripts/TEMPLATE_validation.js
 [EDIT] Implémenter les méthodes :
-  - performValidation()
-  - generateReport()
-  - checkCompliance()
-[PACKAGE] Ajouter dans package.json: "validate:[composant]"
-[INTEGRATION] Ajouter dans UTIL_dev_ia_orchestrator.js si nécessaire
-[TEST] npm run validate:[composant]
-[CHECK] Script génère rapport détaillé et retourne exit code approprié
+
+- performValidation()
+- generateReport()
+- checkCompliance()
+  [PACKAGE] Ajouter dans package.json: "validate:[composant]"
+  [INTEGRATION] Ajouter dans UTIL_dev_ia_orchestrator.js si nécessaire
+  [TEST] npm run validate:[composant]
+  [CHECK] Script génère rapport détaillé et retourne exit code approprié
 ```
 
 #### **Template pour Script Utilitaire**
+
 ```markdown
 [CONTEXT] Phase X.Y - Automatisation de [PROCESSUS]
-[FILE] scripts/UTIL_[processus].js
+[FILE] scripts/UTIL\_[processus].js
 [TEMPLATE] Copier scripts/TEMPLATE_utility.js
 [EDIT] Implémenter la logique métier dans executeProcess()
 [PACKAGE] Ajouter script NPM approprié
@@ -4465,6 +4788,7 @@ L'**orchestrateur Dev:IA** (`UTIL_dev_ia_orchestrator.js`) implémente le **cerv
 #### **🎯 Objectif de Documentation Structurelle**
 
 **Principe** : Chaque dossier critique DOIT avoir un README qui documente :
+
 - 📋 **Inventaire complet** des fichiers et leur rôle
 - 🚨 **Classification par criticité** (Critique/Important/Standard/Temporaire)
 - ⚠️ **Précautions de modification** pour les fichiers sensibles
@@ -4476,42 +4800,49 @@ L'**orchestrateur Dev:IA** (`UTIL_dev_ia_orchestrator.js`) implémente le **cerv
 ##### **📁 `/src/README.md` - Guide du Code Source**
 
 **Structure requise** :
+
 ```markdown
 # 📁 Source Code Architecture - FunLearning V1.0
 
 ## 🎯 Vue d'Ensemble
+
 Structure du code source organisée par domaines fonctionnels
 
 ## 📋 Inventaire par Criticité
 
 ### 🚨 FICHIERS CRITIQUES - Modifications avec EXTRÊME PRÉCAUTION
-| Fichier | Rôle | Impact | Précautions |
-|---------|------|--------|-------------|
-| `app.html` | Template HTML racine | 🔴 GLOBAL | Tests complets avant modif |
-| `hooks.server.ts` | Middleware serveur | 🔴 GLOBAL | Vérifier auth et sécurité |
-| `lib/firebase/client.ts` | Client Firebase | 🔴 AUTH/DATA | Tests auth complets |
-| `lib/stores/user.ts` | Store utilisateur | 🔴 STATE | Vérifier réactivité |
+
+| Fichier                  | Rôle                 | Impact       | Précautions                |
+| ------------------------ | -------------------- | ------------ | -------------------------- |
+| `app.html`               | Template HTML racine | 🔴 GLOBAL    | Tests complets avant modif |
+| `hooks.server.ts`        | Middleware serveur   | 🔴 GLOBAL    | Vérifier auth et sécurité  |
+| `lib/firebase/client.ts` | Client Firebase      | 🔴 AUTH/DATA | Tests auth complets        |
+| `lib/stores/user.ts`     | Store utilisateur    | 🔴 STATE     | Vérifier réactivité        |
 
 ### ⚠️ FICHIERS IMPORTANTS - Modifications avec PRÉCAUTION
-| Fichier | Rôle | Impact | Validation Requise |
-|---------|------|--------|-------------------|
-| `routes/+layout.svelte` | Layout principal | 🟡 UI GLOBALE | Tests visuels |
-| `lib/components/Header.svelte` | Navigation | 🟡 UX | Tests navigation |
-| `lib/stores/courses.ts` | Store contenus | 🟡 DATA | Tests données |
+
+| Fichier                        | Rôle             | Impact        | Validation Requise |
+| ------------------------------ | ---------------- | ------------- | ------------------ |
+| `routes/+layout.svelte`        | Layout principal | 🟡 UI GLOBALE | Tests visuels      |
+| `lib/components/Header.svelte` | Navigation       | 🟡 UX         | Tests navigation   |
+| `lib/stores/courses.ts`        | Store contenus   | 🟡 DATA       | Tests données      |
 
 ### ✅ FICHIERS STANDARD - Modifications Normales
-| Fichier | Rôle | Guidelines |
-|---------|------|-----------|
-| `routes/cours/+page.svelte` | Page cours | Tests unitaires |
-| `lib/components/quiz/` | Composants quiz | Tests isolés |
+
+| Fichier                     | Rôle            | Guidelines      |
+| --------------------------- | --------------- | --------------- |
+| `routes/cours/+page.svelte` | Page cours      | Tests unitaires |
+| `lib/components/quiz/`      | Composants quiz | Tests isolés    |
 
 ### 🔄 FICHIERS TEMPORAIRES - Modifications Libres
-| Fichier | Rôle | Notes |
-|---------|------|-------|
-| `routes/dev/` | Pages développement | Supprimables |
-| `lib/temp/` | Utilitaires temporaires | À nettoyer |
+
+| Fichier       | Rôle                    | Notes        |
+| ------------- | ----------------------- | ------------ |
+| `routes/dev/` | Pages développement     | Supprimables |
+| `lib/temp/`   | Utilitaires temporaires | À nettoyer   |
 
 ## 🔗 Matrice des Dépendances
+
 - **app.html** → Impacte TOUT le projet
 - **hooks.server.ts** → Impacte auth, routing, sécurité
 - **Firebase client** → Impacte auth, données, offline
@@ -4520,6 +4851,7 @@ Structure du code source organisée par domaines fonctionnels
 ## 📏 Guidelines de Modification
 
 ### 🚨 Avant de Modifier un Fichier CRITIQUE :
+
 1. **Lire la documentation** complète du composant
 2. **Créer des tests** qui reproduisent le comportement actuel
 3. **Planifier les tests** de non-régression
@@ -4527,30 +4859,36 @@ Structure du code source organisée par domaines fonctionnels
 5. **Tester dans environnement** isolé d'abord
 
 ### ⚠️ Pour les Fichiers IMPORTANTS :
+
 1. **Tests unitaires** avant modification
 2. **Validation manuelle** des flows impactés
 3. **Review** par second développeur si possible
 
 ### ✅ Pour les Fichiers STANDARD :
+
 1. **Tests appropriés** selon la complexité
 2. **Validation automatique** suffisante
 
 ## 🎯 Par Phase de Développement
 
 ### Phase 0-1 : Fichiers Critiques
+
 - Configuration de base, auth, Firebase
 
-### Phase 2-3 : Fichiers Importants  
+### Phase 2-3 : Fichiers Importants
+
 - UI, composants, interactions
 
 ### Phase 4-6 : Extension Progressive
+
 - PWA, admin, optimisations
 ```
 
 ##### **📁 `/tests/README.md` - Guide de la Suite de Tests**
 
 **Structure requise** :
-```markdown
+
+````markdown
 # 🧪 Test Suite Architecture - FunLearning V1.0
 
 ## 🎯 Stratégie de Tests par Type
@@ -4558,59 +4896,67 @@ Structure du code source organisée par domaines fonctionnels
 ## 📋 Inventaire par Criticité de Couverture
 
 ### 🚨 TESTS CRITIQUES - Exécution OBLIGATOIRE
-| Test | Cible | Fréquence | Échec = Blocage |
-|------|-------|-----------|-----------------|
-| `auth.critical.test.js` | Authentification | Chaque commit | 🔴 OUI |
-| `firebase.integration.test.js` | Connexion Firebase | Chaque commit | 🔴 OUI |
-| `security.test.js` | Failles sécurité | Chaque commit | 🔴 OUI |
-| `data-integrity.test.js` | Intégrité données | Chaque commit | 🔴 OUI |
+
+| Test                           | Cible              | Fréquence     | Échec = Blocage |
+| ------------------------------ | ------------------ | ------------- | --------------- |
+| `auth.critical.test.js`        | Authentification   | Chaque commit | 🔴 OUI          |
+| `firebase.integration.test.js` | Connexion Firebase | Chaque commit | 🔴 OUI          |
+| `security.test.js`             | Failles sécurité   | Chaque commit | 🔴 OUI          |
+| `data-integrity.test.js`       | Intégrité données  | Chaque commit | 🔴 OUI          |
 
 ### ⚠️ TESTS IMPORTANTS - Exécution RECOMMANDÉE
-| Test | Cible | Fréquence | Échec = Warning |
-|------|-------|-----------|-----------------|
-| `ui.component.test.js` | Composants UI | Chaque PR | 🟡 WARNING |
-| `navigation.e2e.test.js` | Parcours utilisateur | Avant release | 🟡 WARNING |
-| `performance.test.js` | Métriques perf | Hebdomadaire | 🟡 WARNING |
+
+| Test                     | Cible                | Fréquence     | Échec = Warning |
+| ------------------------ | -------------------- | ------------- | --------------- |
+| `ui.component.test.js`   | Composants UI        | Chaque PR     | 🟡 WARNING      |
+| `navigation.e2e.test.js` | Parcours utilisateur | Avant release | 🟡 WARNING      |
+| `performance.test.js`    | Métriques perf       | Hebdomadaire  | 🟡 WARNING      |
 
 ### ✅ TESTS STANDARD - Exécution NORMALE
-| Test | Cible | Fréquence |
-|------|-------|-----------|
-| `unit.*.test.js` | Fonctions isolées | Continue |
-| `component.*.test.js` | Composants individuels | Continue |
+
+| Test                  | Cible                  | Fréquence |
+| --------------------- | ---------------------- | --------- |
+| `unit.*.test.js`      | Fonctions isolées      | Continue  |
+| `component.*.test.js` | Composants individuels | Continue  |
 
 ### 🔄 TESTS TEMPORAIRES - Développement
-| Test | Usage | Durée de vie |
-|------|-------|-------------|
-| `debug.*.test.js` | Debugging | Temporaire |
-| `experiment.*.test.js` | R&D | Phase spécifique |
+
+| Test                   | Usage     | Durée de vie     |
+| ---------------------- | --------- | ---------------- |
+| `debug.*.test.js`      | Debugging | Temporaire       |
+| `experiment.*.test.js` | R&D       | Phase spécifique |
 
 ## 🔗 Matrice de Couverture Obligatoire
 
 ### Par Phase de Développement
-| Phase | Couverture Min | Tests Critiques | Tests E2E |
-|-------|---------------|-----------------|-----------|
-| P0 | 70% | Config + Auth | Basic |
-| P1 | 80% | Auth + Firebase | Login flow |
-| P2 | 85% | UI + Data | User journey |
-| P3 | 85% | Interactions | Complete flow |
-| P4 | 90% | PWA + Offline | Full app |
-| P5 | 90% | Admin + Security | Admin flow |
-| P6 | 95% | Performance | Production |
+
+| Phase | Couverture Min | Tests Critiques  | Tests E2E     |
+| ----- | -------------- | ---------------- | ------------- |
+| P0    | 70%            | Config + Auth    | Basic         |
+| P1    | 80%            | Auth + Firebase  | Login flow    |
+| P2    | 85%            | UI + Data        | User journey  |
+| P3    | 85%            | Interactions     | Complete flow |
+| P4    | 90%            | PWA + Offline    | Full app      |
+| P5    | 90%            | Admin + Security | Admin flow    |
+| P6    | 95%            | Performance      | Production    |
 
 ## 📏 Guidelines par Type de Test
 
 ### 🚨 Tests CRITIQUES :
+
 - **Échec = Commit bloqué**
 - **Exécution dans CI/CD**
 - **Notification immédiate si échec**
 - **Rollback automatique si possible**
 
 ### ⚠️ Tests IMPORTANTS :
+
 - **Échec = Warning mais pas blocage**
 - **Review manuelle requise**
 - **Fix avant merge en main**
 
 ### ✅ Tests STANDARD :
+
 - **Feedback développeur**
 - **Intégration continue**
 - **Fix selon priorité**
@@ -4630,10 +4976,12 @@ npm run test:phase:X
 # Tests de sécurité
 npm run test:security
 
-# Tests de performance  
+# Tests de performance
 npm run test:performance
 ```
-```
+````
+
+````
 
 #### **🔧 Intégration dans le Workflow CBD**
 
@@ -4648,9 +4996,10 @@ npm run test:performance
 [TEST-STRATEGY] [Selon guidelines du fichier]
 [VALIDATION] [Tests appropriés au niveau de criticité]
 [CHECK] Modification effectuée selon protocole de criticité
-```
+````
 
 ##### **Workflow de Modification Basé sur la Criticité**
+
 ```markdown
 🔄 WORKFLOW MODIFICATION INTELLIGENTE
 
@@ -4664,11 +5013,13 @@ npm run test:performance
 #### **🎯 Maintenance des README**
 
 ##### **📅 Mise à Jour Automatique**
+
 - **Trigger** : Ajout/suppression de fichiers
 - **Validation** : Classification de criticité obligatoire
 - **Review** : Validation humaine pour fichiers critiques
 
 ##### **🔍 Audit Périodique**
+
 ```bash
 # Vérification cohérence README avec structure réelle
 npm run audit:readme-sync
@@ -4683,28 +5034,34 @@ npm run audit:undocumented
 ### **🚨 Règles de Criticité Obligatoires**
 
 #### **🔴 CRITIQUE** : Modification = Risque de Panne Globale
+
 - Tests complets obligatoires avant ET après
 - Backup automatique avant modification
 - Validation par orchestrateur Dev:IA
 - Review humaine recommandée
 
 #### **🟡 IMPORTANT** : Modification = Risque Fonctionnel
+
 - Tests ciblés obligatoires
 - Validation automatique suffisante
 - Monitoring post-modification
 
 #### **✅ STANDARD** : Modification = Risque Mineur
+
 - Tests unitaires suffisants
 - Intégration continue normale
 
 #### **🔄 TEMPORAIRE** : Modification = Aucun Risque
+
 - Tests optionnels
 - Modification libre
 
 ### **�🔗 Intégration avec l'Orchestrateur**
 
 #### **Gates de Qualité**
+
 Configuration dans `CONFIG_quality_gates.json` par phase :
+
 ```json
 {
   "phase-0": {
@@ -4716,7 +5073,9 @@ Configuration dans `CONFIG_quality_gates.json` par phase :
 ```
 
 #### **Post-Mortem Automatique**
+
 Chaque exécution génère des métriques dans `LOG_POSTMORTEM.md` :
+
 - ⏱️ **Temps d'exécution** par étape
 - ❌ **Erreurs détectées** avec contexte
 - 📊 **Métriques qualité** tendances
@@ -4725,6 +5084,7 @@ Chaque exécution génère des métriques dans `LOG_POSTMORTEM.md` :
 ### **🛡️ Standards de Qualité Scripts**
 
 #### **Code Quality**
+
 ```markdown
 [CHECK] ESLint passing sans erreurs
 [CHECK] Complexité cyclomatique < 10 par fonction
@@ -4734,6 +5094,7 @@ Chaque exécution génère des métriques dans `LOG_POSTMORTEM.md` :
 ```
 
 #### **Documentation**
+
 ```markdown
 [CHECK] Header JSDoc avec description, version, auteur
 [CHECK] Méthodes documentées avec @param et @returns
@@ -4742,6 +5103,7 @@ Chaque exécution génère des métriques dans `LOG_POSTMORTEM.md` :
 ```
 
 #### **Tests et Fiabilité**
+
 ```markdown
 [CHECK] Script testable en isolation
 [CHECK] Gestion des cas d'erreur (fichiers manquants, etc.)
@@ -4752,6 +5114,7 @@ Chaque exécution génère des métriques dans `LOG_POSTMORTEM.md` :
 ### **📚 Documentation Scripts**
 
 Le fichier `scripts/README.md` contient :
+
 - 📋 **Inventaire complet** de tous les scripts
 - 🚀 **Instructions d'usage** avec exemples
 - 🔄 **Workflow d'orchestration** détaillé
@@ -4761,12 +5124,14 @@ Le fichier `scripts/README.md` contient :
 ### **🤖 Auto-apprentissage et Évolution**
 
 L'orchestrateur apprend automatiquement :
+
 - **📈 Optimisation seuils** qualité selon historique
-- **🔄 Adaptation workflow** selon contexte projet  
+- **🔄 Adaptation workflow** selon contexte projet
 - **🧠 Prédiction problèmes** basée sur patterns
 - **💡 Suggestions amélioration** proactives
 
 #### **Métriques d'Apprentissage**
+
 ```bash
 # Voir les tendances d'amélioration
 npm run debug:info
@@ -4788,33 +5153,33 @@ npm run dev:ia --verbose
 
 #### **📊 Tableau des Critères de Succès par Phase**
 
-| Phase | Métrique Clé | Seuil Minimum | Outil de Mesure | Commande | Criticité |
-|-------|--------------|---------------|-----------------|----------|-----------|
-| **P1 - Setup** | Taux de réussite environnement | 100% | Scripts validation | `npm run test:env` | 🔴 BLOQUANT |
-| **P1 - Setup** | Temps setup complet | < 15min | Chronomètre auto | `npm run setup:measure` | 🟡 WARNING |
-| **P2 - Firebase** | Taux de réussite auth | 100% | Tests auth | `npm run test:auth` | 🔴 BLOQUANT |
-| **P2 - Firebase** | Score sécurité Firestore | 100% | Audit sécurité | `npm run audit:security` | 🔴 BLOQUANT |
-| **P2 - Firebase** | Temps connexion Firebase | < 2s | Performance tests | `npm run test:firebase-perf` | 🟡 WARNING |
-| **P3 - Core** | Couverture tests contenu | ≥ 85% | Coverage report | `npm run test:coverage` | 🟠 IMPORTANT |
-| **P3 - Core** | Temps chargement cours | < 2s | Lighthouse | `npm run lighthouse:pages` | 🟠 IMPORTANT |
-| **P3 - Core** | Taux composants réutilisables | ≥ 80% | Analyse statique | `npm run analyze:components` | 🟡 WARNING |
-| **P4 - Advanced** | Score PWA | > 90 | Lighthouse PWA | `npm run lighthouse:pwa` | 🟠 IMPORTANT |
-| **P4 - Advanced** | Performance mobile | > 85 | Lighthouse mobile | `npm run lighthouse:mobile` | 🟠 IMPORTANT |
-| **P4 - Advanced** | Taux accessibilité | 100% | Tests A11Y | `npm run test:accessibility` | 🔴 BLOQUANT |
-| **P5 - Production** | Taux de conversion admin | 100% | Tests E2E admin | `npm run test:admin` | 🔴 BLOQUANT |
-| **P5 - Production** | Disponibilité production | 99.9% | Monitoring uptime | `npm run monitor:uptime` | 🔴 BLOQUANT |
-| **P5 - Production** | Temps réponse API | < 500ms | Tests performance | `npm run test:api-perf` | 🟠 IMPORTANT |
+| Phase               | Métrique Clé                   | Seuil Minimum | Outil de Mesure    | Commande                     | Criticité    |
+| ------------------- | ------------------------------ | ------------- | ------------------ | ---------------------------- | ------------ |
+| **P1 - Setup**      | Taux de réussite environnement | 100%          | Scripts validation | `npm run test:env`           | 🔴 BLOQUANT  |
+| **P1 - Setup**      | Temps setup complet            | < 15min       | Chronomètre auto   | `npm run setup:measure`      | 🟡 WARNING   |
+| **P2 - Firebase**   | Taux de réussite auth          | 100%          | Tests auth         | `npm run test:auth`          | 🔴 BLOQUANT  |
+| **P2 - Firebase**   | Score sécurité Firestore       | 100%          | Audit sécurité     | `npm run audit:security`     | 🔴 BLOQUANT  |
+| **P2 - Firebase**   | Temps connexion Firebase       | < 2s          | Performance tests  | `npm run test:firebase-perf` | 🟡 WARNING   |
+| **P3 - Core**       | Couverture tests contenu       | ≥ 85%         | Coverage report    | `npm run test:coverage`      | 🟠 IMPORTANT |
+| **P3 - Core**       | Temps chargement cours         | < 2s          | Lighthouse         | `npm run lighthouse:pages`   | 🟠 IMPORTANT |
+| **P3 - Core**       | Taux composants réutilisables  | ≥ 80%         | Analyse statique   | `npm run analyze:components` | 🟡 WARNING   |
+| **P4 - Advanced**   | Score PWA                      | > 90          | Lighthouse PWA     | `npm run lighthouse:pwa`     | 🟠 IMPORTANT |
+| **P4 - Advanced**   | Performance mobile             | > 85          | Lighthouse mobile  | `npm run lighthouse:mobile`  | 🟠 IMPORTANT |
+| **P4 - Advanced**   | Taux accessibilité             | 100%          | Tests A11Y         | `npm run test:accessibility` | 🔴 BLOQUANT  |
+| **P5 - Production** | Taux de conversion admin       | 100%          | Tests E2E admin    | `npm run test:admin`         | 🔴 BLOQUANT  |
+| **P5 - Production** | Disponibilité production       | 99.9%         | Monitoring uptime  | `npm run monitor:uptime`     | 🔴 BLOQUANT  |
+| **P5 - Production** | Temps réponse API              | < 500ms       | Tests performance  | `npm run test:api-perf`      | 🟠 IMPORTANT |
 
 #### **🎮 Métriques Spécialisées FunLearning**
 
-| Domaine | Métrique Éducative | Seuil | Outil | Commande | Justification |
-|---------|-------------------|-------|--------|----------|---------------|
-| **Pédagogie** | Taux compréhension contenu | ≥ 90% | Tests utilisateurs | `npm run test:pedagogy` | Efficacité apprentissage |
-| **Pédagogie** | Temps attention moyen | 8-12min | Analytics | `npm run analyze:attention` | Optimisation engagement |
-| **Accessibilité** | Conformité RGAA/WCAG | 100% | Tests auto | `npm run test:rgaa` | Inclusion éducative |
-| **Performance** | Temps chargement vidéo | < 3s | Tests réseau | `npm run test:video-perf` | Fluidité apprentissage |
-| **Sécurité** | Conformité RGPD enfants | 100% | Audit privacy | `npm run audit:rgpd-kids` | Protection données |
-| **Gamification** | Taux engagement badges | ≥ 70% | Analytics gamif | `npm run analyze:gamification` | Motivation apprentissage |
+| Domaine           | Métrique Éducative         | Seuil   | Outil              | Commande                       | Justification            |
+| ----------------- | -------------------------- | ------- | ------------------ | ------------------------------ | ------------------------ |
+| **Pédagogie**     | Taux compréhension contenu | ≥ 90%   | Tests utilisateurs | `npm run test:pedagogy`        | Efficacité apprentissage |
+| **Pédagogie**     | Temps attention moyen      | 8-12min | Analytics          | `npm run analyze:attention`    | Optimisation engagement  |
+| **Accessibilité** | Conformité RGAA/WCAG       | 100%    | Tests auto         | `npm run test:rgaa`            | Inclusion éducative      |
+| **Performance**   | Temps chargement vidéo     | < 3s    | Tests réseau       | `npm run test:video-perf`      | Fluidité apprentissage   |
+| **Sécurité**      | Conformité RGPD enfants    | 100%    | Audit privacy      | `npm run audit:rgpd-kids`      | Protection données       |
+| **Gamification**  | Taux engagement badges     | ≥ 70%   | Analytics gamif    | `npm run analyze:gamification` | Motivation apprentissage |
 
 #### **🚦 Système de Validation Automatique par Phase**
 
@@ -4825,99 +5190,152 @@ class PhaseMetricsValidator {
     P1: {
       name: "Setup & Foundation",
       metrics: [
-        { key: 'env_success_rate', threshold: 100, unit: '%', blocking: true },
-        { key: 'setup_time', threshold: 15, unit: 'min', blocking: false },
-        { key: 'dependencies_security', threshold: 0, unit: 'vulns', blocking: true }
-      ]
+        { key: "env_success_rate", threshold: 100, unit: "%", blocking: true },
+        { key: "setup_time", threshold: 15, unit: "min", blocking: false },
+        {
+          key: "dependencies_security",
+          threshold: 0,
+          unit: "vulns",
+          blocking: true,
+        },
+      ],
     },
     P2: {
-      name: "Firebase & Auth", 
+      name: "Firebase & Auth",
       metrics: [
-        { key: 'auth_success_rate', threshold: 100, unit: '%', blocking: true },
-        { key: 'firestore_security_score', threshold: 100, unit: '%', blocking: true },
-        { key: 'firebase_connection_time', threshold: 2, unit: 's', blocking: false }
-      ]
+        { key: "auth_success_rate", threshold: 100, unit: "%", blocking: true },
+        {
+          key: "firestore_security_score",
+          threshold: 100,
+          unit: "%",
+          blocking: true,
+        },
+        {
+          key: "firebase_connection_time",
+          threshold: 2,
+          unit: "s",
+          blocking: false,
+        },
+      ],
     },
     P3: {
       name: "Core Features",
       metrics: [
-        { key: 'test_coverage', threshold: 85, unit: '%', blocking: false },
-        { key: 'page_load_time', threshold: 2, unit: 's', blocking: false },
-        { key: 'component_reusability', threshold: 80, unit: '%', blocking: false }
-      ]
+        { key: "test_coverage", threshold: 85, unit: "%", blocking: false },
+        { key: "page_load_time", threshold: 2, unit: "s", blocking: false },
+        {
+          key: "component_reusability",
+          threshold: 80,
+          unit: "%",
+          blocking: false,
+        },
+      ],
     },
     P4: {
       name: "Advanced Features",
       metrics: [
-        { key: 'pwa_score', threshold: 90, unit: 'pts', blocking: false },
-        { key: 'mobile_performance', threshold: 85, unit: 'pts', blocking: false },
-        { key: 'accessibility_score', threshold: 100, unit: '%', blocking: true }
-      ]
+        { key: "pwa_score", threshold: 90, unit: "pts", blocking: false },
+        {
+          key: "mobile_performance",
+          threshold: 85,
+          unit: "pts",
+          blocking: false,
+        },
+        {
+          key: "accessibility_score",
+          threshold: 100,
+          unit: "%",
+          blocking: true,
+        },
+      ],
     },
     P5: {
       name: "Production",
       metrics: [
-        { key: 'admin_conversion_rate', threshold: 100, unit: '%', blocking: true },
-        { key: 'production_uptime', threshold: 99.9, unit: '%', blocking: true },
-        { key: 'api_response_time', threshold: 500, unit: 'ms', blocking: false }
-      ]
-    }
+        {
+          key: "admin_conversion_rate",
+          threshold: 100,
+          unit: "%",
+          blocking: true,
+        },
+        {
+          key: "production_uptime",
+          threshold: 99.9,
+          unit: "%",
+          blocking: true,
+        },
+        {
+          key: "api_response_time",
+          threshold: 500,
+          unit: "ms",
+          blocking: false,
+        },
+      ],
+    },
   };
-  
+
   static async validatePhase(phaseId) {
     const phase = this.phases[phaseId];
     if (!phase) throw new Error(`Phase ${phaseId} not found`);
-    
-    console.log(`🎯 Validation ${phase.name} - ${phase.metrics.length} métriques`);
-    
+
+    console.log(
+      `🎯 Validation ${phase.name} - ${phase.metrics.length} métriques`
+    );
+
     const results = [];
     for (const metric of phase.metrics) {
       const result = await this.measureMetric(metric);
       results.push(result);
-      
-      const status = result.success ? '✅' : (metric.blocking ? '🔴' : '🟡');
-      console.log(`${status} ${metric.key}: ${result.value}${metric.unit} (seuil: ${metric.threshold}${metric.unit})`);
+
+      const status = result.success ? "✅" : metric.blocking ? "🔴" : "🟡";
+      console.log(
+        `${status} ${metric.key}: ${result.value}${metric.unit} (seuil: ${metric.threshold}${metric.unit})`
+      );
     }
-    
-    const blocking_failures = results.filter(r => !r.success && r.metric.blocking);
+
+    const blocking_failures = results.filter(
+      (r) => !r.success && r.metric.blocking
+    );
     const phase_ready = blocking_failures.length === 0;
-    
+
     return {
       phase: phaseId,
       ready: phase_ready,
-      score: `${results.filter(r => r.success).length}/${results.length}`,
+      score: `${results.filter((r) => r.success).length}/${results.length}`,
       blocking_issues: blocking_failures.length,
       next_phase: phase_ready ? this.getNextPhase(phaseId) : null,
-      report: results
+      report: results,
     };
   }
-  
+
   static async measureMetric(metric) {
     // Exécution des commandes de mesure selon le type de métrique
     switch (metric.key) {
-      case 'env_success_rate':
-        return await this.runCommand('npm run test:env');
-      case 'test_coverage':
-        return await this.runCommand('npm run test:coverage');
-      case 'pwa_score':
-        return await this.runLighthouse('pwa');
-      case 'auth_success_rate':
-        return await this.runCommand('npm run test:auth');
+      case "env_success_rate":
+        return await this.runCommand("npm run test:env");
+      case "test_coverage":
+        return await this.runCommand("npm run test:coverage");
+      case "pwa_score":
+        return await this.runLighthouse("pwa");
+      case "auth_success_rate":
+        return await this.runCommand("npm run test:auth");
       // ... autres métriques
       default:
         throw new Error(`Metric ${metric.key} not implemented`);
     }
   }
-  
+
   static getNextPhase(currentPhase) {
-    const phases = ['P1', 'P2', 'P3', 'P4', 'P5'];
+    const phases = ["P1", "P2", "P3", "P4", "P5"];
     const currentIndex = phases.indexOf(currentPhase);
-    return currentIndex < phases.length - 1 ? phases[currentIndex + 1] : 'COMPLETE';
+    return currentIndex < phases.length - 1
+      ? phases[currentIndex + 1]
+      : "COMPLETE";
   }
 }
 
 // Usage: node scripts/metrics/phaseValidator.js P3
-const phase = process.argv[2] || 'P1';
+const phase = process.argv[2] || "P1";
 PhaseMetricsValidator.validatePhase(phase).then(console.log);
 ```
 
@@ -4927,65 +5345,67 @@ PhaseMetricsValidator.validatePhase(phase).then(console.log);
 // scripts/metrics/dashboard.js
 class MetricsDashboard {
   static async generateReport() {
-    const allPhases = ['P1', 'P2', 'P3', 'P4', 'P5'];
+    const allPhases = ["P1", "P2", "P3", "P4", "P5"];
     const results = {};
-    
+
     for (const phase of allPhases) {
       results[phase] = await PhaseMetricsValidator.validatePhase(phase);
     }
-    
-    console.log('\n🎯 FUNLEARNING - DASHBOARD MÉTRIQUES\n');
-    console.log('═'.repeat(60));
-    
+
+    console.log("\n🎯 FUNLEARNING - DASHBOARD MÉTRIQUES\n");
+    console.log("═".repeat(60));
+
     for (const [phase, data] of Object.entries(results)) {
-      const status = data.ready ? '🟢 READY' : '🔴 BLOCKED';
+      const status = data.ready ? "🟢 READY" : "🔴 BLOCKED";
       console.log(`${phase} - ${data.phase_name}: ${status} (${data.score})`);
-      
+
       if (!data.ready && data.blocking_issues > 0) {
         console.log(`  ⚠️  ${data.blocking_issues} issue(s) bloquant(es)`);
       }
     }
-    
-    console.log('═'.repeat(60));
-    
+
+    console.log("═".repeat(60));
+
     // Recommandations automatiques
     const currentPhase = this.detectCurrentPhase(results);
     const recommendations = this.generateRecommendations(currentPhase, results);
-    
+
     console.log(`\n🎯 PHASE ACTUELLE: ${currentPhase}`);
     console.log(`📋 RECOMMANDATIONS:`);
-    recommendations.forEach(rec => console.log(`  • ${rec}`));
-    
+    recommendations.forEach((rec) => console.log(`  • ${rec}`));
+
     return results;
   }
-  
+
   static detectCurrentPhase(results) {
     // Logique de détection de la phase actuelle basée sur les métriques
     for (const [phase, data] of Object.entries(results)) {
       if (!data.ready) return phase;
     }
-    return 'P5'; // Toutes les phases validées
+    return "P5"; // Toutes les phases validées
   }
-  
+
   static generateRecommendations(currentPhase, results) {
     const phase_data = results[currentPhase];
     const recommendations = [];
-    
+
     if (phase_data && !phase_data.ready) {
       phase_data.report
-        .filter(metric => !metric.success && metric.metric.blocking)
-        .forEach(metric => {
+        .filter((metric) => !metric.success && metric.metric.blocking)
+        .forEach((metric) => {
           recommendations.push(`🔴 PRIORITÉ: Corriger ${metric.metric.key}`);
         });
     }
-    
+
     if (recommendations.length === 0) {
-      recommendations.push(`✅ Tous les critères bloquants respectés pour ${currentPhase}`);
-      if (phase_data?.next_phase && phase_data.next_phase !== 'COMPLETE') {
+      recommendations.push(
+        `✅ Tous les critères bloquants respectés pour ${currentPhase}`
+      );
+      if (phase_data?.next_phase && phase_data.next_phase !== "COMPLETE") {
         recommendations.push(`🚀 Prêt pour passer à ${phase_data.next_phase}`);
       }
     }
-    
+
     return recommendations;
   }
 }
@@ -4999,14 +5419,14 @@ class MetricsDashboard {
   "scripts": {
     "metrics:validate": "node scripts/metrics/phaseValidator.js",
     "metrics:validate:p1": "node scripts/metrics/phaseValidator.js P1",
-    "metrics:validate:p2": "node scripts/metrics/phaseValidator.js P2", 
+    "metrics:validate:p2": "node scripts/metrics/phaseValidator.js P2",
     "metrics:validate:p3": "node scripts/metrics/phaseValidator.js P3",
     "metrics:validate:p4": "node scripts/metrics/phaseValidator.js P4",
     "metrics:validate:p5": "node scripts/metrics/phaseValidator.js P5",
     "metrics:dashboard": "node scripts/metrics/dashboard.js",
     "metrics:current-phase": "node scripts/metrics/detectCurrentPhase.js",
     "metrics:auto-validate": "npm run metrics:current-phase && npm run metrics:validate:$(npm run metrics:current-phase --silent)",
-    
+
     // Tests de métriques spécifiques
     "test:env": "node scripts/metrics/tests/environmentTests.js",
     "test:coverage": "vitest run --coverage",
@@ -5014,15 +5434,15 @@ class MetricsDashboard {
     "test:accessibility": "npm run test -- --testNamePattern=a11y",
     "audit:security": "npm audit && node scripts/security/auditFirestore.js",
     "audit:rgpd-kids": "node scripts/compliance/rgpdChildrenAudit.js",
-    
+
     // Lighthouse et performance
     "lighthouse:pages": "lighthouse http://localhost:5173 --output json",
     "lighthouse:pwa": "lighthouse http://localhost:5173 --only-categories=pwa",
     "lighthouse:mobile": "lighthouse http://localhost:5173 --preset=perf --form-factor=mobile",
-    
+
     // Analytics et mesures spécialisées
     "analyze:components": "node scripts/metrics/analyzeComponents.js",
-    "analyze:attention": "node scripts/metrics/attentionAnalytics.js", 
+    "analyze:attention": "node scripts/metrics/attentionAnalytics.js",
     "analyze:gamification": "node scripts/metrics/gamificationMetrics.js"
   }
 }
@@ -5030,22 +5450,22 @@ class MetricsDashboard {
 
 ### **📊 KPI de Performance CBD**
 
-| Métrique | Objectif | Mesure |
-|----------|----------|---------|
-| Temps moyen de réponse IA | < 30s | Timer automatique |
-| Taux d'erreur évitées | > 90% | Log des vérifications |
-| Conformité architecturale | 100% | Audit automatique |
-| Satisfaction utilisateur | > 4/5 | Feedback régulier |
+| Métrique                  | Objectif | Mesure                |
+| ------------------------- | -------- | --------------------- |
+| Temps moyen de réponse IA | < 30s    | Timer automatique     |
+| Taux d'erreur évitées     | > 90%    | Log des vérifications |
+| Conformité architecturale | 100%     | Audit automatique     |
+| Satisfaction utilisateur  | > 4/5    | Feedback régulier     |
 
 ### **📝 Log des Améliorations**
 
-| Date | Version | Amélioration |
-|------|---------|--------------|
-| 30/08/2025 | 2.2 | **SYSTÈME AUTONOME AVANCÉ** - Orchestrateur unique `npm run dev:ia`, Quality Gates forcées, Post-mortem auto-apprenant, Prédiction proactive |
-| 30/08/2025 | 2.1 | Documentation dossiers critiques (/src et /tests README), Classification par criticité, Protocoles de modification intelligents |
-| 30/08/2025 | 2.0 | Restructuration complète, templates clairs, automatisation, best practices scripts |
-| 29/08/2025 | 1.1 | Intégration Git et contrôle utilisateur |
-| 29/08/2025 | 1.0 | Version initiale CBD |
+| Date       | Version | Amélioration                                                                                                                                 |
+| ---------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| 30/08/2025 | 2.2     | **SYSTÈME AUTONOME AVANCÉ** - Orchestrateur unique `npm run dev:ia`, Quality Gates forcées, Post-mortem auto-apprenant, Prédiction proactive |
+| 30/08/2025 | 2.1     | Documentation dossiers critiques (/src et /tests README), Classification par criticité, Protocoles de modification intelligents              |
+| 30/08/2025 | 2.0     | Restructuration complète, templates clairs, automatisation, best practices scripts                                                           |
+| 29/08/2025 | 1.1     | Intégration Git et contrôle utilisateur                                                                                                      |
+| 29/08/2025 | 1.0     | Version initiale CBD                                                                                                                         |
 
 ---
 
@@ -5054,6 +5474,7 @@ class MetricsDashboard {
 ### **🚀 Roadmap CBD v3.0 - Vision Autonome Complète**
 
 #### **🤖 Phase 1 : Orchestrateur Intelligent (Q1 2026)**
+
 - [x] **Commande unique** `npm run dev:ia` opérationnelle
 - [x] **Quality Gates forcées** intégrées CI/CD
 - [x] **Post-mortem automatique** avec learning loop
@@ -5062,6 +5483,7 @@ class MetricsDashboard {
 - [ ] **Prédiction proactive** des échecs
 
 #### **🧠 Phase 2 : Intelligence Augmentée (Q2 2026)**
+
 - [ ] **Assistant IA contextuel** intégré dans l'IDE
 - [ ] **Templates dynamiques** qui évoluent automatiquement
 - [ ] **Auto-génération tests** basée sur l'analyse de code
@@ -5069,6 +5491,7 @@ class MetricsDashboard {
 - [ ] **Formation adaptative** selon les patterns détectés
 
 #### **🌐 Phase 3 : Ecosystem Complet (Q3 2026)**
+
 - [ ] **Intégration multi-projets** pour apprentissage croisé
 - [ ] **Marketplace de templates** communautaires
 - [ ] **API d'orchestration** pour autres projets
@@ -5076,6 +5499,7 @@ class MetricsDashboard {
 - [ ] **Benchmarking** inter-équipes
 
 #### **🔮 Phase 4 : Autonomie Totale (Q4 2026)**
+
 - [ ] **Auto-correction** des problèmes détectés
 - [ ] **Évolution automatique** du CBD selon usage
 - [ ] **Prédiction tendances** technologiques
@@ -5084,23 +5508,25 @@ class MetricsDashboard {
 
 ### **🎯 Objectifs Quantifiables**
 
-| Métrique | Actuel | Q1 2026 | Q2 2026 | Q3 2026 | Q4 2026 |
-|----------|--------|---------|---------|---------|---------|
-| **Charge cognitive** | 15 commandes | 1 commande | Auto-suggestion | Prédictif | Zero-touch |
-| **Temps validation** | 5 min | 30 sec | 10 sec | 5 sec | Instantané |
-| **Taux d'erreur** | 10% | 5% | 2% | 1% | 0.1% |
-| **Qualité code** | Variable | Forcée | Optimisée | Prédictive | Auto-corrigée |
-| **Apprentissage** | Manuel | Auto-logging | Pattern detection | Prédiction | Évolution auto |
+| Métrique             | Actuel       | Q1 2026      | Q2 2026           | Q3 2026    | Q4 2026        |
+| -------------------- | ------------ | ------------ | ----------------- | ---------- | -------------- |
+| **Charge cognitive** | 15 commandes | 1 commande   | Auto-suggestion   | Prédictif  | Zero-touch     |
+| **Temps validation** | 5 min        | 30 sec       | 10 sec            | 5 sec      | Instantané     |
+| **Taux d'erreur**    | 10%          | 5%           | 2%                | 1%         | 0.1%           |
+| **Qualité code**     | Variable     | Forcée       | Optimisée         | Prédictive | Auto-corrigée  |
+| **Apprentissage**    | Manuel       | Auto-logging | Pattern detection | Prédiction | Évolution auto |
 
 ### **💫 Vision Ultime : Le Développement Autonome**
 
 **L'Évolution Naturelle** :
+
 1. **Phase Actuelle** : L'IA assiste le développeur
-2. **Phase Intermédiaire** : L'IA guide le développeur  
+2. **Phase Intermédiaire** : L'IA guide le développeur
 3. **Phase Avancée** : L'IA anticipe pour le développeur
 4. **Phase Ultime** : L'IA développe avec le développeur
 
 **Paradigme Transformé** :
+
 - **Développeur** → **Architecte de l'Intent**
 - **IA** → **Exécutant Intelligent et Auto-Apprenant**
 - **Code** → **Manifestation de l'Intent Validée**

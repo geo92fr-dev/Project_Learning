@@ -1,5 +1,5 @@
 <script lang="ts">
-  import InteractiveExercise from '$lib/components/exercises/InteractiveExercise.svelte';
+  import InteractiveExercise from "$lib/components/exercises/InteractiveExercise.svelte";
 
   let exerciseCompleted = false;
   let finalScore = 0;
@@ -8,9 +8,9 @@
     const { score } = event.detail;
     finalScore = score;
     exerciseCompleted = true;
-    
+
     // Log for demo purposes
-    console.log('Exercice terminé avec un score de:', score + '%');
+    console.log("Exercice terminé avec un score de:", score + "%");
   }
 
   function handleProgress(event: CustomEvent) {
@@ -21,7 +21,10 @@
 
 <svelte:head>
   <title>Exercice Interactif - Fractions - FunLearning</title>
-  <meta name="description" content="Exercice interactif sur les fractions avec QCM et évaluation automatique" />
+  <meta
+    name="description"
+    content="Exercice interactif sur les fractions avec QCM et évaluation automatique"
+  />
 </svelte:head>
 
 <div class="exercise-page">
@@ -37,7 +40,10 @@
 
       <div class="header-content">
         <h1>🎯 Exercices Interactifs</h1>
-        <p>Découvrez notre système d'exercices avec évaluation automatique et feedback personnalisé</p>
+        <p>
+          Découvrez notre système d'exercices avec évaluation automatique et
+          feedback personnalisé
+        </p>
       </div>
     </div>
   </header>
@@ -46,7 +52,7 @@
     <div class="container">
       {#if !exerciseCompleted}
         <div class="exercise-wrapper">
-          <InteractiveExercise 
+          <InteractiveExercise
             on:complete={handleExerciseComplete}
             on:progress={handleProgress}
           />
@@ -55,8 +61,12 @@
         <div class="completion-celebration">
           <div class="celebration-content">
             <h2>🎉 Félicitations !</h2>
-            <p>Vous avez terminé l'exercice avec un score de <strong>{finalScore}%</strong></p>
-            
+            <p>
+              Vous avez terminé l'exercice avec un score de <strong
+                >{finalScore}%</strong
+              >
+            </p>
+
             <div class="next-steps">
               <h3>Que souhaitez-vous faire maintenant ?</h3>
               <div class="action-grid">
@@ -65,16 +75,19 @@
                   <h4>Contenu Markdown</h4>
                   <p>Découvrez notre système de rendu de contenu éducatif</p>
                 </a>
-                
-                <button 
+
+                <button
                   class="action-card"
-                  on:click={() => {exerciseCompleted = false; finalScore = 0;}}
+                  on:click={() => {
+                    exerciseCompleted = false;
+                    finalScore = 0;
+                  }}
                 >
                   <div class="action-icon">🔄</div>
                   <h4>Refaire l'exercice</h4>
                   <p>Améliorez votre score en recommençant</p>
                 </button>
-                
+
                 <a href="/content" class="action-card">
                   <div class="action-icon">🎓</div>
                   <h4>Autres cours</h4>
@@ -94,22 +107,27 @@
         <h3>💡 Fonctionnalités démontrées</h3>
         <ul class="feature-list">
           <li>
-            <strong>QCM interactifs</strong> - Questions à choix multiples avec validation en temps réel
+            <strong>QCM interactifs</strong> - Questions à choix multiples avec validation
+            en temps réel
           </li>
           <li>
-            <strong>Progression visuelle</strong> - Barre de progression et navigation entre questions
+            <strong>Progression visuelle</strong> - Barre de progression et navigation
+            entre questions
           </li>
           <li>
             <strong>Feedback immédiat</strong> - Correction automatique avec explications
           </li>
           <li>
-            <strong>Score calculé</strong> - Évaluation automatique et pourcentage de réussite
+            <strong>Score calculé</strong> - Évaluation automatique et pourcentage
+            de réussite
           </li>
           <li>
-            <strong>Design adaptatif</strong> - Interface responsive pour tous les appareils
+            <strong>Design adaptatif</strong> - Interface responsive pour tous les
+            appareils
           </li>
           <li>
-            <strong>Composants réutilisables</strong> - Architecture modulaire pour d'autres exercices
+            <strong>Composants réutilisables</strong> - Architecture modulaire pour
+            d'autres exercices
           </li>
         </ul>
       </div>
@@ -302,7 +320,7 @@
   }
 
   .feature-list li::before {
-    content: '✨';
+    content: "✨";
     position: absolute;
     left: 0;
     top: 0;

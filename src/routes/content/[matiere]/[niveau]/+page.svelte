@@ -1,29 +1,29 @@
 <script>
   // 🧪 TDD - Page Niveau Dynamique selon DOC_CoPilot_Practices
   // Route: /content/[matiere]/[niveau]
-  
-  import { onMount } from 'svelte';
-  import { goto } from '$app/navigation';
-  
+
+  import { onMount } from "svelte";
+  import { goto } from "$app/navigation";
+
   // Import du store content pour mettre à jour l'état
-  import contentStore from '$lib/stores/content';
-  
+  import contentStore from "$lib/stores/content";
+
   // Props depuis +page.ts
   export let data;
-  
+
   let { matiere, niveau, competences, courses, stats } = data;
-  
+
   onMount(() => {
     // Mettre à jour le store avec la sélection
     contentStore.contentActions.selectMatiere(matiere.id);
     contentStore.contentActions.selectNiveau(niveau.id);
   });
-  
+
   // Navigation vers une compétence spécifique
   function navigateToCompetence(competenceId) {
     goto(`/content/${matiere.id}/${niveau.id}/${competenceId}`);
   }
-  
+
   // Navigation vers un cours spécifique
   function navigateToCourse(courseId) {
     goto(`/content/${matiere.id}/${niveau.id}/cours/${courseId}`);
@@ -45,7 +45,7 @@
       <span class="separator">›</span>
       <span class="current">📚 {niveau.nom}</span>
     </div>
-    
+
     <div class="niveau-info">
       <div class="niveau-title">
         <h1>{niveau.nom} - {matiere.nom}</h1>
@@ -53,7 +53,7 @@
           👶 Ages {niveau.ageMin}-{niveau.ageMax} ans
         </p>
       </div>
-      
+
       <div class="niveau-stats">
         <div class="stat-card">
           <span class="stat-number">{stats.nombreCompetences}</span>
@@ -76,7 +76,7 @@
     <h2>🎯 Compétences à maîtriser</h2>
     <div class="competences-grid">
       {#each competences as competence}
-        <div 
+        <div
           class="competence-card"
           style="border-left-color: {matiere.couleur}"
         >
@@ -87,7 +87,7 @@
             </span>
           </div>
           <p class="competence-description">{competence.description}</p>
-          
+
           <!-- Objectifs de la compétence -->
           {#if competence.objectifs && competence.objectifs.length > 0}
             <div class="objectifs">
@@ -99,7 +99,7 @@
               </ul>
             </div>
           {/if}
-          
+
           <div class="competence-meta">
             <span class="duree">⏱️ {competence.dureeEstimee}min</span>
             {#if competence.tags && competence.tags.length > 0}
@@ -110,8 +110,8 @@
               </div>
             {/if}
           </div>
-          
-          <button 
+
+          <button
             class="competence-btn"
             style="background-color: {matiere.couleur}"
             on:click={() => navigateToCompetence(competence.id)}
@@ -129,27 +129,25 @@
       <h2>📖 Cours recommandés</h2>
       <div class="courses-grid">
         {#each courses as course}
-          <div 
+          <div
             class="course-card"
             role="button"
             tabindex="0"
             on:click={() => navigateToCourse(course.id)}
-            on:keydown={(e) => e.key === 'Enter' && navigateToCourse(course.id)}
+            on:keydown={(e) => e.key === "Enter" && navigateToCourse(course.id)}
           >
             <div class="course-header">
               <h3>{course.titre}</h3>
               <span class="course-type">{course.type}</span>
             </div>
             <p class="course-description">{course.description}</p>
-            
+
             <div class="course-meta">
               <span class="duree">⏱️ {course.dureeEstimee}min</span>
               <span class="ordre">📊 Ordre {course.ordre}</span>
             </div>
-            
-            <button class="course-btn">
-              Commencer le cours
-            </button>
+
+            <button class="course-btn"> Commencer le cours </button>
           </div>
         {/each}
       </div>
@@ -162,12 +160,8 @@
       <a href="/content/{matiere.id}" class="btn-secondary">
         ← Retour à {matiere.nom}
       </a>
-      <a href="/content" class="btn-secondary">
-        📚 Tout le contenu
-      </a>
-      <a href="/dashboard" class="btn-secondary">
-        📊 Tableau de bord
-      </a>
+      <a href="/content" class="btn-secondary"> 📚 Tout le contenu </a>
+      <a href="/dashboard" class="btn-secondary"> 📊 Tableau de bord </a>
     </div>
   </section>
 </main>
@@ -184,20 +178,20 @@
     margin-bottom: 1rem;
     color: #6b7280;
   }
-  
+
   .breadcrumb a {
     text-decoration: none;
     color: #3b82f6;
   }
-  
+
   .breadcrumb a:hover {
     text-decoration: underline;
   }
-  
+
   .separator {
     margin: 0 0.5rem;
   }
-  
+
   .current {
     font-weight: 500;
   }

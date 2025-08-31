@@ -1,15 +1,45 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount } from "svelte";
 
   let mounted = false;
 
   const quickLinks = [
-    { title: 'Authentification', icon: '🔐', href: '/auth', description: 'Google OAuth & Email/Password' },
-    { title: 'Démonstrations', icon: '🚀', href: '/demo', description: 'Fonctionnalités Phase 3' },
-    { title: 'Tests & Qualité', icon: '🧪', href: '/tests', description: '113/119 tests réussis' },
-    { title: 'Roadmap', icon: '🗺️', href: '/roadmap', description: 'Progression du projet' },
-    { title: 'Exercices', icon: '🎯', href: '/demo/exercise', description: 'QCM interactifs' },
-    { title: 'Contenu Markdown', icon: '📝', href: '/demo/markdown', description: 'Rendu sécurisé' }
+    {
+      title: "Authentification",
+      icon: "🔐",
+      href: "/auth",
+      description: "Google OAuth & Email/Password",
+    },
+    {
+      title: "Démonstrations",
+      icon: "🚀",
+      href: "/demo",
+      description: "Fonctionnalités Phase 3",
+    },
+    {
+      title: "Tests & Qualité",
+      icon: "🧪",
+      href: "/tests",
+      description: "113/119 tests réussis",
+    },
+    {
+      title: "Roadmap",
+      icon: "🗺️",
+      href: "/roadmap",
+      description: "Progression du projet",
+    },
+    {
+      title: "Exercices",
+      icon: "🎯",
+      href: "/demo/exercise",
+      description: "QCM interactifs",
+    },
+    {
+      title: "Contenu Markdown",
+      icon: "📝",
+      href: "/demo/markdown",
+      description: "Rendu sécurisé",
+    },
   ];
 
   onMount(() => {
@@ -19,7 +49,10 @@
 
 <svelte:head>
   <title>FunLearning V2.0 - Plateforme Éducative Intelligente</title>
-  <meta name="description" content="Plateforme d'apprentissage personnalisée avec gestion de contenu avancée et exercices interactifs" />
+  <meta
+    name="description"
+    content="Plateforme d'apprentissage personnalisée avec gestion de contenu avancée et exercices interactifs"
+  />
 </svelte:head>
 
 <div class="home-page">
@@ -31,9 +64,10 @@
           FunLearning V2.0
         </h1>
         <p class="hero-subtitle">
-          Plateforme d'apprentissage personnalisée et adaptive avec système de contenu intelligent
+          Plateforme d'apprentissage personnalisée et adaptive avec système de
+          contenu intelligent
         </p>
-        
+
         <div class="hero-stats">
           <div class="stat-item">
             <span class="stat-number">3</span>
@@ -48,14 +82,10 @@
             <span class="stat-label">Tests Réussis</span>
           </div>
         </div>
-        
+
         <div class="hero-actions">
-          <a href="/demo" class="btn btn-primary">
-            🎮 Essayer les Démos
-          </a>
-          <a href="/auth" class="btn btn-secondary">
-            🔐 Se Connecter
-          </a>
+          <a href="/demo" class="btn btn-primary"> 🎮 Essayer les Démos </a>
+          <a href="/auth" class="btn btn-secondary"> 🔐 Se Connecter </a>
         </div>
       </div>
     </div>
@@ -67,8 +97,8 @@
         <h2>⚡ Accès Rapide</h2>
         <div class="links-grid">
           {#each quickLinks as link, index}
-            <a 
-              href={link.href} 
+            <a
+              href={link.href}
               class="link-card"
               class:mounted
               style="animation-delay: {index * 0.1}s"
@@ -94,7 +124,7 @@
             </div>
             <div class="phase-progress">
               <div class="progress-bar">
-                <div class="progress-fill" style="width: 100%"></div>
+                <div class="progress-fill" style="width: 100%" />
               </div>
               <span class="progress-text">100%</span>
             </div>
@@ -108,7 +138,7 @@
             </div>
             <div class="phase-progress">
               <div class="progress-bar">
-                <div class="progress-fill" style="width: 100%"></div>
+                <div class="progress-fill" style="width: 100%" />
               </div>
               <span class="progress-text">100%</span>
             </div>
@@ -122,7 +152,7 @@
             </div>
             <div class="phase-progress">
               <div class="progress-bar">
-                <div class="progress-fill" style="width: 95%"></div>
+                <div class="progress-fill" style="width: 95%" />
               </div>
               <span class="progress-text">95%</span>
             </div>
@@ -136,7 +166,7 @@
             </div>
             <div class="phase-progress">
               <div class="progress-bar">
-                <div class="progress-fill" style="width: 0%"></div>
+                <div class="progress-fill" style="width: 0%" />
               </div>
               <span class="progress-text">0%</span>
             </div>
@@ -151,28 +181,40 @@
           <div class="feature-card">
             <div class="feature-icon">🔐</div>
             <h3>Authentification Sécurisée</h3>
-            <p>Connexion Google OAuth et Email/Password avec gestion complète des sessions utilisateur</p>
+            <p>
+              Connexion Google OAuth et Email/Password avec gestion complète des
+              sessions utilisateur
+            </p>
             <a href="/auth" class="feature-link">Tester →</a>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon">📝</div>
             <h3>Contenu Markdown Avancé</h3>
-            <p>Rendu sécurisé avec sanitisation XSS, coloration syntaxique et table des matières automatique</p>
+            <p>
+              Rendu sécurisé avec sanitisation XSS, coloration syntaxique et
+              table des matières automatique
+            </p>
             <a href="/demo/markdown" class="feature-link">Voir démo →</a>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon">🎯</div>
             <h3>Exercices Interactifs</h3>
-            <p>QCM intelligents avec validation en temps réel, scoring automatique et feedback pédagogique</p>
+            <p>
+              QCM intelligents avec validation en temps réel, scoring
+              automatique et feedback pédagogique
+            </p>
             <a href="/demo/exercise" class="feature-link">Essayer →</a>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon">🧪</div>
             <h3>Qualité & Tests</h3>
-            <p>113 tests automatisés, 95% de couverture, développement piloté par la qualité</p>
+            <p>
+              113 tests automatisés, 95% de couverture, développement piloté par
+              la qualité
+            </p>
             <a href="/tests" class="feature-link">Voir résultats →</a>
           </div>
         </div>
@@ -186,11 +228,11 @@
         <div class="footer-section">
           <h3>🎯 Développement Méthodique</h3>
           <p>
-            Approche progressive en 5 phases pour construire une plateforme 
+            Approche progressive en 5 phases pour construire une plateforme
             d'apprentissage robuste et évolutive.
           </p>
         </div>
-        
+
         <div class="footer-section">
           <h3>🔗 Liens Rapides</h3>
           <div class="footer-links">
@@ -200,7 +242,7 @@
             <a href="/auth">Authentification</a>
           </div>
         </div>
-        
+
         <div class="footer-section">
           <h3>📊 Statistiques</h3>
           <div class="footer-stats">
@@ -211,7 +253,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="footer-bottom">
         <p>© 2024 FunLearning V2.0 - Plateforme d'apprentissage intelligente</p>
       </div>

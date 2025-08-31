@@ -1,38 +1,43 @@
 <script>
-  import { onMount } from 'svelte';
-  import GoogleAuth from '$lib/components/GoogleAuth.svelte';
-  import { user, isAuthenticated } from '$lib/stores/googleAuth.js';
-  
+  import { onMount } from "svelte";
+  import GoogleAuth from "$lib/components/GoogleAuth.svelte";
+  import { user, isAuthenticated } from "$lib/stores/googleAuth.js";
+
   let mounted = false;
-  let successMessage = '';
-  let errorMessage = '';
-  
+  let successMessage = "";
+  let errorMessage = "";
+
   onMount(() => {
     mounted = true;
-    console.log('✅ Page d\'authentification Google chargée');
+    console.log("✅ Page d'authentification Google chargée");
   });
-  
+
   function handleAuthSuccess(event) {
-    console.log('🎉 Succès d\'authentification:', event.detail);
-    successMessage = `Bienvenue ${event.detail.user?.displayName || event.detail.user?.email || ''}!`;
-    errorMessage = '';
-    
+    console.log("🎉 Succès d'authentification:", event.detail);
+    successMessage = `Bienvenue ${
+      event.detail.user?.displayName || event.detail.user?.email || ""
+    }!`;
+    errorMessage = "";
+
     // Auto-hide success message after 3s
     setTimeout(() => {
-      successMessage = '';
+      successMessage = "";
     }, 3000);
   }
-  
+
   function handleAuthError(event) {
-    console.error('❌ Erreur d\'authentification:', event.detail);
-    errorMessage = event.detail.error || 'Erreur inconnue';
-    successMessage = '';
+    console.error("❌ Erreur d'authentification:", event.detail);
+    errorMessage = event.detail.error || "Erreur inconnue";
+    successMessage = "";
   }
 </script>
 
 <svelte:head>
   <title>Authentification Google - FunLearning</title>
-  <meta name="description" content="Test de l'authentification Google selon TDD et DOC_CoPilot_Practices" />
+  <meta
+    name="description"
+    content="Test de l'authentification Google selon TDD et DOC_CoPilot_Practices"
+  />
 </svelte:head>
 
 <main class="auth-page" data-testid="auth-page">
@@ -49,7 +54,7 @@
         ✅ {successMessage}
       </div>
     {/if}
-    
+
     {#if errorMessage}
       <div class="message error" data-testid="error-message">
         ❌ {errorMessage}
@@ -68,17 +73,17 @@
             on:error={handleAuthError}
           />
         </div>
-        
+
         <!-- Debug Info -->
         <div class="debug-info">
           <h3>🐛 Informations de débogage</h3>
           <div class="debug-item">
             <strong>État d'authentification:</strong>
             <span class="status" class:authenticated={$isAuthenticated}>
-              {$isAuthenticated ? '✅ Connecté' : '❌ Non connecté'}
+              {$isAuthenticated ? "✅ Connecté" : "❌ Non connecté"}
             </span>
           </div>
-          
+
           {#if $user}
             <div class="debug-item">
               <strong>Utilisateur:</strong>
@@ -89,7 +94,7 @@
       </section>
     {:else}
       <div class="loading-section">
-        <div class="loading-spinner"></div>
+        <div class="loading-spinner" />
         <p>Chargement de l'authentification...</p>
       </div>
     {/if}
@@ -223,8 +228,12 @@
   }
 
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 
   .page-nav {
@@ -255,11 +264,11 @@
     .page-header h1 {
       font-size: 2rem;
     }
-    
+
     .auth-card {
       padding: 1.5rem;
     }
-    
+
     .page-nav {
       flex-direction: column;
     }

@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { goto } from '$app/navigation';
+  import { goto } from "$app/navigation";
   import { matieres, niveaux, contentActions } from "$lib/stores/content";
-  import type { Matiere, NiveauEducatif } from '$lib/types/content';
+  import type { Matiere, NiveauEducatif } from "$lib/types/content";
 
   onMount(() => {
     contentActions.loadMockData();
@@ -29,7 +29,7 @@
   <nav class="breadcrumb">
     <span class="breadcrumb-current">Explorer le contenu</span>
   </nav>
-  
+
   <header>
     <h1>Explorer le contenu</h1>
     <p>Découvrez nos matières et niveaux d'apprentissage</p>
@@ -45,7 +45,7 @@
           on:click={() => navigateToMatiere(matiere)}
           role="button"
           tabindex="0"
-          on:keydown={(e) => e.key === 'Enter' && navigateToMatiere(matiere)}
+          on:keydown={(e) => e.key === "Enter" && navigateToMatiere(matiere)}
         >
           <div class="icone">{matiere.icone}</div>
           <h3>{matiere.nom}</h3>
@@ -59,12 +59,12 @@
     <h2>Niveaux d'apprentissage</h2>
     <div class="niveaux-list">
       {#each $niveaux || [] as niveau (niveau.id)}
-        <div 
+        <div
           class="niveau-card"
           on:click={() => navigateToNiveau(niveau)}
           role="button"
           tabindex="0"
-          on:keydown={(e) => e.key === 'Enter' && navigateToNiveau(niveau)}
+          on:keydown={(e) => e.key === "Enter" && navigateToNiveau(niveau)}
         >
           <strong>{niveau.nom}</strong>
           <span>Ages {niveau.ageMin}-{niveau.ageMax} ans</span>

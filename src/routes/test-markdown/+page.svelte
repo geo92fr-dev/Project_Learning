@@ -5,7 +5,7 @@
   import { writable } from "svelte/store";
   import type { Matiere } from "$lib/types/content";
 
-  // Create a simple matieres store for this test page  
+  // Create a simple matieres store for this test page
   let matieres = writable<Matiere[]>([]);
 
   let selectedCourse: any = null;

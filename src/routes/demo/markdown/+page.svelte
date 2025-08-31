@@ -1,10 +1,14 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import MarkdownRenderer from '$lib/components/MarkdownRenderer.svelte';
-  import { markdownToHtml, generateSlug, estimateReadingTime } from '$lib/utils/content';
+  import { onMount } from "svelte";
+  import MarkdownRenderer from "$lib/components/MarkdownRenderer.svelte";
+  import {
+    markdownToHtml,
+    generateSlug,
+    estimateReadingTime,
+  } from "$lib/utils/content";
 
-  let currentContent = '';
-  let contentType = 'tutorial';
+  let currentContent = "";
+  let contentType = "tutorial";
   let showToc = true;
 
   const demoContents = {
@@ -209,7 +213,7 @@ Proposez 3 façons différentes de faire cette répartition.
 - **10-11** : Passable ⚠️
 - **< 10** : Insuffisant 📖
 
-*Bonne chance !* 🍀`
+*Bonne chance !* 🍀`,
   };
 
   $: {
@@ -217,7 +221,7 @@ Proposez 3 façons différentes de faire cette répartition.
   }
 
   $: readingTime = currentContent ? estimateReadingTime(currentContent) : 0;
-  $: slug = generateSlug('Demo Contenu Markdown');
+  $: slug = generateSlug("Demo Contenu Markdown");
 
   onMount(() => {
     currentContent = demoContents.tutorial;
@@ -226,7 +230,10 @@ Proposez 3 façons différentes de faire cette répartition.
 
 <svelte:head>
   <title>Démo Système de Contenu - FunLearning</title>
-  <meta name="description" content="Démonstration du système de rendu Markdown avancé de FunLearning" />
+  <meta
+    name="description"
+    content="Démonstration du système de rendu Markdown avancé de FunLearning"
+  />
 </svelte:head>
 
 <div class="demo-page">
@@ -242,24 +249,24 @@ Proposez 3 façons différentes de faire cette répartition.
       <div class="control-section">
         <h3>Type de contenu</h3>
         <div class="content-types">
-          <button 
+          <button
             class="type-btn"
-            class:active={contentType === 'tutorial'}
-            on:click={() => contentType = 'tutorial'}
+            class:active={contentType === "tutorial"}
+            on:click={() => (contentType = "tutorial")}
           >
             📚 Cours
           </button>
-          <button 
+          <button
             class="type-btn"
-            class:active={contentType === 'exercise'}
-            on:click={() => contentType = 'exercise'}
+            class:active={contentType === "exercise"}
+            on:click={() => (contentType = "exercise")}
           >
             🎯 Exercice
           </button>
-          <button 
+          <button
             class="type-btn"
-            class:active={contentType === 'evaluation'}
-            on:click={() => contentType = 'evaluation'}
+            class:active={contentType === "evaluation"}
+            on:click={() => (contentType = "evaluation")}
           >
             📊 Évaluation
           </button>
@@ -269,10 +276,7 @@ Proposez 3 façons différentes de faire cette répartition.
       <div class="control-section">
         <h3>Options d'affichage</h3>
         <label class="checkbox-label">
-          <input 
-            type="checkbox" 
-            bind:checked={showToc}
-          />
+          <input type="checkbox" bind:checked={showToc} />
           <span>Afficher la table des matières</span>
         </label>
       </div>
@@ -288,7 +292,7 @@ Proposez 3 façons différentes de faire cette répartition.
         </div>
         <div class="meta-item">
           <span class="meta-label">Mots :</span>
-          <span class="meta-value">{currentContent.split(' ').length}</span>
+          <span class="meta-value">{currentContent.split(" ").length}</span>
         </div>
       </div>
     </div>
@@ -297,10 +301,7 @@ Proposez 3 façons différentes de faire cette répartition.
   <main class="demo-content">
     <div class="container">
       <div class="content-wrapper">
-        <MarkdownRenderer 
-          content={currentContent}
-          className="demo-markdown"
-        />
+        <MarkdownRenderer content={currentContent} className="demo-markdown" />
       </div>
     </div>
   </main>
@@ -315,31 +316,31 @@ Proposez 3 façons différentes de faire cette répartition.
             <h4>Sécurisation XSS</h4>
             <p>HTML sanitisé automatiquement</p>
           </div>
-          
+
           <div class="feature">
             <div class="feature-icon">🎨</div>
             <h4>Coloration syntaxique</h4>
             <p>Code highlighting avec highlight.js</p>
           </div>
-          
+
           <div class="feature">
             <div class="feature-icon">📑</div>
             <h4>Table des matières</h4>
             <p>Navigation automatique par titres</p>
           </div>
-          
+
           <div class="feature">
             <div class="feature-icon">⚡</div>
             <h4>Cache intelligent</h4>
             <p>Performance optimisée</p>
           </div>
-          
+
           <div class="feature">
             <div class="feature-icon">📱</div>
             <h4>Responsive</h4>
             <p>Adapté à tous les écrans</p>
           </div>
-          
+
           <div class="feature">
             <div class="feature-icon">♿</div>
             <h4>Accessibilité</h4>
@@ -460,7 +461,7 @@ Proposez 3 façons différentes de faire cette répartition.
 
   .meta-value {
     color: #495057;
-    font-family: 'SF Mono', Monaco, Consolas, monospace;
+    font-family: "SF Mono", Monaco, Consolas, monospace;
     background: white;
     padding: 0.125rem 0.375rem;
     border-radius: 0.25rem;

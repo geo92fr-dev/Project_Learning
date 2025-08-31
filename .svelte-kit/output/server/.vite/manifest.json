@@ -8,11 +8,11 @@
     "src": ".svelte-kit/generated/server/internal.js"
   },
   "EmailAuth.css": {
-    "file": "_app/immutable/assets/EmailAuth.0367b9db.css",
+    "file": "_app/immutable/assets/EmailAuth.15557e45.css",
     "src": "EmailAuth.css"
   },
   "GoogleAuth.css": {
-    "file": "_app/immutable/assets/GoogleAuth.8936650e.css",
+    "file": "_app/immutable/assets/GoogleAuth.c93edb81.css",
     "src": "GoogleAuth.css"
   },
   "MarkdownRenderer.css": {
@@ -218,13 +218,13 @@
     "src": "src/routes/[matiere]/[niveau]/[competence]/[cours]/+page.ts"
   },
   "src/routes/auth-google/+page.css": {
-    "file": "_app/immutable/assets/_page.17c253c6.css",
+    "file": "_app/immutable/assets/_page.89816b20.css",
     "src": "src/routes/auth-google/+page.css"
   },
   "src/routes/auth-google/+page.svelte": {
     "css": [
-      "_app/immutable/assets/_page.17c253c6.css",
-      "_app/immutable/assets/GoogleAuth.8936650e.css"
+      "_app/immutable/assets/_page.89816b20.css",
+      "_app/immutable/assets/GoogleAuth.c93edb81.css"
     ],
     "file": "entries/pages/auth-google/_page.svelte.js",
     "imports": [
@@ -242,8 +242,8 @@
   "src/routes/auth/+page.svelte": {
     "css": [
       "_app/immutable/assets/_page.f3224a40.css",
-      "_app/immutable/assets/GoogleAuth.8936650e.css",
-      "_app/immutable/assets/EmailAuth.0367b9db.css"
+      "_app/immutable/assets/GoogleAuth.c93edb81.css",
+      "_app/immutable/assets/EmailAuth.15557e45.css"
     ],
     "file": "entries/pages/auth/_page.svelte.js",
     "imports": [
@@ -255,13 +255,13 @@
     "src": "src/routes/auth/+page.svelte"
   },
   "src/routes/auth/login/+page.css": {
-    "file": "_app/immutable/assets/_page.455df3a1.css",
+    "file": "_app/immutable/assets/_page.a33a2a9a.css",
     "src": "src/routes/auth/login/+page.css"
   },
   "src/routes/auth/login/+page.svelte": {
     "css": [
-      "_app/immutable/assets/_page.455df3a1.css",
-      "_app/immutable/assets/GoogleAuth.8936650e.css"
+      "_app/immutable/assets/_page.a33a2a9a.css",
+      "_app/immutable/assets/GoogleAuth.c93edb81.css"
     ],
     "file": "entries/pages/auth/login/_page.svelte.js",
     "imports": [
@@ -273,13 +273,13 @@
     "src": "src/routes/auth/login/+page.svelte"
   },
   "src/routes/complete/+page.css": {
-    "file": "_app/immutable/assets/_page.8bbb3266.css",
+    "file": "_app/immutable/assets/_page.56a1cf72.css",
     "src": "src/routes/complete/+page.css"
   },
   "src/routes/complete/+page.svelte": {
     "css": [
-      "_app/immutable/assets/_page.8bbb3266.css",
-      "_app/immutable/assets/EmailAuth.0367b9db.css"
+      "_app/immutable/assets/_page.56a1cf72.css",
+      "_app/immutable/assets/EmailAuth.15557e45.css"
     ],
     "file": "entries/pages/complete/_page.svelte.js",
     "imports": [
@@ -308,12 +308,12 @@
     "src": "src/routes/content/+page.svelte"
   },
   "src/routes/content/[matiere]/+page.css": {
-    "file": "_app/immutable/assets/_page.c4790fc7.css",
+    "file": "_app/immutable/assets/_page.272d39e1.css",
     "src": "src/routes/content/[matiere]/+page.css"
   },
   "src/routes/content/[matiere]/+page.svelte": {
     "css": [
-      "_app/immutable/assets/_page.c4790fc7.css"
+      "_app/immutable/assets/_page.272d39e1.css"
     ],
     "file": "entries/pages/content/_matiere_/_page.svelte.js",
     "imports": [
@@ -336,12 +336,12 @@
     "src": "src/routes/content/[matiere]/+page.ts"
   },
   "src/routes/content/[matiere]/[niveau]/+page.css": {
-    "file": "_app/immutable/assets/_page.79261ac6.css",
+    "file": "_app/immutable/assets/_page.56a85e08.css",
     "src": "src/routes/content/[matiere]/[niveau]/+page.css"
   },
   "src/routes/content/[matiere]/[niveau]/+page.svelte": {
     "css": [
-      "_app/immutable/assets/_page.79261ac6.css"
+      "_app/immutable/assets/_page.56a85e08.css"
     ],
     "file": "entries/pages/content/_matiere_/_niveau_/_page.svelte.js",
     "imports": [
@@ -364,12 +364,12 @@
     "src": "src/routes/content/[matiere]/[niveau]/+page.ts"
   },
   "src/routes/content/[matiere]/[niveau]/[competence]/+page.css": {
-    "file": "_app/immutable/assets/_page.f5b4fe91.css",
+    "file": "_app/immutable/assets/_page.5f06cbb6.css",
     "src": "src/routes/content/[matiere]/[niveau]/[competence]/+page.css"
   },
   "src/routes/content/[matiere]/[niveau]/[competence]/+page.svelte": {
     "css": [
-      "_app/immutable/assets/_page.f5b4fe91.css"
+      "_app/immutable/assets/_page.5f06cbb6.css"
     ],
     "file": "entries/pages/content/_matiere_/_niveau_/_competence_/_page.svelte.js",
     "imports": [
@@ -414,7 +414,7 @@
     "src": "src/routes/cours/[slug]/+page.ts"
   },
   "src/routes/dashboard/+layout.css": {
-    "file": "_app/immutable/assets/_layout.c162a8af.css",
+    "file": "_app/immutable/assets/_layout.b0ab24fe.css",
     "src": "src/routes/dashboard/+layout.css"
   },
   "src/routes/dashboard/+layout.server.ts": {
@@ -424,7 +424,7 @@
   },
   "src/routes/dashboard/+layout.svelte": {
     "css": [
-      "_app/immutable/assets/_layout.c162a8af.css"
+      "_app/immutable/assets/_layout.b0ab24fe.css"
     ],
     "file": "entries/pages/dashboard/_layout.svelte.js",
     "imports": [
@@ -444,12 +444,12 @@
     "src": "src/routes/dashboard/+page.svelte"
   },
   "src/routes/demo/+page.css": {
-    "file": "_app/immutable/assets/_page.bd8c0f2d.css",
+    "file": "_app/immutable/assets/_page.7a3eeef7.css",
     "src": "src/routes/demo/+page.css"
   },
   "src/routes/demo/+page.svelte": {
     "css": [
-      "_app/immutable/assets/_page.bd8c0f2d.css"
+      "_app/immutable/assets/_page.7a3eeef7.css"
     ],
     "file": "entries/pages/demo/_page.svelte.js",
     "imports": [
@@ -459,12 +459,12 @@
     "src": "src/routes/demo/+page.svelte"
   },
   "src/routes/demo/exercise/+page.css": {
-    "file": "_app/immutable/assets/_page.d0777f66.css",
+    "file": "_app/immutable/assets/_page.cd56fd0b.css",
     "src": "src/routes/demo/exercise/+page.css"
   },
   "src/routes/demo/exercise/+page.svelte": {
     "css": [
-      "_app/immutable/assets/_page.d0777f66.css"
+      "_app/immutable/assets/_page.cd56fd0b.css"
     ],
     "file": "entries/pages/demo/exercise/_page.svelte.js",
     "imports": [
@@ -476,12 +476,12 @@
     "src": "src/routes/demo/exercise/+page.svelte"
   },
   "src/routes/demo/markdown/+page.css": {
-    "file": "_app/immutable/assets/_page.8cadc2a8.css",
+    "file": "_app/immutable/assets/_page.cc9fa6fe.css",
     "src": "src/routes/demo/markdown/+page.css"
   },
   "src/routes/demo/markdown/+page.svelte": {
     "css": [
-      "_app/immutable/assets/_page.8cadc2a8.css"
+      "_app/immutable/assets/_page.cc9fa6fe.css"
     ],
     "file": "entries/pages/demo/markdown/_page.svelte.js",
     "imports": [
@@ -501,12 +501,12 @@
     "src": "src/routes/pedagogy/+page.svelte"
   },
   "src/routes/roadmap/+page.css": {
-    "file": "_app/immutable/assets/_page.f7e2c049.css",
+    "file": "_app/immutable/assets/_page.73af75bf.css",
     "src": "src/routes/roadmap/+page.css"
   },
   "src/routes/roadmap/+page.svelte": {
     "css": [
-      "_app/immutable/assets/_page.f7e2c049.css"
+      "_app/immutable/assets/_page.73af75bf.css"
     ],
     "file": "entries/pages/roadmap/_page.svelte.js",
     "imports": [
@@ -579,12 +579,12 @@
     "src": "src/routes/test-markdown/+page.svelte"
   },
   "src/routes/tests/+page.css": {
-    "file": "_app/immutable/assets/_page.38e334ba.css",
+    "file": "_app/immutable/assets/_page.3fd718f9.css",
     "src": "src/routes/tests/+page.css"
   },
   "src/routes/tests/+page.svelte": {
     "css": [
-      "_app/immutable/assets/_page.38e334ba.css"
+      "_app/immutable/assets/_page.3fd718f9.css"
     ],
     "file": "entries/pages/tests/_page.svelte.js",
     "imports": [

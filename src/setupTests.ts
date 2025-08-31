@@ -1,7 +1,7 @@
-import { vi } from 'vitest';
+import { vi } from "vitest";
 
 // Mock Firebase pour tous les tests
-vi.mock('$lib/firebase', () => ({
+vi.mock("$lib/firebase", () => ({
   auth: {
     currentUser: null,
     onAuthStateChanged: vi.fn((callback) => {
@@ -11,38 +11,38 @@ vi.mock('$lib/firebase', () => ({
     signInWithEmailAndPassword: vi.fn(),
     createUserWithEmailAndPassword: vi.fn(),
     signOut: vi.fn(),
-    signInWithPopup: vi.fn()
+    signInWithPopup: vi.fn(),
   },
-  googleProvider: {}
+  googleProvider: {},
 }));
 
 // Mock stores Svelte
-vi.mock('$lib/stores/auth', () => ({
+vi.mock("$lib/stores/auth", () => ({
   authStore: {
     subscribe: vi.fn(),
     update: vi.fn(),
-    set: vi.fn()
+    set: vi.fn(),
   },
   currentUser: {
     subscribe: vi.fn(),
-    set: vi.fn()
+    set: vi.fn(),
   },
   isAuthenticated: {
     subscribe: vi.fn(),
-    set: vi.fn()
+    set: vi.fn(),
   },
   authActions: {
     signIn: vi.fn(),
     signOut: vi.fn(),
     setLoading: vi.fn(),
-    setError: vi.fn()
-  }
+    setError: vi.fn(),
+  },
 }));
 
 // Mock des APIs du navigateur
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
   writable: true,
-  value: vi.fn().mockImplementation(query => ({
+  value: vi.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -61,10 +61,10 @@ const localStorageMock = {
   removeItem: vi.fn(),
   clear: vi.fn(),
   length: 0,
-  key: vi.fn()
+  key: vi.fn(),
 };
-Object.defineProperty(window, 'localStorage', {
-  value: localStorageMock
+Object.defineProperty(window, "localStorage", {
+  value: localStorageMock,
 });
 
 // Mock fetch

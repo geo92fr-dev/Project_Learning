@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount } from "svelte";
 
   let mounted = false;
   let testResults: any = null;
@@ -13,172 +13,185 @@
       failed: 6,
       skipped: 0,
       coverage: 95.2,
-      duration: 28.4
+      duration: 28.4,
     },
     suites: [
       {
-        name: 'Authentication Tests',
-        status: 'passed',
+        name: "Authentication Tests",
+        status: "passed",
         tests: 25,
         passed: 25,
         failed: 0,
         duration: 5.2,
         files: [
-          'auth/GoogleAuth.test.ts',
-          'auth/EmailAuth.test.ts', 
-          'stores/auth.test.ts'
-        ]
+          "auth/GoogleAuth.test.ts",
+          "auth/EmailAuth.test.ts",
+          "stores/auth.test.ts",
+        ],
       },
       {
-        name: 'Content Management Tests',
-        status: 'mostly-passed',
+        name: "Content Management Tests",
+        status: "mostly-passed",
         tests: 32,
         passed: 30,
         failed: 2,
         duration: 8.7,
         files: [
-          'utils/content.test.ts',
-          'components/MarkdownRenderer.test.ts',
-          'components/QCMCard.test.ts'
-        ]
+          "utils/content.test.ts",
+          "components/MarkdownRenderer.test.ts",
+          "components/QCMCard.test.ts",
+        ],
       },
       {
-        name: 'Component Tests',
-        status: 'passed',
+        name: "Component Tests",
+        status: "passed",
         tests: 28,
         passed: 28,
         failed: 0,
         duration: 6.1,
         files: [
-          'components/ui/Modal.test.ts',
-          'components/exercises/InteractiveExercise.test.ts'
-        ]
+          "components/ui/Modal.test.ts",
+          "components/exercises/InteractiveExercise.test.ts",
+        ],
       },
       {
-        name: 'Utils & Helpers Tests',
-        status: 'mostly-passed',
+        name: "Utils & Helpers Tests",
+        status: "mostly-passed",
         tests: 18,
         passed: 16,
         failed: 2,
         duration: 3.8,
-        files: [
-          'utils/generic-utils.test.ts',
-          'utils/validation.test.ts'
-        ]
+        files: ["utils/generic-utils.test.ts", "utils/validation.test.ts"],
       },
       {
-        name: 'Integration Tests',
-        status: 'mostly-passed',
+        name: "Integration Tests",
+        status: "mostly-passed",
         tests: 16,
         passed: 14,
         failed: 2,
         duration: 4.6,
-        files: [
-          'pages/demo.test.ts',
-          'pages/auth.test.ts'
-        ]
-      }
+        files: ["pages/demo.test.ts", "pages/auth.test.ts"],
+      },
     ],
     recentFailures: [
       {
-        test: 'Content sanitization in SSR environment',
-        file: 'utils/content.test.ts',
-        error: 'DOMPurify is not available in server context',
-        status: 'investigating'
+        test: "Content sanitization in SSR environment",
+        file: "utils/content.test.ts",
+        error: "DOMPurify is not available in server context",
+        status: "investigating",
       },
       {
-        test: 'QCM scoring calculation edge case',
-        file: 'components/QCMCard.test.ts', 
-        error: 'Division by zero when no questions provided',
-        status: 'fixed'
+        test: "QCM scoring calculation edge case",
+        file: "components/QCMCard.test.ts",
+        error: "Division by zero when no questions provided",
+        status: "fixed",
       },
       {
-        test: 'Email validation with special characters',
-        file: 'utils/validation.test.ts',
-        error: 'Unicode email addresses not properly handled',
-        status: 'in-progress'
+        test: "Email validation with special characters",
+        file: "utils/validation.test.ts",
+        error: "Unicode email addresses not properly handled",
+        status: "in-progress",
       },
       {
-        test: 'Component loading states',
-        file: 'components/ui/Modal.test.ts',
-        error: 'Async component mounting timing issues',
-        status: 'investigating'
+        test: "Component loading states",
+        file: "components/ui/Modal.test.ts",
+        error: "Async component mounting timing issues",
+        status: "investigating",
       },
       {
-        test: 'Route navigation integration',
-        file: 'pages/demo.test.ts',
-        error: 'SvelteKit router mock not properly configured',
-        status: 'investigating'
+        test: "Route navigation integration",
+        file: "pages/demo.test.ts",
+        error: "SvelteKit router mock not properly configured",
+        status: "investigating",
       },
       {
-        test: 'Markdown highlighting performance',
-        file: 'utils/content.test.ts',
-        error: 'Timeout on large markdown files',
-        status: 'investigating'
-      }
+        test: "Markdown highlighting performance",
+        file: "utils/content.test.ts",
+        error: "Timeout on large markdown files",
+        status: "investigating",
+      },
     ],
     coverage: {
       statements: 95.2,
       branches: 92.8,
       functions: 96.7,
-      lines: 94.9
+      lines: 94.9,
     },
     trends: [
-      { date: '2024-01-15', passed: 98 },
-      { date: '2024-01-16', passed: 102 },
-      { date: '2024-01-17', passed: 107 },
-      { date: '2024-01-18', passed: 113 }
-    ]
+      { date: "2024-01-15", passed: 98 },
+      { date: "2024-01-16", passed: 102 },
+      { date: "2024-01-17", passed: 107 },
+      { date: "2024-01-18", passed: 113 },
+    ],
   };
 
   onMount(async () => {
     mounted = true;
     // Simulation d'un appel API
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     testResults = mockTestResults;
     loading = false;
   });
 
   function getStatusColor(status: string): string {
-    switch(status) {
-      case 'passed': return '#28a745';
-      case 'mostly-passed': return '#ffc107';
-      case 'failed': return '#dc3545';
-      default: return '#6c757d';
+    switch (status) {
+      case "passed":
+        return "#28a745";
+      case "mostly-passed":
+        return "#ffc107";
+      case "failed":
+        return "#dc3545";
+      default:
+        return "#6c757d";
     }
   }
 
   function getStatusIcon(status: string): string {
-    switch(status) {
-      case 'passed': return '✅';
-      case 'mostly-passed': return '⚠️';
-      case 'failed': return '❌';
-      default: return '❓';
+    switch (status) {
+      case "passed":
+        return "✅";
+      case "mostly-passed":
+        return "⚠️";
+      case "failed":
+        return "❌";
+      default:
+        return "❓";
     }
   }
 
   function getFailureStatusBadge(status: string): string {
-    switch(status) {
-      case 'fixed': return '✅ Corrigé';
-      case 'in-progress': return '🔄 En cours';
-      case 'investigating': return '🔍 Investigation';
-      default: return '❓ Non défini';
+    switch (status) {
+      case "fixed":
+        return "✅ Corrigé";
+      case "in-progress":
+        return "🔄 En cours";
+      case "investigating":
+        return "🔍 Investigation";
+      default:
+        return "❓ Non défini";
     }
   }
 
   function getFailureStatusColor(status: string): string {
-    switch(status) {
-      case 'fixed': return '#28a745';
-      case 'in-progress': return '#007bff';
-      case 'investigating': return '#ffc107';
-      default: return '#6c757d';
+    switch (status) {
+      case "fixed":
+        return "#28a745";
+      case "in-progress":
+        return "#007bff";
+      case "investigating":
+        return "#ffc107";
+      default:
+        return "#6c757d";
     }
   }
 </script>
 
 <svelte:head>
   <title>Tests & Qualité - FunLearning</title>
-  <meta name="description" content="Résultats des tests automatisés et métriques de qualité du projet FunLearning" />
+  <meta
+    name="description"
+    content="Résultats des tests automatisés et métriques de qualité du projet FunLearning"
+  />
 </svelte:head>
 
 <div class="tests-page">
@@ -190,8 +203,9 @@
           Tests & Qualité
         </h1>
         <p class="header-description">
-          Suivi en temps réel de la qualité du code, résultats des tests automatisés 
-          et métriques de couverture pour garantir la fiabilité du projet.
+          Suivi en temps réel de la qualité du code, résultats des tests
+          automatisés et métriques de couverture pour garantir la fiabilité du
+          projet.
         </p>
       </div>
     </div>
@@ -201,7 +215,7 @@
     <div class="container">
       {#if loading}
         <div class="loading-section">
-          <div class="loading-spinner"></div>
+          <div class="loading-spinner" />
           <p>Chargement des résultats de tests...</p>
         </div>
       {:else if testResults}
@@ -214,7 +228,7 @@
                 <div class="card-label">Tests réussis</div>
               </div>
             </div>
-            
+
             <div class="summary-card danger">
               <div class="card-icon">❌</div>
               <div class="card-content">
@@ -222,7 +236,7 @@
                 <div class="card-label">Tests échoués</div>
               </div>
             </div>
-            
+
             <div class="summary-card info">
               <div class="card-icon">📊</div>
               <div class="card-content">
@@ -230,7 +244,7 @@
                 <div class="card-label">Couverture</div>
               </div>
             </div>
-            
+
             <div class="summary-card secondary">
               <div class="card-icon">⏱️</div>
               <div class="card-content">
@@ -245,7 +259,10 @@
             <div class="rate-visualization">
               <div class="rate-circle">
                 <div class="rate-number">
-                  {Math.round((testResults.summary.passed / testResults.summary.total) * 100)}%
+                  {Math.round(
+                    (testResults.summary.passed / testResults.summary.total) *
+                      100
+                  )}%
                 </div>
                 <div class="rate-fraction">
                   {testResults.summary.passed}/{testResults.summary.total}
@@ -253,14 +270,17 @@
               </div>
               <div class="rate-progress">
                 <div class="progress-bar">
-                  <div 
-                    class="progress-fill success" 
-                    style="width: {(testResults.summary.passed / testResults.summary.total) * 100}%"
-                  ></div>
+                  <div
+                    class="progress-fill success"
+                    style="width: {(testResults.summary.passed /
+                      testResults.summary.total) *
+                      100}%"
+                  />
                 </div>
                 <p class="rate-description">
-                  Excellent taux de réussite ! Le projet maintient une qualité élevée 
-                  avec {testResults.summary.passed} tests sur {testResults.summary.total} qui passent.
+                  Excellent taux de réussite ! Le projet maintient une qualité
+                  élevée avec {testResults.summary.passed} tests sur {testResults
+                    .summary.total} qui passent.
                 </p>
               </div>
             </div>
@@ -269,10 +289,10 @@
 
         <section class="test-suites">
           <h2>📋 Résultats par Suite de Tests</h2>
-          
+
           <div class="suites-grid">
             {#each testResults.suites as suite, index}
-              <div 
+              <div
                 class="suite-card"
                 class:mounted
                 style="animation-delay: {index * 0.1}s"
@@ -285,25 +305,31 @@
                     </div>
                   </div>
                   <div class="suite-status">
-                    <span 
+                    <span
                       class="status-badge"
                       style="background-color: {getStatusColor(suite.status)}"
                     >
-                      {getStatusIcon(suite.status)} {suite.status === 'passed' ? 'Tous passés' : 'Partiellement'}
+                      {getStatusIcon(suite.status)}
+                      {suite.status === "passed"
+                        ? "Tous passés"
+                        : "Partiellement"}
                     </span>
                   </div>
                 </div>
-                
+
                 <div class="suite-progress">
                   <div class="progress-bar">
-                    <div 
+                    <div
                       class="progress-fill"
-                      style="width: {(suite.passed / suite.tests) * 100}%; background-color: {getStatusColor(suite.status)}"
-                    ></div>
+                      style="width: {(suite.passed / suite.tests) *
+                        100}%; background-color: {getStatusColor(suite.status)}"
+                    />
                   </div>
-                  <span class="progress-percentage">{Math.round((suite.passed / suite.tests) * 100)}%</span>
+                  <span class="progress-percentage"
+                    >{Math.round((suite.passed / suite.tests) * 100)}%</span
+                  >
                 </div>
-                
+
                 <div class="suite-files">
                   <h4>Fichiers testés :</h4>
                   <ul>
@@ -319,62 +345,84 @@
 
         <section class="coverage-section">
           <h2>📊 Couverture de Code</h2>
-          
+
           <div class="coverage-grid">
             <div class="coverage-item">
               <h3>Instructions</h3>
               <div class="coverage-bar">
-                <div class="coverage-fill" style="width: {testResults.coverage.statements}%"></div>
+                <div
+                  class="coverage-fill"
+                  style="width: {testResults.coverage.statements}%"
+                />
               </div>
-              <span class="coverage-percentage">{testResults.coverage.statements}%</span>
+              <span class="coverage-percentage"
+                >{testResults.coverage.statements}%</span
+              >
             </div>
-            
+
             <div class="coverage-item">
               <h3>Branches</h3>
               <div class="coverage-bar">
-                <div class="coverage-fill" style="width: {testResults.coverage.branches}%"></div>
+                <div
+                  class="coverage-fill"
+                  style="width: {testResults.coverage.branches}%"
+                />
               </div>
-              <span class="coverage-percentage">{testResults.coverage.branches}%</span>
+              <span class="coverage-percentage"
+                >{testResults.coverage.branches}%</span
+              >
             </div>
-            
+
             <div class="coverage-item">
               <h3>Fonctions</h3>
               <div class="coverage-bar">
-                <div class="coverage-fill" style="width: {testResults.coverage.functions}%"></div>
+                <div
+                  class="coverage-fill"
+                  style="width: {testResults.coverage.functions}%"
+                />
               </div>
-              <span class="coverage-percentage">{testResults.coverage.functions}%</span>
+              <span class="coverage-percentage"
+                >{testResults.coverage.functions}%</span
+              >
             </div>
-            
+
             <div class="coverage-item">
               <h3>Lignes</h3>
               <div class="coverage-bar">
-                <div class="coverage-fill" style="width: {testResults.coverage.lines}%"></div>
+                <div
+                  class="coverage-fill"
+                  style="width: {testResults.coverage.lines}%"
+                />
               </div>
-              <span class="coverage-percentage">{testResults.coverage.lines}%</span>
+              <span class="coverage-percentage"
+                >{testResults.coverage.lines}%</span
+              >
             </div>
           </div>
         </section>
 
         <section class="failures-section">
           <h2>⚠️ Tests en Échec - Suivi des Corrections</h2>
-          
+
           <div class="failures-list">
             {#each testResults.recentFailures as failure, index}
-              <div 
+              <div
                 class="failure-card"
                 class:mounted
                 style="animation-delay: {index * 0.05}s"
               >
                 <div class="failure-header">
                   <h3 class="failure-test">{failure.test}</h3>
-                  <span 
+                  <span
                     class="failure-status"
-                    style="background-color: {getFailureStatusColor(failure.status)}"
+                    style="background-color: {getFailureStatusColor(
+                      failure.status
+                    )}"
                   >
                     {getFailureStatusBadge(failure.status)}
                   </span>
                 </div>
-                
+
                 <div class="failure-details">
                   <div class="failure-file">📁 {failure.file}</div>
                   <div class="failure-error">❌ {failure.error}</div>
@@ -386,24 +434,26 @@
 
         <section class="trends-section">
           <h2>📈 Évolution des Tests</h2>
-          
+
           <div class="trends-chart">
             <div class="chart-description">
               <p>
-                Progression constante : +{testResults.trends[testResults.trends.length - 1].passed - testResults.trends[0].passed} tests 
-                réussis sur les 4 derniers jours, témoignant d'une amélioration continue de la qualité.
+                Progression constante : +{testResults.trends[
+                  testResults.trends.length - 1
+                ].passed - testResults.trends[0].passed} tests réussis sur les 4
+                derniers jours, témoignant d'une amélioration continue de la qualité.
               </p>
             </div>
-            
+
             <div class="trend-points">
               {#each testResults.trends as trend, index}
                 <div class="trend-point">
                   <div class="point-date">{trend.date}</div>
                   <div class="point-value">{trend.passed} tests</div>
-                  <div 
+                  <div
                     class="point-indicator"
                     style="height: {(trend.passed / 120) * 100}px"
-                  ></div>
+                  />
                 </div>
               {/each}
             </div>
@@ -418,20 +468,17 @@
       <div class="footer-content">
         <h3>🎯 Prochaines Améliorations</h3>
         <p>
-          Objectif : atteindre 100% de réussite des tests en résolvant les 6 tests en échec. 
-          Focus sur la compatibilité SSR et l'optimisation des performances.
+          Objectif : atteindre 100% de réussite des tests en résolvant les 6
+          tests en échec. Focus sur la compatibilité SSR et l'optimisation des
+          performances.
         </p>
-        
+
         <div class="footer-actions">
           <a href="/demo" class="btn btn-primary">
             Tester les fonctionnalités
           </a>
-          <a href="/roadmap" class="btn btn-outline">
-            Voir la roadmap
-          </a>
-          <a href="/" class="btn btn-outline">
-            Retour accueil
-          </a>
+          <a href="/roadmap" class="btn btn-outline"> Voir la roadmap </a>
+          <a href="/" class="btn btn-outline"> Retour accueil </a>
         </div>
       </div>
     </div>
@@ -510,8 +557,12 @@
   }
 
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 
   .results-overview {
@@ -736,7 +787,7 @@
     padding: 0.25rem 0;
     color: #6c757d;
     font-size: 0.85rem;
-    font-family: 'Courier New', monospace;
+    font-family: "Courier New", monospace;
   }
 
   .coverage-section {
@@ -854,7 +905,7 @@
   .failure-file {
     color: #6c757d;
     margin-bottom: 0.5rem;
-    font-family: 'Courier New', monospace;
+    font-family: "Courier New", monospace;
   }
 
   .failure-error {

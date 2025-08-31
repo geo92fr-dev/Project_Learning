@@ -1,31 +1,31 @@
 <script>
   // 🧪 TDD - Page Matière Dynamique selon DOC_CoPilot_Practices
   // Route: /content/[matiere]
-  
-  import { onMount } from 'svelte';
-  import { goto } from '$app/navigation';
-  
+
+  import { onMount } from "svelte";
+  import { goto } from "$app/navigation";
+
   // Import du store content pour mettre à jour l'état
-  import { contentActions } from '$lib/stores/content';
-  
+  import { contentActions } from "$lib/stores/content";
+
   // Props depuis +page.ts
   export let data;
-  
+
   let { matiere, niveaux, competences, stats } = data;
-  
+
   onMount(() => {
     // Mettre à jour le store avec la matière sélectionnée
     contentActions.selectMatiere(matiere.id);
   });
-  
+
   // Navigation vers un niveau spécifique
   function navigateToNiveau(niveauId) {
     goto(`/content/${matiere.id}/${niveauId}`);
   }
-  
+
   // Navigation vers une compétence spécifique
   function navigateToCompetence(competenceId) {
-    const competence = competences.find(c => c.id === competenceId);
+    const competence = competences.find((c) => c.id === competenceId);
     if (competence) {
       goto(`/content/${matiere.id}/${competence.niveauId}/${competenceId}`);
     }
@@ -45,7 +45,7 @@
       <span class="separator">›</span>
       <span class="current">{matiere.icone} {matiere.nom}</span>
     </div>
-    
+
     <div class="matiere-info">
       <div class="matiere-icon">{matiere.icone}</div>
       <div class="matiere-details">
@@ -71,7 +71,7 @@
     <h2>🎚️ Choisir un niveau</h2>
     <div class="niveaux-grid">
       {#each niveaux as niveau}
-        <button 
+        <button
           class="niveau-card"
           style="border-color: {matiere.couleur}"
           on:click={() => navigateToNiveau(niveau.id)}
@@ -81,7 +81,7 @@
             <p>Ages {niveau.ageMin}-{niveau.ageMax} ans</p>
           </div>
           <div class="niveau-stats">
-            {competences.filter(c => c.niveauId === niveau.id).length} compétences
+            {competences.filter((c) => c.niveauId === niveau.id).length} compétences
           </div>
           <div class="niveau-arrow">→</div>
         </button>
@@ -94,7 +94,7 @@
     <h2>🎯 Compétences disponibles</h2>
     <div class="competences-grid">
       {#each competences as competence}
-        <div 
+        <div
           class="competence-card"
           style="border-left-color: {matiere.couleur}"
         >
@@ -107,9 +107,11 @@
           <p class="competence-description">{competence.description}</p>
           <div class="competence-meta">
             <span class="duree">⏱️ {competence.dureeEstimee}min</span>
-            <span class="niveau">📚 {niveaux.find(n => n.id === competence.niveauId)?.nom}</span>
+            <span class="niveau"
+              >📚 {niveaux.find((n) => n.id === competence.niveauId)?.nom}</span
+            >
           </div>
-          <button 
+          <button
             class="competence-btn"
             style="background-color: {matiere.couleur}"
             on:click={() => navigateToCompetence(competence.id)}
@@ -124,12 +126,8 @@
   <!-- Actions rapides -->
   <section class="actions-section">
     <div class="quick-actions">
-      <a href="/content" class="btn-secondary">
-        ← Retour au contenu
-      </a>
-      <a href="/dashboard" class="btn-secondary">
-        📊 Tableau de bord
-      </a>
+      <a href="/content" class="btn-secondary"> ← Retour au contenu </a>
+      <a href="/dashboard" class="btn-secondary"> 📊 Tableau de bord </a>
     </div>
   </section>
 </main>
@@ -146,20 +144,20 @@
     margin-bottom: 1rem;
     color: #6b7280;
   }
-  
+
   .breadcrumb a {
     text-decoration: none;
     color: #3b82f6;
   }
-  
+
   .breadcrumb a:hover {
     text-decoration: underline;
   }
-  
+
   .separator {
     margin: 0 0.5rem;
   }
-  
+
   .current {
     font-weight: 500;
   }

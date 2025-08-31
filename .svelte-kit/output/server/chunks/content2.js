@@ -4,19 +4,21 @@ import DOMPurify from "dompurify";
 import hljs from "highlight.js";
 import { B as BROWSER } from "./false.js";
 const browser = BROWSER;
-marked.use(markedHighlight({
-  langPrefix: "hljs language-",
-  highlight(code, lang) {
-    if (lang && hljs.getLanguage(lang)) {
-      try {
-        return hljs.highlight(code, { language: lang }).value;
-      } catch (err) {
-        console.warn("Erreur de coloration syntaxique:", err);
+marked.use(
+  markedHighlight({
+    langPrefix: "hljs language-",
+    highlight(code, lang) {
+      if (lang && hljs.getLanguage(lang)) {
+        try {
+          return hljs.highlight(code, { language: lang }).value;
+        } catch (err) {
+          console.warn("Erreur de coloration syntaxique:", err);
+        }
       }
+      return hljs.highlightAuto(code).value;
     }
-    return hljs.highlightAuto(code).value;
-  }
-}));
+  })
+);
 marked.setOptions({
   breaks: true,
   gfm: true

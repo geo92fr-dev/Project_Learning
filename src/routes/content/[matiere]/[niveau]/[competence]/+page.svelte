@@ -1,31 +1,34 @@
 <script>
   // 🧪 TDD - Page Compétence Dynamique selon DOC_CoPilot_Practices
   // Route: /content/[matiere]/[niveau]/[competence]
-  
-  import { onMount } from 'svelte';
-  import { goto } from '$app/navigation';
-  import MarkdownRenderer from '$lib/components/MarkdownRenderer.svelte';
-  
+
+  import { onMount } from "svelte";
+  import { goto } from "$app/navigation";
+  import MarkdownRenderer from "$lib/components/MarkdownRenderer.svelte";
+
   // Import du store content pour mettre à jour l'état
-  import contentStore from '$lib/stores/content';
-  
+  import contentStore from "$lib/stores/content";
+
   // Props depuis +page.ts
   export let data;
-  
-  let { matiere, niveau, competence, courses, relatedCompetences, stats } = data;
-  
+
+  let { matiere, niveau, competence, courses, relatedCompetences, stats } =
+    data;
+
   onMount(() => {
     // Mettre à jour le store avec la sélection complète
     contentStore.contentActions.selectMatiere(matiere.id);
     contentStore.contentActions.selectNiveau(niveau.id);
     contentStore.contentActions.selectCompetence(competence.id);
   });
-  
+
   // Navigation vers un cours spécifique
   function navigateToCourse(courseId) {
-    goto(`/content/${matiere.id}/${niveau.id}/${competence.id}/cours/${courseId}`);
+    goto(
+      `/content/${matiere.id}/${niveau.id}/${competence.id}/cours/${courseId}`
+    );
   }
-  
+
   // Navigation vers une compétence related
   function navigateToRelatedCompetence(relatedCompetenceId) {
     goto(`/content/${matiere.id}/${niveau.id}/${relatedCompetenceId}`);
@@ -41,10 +44,14 @@
   // Calculer la difficulté en couleur
   function getDifficultyColor(difficulte) {
     switch (difficulte) {
-      case 'facile': return '#10b981';
-      case 'moyen': return '#f59e0b';
-      case 'difficile': return '#ef4444';
-      default: return '#6b7280';
+      case "facile":
+        return "#10b981";
+      case "moyen":
+        return "#f59e0b";
+      case "difficile":
+        return "#ef4444";
+      default:
+        return "#6b7280";
     }
   }
 </script>
@@ -66,14 +73,16 @@
       <span class="separator">›</span>
       <span class="current">🎯 {competence.nom}</span>
     </div>
-    
+
     <div class="competence-info">
       <div class="competence-title">
         <h1>{competence.nom}</h1>
         <div class="competence-badges">
-          <span 
+          <span
             class="difficulte-badge"
-            style="background-color: {getDifficultyColor(competence.difficulte)}15; color: {getDifficultyColor(competence.difficulte)}"
+            style="background-color: {getDifficultyColor(
+              competence.difficulte
+            )}15; color: {getDifficultyColor(competence.difficulte)}"
           >
             {competence.difficulte}
           </span>
@@ -82,9 +91,9 @@
           </span>
         </div>
       </div>
-      
+
       <p class="competence-description">{competence.description}</p>
-      
+
       <div class="competence-stats">
         <div class="stat-card">
           <span class="stat-number">{stats.nombreCours}</span>
@@ -142,16 +151,16 @@
         </button>
       {/if}
     </div>
-    
+
     {#if courses.length > 0}
       <div class="courses-list">
         {#each courses as course, index}
-          <div 
+          <div
             class="course-item"
             role="button"
             tabindex="0"
             on:click={() => navigateToCourse(course.id)}
-            on:keydown={(e) => e.key === 'Enter' && navigateToCourse(course.id)}
+            on:keydown={(e) => e.key === "Enter" && navigateToCourse(course.id)}
           >
             <div class="course-number">
               {course.ordre || index + 1}
@@ -159,17 +168,17 @@
             <div class="course-content">
               <h3>{course.titre}</h3>
               <p class="course-description">{course.description}</p>
-              
+
               {#if course.contenuMarkdown}
                 <div class="course-preview">
-                  <MarkdownRenderer 
-                    content={course.contenuMarkdown.substring(0, 200) + '...'}
+                  <MarkdownRenderer
+                    content={course.contenuMarkdown.substring(0, 200) + "..."}
                     showToc={false}
                     compact={true}
                   />
                 </div>
               {/if}
-              
+
               <div class="course-meta">
                 <span class="course-type">{course.type}</span>
                 <span class="course-duration">⏱️ {course.dureeEstimee}min</span>
@@ -195,17 +204,21 @@
       <h2>🔗 Compétences connexes</h2>
       <div class="related-grid">
         {#each relatedCompetences as related}
-          <div 
+          <div
             class="related-card"
             role="button"
             tabindex="0"
             on:click={() => navigateToRelatedCompetence(related.id)}
-            on:keydown={(e) => e.key === 'Enter' && navigateToRelatedCompetence(related.id)}
+            on:keydown={(e) =>
+              e.key === "Enter" && navigateToRelatedCompetence(related.id)}
           >
             <h3>{related.nom}</h3>
             <p>{related.description}</p>
             <div class="related-meta">
-              <span class="related-difficulte" style="color: {getDifficultyColor(related.difficulte)}">
+              <span
+                class="related-difficulte"
+                style="color: {getDifficultyColor(related.difficulte)}"
+              >
                 {related.difficulte}
               </span>
               <span class="related-duree">⏱️ {related.dureeEstimee}min</span>
@@ -235,11 +248,10 @@
         ← Retour au {niveau.nom}
       </a>
       <a href="/content/{matiere.id}" class="btn-secondary">
-        {matiere.icone} {matiere.nom}
+        {matiere.icone}
+        {matiere.nom}
       </a>
-      <a href="/content" class="btn-secondary">
-        📚 Tout le contenu
-      </a>
+      <a href="/content" class="btn-secondary"> 📚 Tout le contenu </a>
     </div>
   </section>
 </main>
@@ -257,20 +269,20 @@
     color: #6b7280;
     font-size: 0.9rem;
   }
-  
+
   .breadcrumb a {
     text-decoration: none;
     color: #3b82f6;
   }
-  
+
   .breadcrumb a:hover {
     text-decoration: underline;
   }
-  
+
   .separator {
     margin: 0 0.5rem;
   }
-  
+
   .current {
     font-weight: 500;
   }
