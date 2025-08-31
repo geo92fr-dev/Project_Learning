@@ -24,6 +24,7 @@
     "perf:full": "npm run lighthouse",
     "dev:ia": "node scripts/dev-ia.cjs",
     "roadmap:check": "node scripts/roadmap-checker.cjs",
+    "roadmap:generate-recaps": "node scripts/generate-phase-recaps.cjs",
     "quality:gates": "node scripts/quality-gates.cjs",
     "validation:cbd": "echo 'CBD validation intégrée dans dev:ia'",
     "validate": "npm run roadmap:check && npm run test:critical && npm run check",

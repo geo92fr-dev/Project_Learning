@@ -22,6 +22,30 @@ Créer une application d'apprentissage complète avec authentification, contenu 
 
 ---
 
+## 📋 **Suivi & Récapitulatifs des Phases**
+
+### **🎯 Système de Documentation Continue**
+Chaque phase dispose de deux documents complémentaires :
+- **`phase-X-[nom].md`** : Spécifications et instructions détaillées
+- **`phase-X-recap.md`** : Récapitulatif des réalisations et métriques
+
+### **📊 Index des Récapitulatifs**
+| Phase | Spécification | Récapitulatif | Status |
+|-------|---------------|---------------|---------|
+| **1** | [Setup & Architecture](phases/phase-1-setup.md) | [📋 Recap Phase 1](phases/phase-1-recap.md) | ✅ **COMPLÉTÉE** |
+| **2** | [Authentication](phases/phase-2-auth.md) | [📋 Recap Phase 2](phases/phase-2-recap.md) | 🔄 **EN COURS** |
+| **3** | [Content Management](phases/phase-3-content.md) | [📋 Recap Phase 3](phases/phase-3-recap.md) | 🎯 **PLANIFIÉE** |
+| **4-12** | [Phases 4-12](phases/) | [📋 Tous les récaps](phases/README-RECAPS.md) | 🎯 **PLANIFIÉES** |
+
+### **⚙️ Commandes de Suivi**
+```bash
+npm run roadmap:generate-recaps    # Génère nouveaux récapitulatifs
+npm run roadmap:check              # Valide cohérence phase/recap
+find phases -name "*recap.md"      # Liste tous les récapitulatifs
+```
+
+---
+
 ## 🏷️ **Système de Versioning - Releases Progressives**
 
 | Version  | Phases | Fonctionnalités | Statut |

@@ -2,6 +2,15 @@
 
 > **Résumé exécutif** : Vue d'ensemble pratique pour comprendre le QUOI et le COMMENT du projet FunLearning.
 
+## 📊 **TABLEAU DE BORD PROJET**
+**🎯 [Voir Dashboard Complet](DASHBOARD.md)** - Suivi temps réel progression par phases
+
+```
+Progress Global: ████████░░░░░░░░░░░░░░ 8.3% (1/12 phases)
+Phase Actuelle: Phase 2 - Authentication (40% complété)
+Prochaine Étape: Finaliser système auth Firebase
+```
+
 ---
 
 ## 🎯 **L'Essentiel**
@@ -25,54 +34,70 @@
 ### 🏗️ **GROUPE 1 : FONDATIONS** (3-4 semaines, v1.0-v1.2)
 **Objectif** : Base technique solide et authentification
 
-| Phase | Durée | Quoi | Validation |
-|-------|-------|------|------------|
-| **1** Setup & Architecture | 3-4j | SvelteKit + TypeScript + Tests | `npm run validate 1` |
-| **2** Firebase & Auth | 1 sem | Google OAuth + protection routes | `npm run test:auth` |
-| **3** Contenu & Markdown | 1 sem | Système contenu dynamique | `npm run test:content` |
-| **4** Pédagogie Avancée | 3j | Métacognition + pré-évaluation | Tests pédagogiques |
+| Phase | Durée | Quoi | Validation | Récap |
+|-------|-------|------|------------|-------|
+| **1** Setup & Architecture | 3-4j | SvelteKit + TypeScript + Tests | `npm run validate 1` | [📋 Recap](phases/phase-1-recap.md) ✅ |
+| **2** Firebase & Auth | 1 sem | Google OAuth + protection routes | `npm run test:auth` | [📋 Recap](phases/phase-2-recap.md) 🔄 |
+| **3** Contenu & Markdown | 1 sem | Système contenu dynamique | `npm run test:content` | [📋 Recap](phases/phase-3-recap.md) 🎯 |
+| **4** Pédagogie Avancée | 3j | Métacognition + pré-évaluation | Tests pédagogiques | [📋 Recap](phases/phase-4-recap.md) 🎯 |
 
 **Livrable v1.2** : MVP avec auth + contenu de base
 
 ### ⚙️ **GROUPE 2 : PHASE MOTEUR** (1 semaine, v1.5)
 **Objectif** : Données et contenu complets
 
-| Phase | Durée | Quoi | Comment |
-|-------|-------|------|---------|
-| **5** Firebase Integration | 3h | Services CRUD Firebase | Migration data layer |
-| **6** Curriculum Complet | 2j | 120+ compétences auto-générées | Scripts génération |
-| **7** Interface Dynamique | 1-2j | UI 100% connectée Firebase | Remplacement données statiques |
+| Phase | Durée | Quoi | Comment | Récap |
+|-------|-------|------|---------|-------|
+| **5** Firebase Integration | 3h | Services CRUD Firebase | Migration data layer | [📋 Recap](phases/phase-5-recap.md) 🎯 |
+| **6** Curriculum Complet | 2j | 120+ compétences auto-générées | Scripts génération | [📋 Recap](phases/phase-6-recap.md) 🎯 |
+| **7** Interface Dynamique | 1-2j | UI 100% connectée Firebase | Remplacement données statiques | [📋 Recap](phases/phase-7-recap.md) 🎯 |
 
 **Livrable v1.5** : Contenu complet et dynamique
 
 ### 🎮 **GROUPE 3 : PHASE UX** (1.5 semaines, v1.7)
 **Objectif** : Expérience utilisateur et interactivité
 
-| Phase | Durée | Quoi | Focus |
-|-------|-------|------|-------|
-| **8** Navigation UX | 1-2j | Navigation hiérarchique complète | Matière→Niveau→Compétences |
-| **9** Exercices & Progression | 1 sem | QCM interactifs + gamification | Système scoring |
+| Phase | Durée | Quoi | Focus | Récap |
+|-------|-------|------|-------|-------|
+| **8** Navigation UX | 1-2j | Navigation hiérarchique complète | Matière→Niveau→Compétences | [📋 Recap](phases/phase-8-recap.md) 🎯 |
+| **9** Exercices & Progression | 1 sem | QCM interactifs + gamification | Système scoring | [📋 Recap](phases/phase-9-recap.md) 🎯 |
 
 **Livrable v1.7** : Expérience complète utilisateur
 
 ### 📱 **GROUPE 4 : ÉCOSYSTÈME** (2 semaines, v1.9)
 **Objectif** : Solution complète multi-plateforme
 
-| Phase | Durée | Quoi | Bénéfice |
-|-------|-------|------|----------|
-| **10** PWA & Offline | 1 sem | App installable + mode offline | Accessibilité totale |
-| **11** Admin & Import | 1 sem | Dashboard admin + import masse | Gestion contenu |
+| Phase | Durée | Quoi | Bénéfice | Récap |
+|-------|-------|------|----------|-------|
+| **10** PWA & Offline | 1 sem | App installable + mode offline | Accessibilité totale | [📋 Recap](phases/phase-10-recap.md) 🎯 |
+| **11** Admin & Import | 1 sem | Dashboard admin + import masse | Gestion contenu | [📋 Recap](phases/phase-11-recap.md) 🎯 |
 
 **Livrable v1.9** : Solution professionnelle
 
 ### 🚀 **GROUPE 5 : PRODUCTION** (1 semaine, v2.0)
 **Objectif** : Optimisation et déploiement
 
-| Phase | Durée | Quoi | Standard |
-|-------|-------|------|---------|
-| **12** Polish & Performance | 1 sem | Lighthouse >90% + monitoring | Production-ready |
+| Phase | Durée | Quoi | Standard | Récap |
+|-------|-------|------|---------|-------|
+| **12** Polish & Performance | 1 sem | Lighthouse >90% + monitoring | Production-ready | [📋 Recap](phases/phase-12-recap.md) 🎯 |
 
 **Livrable v2.0** : Plateforme production complète
+
+---
+
+## 📋 **Suivi des Réalisations**
+
+### **🎯 Index des Récapitulatifs**
+- **📊 Vue d'ensemble** : [Index Récapitulatifs](phases/README-RECAPS.md)
+- **✅ Phases Complétées** : Status détaillé dans chaque récap
+- **🔄 Phases En Cours** : Suivi temps réel
+- **🎯 Phases Planifiées** : Templates prêts
+
+### **⚙️ Génération Automatique**
+```bash
+npm run roadmap:generate-recaps    # Créer nouveaux récapitulatifs
+npm run roadmap:check              # Valider cohérence phases
+```
 
 ---
 
