@@ -1,0 +1,45 @@
+// 🔥 Firebase Configuration - FunLearning V2.0
+// Configuration SSR-Safe selon DOC_CoPilot_Practices
+
+import { browser } from '$app/environment';
+
+// Configuration Firebase (à adapter avec vos propres clés)
+const firebaseConfig = {
+  apiKey: "demo-api-key",
+  authDomain: "demo-project.firebaseapp.com", 
+  projectId: "demo-project",
+  storageBucket: "demo-project.appspot.com",
+  messagingSenderId: "123456789",
+  appId: "1:123456789:web:abcdef"
+};
+
+let app = null;
+let auth = null;
+
+// Initialize Firebase only in browser
+if (browser) {
+  try {
+    const { initializeApp } = await import('firebase/app');
+    const { getAuth, connectAuthEmulator } = await import('firebase/auth');
+    
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    
+    // Connect to auth emulator in development
+    if (import.meta.env.DEV && !auth._delegate._config.emulator) {
+      try {
+        connectAuthEmulator(auth, 'http://localhost:9099');
+      } catch (error) {
+        // Emulator connection failed - continue with production auth
+        console.warn('🔥 Firebase Auth Emulator not available, using production');
+      }
+    }
+    
+    console.log('🔥 Firebase initialized successfully');
+  } catch (error) {
+    console.error('❌ Firebase initialization error:', error);
+  }
+}
+
+export { app, auth };
+export default { app, auth };
