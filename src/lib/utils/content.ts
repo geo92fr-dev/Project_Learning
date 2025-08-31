@@ -1,7 +1,24 @@
 import { marked } from "marked";
+import { markedHighlight } from "marked-highlight";
 import DOMPurify from "dompurify";
 import hljs from "highlight.js";
+import { browser } from "$app/environment";
 import type { Course, Lesson } from "$lib/types/content";
+
+// Configuration de marked avec highlight.js
+marked.use(markedHighlight({
+  langPrefix: 'hljs language-',
+  highlight(code: string, lang: string) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return hljs.highlight(code, { language: lang }).value;
+      } catch (err) {
+        console.warn("Erreur de coloration syntaxique:", err);
+      }
+    }
+    return hljs.highlightAuto(code).value;
+  }
+}));
 
 // Configuration de marked avec sécurité
 marked.setOptions({
@@ -56,6 +73,20 @@ const purifyConfig = {
 };
 
 /**
+ * Sanitisation basique côté serveur pour les éléments dangereux
+ */
+function sanitizeHtmlBasic(html: string): string {
+  return html
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
+    .replace(/<object\b[^<]*(?:(?!<\/object>)<[^<]*)*<\/object>/gi, '')
+    .replace(/<embed\b[^<]*(?:(?!<\/embed>)<[^<]*)*<\/embed>/gi, '')
+    .replace(/<form\b[^<]*(?:(?!<\/form>)<[^<]*)*<\/form>/gi, '')
+    .replace(/on\w+\s*=\s*["'][^"']*["']/gi, '') // Remove event handlers
+    .replace(/javascript:/gi, ''); // Remove javascript: URLs
+}
+
+/**
  * Convertit du Markdown en HTML sécurisé
  */
 export function markdownToHtml(markdown: string): string {
@@ -64,8 +95,16 @@ export function markdownToHtml(markdown: string): string {
     const rawHtml = marked.parse(markdown) as string;
 
     // 2. Sécuriser le HTML
-    const cleanHtml = DOMPurify.sanitize(rawHtml, purifyConfig);
-
+    let cleanHtml: string;
+    
+    if (browser && typeof window !== 'undefined' && DOMPurify.sanitize) {
+      // Côté client avec DOMPurify
+      cleanHtml = DOMPurify.sanitize(rawHtml, purifyConfig);
+    } else {
+      // Côté serveur ou environnement de test avec sanitisation basique
+      cleanHtml = sanitizeHtmlBasic(rawHtml);
+    }
+    
     return cleanHtml;
   } catch (error) {
     console.error("Erreur de conversion Markdown:", error);

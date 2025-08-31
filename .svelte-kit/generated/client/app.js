@@ -22,28 +22,48 @@ export const nodes = [
 	() => import('./nodes/18'),
 	() => import('./nodes/19'),
 	() => import('./nodes/20'),
-	() => import('./nodes/21')
+	() => import('./nodes/21'),
+	() => import('./nodes/22'),
+	() => import('./nodes/23'),
+	() => import('./nodes/24'),
+	() => import('./nodes/25'),
+	() => import('./nodes/26'),
+	() => import('./nodes/27'),
+	() => import('./nodes/28'),
+	() => import('./nodes/29'),
+	() => import('./nodes/30'),
+	() => import('./nodes/31')
 ];
 
 export const server_loads = [2];
 
 export const dictionary = {
 		"/": [6],
-		"/auth-google": [8],
-		"/auth/login": [7],
-		"/content": [9],
-		"/cours": [10],
-		"/cours/[slug]": [11],
-		"/dashboard": [12,[2]],
-		"/pedagogy": [13],
-		"/test-content-fixed": [15],
-		"/test-content": [14],
-		"/test-exercises": [16],
-		"/test-markdown": [17],
-		"/[matiere]": [18,[3]],
-		"/[matiere]/[niveau]": [19,[3,4]],
-		"/[matiere]/[niveau]/[competence]": [20,[3,4,5]],
-		"/[matiere]/[niveau]/[competence]/[cours]": [21,[3,4,5]]
+		"/auth-google": [9],
+		"/auth": [7],
+		"/auth/login": [8],
+		"/complete": [10],
+		"/content": [11],
+		"/content/[matiere]": [12],
+		"/content/[matiere]/[niveau]": [13],
+		"/content/[matiere]/[niveau]/[competence]": [14],
+		"/cours": [15],
+		"/cours/[slug]": [16],
+		"/dashboard": [17,[2]],
+		"/demo": [18],
+		"/demo/exercise": [19],
+		"/demo/markdown": [20],
+		"/pedagogy": [21],
+		"/roadmap": [22],
+		"/test-content-fixed": [24],
+		"/test-content": [23],
+		"/test-exercises": [25],
+		"/test-markdown": [26],
+		"/tests": [27],
+		"/[matiere]": [28,[3]],
+		"/[matiere]/[niveau]": [29,[3,4]],
+		"/[matiere]/[niveau]/[competence]": [30,[3,4,5]],
+		"/[matiere]/[niveau]/[competence]/[cours]": [31,[3,4,5]]
 	};
 
 export const hooks = {

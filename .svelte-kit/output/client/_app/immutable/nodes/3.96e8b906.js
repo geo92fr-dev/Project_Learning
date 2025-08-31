@@ -1,1 +1,0 @@
-import{s as o}from"../chunks/scheduler.02e0ea0e.js";import{S as t,i as n}from"../chunks/index.ee037b30.js";const a=Object.freeze(Object.defineProperty({__proto__:null},Symbol.toStringTag,{value:"Module"}));class u extends t{constructor(e){super(),n(this,e,null,null,o,{})}}export{u as component,a as universal};

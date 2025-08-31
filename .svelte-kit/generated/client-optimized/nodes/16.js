@@ -1,1 +1,3 @@
-export { default as component } from "../../../../src/routes/test-markdown/+page.svelte";
+import * as universal from "../../../../src/routes/cours/[slug]/+page.ts";
+export { universal };
+export { default as component } from "../../../../src/routes/cours/[slug]/+page.svelte";

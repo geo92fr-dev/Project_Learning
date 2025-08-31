@@ -1,8 +1,19 @@
 {
 	"/": [],
 	"/auth-google": [],
+	"/auth": [],
 	"/auth/login": [],
+	"/complete": [],
 	"/content": [],
+	"/content/[matiere]": [
+		"src/routes/content/[matiere]/+page.ts"
+	],
+	"/content/[matiere]/[niveau]": [
+		"src/routes/content/[matiere]/[niveau]/+page.ts"
+	],
+	"/content/[matiere]/[niveau]/[competence]": [
+		"src/routes/content/[matiere]/[niveau]/[competence]/+page.ts"
+	],
 	"/cours": [],
 	"/cours/[slug]": [
 		"src/routes/cours/[slug]/+page.ts"
@@ -11,11 +22,16 @@
 		"src/routes/dashboard/+layout.server.ts",
 		"src/routes/dashboard/+layout.server.ts"
 	],
+	"/demo": [],
+	"/demo/exercise": [],
+	"/demo/markdown": [],
 	"/pedagogy": [],
+	"/roadmap": [],
 	"/test-content-fixed": [],
 	"/test-content": [],
 	"/test-exercises": [],
 	"/test-markdown": [],
+	"/tests": [],
 	"/[matiere]": [
 		"src/routes/[matiere]/+layout.ts",
 		"src/routes/[matiere]/+layout.ts"

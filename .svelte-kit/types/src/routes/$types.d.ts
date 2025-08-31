@@ -12,8 +12,8 @@ type EnsureDefined<T> = T extends null | undefined ? {} : T;
 type OptionalUnion<U extends Record<string, any>, A extends keyof U = U extends U ? keyof U : never> = U extends unknown ? { [P in Exclude<A, keyof U>]?: never } & U : never;
 export type Snapshot<T = any> = Kit.Snapshot<T>;
 type PageParentData = EnsureDefined<LayoutData>;
-type LayoutRouteId = RouteId | "/" | "/auth/login" | "/auth-google" | "/content" | "/cours" | "/cours/[slug]" | "/dashboard" | "/pedagogy" | "/test-content" | "/test-content-fixed" | "/test-exercises" | "/test-markdown" | "/[matiere]" | "/[matiere]/[niveau]" | "/[matiere]/[niveau]/[competence]" | "/[matiere]/[niveau]/[competence]/[cours]" | null
-type LayoutParams = RouteParams & { slug?: string; matiere?: string; niveau?: string; competence?: string; cours?: string }
+type LayoutRouteId = RouteId | "/" | "/auth" | "/auth/login" | "/auth-google" | "/complete" | "/content" | "/content/[matiere]" | "/content/[matiere]/[niveau]" | "/content/[matiere]/[niveau]/[competence]" | "/cours" | "/cours/[slug]" | "/dashboard" | "/demo" | "/demo/exercise" | "/demo/markdown" | "/pedagogy" | "/roadmap" | "/test-content" | "/test-content-fixed" | "/test-exercises" | "/test-markdown" | "/tests" | "/[matiere]" | "/[matiere]/[niveau]" | "/[matiere]/[niveau]/[competence]" | "/[matiere]/[niveau]/[competence]/[cours]" | null
+type LayoutParams = RouteParams & { matiere?: string; niveau?: string; competence?: string; slug?: string; cours?: string }
 type LayoutParentData = EnsureDefined<{}>;
 
 export type PageServerData = null;

@@ -10,7 +10,7 @@ return {
 	assets: new Set([]),
 	mimeTypes: {},
 	_: {
-		client: {"start":"_app/immutable/entry/start.f4f74cf8.js","app":"_app/immutable/entry/app.c1344500.js","imports":["_app/immutable/entry/start.f4f74cf8.js","_app/immutable/chunks/scheduler.02e0ea0e.js","_app/immutable/chunks/singletons.486a7f47.js","_app/immutable/chunks/index.3731fc92.js","_app/immutable/entry/app.c1344500.js","_app/immutable/chunks/preload-helper.a4192956.js","_app/immutable/chunks/scheduler.02e0ea0e.js","_app/immutable/chunks/index.ee037b30.js"],"stylesheets":[],"fonts":[]},
+		client: {"start":"_app/immutable/entry/start.59868831.js","app":"_app/immutable/entry/app.c45c8e46.js","imports":["_app/immutable/entry/start.59868831.js","_app/immutable/chunks/scheduler.8dd50edf.js","_app/immutable/chunks/singletons.50902caa.js","_app/immutable/chunks/index.1e5ee360.js","_app/immutable/chunks/control.c2cf8273.js","_app/immutable/entry/app.c45c8e46.js","_app/immutable/chunks/preload-helper.a4192956.js","_app/immutable/chunks/scheduler.8dd50edf.js","_app/immutable/chunks/index.af76732a.js"],"stylesheets":[],"fonts":[]},
 		nodes: [
 			__memo(() => import('./nodes/0.js')),
 			__memo(() => import('./nodes/1.js')),
@@ -32,119 +32,200 @@ return {
 			__memo(() => import('./nodes/17.js')),
 			__memo(() => import('./nodes/18.js')),
 			__memo(() => import('./nodes/19.js')),
-			__memo(() => import('./nodes/20.js'))
+			__memo(() => import('./nodes/20.js')),
+			__memo(() => import('./nodes/21.js')),
+			__memo(() => import('./nodes/22.js')),
+			__memo(() => import('./nodes/23.js')),
+			__memo(() => import('./nodes/24.js')),
+			__memo(() => import('./nodes/25.js')),
+			__memo(() => import('./nodes/26.js')),
+			__memo(() => import('./nodes/27.js')),
+			__memo(() => import('./nodes/28.js')),
+			__memo(() => import('./nodes/29.js')),
+			__memo(() => import('./nodes/30.js')),
+			__memo(() => import('./nodes/31.js'))
 		],
 		routes: [
 			{
 				id: "/",
 				pattern: /^\/$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 5 },
+				page: { layouts: [0,], errors: [1,], leaf: 6 },
 				endpoint: null
 			},
 			{
-				id: "/auth-simple",
-				pattern: /^\/auth-simple\/?$/,
+				id: "/auth-google",
+				pattern: /^\/auth-google\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 6 },
+				page: { layouts: [0,], errors: [1,], leaf: 9 },
+				endpoint: null
+			},
+			{
+				id: "/auth",
+				pattern: /^\/auth\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 7 },
+				endpoint: null
+			},
+			{
+				id: "/auth/login",
+				pattern: /^\/auth\/login\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 8 },
+				endpoint: null
+			},
+			{
+				id: "/complete",
+				pattern: /^\/complete\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 10 },
 				endpoint: null
 			},
 			{
 				id: "/content",
 				pattern: /^\/content\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 7 },
+				page: { layouts: [0,], errors: [1,], leaf: 11 },
+				endpoint: null
+			},
+			{
+				id: "/content/[matiere]",
+				pattern: /^\/content\/([^/]+?)\/?$/,
+				params: [{"name":"matiere","optional":false,"rest":false,"chained":false}],
+				page: { layouts: [0,], errors: [1,], leaf: 12 },
+				endpoint: null
+			},
+			{
+				id: "/content/[matiere]/[niveau]",
+				pattern: /^\/content\/([^/]+?)\/([^/]+?)\/?$/,
+				params: [{"name":"matiere","optional":false,"rest":false,"chained":false},{"name":"niveau","optional":false,"rest":false,"chained":false}],
+				page: { layouts: [0,], errors: [1,], leaf: 13 },
+				endpoint: null
+			},
+			{
+				id: "/content/[matiere]/[niveau]/[competence]",
+				pattern: /^\/content\/([^/]+?)\/([^/]+?)\/([^/]+?)\/?$/,
+				params: [{"name":"matiere","optional":false,"rest":false,"chained":false},{"name":"niveau","optional":false,"rest":false,"chained":false},{"name":"competence","optional":false,"rest":false,"chained":false}],
+				page: { layouts: [0,], errors: [1,], leaf: 14 },
 				endpoint: null
 			},
 			{
 				id: "/cours",
 				pattern: /^\/cours\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 8 },
+				page: { layouts: [0,], errors: [1,], leaf: 15 },
 				endpoint: null
 			},
 			{
 				id: "/cours/[slug]",
 				pattern: /^\/cours\/([^/]+?)\/?$/,
 				params: [{"name":"slug","optional":false,"rest":false,"chained":false}],
-				page: { layouts: [0,], errors: [1,], leaf: 9 },
+				page: { layouts: [0,], errors: [1,], leaf: 16 },
 				endpoint: null
 			},
 			{
 				id: "/dashboard",
 				pattern: /^\/dashboard\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 10 },
+				page: { layouts: [0,2,], errors: [1,,], leaf: 17 },
+				endpoint: null
+			},
+			{
+				id: "/demo",
+				pattern: /^\/demo\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 18 },
+				endpoint: null
+			},
+			{
+				id: "/demo/exercise",
+				pattern: /^\/demo\/exercise\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 19 },
+				endpoint: null
+			},
+			{
+				id: "/demo/markdown",
+				pattern: /^\/demo\/markdown\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 20 },
 				endpoint: null
 			},
 			{
 				id: "/pedagogy",
 				pattern: /^\/pedagogy\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 11 },
+				page: { layouts: [0,], errors: [1,], leaf: 21 },
+				endpoint: null
+			},
+			{
+				id: "/roadmap",
+				pattern: /^\/roadmap\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 22 },
 				endpoint: null
 			},
 			{
 				id: "/test-content-fixed",
 				pattern: /^\/test-content-fixed\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 13 },
+				page: { layouts: [0,], errors: [1,], leaf: 24 },
 				endpoint: null
 			},
 			{
 				id: "/test-content",
 				pattern: /^\/test-content\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 12 },
+				page: { layouts: [0,], errors: [1,], leaf: 23 },
 				endpoint: null
 			},
 			{
 				id: "/test-exercises",
 				pattern: /^\/test-exercises\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 14 },
-				endpoint: null
-			},
-			{
-				id: "/test-firebase-simple",
-				pattern: /^\/test-firebase-simple\/?$/,
-				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 15 },
+				page: { layouts: [0,], errors: [1,], leaf: 25 },
 				endpoint: null
 			},
 			{
 				id: "/test-markdown",
 				pattern: /^\/test-markdown\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 16 },
+				page: { layouts: [0,], errors: [1,], leaf: 26 },
+				endpoint: null
+			},
+			{
+				id: "/tests",
+				pattern: /^\/tests\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 27 },
 				endpoint: null
 			},
 			{
 				id: "/[matiere]",
 				pattern: /^\/([^/]+?)\/?$/,
 				params: [{"name":"matiere","optional":false,"rest":false,"chained":false}],
-				page: { layouts: [0,2,], errors: [1,,], leaf: 17 },
+				page: { layouts: [0,3,], errors: [1,,], leaf: 28 },
 				endpoint: null
 			},
 			{
 				id: "/[matiere]/[niveau]",
 				pattern: /^\/([^/]+?)\/([^/]+?)\/?$/,
 				params: [{"name":"matiere","optional":false,"rest":false,"chained":false},{"name":"niveau","optional":false,"rest":false,"chained":false}],
-				page: { layouts: [0,2,3,], errors: [1,,,], leaf: 18 },
+				page: { layouts: [0,3,4,], errors: [1,,,], leaf: 29 },
 				endpoint: null
 			},
 			{
 				id: "/[matiere]/[niveau]/[competence]",
 				pattern: /^\/([^/]+?)\/([^/]+?)\/([^/]+?)\/?$/,
 				params: [{"name":"matiere","optional":false,"rest":false,"chained":false},{"name":"niveau","optional":false,"rest":false,"chained":false},{"name":"competence","optional":false,"rest":false,"chained":false}],
-				page: { layouts: [0,2,3,4,], errors: [1,,,,], leaf: 19 },
+				page: { layouts: [0,3,4,5,], errors: [1,,,,], leaf: 30 },
 				endpoint: null
 			},
 			{
 				id: "/[matiere]/[niveau]/[competence]/[cours]",
 				pattern: /^\/([^/]+?)\/([^/]+?)\/([^/]+?)\/([^/]+?)\/?$/,
 				params: [{"name":"matiere","optional":false,"rest":false,"chained":false},{"name":"niveau","optional":false,"rest":false,"chained":false},{"name":"competence","optional":false,"rest":false,"chained":false},{"name":"cours","optional":false,"rest":false,"chained":false}],
-				page: { layouts: [0,2,3,4,], errors: [1,,,,], leaf: 20 },
+				page: { layouts: [0,3,4,5,], errors: [1,,,,], leaf: 31 },
 				endpoint: null
 			}
 		],

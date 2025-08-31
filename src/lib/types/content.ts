@@ -130,11 +130,11 @@ export interface ContentMetadata {
   updatedAt?: string;
 }
 
-export interface MarkdownContent {
+export type MarkdownContent = {
   content: string;
   metadata: ContentMetadata;
   html?: string;
-}
+};
 
 // ===== VALIDATION HELPERS =====
 export const ValidationHelpers = {

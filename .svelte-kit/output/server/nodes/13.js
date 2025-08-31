@@ -1,8 +1,10 @@
-
+import * as universal from '../entries/pages/content/_matiere_/_niveau_/_page.ts.js';
 
 export const index = 13;
 let component_cache;
-export const component = async () => component_cache ??= (await import('../entries/pages/test-content-fixed/_page.svelte.js')).default;
-export const imports = ["_app/immutable/nodes/13.cc62056d.js","_app/immutable/chunks/scheduler.02e0ea0e.js","_app/immutable/chunks/each.4470a8e9.js","_app/immutable/chunks/index.ee037b30.js","_app/immutable/chunks/content.d1a5111c.js","_app/immutable/chunks/index.3731fc92.js","_app/immutable/chunks/content.15b954d1.js"];
-export const stylesheets = ["_app/immutable/assets/13.fb5614c3.css"];
+export const component = async () => component_cache ??= (await import('../entries/pages/content/_matiere_/_niveau_/_page.svelte.js')).default;
+export { universal };
+export const universal_id = "src/routes/content/[matiere]/[niveau]/+page.ts";
+export const imports = ["_app/immutable/nodes/13.a72f45fb.js","_app/immutable/chunks/preload-helper.a4192956.js","_app/immutable/chunks/index.8f2ca6db.js","_app/immutable/chunks/control.c2cf8273.js","_app/immutable/chunks/scheduler.8dd50edf.js","_app/immutable/chunks/each.6b27af3a.js","_app/immutable/chunks/index.af76732a.js","_app/immutable/chunks/navigation.1081ecf5.js","_app/immutable/chunks/singletons.50902caa.js","_app/immutable/chunks/index.1e5ee360.js","_app/immutable/chunks/content.ad934cc6.js"];
+export const stylesheets = ["_app/immutable/assets/13.79261ac6.css"];
 export const fonts = [];

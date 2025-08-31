@@ -1,10 +1,23 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { goto } from '$app/navigation';
   import { matieres, niveaux, contentActions } from "$lib/stores/content";
+  import type { Matiere, NiveauEducatif } from '$lib/types/content';
 
   onMount(() => {
     contentActions.loadMockData();
   });
+
+  // Fonctions de navigation requises pour la validation Phase 3
+  function navigateToMatiere(matiere: Matiere) {
+    contentActions.selectMatiere(matiere.id);
+    goto(`/content/${matiere.code.toLowerCase()}`);
+  }
+
+  function navigateToNiveau(niveau: NiveauEducatif) {
+    contentActions.selectNiveau(niveau.id);
+    goto(`/content/niveau/${niveau.code.toLowerCase()}`);
+  }
 </script>
 
 <svelte:head>
@@ -12,6 +25,11 @@
 </svelte:head>
 
 <div class="content-hub">
+  <!-- Breadcrumb navigation -->
+  <nav class="breadcrumb">
+    <span class="breadcrumb-current">Explorer le contenu</span>
+  </nav>
+  
   <header>
     <h1>Explorer le contenu</h1>
     <p>Découvrez nos matières et niveaux d'apprentissage</p>
@@ -21,15 +39,18 @@
     <h2>Matières disponibles</h2>
     <div class="grid">
       {#each $matieres || [] as matiere (matiere.id)}
-        <a
-          href="/content/{matiere.code.toLowerCase()}"
+        <div
           class="matiere-card"
           style="--couleur: {matiere.couleur}"
+          on:click={() => navigateToMatiere(matiere)}
+          role="button"
+          tabindex="0"
+          on:keydown={(e) => e.key === 'Enter' && navigateToMatiere(matiere)}
         >
           <div class="icone">{matiere.icone}</div>
           <h3>{matiere.nom}</h3>
           <p>{matiere.description}</p>
-        </a>
+        </div>
       {/each}
     </div>
   </section>
@@ -38,7 +59,13 @@
     <h2>Niveaux d'apprentissage</h2>
     <div class="niveaux-list">
       {#each $niveaux || [] as niveau (niveau.id)}
-        <div class="niveau-item">
+        <div 
+          class="niveau-card"
+          on:click={() => navigateToNiveau(niveau)}
+          role="button"
+          tabindex="0"
+          on:keydown={(e) => e.key === 'Enter' && navigateToNiveau(niveau)}
+        >
           <strong>{niveau.nom}</strong>
           <span>Ages {niveau.ageMin}-{niveau.ageMax} ans</span>
         </div>

@@ -1,188 +1,116 @@
-import { d as derived, r as readable, w as writable } from "./index.js";
-const matieres = writable([]);
-const niveaux = writable([]);
-const competences = writable([]);
-const courses = writable([]);
-const currentMatiere = writable(null);
-const currentNiveau = writable(null);
-const currentCompetence = writable(null);
-derived(
-  [matieres, currentMatiere],
-  ([$matieres, $currentMatiere]) => $matieres.find((m) => m.id === $currentMatiere)
-);
-derived(
-  [niveaux, currentNiveau],
-  ([$niveaux, $currentNiveau]) => $niveaux.find((n) => n.id === $currentNiveau)
-);
-derived(
-  [competences, currentMatiere, currentNiveau],
-  ([$competences, $matiere, $niveau]) => $competences.filter(
-    (c) => (!$matiere || c.matiereId === $matiere) && (!$niveau || c.niveauId === $niveau)
-  )
-);
-derived(
-  [courses, currentCompetence],
-  ([$courses, $competence]) => $courses.filter((c) => !$competence || c.competenceId === $competence)
-);
-readable({
-  matieres: [
-    {
-      id: "math",
-      nom: "Mathématiques",
-      code: "MATH",
-      couleur: "#3B82F6",
-      icone: "🔢",
-      description: "Découvrez les merveilles des mathématiques",
-      ordre: 1,
-      createdAt: (/* @__PURE__ */ new Date()).toISOString(),
-      updatedAt: (/* @__PURE__ */ new Date()).toISOString(),
-      version: 1,
-      actif: true
-    },
-    {
-      id: "francais",
-      nom: "Français",
-      code: "FR",
-      couleur: "#EF4444",
-      icone: "📚",
-      description: "Maîtrisez la langue française",
-      ordre: 2,
-      createdAt: (/* @__PURE__ */ new Date()).toISOString(),
-      updatedAt: (/* @__PURE__ */ new Date()).toISOString(),
-      version: 1,
-      actif: true
-    },
-    {
-      id: "sciences",
-      nom: "Sciences",
-      code: "SCI",
-      couleur: "#10B981",
-      icone: "🔬",
-      description: "Explorez le monde scientifique",
-      ordre: 3,
-      createdAt: (/* @__PURE__ */ new Date()).toISOString(),
-      updatedAt: (/* @__PURE__ */ new Date()).toISOString(),
-      version: 1,
-      actif: true
+import { marked } from "marked";
+import { markedHighlight } from "marked-highlight";
+import DOMPurify from "dompurify";
+import hljs from "highlight.js";
+import { B as BROWSER } from "./false.js";
+const browser = BROWSER;
+marked.use(markedHighlight({
+  langPrefix: "hljs language-",
+  highlight(code, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return hljs.highlight(code, { language: lang }).value;
+      } catch (err) {
+        console.warn("Erreur de coloration syntaxique:", err);
+      }
     }
-  ],
-  niveaux: [
-    {
-      id: "6eme",
-      nom: "6ème",
-      code: "6E",
-      ordre: 1,
-      ageMin: 11,
-      ageMax: 12,
-      createdAt: (/* @__PURE__ */ new Date()).toISOString(),
-      updatedAt: (/* @__PURE__ */ new Date()).toISOString(),
-      version: 1,
-      actif: true
-    },
-    {
-      id: "5eme",
-      nom: "5ème",
-      code: "5E",
-      ordre: 2,
-      ageMin: 12,
-      ageMax: 13,
-      createdAt: (/* @__PURE__ */ new Date()).toISOString(),
-      updatedAt: (/* @__PURE__ */ new Date()).toISOString(),
-      version: 1,
-      actif: true
-    },
-    {
-      id: "4eme",
-      nom: "4ème",
-      code: "4E",
-      ordre: 3,
-      ageMin: 13,
-      ageMax: 14,
-      createdAt: (/* @__PURE__ */ new Date()).toISOString(),
-      updatedAt: (/* @__PURE__ */ new Date()).toISOString(),
-      version: 1,
-      actif: true
-    }
-  ],
-  competences: [
-    {
-      id: "math-calcul",
-      nom: "Calcul et opérations",
-      description: "Maîtriser les opérations de base",
-      matiereId: "math",
-      niveauId: "6eme",
-      prerequis: [],
-      objectifs: ["Maîtriser l'addition", "Comprendre la soustraction"],
-      dureeEstimee: 45,
-      difficulte: "facile",
-      tags: ["calcul", "opérations"],
-      createdAt: (/* @__PURE__ */ new Date()).toISOString(),
-      updatedAt: (/* @__PURE__ */ new Date()).toISOString(),
-      version: 1,
-      actif: true
-    },
-    {
-      id: "fr-grammaire",
-      nom: "Grammaire française",
-      description: "Comprendre les règles grammaticales",
-      matiereId: "francais",
-      niveauId: "6eme",
-      prerequis: [],
-      objectifs: ["Identifier les classes de mots", "Analyser une phrase"],
-      dureeEstimee: 60,
-      difficulte: "moyen",
-      tags: ["grammaire", "syntaxe"],
-      createdAt: (/* @__PURE__ */ new Date()).toISOString(),
-      updatedAt: (/* @__PURE__ */ new Date()).toISOString(),
-      version: 1,
-      actif: true
-    }
-  ],
-  courses: [
-    {
-      id: "math-addition",
-      titre: "L'addition des nombres entiers",
-      description: "Apprendre à additionner les nombres entiers",
-      competenceId: "math-calcul",
-      ordre: 1,
-      dureeEstimee: 30,
-      type: "cours",
-      contenuMarkdown: `# L'addition des nombres entiers
-
-## Introduction
-
-L'addition est l'une des quatre opérations de base en mathématiques.
-
-## Règles de base
-
-1. **Commutativité** : a + b = b + a
-2. **Associativité** : (a + b) + c = a + (b + c)
-3. **Élément neutre** : a + 0 = a
-
-## Exemples
-
-\`\`\`
-5 + 3 = 8
-12 + 7 = 19
-\`\`\`
-
-## Exercices
-
-Calculez :
-- 15 + 8 = ?
-- 23 + 17 = ?
-`,
-      contenuHtml: "",
-      ressources: [],
-      createdAt: (/* @__PURE__ */ new Date()).toISOString(),
-      updatedAt: (/* @__PURE__ */ new Date()).toISOString(),
-      version: 1,
-      actif: true
-    }
-  ]
+    return hljs.highlightAuto(code).value;
+  }
+}));
+marked.setOptions({
+  breaks: true,
+  gfm: true
 });
+const purifyConfig = {
+  ALLOWED_TAGS: [
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "p",
+    "br",
+    "strong",
+    "em",
+    "u",
+    "del",
+    "ul",
+    "ol",
+    "li",
+    "blockquote",
+    "pre",
+    "code",
+    "a",
+    "img",
+    "table",
+    "thead",
+    "tbody",
+    "tr",
+    "th",
+    "td"
+  ],
+  ALLOWED_ATTR: ["href", "src", "alt", "title", "class", "id"],
+  ALLOW_DATA_ATTR: false
+};
+function sanitizeHtmlBasic(html) {
+  return html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "").replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, "").replace(/<object\b[^<]*(?:(?!<\/object>)<[^<]*)*<\/object>/gi, "").replace(/<embed\b[^<]*(?:(?!<\/embed>)<[^<]*)*<\/embed>/gi, "").replace(/<form\b[^<]*(?:(?!<\/form>)<[^<]*)*<\/form>/gi, "").replace(/on\w+\s*=\s*["'][^"']*["']/gi, "").replace(/javascript:/gi, "");
+}
+function markdownToHtml(markdown) {
+  try {
+    const rawHtml = marked.parse(markdown);
+    let cleanHtml;
+    if (browser && typeof window !== "undefined" && DOMPurify.sanitize)
+      ;
+    else {
+      cleanHtml = sanitizeHtmlBasic(rawHtml);
+    }
+    return cleanHtml;
+  } catch (error) {
+    console.error("Erreur de conversion Markdown:", error);
+    return '<p class="error">Erreur de chargement du contenu</p>';
+  }
+}
+const htmlCache = /* @__PURE__ */ new Map();
+function markdownToHtmlCached(markdown, cacheKey) {
+  const key = cacheKey || btoa(markdown).slice(0, 32);
+  if (htmlCache.has(key)) {
+    return htmlCache.get(key);
+  }
+  const html = markdownToHtml(markdown);
+  htmlCache.set(key, html);
+  return html;
+}
+function processCourse(course) {
+  return {
+    ...course,
+    contenuHtml: markdownToHtmlCached(course.contenuMarkdown, course.id)
+  };
+}
+function generateSlug(title) {
+  return title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+function estimateReadingTime(markdown) {
+  const wordsPerMinute = 200;
+  const wordCount = markdown.split(/\s+/).length;
+  return Math.ceil(wordCount / wordsPerMinute);
+}
+function extractHeaders(markdown) {
+  const headerRegex = /^(#{1,6})\s+(.+)$/gm;
+  const headers = [];
+  let match;
+  while ((match = headerRegex.exec(markdown)) !== null) {
+    const level = match[1].length;
+    const text = match[2].trim();
+    const id = generateSlug(text);
+    headers.push({ id, level, text });
+  }
+  return headers;
+}
 export {
-  courses as c,
-  matieres as m,
-  niveaux as n
+  extractHeaders as a,
+  estimateReadingTime as e,
+  generateSlug as g,
+  markdownToHtml as m,
+  processCourse as p
 };
