@@ -38,7 +38,9 @@ export const nodes = [
 	() => import('./nodes/34'),
 	() => import('./nodes/35'),
 	() => import('./nodes/36'),
-	() => import('./nodes/37')
+	() => import('./nodes/37'),
+	() => import('./nodes/38'),
+	() => import('./nodes/39')
 ];
 
 export const server_loads = [2];
@@ -56,26 +58,28 @@ export const dictionary = {
 		"/content/[matiere]/[niveau]/[competence]": [15],
 		"/cours": [16],
 		"/cours/[slug]": [17],
-		"/dashboard": [18,[2]],
-		"/debug-auth": [19],
-		"/demo": [20],
-		"/demo/exercise": [21],
-		"/demo/markdown": [22],
-		"/pedagogy": [23],
-		"/roadmap": [24],
-		"/test-auth": [25],
-		"/test-content-fixed": [27],
-		"/test-content": [26],
-		"/test-exercises": [28],
-		"/test-firebase-simple": [30],
-		"/test-firebase": [29],
-		"/test-markdown": [31],
-		"/test-phase4": [32],
-		"/tests": [33],
-		"/[matiere]": [34,[3]],
-		"/[matiere]/[niveau]": [35,[3,4]],
-		"/[matiere]/[niveau]/[competence]": [36,[3,4,5]],
-		"/[matiere]/[niveau]/[competence]/[cours]": [37,[3,4,5]]
+		"/curriculum-dashboard": [19],
+		"/curriculum": [18],
+		"/dashboard": [20,[2]],
+		"/debug-auth": [21],
+		"/demo": [22],
+		"/demo/exercise": [23],
+		"/demo/markdown": [24],
+		"/pedagogy": [25],
+		"/roadmap": [26],
+		"/test-auth": [27],
+		"/test-content-fixed": [29],
+		"/test-content": [28],
+		"/test-exercises": [30],
+		"/test-firebase-simple": [32],
+		"/test-firebase": [31],
+		"/test-markdown": [33],
+		"/test-phase4": [34],
+		"/tests": [35],
+		"/[matiere]": [36,[3]],
+		"/[matiere]/[niveau]": [37,[3,4]],
+		"/[matiere]/[niveau]/[competence]": [38,[3,4,5]],
+		"/[matiere]/[niveau]/[competence]/[cours]": [39,[3,4,5]]
 	};
 
 export const hooks = {

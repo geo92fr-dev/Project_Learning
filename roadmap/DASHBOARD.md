@@ -9,21 +9,24 @@
 ### **📈 Progression Globale**
 
 ```
-Progress: █████████████░░░░░░░ 33.3% (4/12 phases)
+Progress: ██████████████████░░ 50% (6/12 phases)
 
 Phase 1: ████████████████████ 100% ✅ COMPLÉTÉE
 Phase 2: ████████████████████ 100% ✅ COMPLÉTÉE
 Phase 3: ████████████████████ 100% ✅ COMPLÉTÉE
 Phase 4: ████████████████████ 100% ✅ COMPLÉTÉE
-Phases 5-12: ░░░░░░░░░░░░░░░░░░░░ 0%   🎯 PLANIFIÉES
+Phase 5: ████████████████████ 100% ✅ COMPLÉTÉE
+Phase 6: ████████████████████ 100% ✅ COMPLÉTÉE (NOUVEAU!)
+Phases 7-12: ░░░░░░░░░░░░░░░░░░░░ 0%   🎯 PLANIFIÉES
 ```
 
 ### **🏆 Métriques Clés**
 
-- **Phases Complétées** : 4/12 (33.3%)
-- **Lignes de Code** : ~3,500 (Phase 4: +2,065 lignes)
-- **Tests Coverage** : 100% (Phase 4: 17/17 tests passent)
-- **Quality Gates** : 5/5 validés (toutes phases)
+- **Phases Complétées** : 6/12 (50%)
+- **Lignes de Code** : ~5,000 (Phase 6: +1,500 lignes)
+- **Tests Coverage** : 100% (Phase 6: 15/15 tests passent + tests automation)
+- **Quality Gates** : 6/6 validés (toutes phases)
+- **Innovation** : Dashboard Curriculum + Scripts Automation TDD
 
 ---
 
@@ -31,24 +34,26 @@ Phases 5-12: ░░░░░░░░░░░░░░░░░░░░ 0%   �
 
 ### **✅ GROUPE 1 : FONDATIONS (100% → COMPLÉTÉ)**
 
-| Phase | Durée | Status           | Progress | Récap                               | Achievement    |
-| ----- | ----- | ---------------- | -------- | ----------------------------------- | -------------- |
-| **1** | 3-4j  | ✅ **COMPLÉTÉE** | 100%     | [📋 Recap](phases/phase-1-recap.md) | Setup & Base   |
-| **2** | 1 sem | ✅ **COMPLÉTÉE** | 100%     | [📋 Recap](phases/phase-2-recap.md) | Auth complète  |
-| **3** | 1 sem | ✅ **COMPLÉTÉE** | 100%     | [📋 Recap](phases/phase-3-recap.md) | Content System |
-| **4** | 3j    | ✅ **COMPLÉTÉE** | 100%     | [📋 Recap](phases/phase-4-recap.md) | Pédagogie IA   |
+| Phase | Durée | Status           | Progress | Récap                               | Achievement          |
+| ----- | ----- | ---------------- | -------- | ----------------------------------- | -------------------- |
+| **1** | 3-4j  | ✅ **COMPLÉTÉE** | 100%     | [📋 Recap](phases/phase-1-recap.md) | Setup & Base         |
+| **2** | 1 sem | ✅ **COMPLÉTÉE** | 100%     | [📋 Recap](phases/phase-2-recap.md) | Auth complète        |
+| **3** | 1 sem | ✅ **COMPLÉTÉE** | 100%     | [📋 Recap](phases/phase-3-recap.md) | Content System       |
+| **4** | 3j    | ✅ **COMPLÉTÉE** | 100%     | [📋 Recap](phases/phase-4-recap.md) | Pédagogie IA         |
+| **5** | 2j    | ✅ **COMPLÉTÉE** | 100%     | [📋 Recap](phases/phase-5-recap.md) | Firebase Data Layer  |
+| **6** | 1j    | ✅ **COMPLÉTÉE** | 100%     | [📋 Recap](phases/phase-6-recap.md) | Curriculum Generator |
 
-**🎯 Objectif Groupe 1** : Base technique + pédagogie avancée → **v1.2 ATTEINT**
+**🎯 Objectif Groupe 1** : Base technique + pédagogie avancée → **v1.6 ATTEINT**
 
 ### **🎯 GROUPE 2 : PHASE MOTEUR (0% complété)**
 
 | Phase | Durée | Status           | Progress | Récap                               | Criticité |
 | ----- | ----- | ---------------- | -------- | ----------------------------------- | --------- |
-| **5** | 3h    | 🎯 **PLANIFIÉE** | 0%       | [📋 Recap](phases/phase-5-recap.md) | HIGH      |
-| **6** | 2j    | 🎯 **PLANIFIÉE** | 0%       | [📋 Recap](phases/phase-6-recap.md) | HIGH      |
-| **7** | 1-2j  | 🎯 **PLANIFIÉE** | 0%       | [📋 Recap](phases/phase-7-recap.md) | MEDIUM    |
+| **7** | 2j    | 🔥 **PROCHAINE** | 0%       | [📋 Recap](phases/phase-7-recap.md) | HIGH      |
+| **8** | 1-2j  | 🎯 **PLANIFIÉE** | 0%       | [📋 Recap](phases/phase-8-recap.md) | MEDIUM    |
+| **9** | 1 sem | 🎯 **PLANIFIÉE** | 0%       | [📋 Recap](phases/phase-9-recap.md) | MEDIUM    |
 
-**🎯 Objectif Groupe 2** : Données Firebase complètes → **v1.5**
+**🎯 Objectif Groupe 2** : Interface utilisateur avancée → **v1.8**
 
 ### **🎯 GROUPE 3 : PHASE UX (0% complété)**
 

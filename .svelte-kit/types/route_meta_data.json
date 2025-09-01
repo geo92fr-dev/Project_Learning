@@ -19,6 +19,8 @@
 	"/cours/[slug]": [
 		"src/routes/cours/[slug]/+page.ts"
 	],
+	"/curriculum-dashboard": [],
+	"/curriculum": [],
 	"/dashboard": [
 		"src/routes/dashboard/+layout.server.ts",
 		"src/routes/dashboard/+layout.server.ts"

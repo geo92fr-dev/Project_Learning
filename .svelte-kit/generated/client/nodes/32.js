@@ -1,1 +1,1 @@
-export { default as component } from "../../../../src/routes/test-phase4/+page.svelte";
+export { default as component } from "../../../../src/routes/test-firebase-simple/+page.svelte";

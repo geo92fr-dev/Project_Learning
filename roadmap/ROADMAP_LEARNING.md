@@ -2,14 +2,22 @@
 
 > **Approche IA-First** : Instructions granulaires, commandes précises, validation automatisée pour assistant Copilot.
 
-## 🎉 **MISE À JOUR MAJEURE - Phase 5 TERMINÉE ! (19 Décembre 2024)**
+## 🎉 **MISE À JOUR MAJEURE - Phase 6 TERMINÉE ! (1er Septembre 2025)**
 
-### ✅ **Phase 5 - Firebase Data Layer : 100% TERMINÉE** 🚀
+### ✅ **Phase 6 - Curriculum Generation : 100% TERMINÉE** 🚀
+
+- **Innovation pédagogique :** Système de génération automatique de curriculums avec TDD complet
+- **Statut technique :** 15 tests passés (100%), Dashboard interactif fonctionnel, Scripts automation
+- **Composants créés :** generator.js, curriculum/+page.svelte, curriculum-automation.js
+- **Release officielle :** v1.6 avec validation DOC_CoPilot_Practices complète
+- **Validation :** Tous les critères TDD respectés, sécurité XSS/injection validée
+
+### ✅ **Phase 5 - Firebase Data Layer : 100% TERMINÉE** ✅
 
 - **Infrastructure données :** Firebase complètement intégré avec architecture scalable
 - **Statut technique :** 76 tests passés, Repository Pattern implémenté, Security Rules RBAC
 - **Composants créés :** firebase-stores.ts, UserProfileCard, CourseCard, collections.ts
-- **Release officielle :** v1.3 avec tag Git et documentation complète
+- **Release officielle :** v1.5 avec tag Git et documentation complète
 - **Validation :** Tous les critères obligatoires respectés, conformité RGPD
 
 ### ✅ **Phase 4 - Pédagogie Avancée : 100% TERMINÉE** ✅
