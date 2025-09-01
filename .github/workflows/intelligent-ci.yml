@@ -28,8 +28,6 @@ on:
           - "lycee"
 
 env:
-
-env:
   NODE_VERSION: "18"
   EDUCATIONAL_MODE: true
   FUNLEARNING_PHASE: "3"
