@@ -438,3 +438,49 @@ export function isUserProgress(obj: any): obj is UserProgress {
     return false;
   }
 }
+
+// ===== URL VALIDATION UTILITIES =====
+
+/**
+ * Valider une URL de manière sécurisée
+ * Basé sur DOC_CoPilot_Practices v2.2 - Section 4: Validation et Sécurité
+ */
+export function validateURL(url: string, options: {
+  allowedProtocols?: string[];
+  allowedDomains?: string[];
+  maxLength?: number;
+} = {}): { isValid: boolean; error?: string } {
+  const {
+    allowedProtocols = ['http:', 'https:'],
+    allowedDomains = [],
+    maxLength = 2048
+  } = options;
+
+  // Vérification longueur
+  if (url.length > maxLength) {
+    return { isValid: false, error: `URL trop longue (max: ${maxLength})` };
+  }
+
+  try {
+    const urlObj = new URL(url);
+    
+    // Vérification protocole
+    if (!allowedProtocols.includes(urlObj.protocol)) {
+      return { isValid: false, error: `Protocole non autorisé: ${urlObj.protocol}` };
+    }
+    
+    // Vérification domaine si spécifié
+    if (allowedDomains.length > 0 && !allowedDomains.includes(urlObj.hostname)) {
+      return { isValid: false, error: `Domaine non autorisé: ${urlObj.hostname}` };
+    }
+    
+    // Vérifications sécurité supplémentaires
+    if (urlObj.hostname === 'localhost' && urlObj.protocol === 'https:') {
+      return { isValid: false, error: 'HTTPS localhost non autorisé' };
+    }
+    
+    return { isValid: true };
+  } catch (error) {
+    return { isValid: false, error: 'URL malformée' };
+  }
+}

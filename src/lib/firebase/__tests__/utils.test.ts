@@ -16,6 +16,7 @@ import {
   createCompetenceConverter,
   createUserProgressConverter,
   validateFirestoreData,
+  validateURL,
   sanitizeUserInput,
   createTimestamp,
   generateDocumentId,
@@ -296,7 +297,9 @@ describe('Firebase Utilities - TDD', () => {
         const result = validateFirestoreData('user', validUserData);
         
         expect(result.success).toBe(true);
-        expect(result.data).toEqual(expect.objectContaining(validUserData));
+        if (result.success) {
+          expect(result.data).toEqual(expect.objectContaining(validUserData));
+        }
       });
 
       it('should reject invalid user data', () => {
@@ -311,7 +314,9 @@ describe('Firebase Utilities - TDD', () => {
         const result = validateFirestoreData('user', invalidUserData);
         
         expect(result.success).toBe(false);
-        expect(result.error).toBeDefined();
+        if (!result.success) {
+          expect(result.error).toBeDefined();
+        }
       });
 
       it('should validate course data against schema', () => {
@@ -509,6 +514,73 @@ describe('Firebase Utilities - TDD', () => {
     it('should handle batch size limits', () => {
       // Test: Limites de taille batch
       expect(true).toBe(true); // Placeholder pour implémentation future
+    });
+  });
+
+  // ===== URL VALIDATION TESTS (TDD) =====
+
+  describe('URL Validation', () => {
+    describe('validateURL', () => {
+      it('should accept valid HTTPS URLs', () => {
+        const validUrls = [
+          'https://example.com',
+          'https://subdomain.example.com/path?query=value',
+          'https://lh3.googleusercontent.com/photo.jpg'
+        ];
+        
+        validUrls.forEach(url => {
+          const result = validateURL(url, { allowedProtocols: ['https:'] });
+          expect(result.isValid).toBe(true);
+          expect(result.error).toBeUndefined();
+        });
+      });
+
+      it('should reject malicious URLs', () => {
+        const maliciousUrls = [
+          'javascript:alert("xss")',
+          'data:text/html,<script>alert("xss")</script>',
+          'ftp://malicious.com/file',
+          'http://' + 'a'.repeat(3000) // URL trop longue
+        ];
+        
+        maliciousUrls.forEach(url => {
+          const result = validateURL(url);
+          expect(result.isValid).toBe(false);
+          expect(result.error).toBeDefined();
+        });
+      });
+
+      it('should validate domain restrictions', () => {
+        const allowedDomains = ['example.com', 'google.com'];
+        
+        // URL autorisée
+        const validResult = validateURL('https://example.com/path', {
+          allowedDomains
+        });
+        expect(validResult.isValid).toBe(true);
+
+        // URL non autorisée
+        const invalidResult = validateURL('https://malicious.com/path', {
+          allowedDomains
+        });
+        expect(invalidResult.isValid).toBe(false);
+        expect(invalidResult.error).toContain('Domaine non autorisé');
+      });
+
+      it('should handle malformed URLs', () => {
+        const malformedUrls = [
+          'not-a-url',
+          'http://',
+          '://missing-protocol.com',
+          'https://[invalid-brackets'
+        ];
+
+        malformedUrls.forEach(url => {
+          const result = validateURL(url);
+          expect(result.isValid).toBe(false);
+          expect(result.error).toBe('URL malformée');
+        });
+      });
     });
   });
 });

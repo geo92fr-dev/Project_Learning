@@ -1,6 +1,6 @@
 {
   "currentPhase": 2,
-  "globalProgress": 17,
+  "globalProgress": 19,
   "phases": [
     {
       "phase": 1,
@@ -46,9 +46,9 @@
       "phase": 5,
       "title": "CRUD Avancé",
       "totalItems": 4,
-      "completedItems": 0,
-      "percentage": 0,
-      "nextTask": "Firestore setup",
+      "completedItems": 1,
+      "percentage": 25,
+      "nextTask": "Collections",
       "estimatedHours": 18,
       "blockers": []
     },
@@ -125,7 +125,7 @@
       "blockers": []
     }
   ],
-  "lastUpdate": "2025-09-01T09:38:12.229Z",
+  "lastUpdate": "2025-09-01T11:43:48.036Z",
   "activeFiles": [],
   "recentActions": []
 }

@@ -260,4 +260,105 @@ describe('Firebase Collections Utilities - TDD', () => {
       expect(true).toBe(true); // Placeholder
     });
   });
+
+  // ===== TESTS DE VÉRIFICATION CRITIQUE IA (DOC_CoPilot_Practices v2.2) =====
+  
+  describe('Edge Cases That AI Might Miss', () => {
+    it('should handle null and undefined values gracefully', () => {
+      // Test des cas que l'IA pourrait manquer
+      const nullFields = {
+        id: null,
+        email: null,
+        displayName: null,
+        role: null
+      };
+
+      expect(() => UserProfileSchema.parse(nullFields)).toThrow();
+    });
+
+    it('should prevent prototype pollution attempts', () => {
+      // Test contre les attaques de pollution de prototype
+      const maliciousData = {
+        id: 'user123',
+        email: 'test@example.com',
+        displayName: 'Test User',
+        role: 'student',
+        createdAt: '2025-09-01T10:00:00Z',
+        lastLoginAt: '2025-09-01T10:00:00Z',
+        '__proto__': { isAdmin: true },
+        'constructor': { prototype: { isAdmin: true } }
+      };
+
+      const result = UserProfileSchema.parse(maliciousData);
+      // Vérifier que les propriétés malveillantes ne sont pas présentes
+      expect(result).not.toHaveProperty('__proto__');
+      expect(result).not.toHaveProperty('constructor');
+    });
+
+    it('should handle extremely large data payloads', () => {
+      // Test avec des données très volumineuses
+      const largeUser = {
+        id: 'user123',
+        email: 'test@example.com',
+        displayName: 'A'.repeat(10000), // Très long nom
+        role: 'student' as const,
+        createdAt: '2025-09-01T10:00:00Z',
+        lastLoginAt: '2025-09-01T10:00:00Z',
+        learningProfile: {
+          learningGoals: Array(1000).fill('goal') // Très grand tableau
+        }
+      };
+
+      // Devrait être rejeté ou limité
+      expect(() => UserProfileSchema.parse(largeUser)).toThrow();
+    });
+
+    it('should validate against Unicode attacks', () => {
+      // Test contre les attaques Unicode
+      const unicodeAttacks = [
+        'test\u202E@example.com', // Right-to-left override
+        'test@exam\u200Bple.com', // Zero-width space
+        'test@example.c\uFEFFom', // Zero-width no-break space
+        'test\u0000@example.com', // Null byte
+        'Attacker\uFDD0@example.com' // Non-character
+      ];
+
+      unicodeAttacks.forEach(maliciousEmail => {
+        const userData = {
+          id: 'user123',
+          email: maliciousEmail,
+          displayName: 'Test User',
+          role: 'student' as const,
+          createdAt: '2025-09-01T10:00:00Z',
+          lastLoginAt: '2025-09-01T10:00:00Z'
+        };
+
+        expect(() => UserProfileSchema.parse(userData)).toThrow();
+      });
+    });
+
+    it('should prevent XSS attacks in displayName', () => {
+      // Test spécifique contre les attaques XSS
+      const xssAttacks = [
+        '<script>alert("xss")</script>',
+        'javascript:alert("xss")',
+        '<img src=x onerror=alert("xss")>',
+        'vbscript:msgbox("xss")',
+        '<iframe onload=alert("xss")></iframe>'
+      ];
+
+      xssAttacks.forEach(maliciousName => {
+        const userData = {
+          id: 'user123',
+          email: 'test@example.com',
+          displayName: maliciousName,
+          role: 'student' as const,
+          createdAt: '2025-09-01T10:00:00Z',
+          lastLoginAt: '2025-09-01T10:00:00Z'
+        };
+
+        expect(() => UserProfileSchema.parse(userData)).toThrow();
+      });
+    });
+  });
 });

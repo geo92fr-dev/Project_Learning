@@ -9,6 +9,38 @@
 
 import { z } from "zod";
 
+// ===== VALIDATION FUNCTIONS (Security Best Practices v2.2) =====
+
+/**
+ * Validation sécurisée des chaînes de caractères
+ * Basé sur DOC_CoPilot_Practices v2.2 - Section 4: Validation et Sécurité
+ */
+function secureString(maxLength = 255) {
+  return z.string()
+    .max(maxLength, `Texte trop long (max: ${maxLength} caractères)`)
+    .refine(
+      (val) => !/<script|javascript:|data:|vbscript:|onload=|onerror=/i.test(val),
+      { message: 'Contenu potentiellement malveillant détecté' }
+    )
+    .refine(
+      (val) => !/[\u0000-\u001F\u007F-\u009F\uFEFF\u200B-\u200F\u2028-\u202F\uFDD0-\uFDEF\uFFFE\uFFFF]/.test(val),
+      { message: 'Caractères Unicode non autorisés détectés' }
+    );
+}
+
+/**
+ * Validation sécurisée des emails avec protection contre Unicode
+ */
+function secureEmail() {
+  return z.string()
+    .email('Format email invalide')
+    .max(254, 'Email trop long')
+    .refine(
+      (val) => !/[\u0000-\u001F\u007F-\u009F\uFEFF\u200B-\u200F\u2028-\u202F]/.test(val),
+      { message: 'Caractères Unicode non autorisés dans l\'email' }
+    );
+}
+
 // ===== USER PROFILE SCHEMA =====
 
 /**
@@ -16,9 +48,9 @@ import { z } from "zod";
  * @description Structure complète du profil utilisateur avec préférences et suivi pédagogique
  */
 export const UserProfileSchema = z.object({
-  id: z.string(),
-  email: z.string().email(),
-  displayName: z.string(),
+  id: secureString(50),
+  email: secureEmail(),
+  displayName: secureString(100),
   photoURL: z.string().url().optional(),
   role: z.enum(["student", "teacher", "admin"]),
   createdAt: z.string(),
