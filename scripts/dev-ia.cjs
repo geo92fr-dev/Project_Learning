@@ -29,11 +29,14 @@ class DevIAOrchestrator {
     
     // Logic de détection basée sur la version, les fichiers et les tags Git
     try {
-      // Vérification du tag Git actuel pour détecter Phase 3
+      // Vérification du tag Git actuel pour détecter la phase
       const { execSync } = require('child_process');
       const gitTag = execSync('git describe --tags --exact-match HEAD 2>/dev/null || echo ""', { encoding: 'utf8' }).trim();
       
-      if (gitTag.includes('phase3-complete') || gitTag.includes('v3.0.0')) {
+      if (gitTag.includes('phase-4') || gitTag.includes('v4.0.0')) {
+        return 4;
+      }
+      if (gitTag.includes('phase-3') || gitTag.includes('phase3-complete') || gitTag.includes('v3.0.0')) {
         return 3;
       }
     } catch (e) {
@@ -43,6 +46,21 @@ class DevIAOrchestrator {
     // Détection par structure de fichiers et fonctionnalités
     if (!fs.existsSync(path.join(this.projectRoot, 'src/lib/firebase'))) return 1;
     if (!fs.existsSync(path.join(this.projectRoot, 'src/routes/auth'))) return 2;
+    
+    // Phase 4: Vérification des composants pédagogiques avancés
+    const phase4Indicators = [
+      'src/lib/types/pedagogy.ts',
+      'src/lib/services/preEvaluation.ts',
+      'src/lib/services/metacognition.ts',
+      'src/lib/components/PreEvaluationQuiz.svelte',
+      'src/lib/components/MetacognitionPrompts.svelte'
+    ];
+    
+    const hasPhase4Features = phase4Indicators.some(indicator => 
+      fs.existsSync(path.join(this.projectRoot, indicator))
+    );
+    
+    if (hasPhase4Features) return 4;
     
     // Phase 3: Vérification des composants de content management
     const phase3Indicators = [
@@ -70,7 +88,7 @@ class DevIAOrchestrator {
       1: ['lint', 'build', 'test:unit'],
       2: ['lint', 'build', 'test:unit', 'test:critical'],
       3: ['build', 'test:unit', 'validate:phase3:quick'],
-      4: ['lint', 'build', 'test:unit', 'test:critical', 'performance'],
+      4: ['build', 'test:unit', 'validate:phase4:quick'],
       6: ['lint', 'build', 'test:unit', 'test:critical'],
       12: ['lint', 'build', 'test:unit', 'test:critical', 'security']
     };
