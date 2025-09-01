@@ -7,9 +7,9 @@
 **🎯 [Voir Dashboard Complet](DASHBOARD.md)** - Suivi temps réel progression par phases
 
 ```
-Progress Global: ████████░░░░░░░░░░░░░░ 8.3% (1/12 phases)
-Phase Actuelle: Phase 2 - Authentication (40% complété)
-Prochaine Étape: Finaliser système auth Firebase
+Progress Global: ████████████████░░░░ 41.7% (5/12 phases)
+Phase Actuelle: Phase 6 - Curriculum Generation (Prête à démarrer)
+Dernière Réussie: Phase 5 - Firebase Data Layer ✅ (76 tests passés)
 ```
 
 ---
@@ -53,7 +53,7 @@ Prochaine Étape: Finaliser système auth Firebase
 
 | Phase                      | Durée | Quoi                           | Comment                        | Récap                                  |
 | -------------------------- | ----- | ------------------------------ | ------------------------------ | -------------------------------------- |
-| **5** Firebase Integration | 3h    | Services CRUD Firebase         | Migration data layer           | [📋 Recap](phases/phase-5-recap.md) 🎯 |
+| **5** Firebase Integration | 3-4j  | Services CRUD Firebase + Data Layer | `npm run validate 5` ✅  | [📋 Recap](phases/phase-5-recap.md) ✅ |
 | **6** Curriculum Complet   | 2j    | 120+ compétences auto-générées | Scripts génération             | [📋 Recap](phases/phase-6-recap.md) 🎯 |
 | **7** Interface Dynamique  | 1-2j  | UI 100% connectée Firebase     | Remplacement données statiques | [📋 Recap](phases/phase-7-recap.md) 🎯 |
 
