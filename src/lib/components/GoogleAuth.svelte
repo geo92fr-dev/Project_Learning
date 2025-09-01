@@ -125,12 +125,12 @@
     <!-- User Info -->
     <div class="user-info" data-testid="user-info">
       <div class="user-avatar">
-        {#if currentUser.photoURL}
+        {#if currentUser?.photoURL}
           <img src={currentUser.photoURL} alt="Avatar" />
         {:else}
           <div class="avatar-placeholder">
-            {currentUser.displayName?.charAt(0) ||
-              currentUser.email?.charAt(0) ||
+            {currentUser?.displayName?.charAt(0) ||
+              currentUser?.email?.charAt(0) ||
               "👤"}
           </div>
         {/if}
@@ -138,10 +138,10 @@
 
       <div class="user-details">
         <div class="user-name">
-          {currentUser.displayName || "Utilisateur"}
+          {currentUser?.displayName || "Utilisateur"}
         </div>
         <div class="user-email">
-          {currentUser.email}
+          {currentUser?.email || ""}
         </div>
       </div>
 

@@ -124,11 +124,11 @@ function add_attribute(name, value, boolean) {
   return ` ${name}${assignment}`;
 }
 export {
-  each as a,
+  escape as a,
   add_attribute as b,
   create_ssr_component as c,
   createEventDispatcher as d,
-  escape as e,
+  each as e,
   getContext as g,
   missing_component as m,
   onDestroy as o,

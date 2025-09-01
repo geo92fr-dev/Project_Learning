@@ -1,4 +1,4 @@
-import { e as error } from "../../../../../../chunks/index2.js";
+import { e as error } from "../../../../../../chunks/index.js";
 import { g as get_store_value } from "../../../../../../chunks/utils.js";
 const load = async ({
   params

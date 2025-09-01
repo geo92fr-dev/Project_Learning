@@ -1,7 +1,7 @@
 import { s as subscribe } from "../../../chunks/utils.js";
-import { c as create_ssr_component, e as escape, v as validate_component } from "../../../chunks/ssr.js";
+import { c as create_ssr_component, a as escape, v as validate_component } from "../../../chunks/ssr.js";
 import { Q as QCMCard } from "../../../chunks/QCMCard.js";
-import { d as derived, w as writable } from "../../../chunks/index.js";
+import { d as derived, w as writable } from "../../../chunks/index2.js";
 const initialState = {
   currentExercise: null,
   userAnswer: null,

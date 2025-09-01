@@ -1,4 +1,4 @@
-import { d as derived, r as readable, w as writable } from "./index.js";
+import { d as derived, r as readable, w as writable } from "./index2.js";
 const matieres = writable([]);
 const niveaux = writable([]);
 const competences = writable([]);

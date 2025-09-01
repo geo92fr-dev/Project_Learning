@@ -46,7 +46,7 @@
   "_auth.js": {
     "file": "chunks/auth.js",
     "imports": [
-      "_index.js"
+      "_index2.js"
     ]
   },
   "_content2.js": {
@@ -61,17 +61,17 @@
   "_googleAuth.js": {
     "file": "chunks/googleAuth.js",
     "imports": [
-      "_index.js"
+      "_index2.js"
     ]
   },
   "_index.js": {
-    "file": "chunks/index.js",
+    "file": "chunks/index.js"
+  },
+  "_index2.js": {
+    "file": "chunks/index2.js",
     "imports": [
       "_utils.js"
     ]
-  },
-  "_index2.js": {
-    "file": "chunks/index2.js"
   },
   "_internal.js": {
     "dynamicImports": [
@@ -113,8 +113,8 @@
     "imports": [
       "_false.js",
       "_internal.js",
-      "_index2.js",
-      "_index.js"
+      "_index.js",
+      "_index2.js"
     ],
     "isEntry": true,
     "src": "node_modules/@sveltejs/kit/src/runtime/server/index.js"
@@ -127,12 +127,19 @@
   "src/lib/stores/content.ts": {
     "file": "chunks/content.js",
     "imports": [
-      "_index.js"
+      "_index2.js"
     ],
     "isDynamicEntry": true,
     "src": "src/lib/stores/content.ts"
   },
+  "src/routes/+page.css": {
+    "file": "_app/immutable/assets/_page.9cc64228.css",
+    "src": "src/routes/+page.css"
+  },
   "src/routes/+page.svelte": {
+    "css": [
+      "_app/immutable/assets/_page.9cc64228.css"
+    ],
     "file": "entries/pages/_page.svelte.js",
     "imports": [
       "_ssr.js"
@@ -235,12 +242,12 @@
     "src": "src/routes/auth-google/+page.svelte"
   },
   "src/routes/auth-test/+page.css": {
-    "file": "_app/immutable/assets/_page.5b0b544c.css",
+    "file": "_app/immutable/assets/_page.f09bc7a6.css",
     "src": "src/routes/auth-test/+page.css"
   },
   "src/routes/auth-test/+page.svelte": {
     "css": [
-      "_app/immutable/assets/_page.5b0b544c.css"
+      "_app/immutable/assets/_page.f09bc7a6.css"
     ],
     "file": "entries/pages/auth-test/_page.svelte.js",
     "imports": [
@@ -299,7 +306,7 @@
     "imports": [
       "_utils.js",
       "_ssr.js",
-      "_index.js",
+      "_index2.js",
       "_auth.js"
     ],
     "isEntry": true,
@@ -344,7 +351,7 @@
     ],
     "file": "entries/pages/content/_matiere_/_page.ts.js",
     "imports": [
-      "_index2.js",
+      "_index.js",
       "_utils.js"
     ],
     "isEntry": true,
@@ -372,7 +379,7 @@
     ],
     "file": "entries/pages/content/_matiere_/_niveau_/_page.ts.js",
     "imports": [
-      "_index2.js",
+      "_index.js",
       "_utils.js"
     ],
     "isEntry": true,
@@ -401,7 +408,7 @@
     ],
     "file": "entries/pages/content/_matiere_/_niveau_/_competence_/_page.ts.js",
     "imports": [
-      "_index2.js",
+      "_index.js",
       "_utils.js"
     ],
     "isEntry": true,
@@ -450,13 +457,31 @@
     "isEntry": true,
     "src": "src/routes/dashboard/+layout.svelte"
   },
+  "src/routes/dashboard/+page.css": {
+    "file": "_app/immutable/assets/_page.38d1132c.css",
+    "src": "src/routes/dashboard/+page.css"
+  },
   "src/routes/dashboard/+page.svelte": {
+    "css": [
+      "_app/immutable/assets/_page.38d1132c.css"
+    ],
     "file": "entries/pages/dashboard/_page.svelte.js",
+    "imports": [
+      "_utils.js",
+      "_ssr.js",
+      "_index2.js",
+      "_googleAuth.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/dashboard/+page.svelte"
+  },
+  "src/routes/debug-auth/+page.svelte": {
+    "file": "entries/pages/debug-auth/_page.svelte.js",
     "imports": [
       "_ssr.js"
     ],
     "isEntry": true,
-    "src": "src/routes/dashboard/+page.svelte"
+    "src": "src/routes/debug-auth/+page.svelte"
   },
   "src/routes/demo/+page.css": {
     "file": "_app/immutable/assets/_page.7a3eeef7.css",
@@ -586,18 +611,18 @@
       "_utils.js",
       "_ssr.js",
       "_QCMCard.js",
-      "_index.js"
+      "_index2.js"
     ],
     "isEntry": true,
     "src": "src/routes/test-exercises/+page.svelte"
   },
   "src/routes/test-firebase-simple/+page.css": {
-    "file": "_app/immutable/assets/_page.239ad4a6.css",
+    "file": "_app/immutable/assets/_page.2932fc15.css",
     "src": "src/routes/test-firebase-simple/+page.css"
   },
   "src/routes/test-firebase-simple/+page.svelte": {
     "css": [
-      "_app/immutable/assets/_page.239ad4a6.css"
+      "_app/immutable/assets/_page.2932fc15.css"
     ],
     "file": "entries/pages/test-firebase-simple/_page.svelte.js",
     "imports": [
@@ -637,23 +662,23 @@
       "_ssr.js",
       "src/lib/stores/content.ts",
       "_MarkdownRenderer.js",
-      "_index.js"
+      "_index2.js"
     ],
     "isEntry": true,
     "src": "src/routes/test-markdown/+page.svelte"
   },
   "src/routes/test-phase4/+page.css": {
-    "file": "_app/immutable/assets/_page.19fe1565.css",
+    "file": "_app/immutable/assets/_page.7dbc5d46.css",
     "src": "src/routes/test-phase4/+page.css"
   },
   "src/routes/test-phase4/+page.svelte": {
     "css": [
-      "_app/immutable/assets/_page.19fe1565.css"
+      "_app/immutable/assets/_page.7dbc5d46.css"
     ],
     "file": "entries/pages/test-phase4/_page.svelte.js",
     "imports": [
       "_ssr.js",
-      "_index.js",
+      "_index2.js",
       "_utils.js"
     ],
     "isEntry": true,

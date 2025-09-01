@@ -31,15 +31,15 @@
 
     authStore.update((state) => ({
       ...state,
-      user: { 
-        id: `user-${Date.now()}`, 
+      user: {
+        id: `user-${Date.now()}`,
         uid: `user-${Date.now()}`,
-        email, 
+        email,
         displayName: name,
         name,
         emailVerified: true,
         createdAt: now,
-        lastLoginAt: now
+        lastLoginAt: now,
       },
       loading: false,
       error: null,

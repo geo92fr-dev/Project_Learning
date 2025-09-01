@@ -79,7 +79,7 @@ export const authActions = {
 export async function signIn(credentials: LoginCredentials): Promise<void> {
   authActions.setLoading(true);
   authActions.setError(null);
-  
+
   try {
     // Simulate authentication - replace with actual Firebase auth
     const now = new Date().toISOString();
@@ -87,19 +87,19 @@ export async function signIn(credentials: LoginCredentials): Promise<void> {
       id: `user_${Date.now()}`,
       uid: `user_${Date.now()}`,
       email: credentials.email,
-      displayName: credentials.email.split('@')[0],
-      name: credentials.email.split('@')[0],
+      displayName: credentials.email.split("@")[0],
+      name: credentials.email.split("@")[0],
       emailVerified: true,
       createdAt: now,
       lastLoginAt: now,
     };
-    
+
     // Simulate async operation
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     authActions.signIn(mockUser);
   } catch (error: any) {
-    authActions.setError(error.message || 'Login failed');
+    authActions.setError(error.message || "Login failed");
     throw error;
   }
 }
@@ -107,7 +107,7 @@ export async function signIn(credentials: LoginCredentials): Promise<void> {
 export async function signUp(credentials: RegisterCredentials): Promise<void> {
   authActions.setLoading(true);
   authActions.setError(null);
-  
+
   try {
     // Simulate authentication - replace with actual Firebase auth
     const now = new Date().toISOString();
@@ -115,48 +115,48 @@ export async function signUp(credentials: RegisterCredentials): Promise<void> {
       id: `user_${Date.now()}`,
       uid: `user_${Date.now()}`,
       email: credentials.email,
-      displayName: credentials.displayName || credentials.email.split('@')[0],
-      name: credentials.displayName || credentials.email.split('@')[0],
+      displayName: credentials.displayName || credentials.email.split("@")[0],
+      name: credentials.displayName || credentials.email.split("@")[0],
       emailVerified: false, // New users need to verify email
       createdAt: now,
       lastLoginAt: now,
     };
-    
+
     // Simulate async operation
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     authActions.signIn(mockUser);
   } catch (error: any) {
-    authActions.setError(error.message || 'Registration failed');
+    authActions.setError(error.message || "Registration failed");
     throw error;
   }
 }
 
 export async function signOut(): Promise<void> {
   authActions.setLoading(true);
-  
+
   try {
     // Simulate async operation
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
     authActions.signOut();
   } catch (error: any) {
-    authActions.setError(error.message || 'Sign out failed');
+    authActions.setError(error.message || "Sign out failed");
     throw error;
   }
 }
 
 export async function initAuth(): Promise<void> {
   authActions.setLoading(true);
-  
+
   try {
     // Simulate checking for existing session
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     // For now, just clear loading state
     authActions.setLoading(false);
   } catch (error: any) {
-    authActions.setError(error.message || 'Auth initialization failed');
+    authActions.setError(error.message || "Auth initialization failed");
   }
 }
 

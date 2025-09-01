@@ -1,115 +1,119 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-  import { signIn, signUp } from '$lib/stores/auth';
-  import { signInWithGoogle } from '$lib/stores/googleAuth';
-  import type { LoginCredentials, RegisterCredentials } from '$lib/types/auth';
-  
+  import { createEventDispatcher } from "svelte";
+  import { signIn, signUp } from "$lib/stores/auth";
+  import { signInWithGoogle } from "$lib/stores/googleAuth";
+  import type { LoginCredentials, RegisterCredentials } from "$lib/types/auth";
+
   const dispatch = createEventDispatcher();
-  
+
   // Props
-  export let mode: 'login' | 'register' = 'login';
+  export let mode: "login" | "register" = "login";
   export let loading = false;
   export let error: string | null = null;
-  
+
   // Form data
-  let email = '';
-  let password = '';
-  let confirmPassword = '';
-  let displayName = '';
-  
+  let email = "";
+  let password = "";
+  let confirmPassword = "";
+  let displayName = "";
+
   // Validation state
-  let emailError = '';
-  let passwordError = '';
-  let confirmPasswordError = '';
-  
+  let emailError = "";
+  let passwordError = "";
+  let confirmPasswordError = "";
+
   function validateEmail(emailValue: string): string {
-    if (!emailValue) return '';
+    if (!emailValue) return "";
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(emailValue) ? '' : 'Email invalide';
+    return emailRegex.test(emailValue) ? "" : "Email invalide";
   }
-  
+
   function validatePassword(passwordValue: string): string {
-    if (!passwordValue) return '';
-    return passwordValue.length >= 6 ? '' : 'Minimum 6 caractères';
+    if (!passwordValue) return "";
+    return passwordValue.length >= 6 ? "" : "Minimum 6 caractères";
   }
-  
-  function validateConfirmPassword(passwordValue: string, confirmPasswordValue: string): string {
-    if (!confirmPasswordValue) return '';
-    return passwordValue === confirmPasswordValue ? '' : 'Mots de passe différents';
+
+  function validateConfirmPassword(
+    passwordValue: string,
+    confirmPasswordValue: string
+  ): string {
+    if (!confirmPasswordValue) return "";
+    return passwordValue === confirmPasswordValue
+      ? ""
+      : "Mots de passe différents";
   }
-  
+
   // Update validation on input changes
   function updateValidation() {
     emailError = validateEmail(email);
     passwordError = validatePassword(password);
-    if (mode === 'register') {
+    if (mode === "register") {
       confirmPasswordError = validateConfirmPassword(password, confirmPassword);
     }
   }
-  
+
   function isFormValid(): boolean {
     const baseValid = !!email && !!password && !emailError && !passwordError;
-    if (mode === 'register') {
+    if (mode === "register") {
       return baseValid && !!confirmPassword && !confirmPasswordError;
     }
     return baseValid;
   }
-  
+
   async function handleSubmit() {
     if (!isFormValid() || loading) return;
-    
+
     try {
-      if (mode === 'login') {
+      if (mode === "login") {
         const credentials: LoginCredentials = { email, password };
         await signIn(credentials);
-        dispatch('success', { type: 'login', email });
+        dispatch("success", { type: "login", email });
       } else {
-        const credentials: RegisterCredentials = { 
-          email, 
-          password, 
+        const credentials: RegisterCredentials = {
+          email,
+          password,
           confirmPassword,
-          displayName: displayName || undefined 
+          displayName: displayName || undefined,
         };
         await signUp(credentials);
-        dispatch('success', { type: 'register', email });
+        dispatch("success", { type: "register", email });
       }
     } catch (err: any) {
-      dispatch('error', err.message);
+      dispatch("error", err.message);
     }
   }
-  
+
   async function handleGoogleLogin() {
     if (loading) return;
-    
+
     try {
       await signInWithGoogle();
-      dispatch('success', { type: 'google-login' });
+      dispatch("success", { type: "google-login" });
     } catch (err: any) {
-      dispatch('error', err.message);
+      dispatch("error", err.message);
     }
   }
-  
+
   function toggleMode() {
-    mode = mode === 'login' ? 'register' : 'login';
+    mode = mode === "login" ? "register" : "login";
     // Reset form
-    email = '';
-    password = '';
-    confirmPassword = '';
-    displayName = '';
-    dispatch('modeChange', mode);
+    email = "";
+    password = "";
+    confirmPassword = "";
+    displayName = "";
+    dispatch("modeChange", mode);
   }
 </script>
 
 <div class="auth-form">
   <div class="form-header">
     <h2>
-      {mode === 'login' ? '🔐 Connexion' : '🚀 Inscription'}
+      {mode === "login" ? "🔐 Connexion" : "🚀 Inscription"}
     </h2>
     <p>
-      {mode === 'login' 
-        ? 'Connectez-vous à votre compte FunLearning' 
-        : 'Créez votre compte FunLearning'
-      }
+      {mode === "login"
+        ? "Connectez-vous à votre compte FunLearning"
+        : "Créez votre compte FunLearning"}
     </p>
   </div>
 
@@ -141,7 +145,7 @@
     </div>
 
     <!-- Nom d'affichage (inscription uniquement) -->
-    {#if mode === 'register'}
+    {#if mode === "register"}
       <div class="form-group">
         <label for="displayName">Nom d'affichage (optionnel)</label>
         <input
@@ -165,7 +169,7 @@
         placeholder="••••••••"
         class:error={passwordError}
         disabled={loading}
-        autocomplete={mode === 'login' ? 'current-password' : 'new-password'}
+        autocomplete={mode === "login" ? "current-password" : "new-password"}
         required
       />
       {#if passwordError}
@@ -174,7 +178,7 @@
     </div>
 
     <!-- Confirmation mot de passe (inscription uniquement) -->
-    {#if mode === 'register'}
+    {#if mode === "register"}
       <div class="form-group">
         <label for="confirmPassword">Confirmer le mot de passe</label>
         <input
@@ -201,10 +205,10 @@
         disabled={!isFormValid() || loading}
       >
         {#if loading}
-          <span class="loading-spinner"></span>
-          {mode === 'login' ? 'Connexion...' : 'Inscription...'}
+          <span class="loading-spinner" />
+          {mode === "login" ? "Connexion..." : "Inscription..."}
         {:else}
-          {mode === 'login' ? 'Se connecter' : "S'inscrire"}
+          {mode === "login" ? "Se connecter" : "S'inscrire"}
         {/if}
       </button>
 
@@ -227,9 +231,14 @@
   <!-- Toggle mode -->
   <div class="form-footer">
     <p>
-      {mode === 'login' ? "Pas encore de compte ?" : "Déjà inscrit ?"}
-      <button type="button" class="link-btn" on:click={toggleMode} disabled={loading}>
-        {mode === 'login' ? "S'inscrire" : "Se connecter"}
+      {mode === "login" ? "Pas encore de compte ?" : "Déjà inscrit ?"}
+      <button
+        type="button"
+        class="link-btn"
+        on:click={toggleMode}
+        disabled={loading}
+      >
+        {mode === "login" ? "S'inscrire" : "Se connecter"}
       </button>
     </p>
   </div>
@@ -356,7 +365,7 @@
   }
 
   .divider::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     left: 0;

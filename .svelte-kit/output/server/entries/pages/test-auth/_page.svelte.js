@@ -1,5 +1,5 @@
 import { s as subscribe } from "../../../chunks/utils.js";
-import { c as create_ssr_component, e as escape, v as validate_component } from "../../../chunks/ssr.js";
+import { c as create_ssr_component, a as escape, v as validate_component } from "../../../chunks/ssr.js";
 import { l as loading, i as isAuthenticated, u as user } from "../../../chunks/auth.js";
 const AuthComplete = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   return ``;

@@ -1,8 +1,9 @@
-// 🔐 Google Authentication Store - TDD Implementation
-// Store selon DOC_CoPilot_Practices avec gestion SSR
+// 🔐 Google Authentication Store - Clean Version
+// Store pour l'authentification Google avec Firebase
 
-import { writable, derived } from "svelte/store";
+import { writable, derived, get } from "svelte/store";
 import { browser } from "$app/environment";
+import { authInfoStore } from "$lib/firebase/stores/firebase-stores";
 
 // === STORES PRINCIPAUX ===
 export const user = writable(null);
@@ -23,10 +24,40 @@ function updateErrorState(errorMessage) {
 
 function updateUserState(userData) {
   user.set(userData);
+
+  // Synchroniser avec authInfoStore pour éviter la boucle infinie du dashboard
+  authInfoStore.set({
+    isAuthenticated: true,
+    user: {
+      uid: userData.uid,
+      email: userData.email,
+    },
+  });
+
+  console.log("🔄 authInfoStore mis à jour:", userData.email);
 }
 
 export function clearError() {
   error.set(null);
+}
+
+// Initialiser authInfoStore à l'état non-authentifié SEULEMENT si non défini
+export function initializeAuthState() {
+  // Ne pas écraser un état déjà défini
+  const currentState = get(authInfoStore);
+  if (currentState.isAuthenticated !== null) {
+    console.log(
+      "🔄 authInfoStore déjà initialisé:",
+      currentState.isAuthenticated ? "authentifié" : "non-authentifié"
+    );
+    return;
+  }
+
+  authInfoStore.set({
+    isAuthenticated: false,
+    user: null,
+  });
+  console.log("🔄 authInfoStore initialisé: non-authentifié");
 }
 
 // === GOOGLE SIGN IN ===
@@ -39,23 +70,49 @@ export async function signInWithGoogle() {
   updateErrorState(null);
 
   try {
-    // Dynamic import pour éviter les erreurs SSR
-    const { auth } = await import("../firebase/config.js");
-    const { signInWithPopup, GoogleAuthProvider } = await import(
-      "firebase/auth"
-    );
+    console.log("🚀 Début authentification Google...");
+
+    // Import dynamique pour éviter les erreurs SSR
+    const firebaseAuth = await import("firebase/auth");
+    const configModule = await import("../firebase/config");
+
+    console.log("📋 Config module importé:", Object.keys(configModule));
+
+    // FORCER l'initialisation
+    console.log("🔧 Force initialisation Firebase...");
+    configModule.initializeFirebase();
+
+    // Attendre que Firebase soit vraiment initialisé
+    let auth = configModule.auth;
+    let attempts = 0;
+
+    while (!auth && attempts < 10) {
+      console.log(
+        `⏳ Attente initialisation Firebase (tentative ${attempts + 1}/10)...`
+      );
+      await new Promise((resolve) => setTimeout(resolve, 200));
+      auth = configModule.auth;
+      attempts++;
+    }
+
+    console.log("🔐 Auth instance récupérée:", auth);
+    console.log("🔐 Type auth:", typeof auth);
 
     if (!auth) {
-      throw new Error("Firebase auth not initialized");
+      throw new Error(
+        "Firebase auth not initialized après plusieurs tentatives"
+      );
     }
 
     // Configure Google provider
-    const provider = new GoogleAuthProvider();
+    const provider = new firebaseAuth.GoogleAuthProvider();
     provider.addScope("email");
     provider.addScope("profile");
 
+    console.log("🚀 Tentative de connexion popup...");
+
     // Sign in with popup
-    const result = await signInWithPopup(auth, provider);
+    const result = await firebaseAuth.signInWithPopup(auth, provider);
 
     // Extract user data
     const userData = {
@@ -64,20 +121,16 @@ export async function signInWithGoogle() {
       displayName: result.user.displayName,
       photoURL: result.user.photoURL,
       emailVerified: result.user.emailVerified,
-      createdAt: result.user.metadata.creationTime,
-      lastLoginAt: result.user.metadata.lastSignInTime,
     };
 
     updateUserState(userData);
 
-    console.log("✅ Google authentication successful:", userData.email);
+    console.log("✅ Authentification réussie:", userData.email);
     return { success: true, user: userData };
   } catch (error) {
-    const errorMessage = getAuthErrorMessage(error);
-    updateErrorState(errorMessage);
-
-    console.error("❌ Google authentication failed:", error);
-    return { success: false, error: errorMessage };
+    console.error("❌ Erreur authentification Google:", error);
+    updateErrorState(error.message);
+    return { success: false, error: error.message };
   } finally {
     updateLoadingState(false);
   }
@@ -86,30 +139,32 @@ export async function signInWithGoogle() {
 // === SIGN OUT ===
 export async function signOut() {
   if (!browser) {
-    return;
+    console.log("⚠️ SignOut called in non-browser environment");
+    return { success: false, error: "Not supported in server environment" };
   }
 
   updateLoadingState(true);
   updateErrorState(null);
 
   try {
-    const { auth } = await import("../firebase/config.js");
-    const { signOut: firebaseSignOut } = await import("firebase/auth");
+    const firebaseAuth = await import("firebase/auth");
+    const { getAuthInstance } = await import("../firebase/config");
 
-    if (auth) {
-      await firebaseSignOut(auth);
+    const auth = getAuthInstance();
+    if (auth && firebaseAuth.signOut) {
+      await firebaseAuth.signOut(auth);
+    } else {
+      throw new Error("Firebase auth not available or signOut not supported");
     }
 
     updateUserState(null);
 
-    console.log("👋 User signed out successfully");
+    console.log("👋 Déconnexion réussie");
     return { success: true };
   } catch (error) {
-    const errorMessage = "Erreur lors de la déconnexion";
-    updateErrorState(errorMessage);
-
-    console.error("❌ Sign out failed:", error);
-    return { success: false, error: errorMessage };
+    console.error("❌ Erreur déconnexion:", error);
+    updateErrorState(error.message);
+    return { success: false, error: error.message };
   } finally {
     updateLoadingState(false);
   }
@@ -122,15 +177,28 @@ export async function initAuthListener() {
   }
 
   try {
-    const { auth } = await import("../firebase/config.js");
-    const { onAuthStateChanged } = await import("firebase/auth");
+    console.log("🔍 Initialisation listener auth...");
 
+    const firebaseAuth = await import("firebase/auth");
+    const { getAuthInstance } = await import("../firebase/config");
+
+    // Attendre un moment pour l'initialisation
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    const auth = getAuthInstance();
     if (!auth) {
       console.warn("⚠️ Firebase auth not available for state listener");
       return;
     }
 
-    onAuthStateChanged(auth, (firebaseUser) => {
+    console.log("✅ Setting up auth state listener");
+
+    firebaseAuth.onAuthStateChanged(auth, (firebaseUser) => {
+      console.log(
+        "🔄 Auth state changed:",
+        firebaseUser ? "Connecté" : "Déconnecté"
+      );
+
       if (firebaseUser) {
         const userData = {
           uid: firebaseUser.uid,
@@ -138,43 +206,15 @@ export async function initAuthListener() {
           displayName: firebaseUser.displayName,
           photoURL: firebaseUser.photoURL,
           emailVerified: firebaseUser.emailVerified,
-          createdAt: firebaseUser.metadata.creationTime,
-          lastLoginAt: firebaseUser.metadata.lastSignInTime,
         };
         updateUserState(userData);
-        console.log("🔄 Auth state changed: user signed in");
       } else {
         updateUserState(null);
-        console.log("🔄 Auth state changed: user signed out");
       }
     });
+
+    console.log("✅ Auth listener configuré");
   } catch (error) {
-    console.error("❌ Auth listener setup failed:", error);
+    console.error("❌ Erreur setup auth listener:", error);
   }
-}
-
-// === ERROR HANDLING ===
-function getAuthErrorMessage(error) {
-  switch (error.code) {
-    case "auth/popup-closed-by-user":
-      return "Connexion annulée par l'utilisateur";
-    case "auth/popup-blocked":
-      return "Popup bloquée par le navigateur. Veuillez autoriser les popups.";
-    case "auth/cancelled-popup-request":
-      return "Demande de connexion annulée";
-    case "auth/network-request-failed":
-      return "Erreur réseau. Vérifiez votre connexion internet.";
-    case "auth/too-many-requests":
-      return "Trop de tentatives. Veuillez réessayer plus tard.";
-    case "auth/user-disabled":
-      return "Ce compte a été désactivé.";
-    default:
-      return error.message || "Erreur d'authentification inconnue";
-  }
-}
-
-// === INITIALIZATION ===
-// Initialize auth listener when module loads
-if (browser) {
-  initAuthListener();
 }

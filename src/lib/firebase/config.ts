@@ -3,7 +3,10 @@
 
 import { initializeApp, type FirebaseApp } from "firebase/app";
 import { getAuth as initAuth, type Auth } from "firebase/auth";
-import { getFirestore as initFirestore, type Firestore } from "firebase/firestore";
+import {
+  getFirestore as initFirestore,
+  type Firestore,
+} from "firebase/firestore";
 import { browser } from "$app/environment";
 
 // Configuration Firebase depuis les variables d'environnement
@@ -35,46 +38,110 @@ function validateConfig() {
 }
 
 // Initialisation Firebase (côté client uniquement)
-let app: FirebaseApp | undefined;
-let auth: Auth | undefined;
-let db: Firestore | undefined;
+let app: FirebaseApp | null = null;
+let auth: Auth | null = null;
+let db: Firestore | null = null;
 
-if (browser) {
+// Fonction d'initialisation
+function initializeFirebase() {
+  console.log("🔧 Début initialisation Firebase, browser:", browser);
+
+  if (!browser) {
+    console.log("⚠️ Pas côté browser, initialisation ignorée");
+    return { app: null, auth: null, db: null };
+  }
+
+  if (auth) {
+    console.log("✅ Firebase déjà initialisé");
+    return { app, auth, db };
+  }
+
   try {
+    console.log("📋 Validation config...");
     validateConfig();
+    console.log("✅ Config validée");
+
+    console.log("🚀 Initialisation app...");
     app = initializeApp(firebaseConfig);
+    console.log("✅ App initialisée:", !!app);
+
+    console.log("🔐 Initialisation auth...");
     auth = initAuth(app);
+    console.log("✅ Auth initialisée:", !!auth);
+
+    console.log("💾 Initialisation firestore...");
     db = initFirestore(app);
+    console.log("✅ Firestore initialisé:", !!db);
 
     console.log("🔥 Firebase initialisé avec succès");
+    return { app, auth, db };
   } catch (error) {
     console.error("❌ Erreur initialisation Firebase:", error);
-    throw error;
+    if (error instanceof Error) {
+      console.error("❌ Détails erreur:", error.message);
+      console.error("❌ Stack:", error.stack);
+    }
+    // NE PAS throw pour éviter de casser l'app
+    return { app: null, auth: null, db: null };
   }
 }
 
-export { app, auth, db };
+// Initialisation immédiate si côté browser
+initializeFirebase();
 
 // Fonctions d'accès sécurisées
-export function getAuth(): Auth {
+export function getAuthInstance(): Auth {
   if (!auth) {
-    throw new Error("Firebase Auth not initialized. Ensure Firebase is initialized in browser.");
+    console.log("⚠️ Auth pas encore initialisé, tentative d'initialisation...");
+    initializeFirebase();
+    if (!auth) {
+      throw new Error(
+        "Firebase Auth not initialized. Ensure Firebase is initialized in browser."
+      );
+    }
   }
+  console.log("✅ Retour auth instance:", auth);
   return auth;
 }
 
-export function getDb(): Firestore {
+// Version asynchrone pour s'assurer que l'initialisation est terminée
+export async function getAuthInstanceAsync(): Promise<Auth> {
+  if (!auth) {
+    console.log("⚠️ Auth pas encore initialisé, initialisation...");
+    initializeFirebase();
+    // Attendre que l'initialisation soit terminée
+    let attempts = 0;
+    while (!auth && attempts < 10) {
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      attempts++;
+    }
+    if (!auth) {
+      throw new Error("Firebase Auth not initialized after multiple attempts.");
+    }
+  }
+  console.log("✅ Retour auth instance async:", auth);
+  return auth;
+}
+
+export function getDatabase(): Firestore {
   if (!db) {
-    throw new Error("Firebase Firestore not initialized. Ensure Firebase is initialized in browser.");
+    throw new Error(
+      "Firebase Firestore not initialized. Ensure Firebase is initialized in browser."
+    );
   }
   return db;
 }
 
 export function getApp(): FirebaseApp {
   if (!app) {
-    throw new Error("Firebase App not initialized. Ensure Firebase is initialized in browser.");
+    throw new Error(
+      "Firebase App not initialized. Ensure Firebase is initialized in browser."
+    );
   }
   return app;
 }
+
+// Export de toutes les fonctions et variables
+export { app, auth, db, firebaseConfig, initializeFirebase };
 
 // 📋 Phase Status: ✅ Phase 2 - Configuration Firebase TypeScript sécurisée

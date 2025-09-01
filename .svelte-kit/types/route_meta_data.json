@@ -23,6 +23,7 @@
 		"src/routes/dashboard/+layout.server.ts",
 		"src/routes/dashboard/+layout.server.ts"
 	],
+	"/debug-auth": [],
 	"/demo": [],
 	"/demo/exercise": [],
 	"/demo/markdown": [],

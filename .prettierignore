@@ -9,3 +9,4 @@ PATTERNS_LEARNED.json
 IMPROVEMENTS_SUGGESTED.md
 LOG_POSTMORTEM.md
 lighthouserc.js
+.funlearning/**

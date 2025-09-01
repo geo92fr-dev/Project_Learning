@@ -2,12 +2,7 @@
   "timestamp": "2025-08-31T17:19:12.276Z",
   "phase": 3,
   "success": false,
-  "workflow": [
-    "lint",
-    "build",
-    "test:unit",
-    "validate:phase3"
-  ],
+  "workflow": ["lint", "build", "test:unit", "validate:phase3"],
   "environment": {
     "node": "v22.18.0",
     "platform": "win32"

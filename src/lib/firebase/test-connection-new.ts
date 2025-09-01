@@ -22,26 +22,29 @@ export async function testFirebaseConnection(): Promise<FirebaseTestResults> {
     results: {
       auth: false,
       firestore: false,
-      anonymousAuth: false
+      anonymousAuth: false,
     },
-    errors: [] as string[]
+    errors: [] as string[],
   };
 
   try {
     // Test Firebase Auth availability
     // This is a mock implementation - replace with actual Firebase tests
     results.results.auth = true;
-    
+
     // Test Firestore availability
     // This is a mock implementation - replace with actual Firestore tests
     results.results.firestore = true;
-    
+
     // Test anonymous authentication
     // This is a mock implementation - replace with actual anonymous auth test
     results.results.anonymousAuth = true;
-    
-    results.success = results.results.auth && results.results.firestore && results.results.anonymousAuth;
-    
+
+    results.success =
+      results.results.auth &&
+      results.results.firestore &&
+      results.results.anonymousAuth;
+
     if (!results.success) {
       results.errors.push("Some Firebase services are not available");
     }
@@ -57,6 +60,6 @@ export function getFirebaseStatus(): FirebaseStatus {
   return {
     app: true,
     auth: true,
-    firestore: true
+    firestore: true,
   };
 }

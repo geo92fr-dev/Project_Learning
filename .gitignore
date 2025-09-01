@@ -8,3 +8,22 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 dist
 build
+
+# SvelteKit build outputs
+.svelte-kit/
+
+# Quality metrics (auto-generated)
+.funlearning/quality-metrics*.json
+.funlearning/roadmap-state*.json
+
+# Test coverage
+coverage/
+test-results/
+
+# Temporary files
+*.tmp
+*.temp
+temp.json
+
+# Logs
+*.log

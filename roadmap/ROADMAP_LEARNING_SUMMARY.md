@@ -51,11 +51,11 @@ Dernière Réussie: Phase 5 - Firebase Data Layer ✅ (76 tests passés)
 
 **Objectif** : Données et contenu complets
 
-| Phase                      | Durée | Quoi                           | Comment                        | Récap                                  |
-| -------------------------- | ----- | ------------------------------ | ------------------------------ | -------------------------------------- |
-| **5** Firebase Integration | 3-4j  | Services CRUD Firebase + Data Layer | `npm run validate 5` ✅  | [📋 Recap](phases/phase-5-recap.md) ✅ |
-| **6** Curriculum Complet   | 2j    | 120+ compétences auto-générées | Scripts génération             | [📋 Recap](phases/phase-6-recap.md) 🎯 |
-| **7** Interface Dynamique  | 1-2j  | UI 100% connectée Firebase     | Remplacement données statiques | [📋 Recap](phases/phase-7-recap.md) 🎯 |
+| Phase                      | Durée | Quoi                                | Comment                        | Récap                                  |
+| -------------------------- | ----- | ----------------------------------- | ------------------------------ | -------------------------------------- |
+| **5** Firebase Integration | 3-4j  | Services CRUD Firebase + Data Layer | `npm run validate 5` ✅        | [📋 Recap](phases/phase-5-recap.md) ✅ |
+| **6** Curriculum Complet   | 2j    | 120+ compétences auto-générées      | Scripts génération             | [📋 Recap](phases/phase-6-recap.md) 🎯 |
+| **7** Interface Dynamique  | 1-2j  | UI 100% connectée Firebase          | Remplacement données statiques | [📋 Recap](phases/phase-7-recap.md) 🎯 |
 
 **Livrable v1.5** : Contenu complet et dynamique
 

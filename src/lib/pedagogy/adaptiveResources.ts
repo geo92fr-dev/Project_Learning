@@ -3,24 +3,26 @@
  * Recommandation intelligente de ressources selon le profil d'apprentissage
  */
 
-import { writable } from 'svelte/store';
-import type { AdaptiveResource } from '$lib/types/pedagogy';
+import { writable } from "svelte/store";
+import type { AdaptiveResource } from "$lib/types/pedagogy";
 
 // ===== STORES =====
 export const recommendedResources = writable<AdaptiveResource[]>([]);
 
 // ===== TYPES LOCAUX =====
 interface UserPreferences {
-  learningStyle: 'visual' | 'auditory' | 'kinesthetic' | 'reading' | 'mixed';
+  learningStyle: "visual" | "auditory" | "kinesthetic" | "reading" | "mixed";
   timeConstraints: number; // minutes
-  preferredResourceTypes: Array<'lesson' | 'exercise' | 'video' | 'interactive' | 'reading' | 'game'>;
+  preferredResourceTypes: Array<
+    "lesson" | "exercise" | "video" | "interactive" | "reading" | "game"
+  >;
 }
 
 interface RecommendationContext {
   competence: string;
   currentLevel: number;
   timeAvailable: number;
-  sessionGoal: 'learn' | 'practice' | 'review' | 'assess';
+  sessionGoal: "learn" | "practice" | "review" | "assess";
 }
 
 interface AdaptiveRecommendation {
@@ -34,7 +36,7 @@ interface AdaptiveRecommendation {
 interface PersonalizationFactor {
   factor: string;
   value: string;
-  impact: 'low' | 'medium' | 'high';
+  impact: "low" | "medium" | "high";
   explanation: string;
 }
 
@@ -46,7 +48,7 @@ interface AdaptedContent {
 }
 
 interface ContentAdaptation {
-  type: 'pacing' | 'difficulty' | 'presentation' | 'modality' | 'enhancement';
+  type: "pacing" | "difficulty" | "presentation" | "modality" | "enhancement";
   description: string;
   parameters: Record<string, any>;
 }
@@ -57,7 +59,7 @@ interface ResourceEffectivenessReport {
   average_duration: number;
   average_satisfaction: number;
   type_breakdown: Record<string, ResourceTypeMetrics>;
-  top_performing_resources: Array<{id: string, score: number}>;
+  top_performing_resources: Array<{ id: string; score: number }>;
   improvement_recommendations: string[];
   generated_at: string;
 }
@@ -72,83 +74,83 @@ interface ResourceTypeMetrics {
 // ===== BANQUE DE RESSOURCES =====
 const RESOURCE_BANK: AdaptiveResource[] = [
   {
-    id: 'js-intro-video',
-    type: 'video',
-    title: 'Introduction à JavaScript',
-    description: 'Vidéo interactive couvrant les bases de JavaScript',
+    id: "js-intro-video",
+    type: "video",
+    title: "Introduction à JavaScript",
+    description: "Vidéo interactive couvrant les bases de JavaScript",
     difficulty_level: 1,
     estimated_time: 25,
-    learning_objectives: ['Variables', 'Fonctions', 'Syntaxe de base'],
+    learning_objectives: ["Variables", "Fonctions", "Syntaxe de base"],
     prerequisites: [],
-    skill_focus: ['javascript-fundamentals'],
-    adaptation_reason: 'Idéal pour débutants avec style d\'apprentissage visuel',
-    priority: 'high',
-    content_path: '/content/javascript/intro-video'
+    skill_focus: ["javascript-fundamentals"],
+    adaptation_reason: "Idéal pour débutants avec style d'apprentissage visuel",
+    priority: "high",
+    content_path: "/content/javascript/intro-video",
   },
   {
-    id: 'js-practice-exercises',
-    type: 'exercise',
-    title: 'Exercices Pratiques JavaScript',
-    description: 'Série d\'exercices interactifs pour pratiquer les concepts',
+    id: "js-practice-exercises",
+    type: "exercise",
+    title: "Exercices Pratiques JavaScript",
+    description: "Série d'exercices interactifs pour pratiquer les concepts",
     difficulty_level: 2,
     estimated_time: 40,
-    learning_objectives: ['Application pratique', 'Résolution de problèmes'],
-    prerequisites: ['javascript-fundamentals'],
-    skill_focus: ['javascript-application'],
-    adaptation_reason: 'Parfait pour consolider les acquis par la pratique',
-    priority: 'medium',
-    content_path: '/content/javascript/exercises'
+    learning_objectives: ["Application pratique", "Résolution de problèmes"],
+    prerequisites: ["javascript-fundamentals"],
+    skill_focus: ["javascript-application"],
+    adaptation_reason: "Parfait pour consolider les acquis par la pratique",
+    priority: "medium",
+    content_path: "/content/javascript/exercises",
   },
   {
-    id: 'reading-js-concepts',
-    type: 'reading',
-    title: 'Guide Complet JavaScript',
-    description: 'Documentation approfondie des concepts JavaScript',
+    id: "reading-js-concepts",
+    type: "reading",
+    title: "Guide Complet JavaScript",
+    description: "Documentation approfondie des concepts JavaScript",
     difficulty_level: 3,
     estimated_time: 60,
-    learning_objectives: ['Compréhension approfondie', 'Référence'],
-    prerequisites: ['javascript-fundamentals'],
-    skill_focus: ['javascript-advanced'],
-    adaptation_reason: 'Idéal pour apprentissage par lecture et référence',
-    priority: 'medium',
-    content_path: '/content/javascript/guide'
+    learning_objectives: ["Compréhension approfondie", "Référence"],
+    prerequisites: ["javascript-fundamentals"],
+    skill_focus: ["javascript-advanced"],
+    adaptation_reason: "Idéal pour apprentissage par lecture et référence",
+    priority: "medium",
+    content_path: "/content/javascript/guide",
   },
   {
-    id: 'typescript-intro',
-    type: 'lesson',
-    title: 'TypeScript pour Débutants',
-    description: 'Leçon interactive sur les fondamentaux de TypeScript',
+    id: "typescript-intro",
+    type: "lesson",
+    title: "TypeScript pour Débutants",
+    description: "Leçon interactive sur les fondamentaux de TypeScript",
     difficulty_level: 2,
     estimated_time: 35,
-    learning_objectives: ['Types', 'Interfaces', 'Classes'],
-    prerequisites: ['javascript-fundamentals'],
-    skill_focus: ['typescript-fundamentals'],
-    adaptation_reason: 'Progression naturelle après JavaScript',
-    priority: 'medium',
-    content_path: '/content/typescript/intro'
+    learning_objectives: ["Types", "Interfaces", "Classes"],
+    prerequisites: ["javascript-fundamentals"],
+    skill_focus: ["typescript-fundamentals"],
+    adaptation_reason: "Progression naturelle après JavaScript",
+    priority: "medium",
+    content_path: "/content/typescript/intro",
   },
   {
-    id: 'svelte-game',
-    type: 'game',
-    title: 'Jeu Svelte Builder',
-    description: 'Jeu interactif pour apprendre Svelte en s\'amusant',
+    id: "svelte-game",
+    type: "game",
+    title: "Jeu Svelte Builder",
+    description: "Jeu interactif pour apprendre Svelte en s'amusant",
     difficulty_level: 4,
     estimated_time: 45,
-    learning_objectives: ['Composants', 'Réactivité', 'Stores'],
-    prerequisites: ['javascript-fundamentals', 'typescript-fundamentals'],
-    skill_focus: ['svelte-advanced'],
-    adaptation_reason: 'Apprentissage ludique pour concepts avancés',
-    priority: 'low',
-    content_path: '/content/svelte/game'
-  }
+    learning_objectives: ["Composants", "Réactivité", "Stores"],
+    prerequisites: ["javascript-fundamentals", "typescript-fundamentals"],
+    skill_focus: ["svelte-advanced"],
+    adaptation_reason: "Apprentissage ludique pour concepts avancés",
+    priority: "low",
+    content_path: "/content/svelte/game",
+  },
 ];
 
 // ===== MOTEUR DE RECOMMANDATION =====
 export class AdaptiveResourceManager {
   private userPreferences: UserPreferences = {
-    learningStyle: 'mixed',
+    learningStyle: "mixed",
     timeConstraints: 30,
-    preferredResourceTypes: ['interactive', 'video']
+    preferredResourceTypes: ["interactive", "video"],
   };
 
   /**
@@ -162,13 +164,15 @@ export class AdaptiveResourceManager {
    * Calcule un score de pertinence pour une ressource
    */
   private calculateRelevanceScore(
-    resource: AdaptiveResource, 
+    resource: AdaptiveResource,
     context: RecommendationContext
   ): number {
     let score = 50; // Score de base
 
     // Score basé sur le style d'apprentissage
-    if (this.matchesLearningStyle(resource, this.userPreferences.learningStyle)) {
+    if (
+      this.matchesLearningStyle(resource, this.userPreferences.learningStyle)
+    ) {
       score += 25;
     }
 
@@ -183,14 +187,24 @@ export class AdaptiveResourceManager {
 
     // Score basé sur la priorité
     switch (resource.priority) {
-      case 'critical': score += 30; break;
-      case 'high': score += 20; break;
-      case 'medium': score += 10; break;
-      case 'low': score += 0; break;
+      case "critical":
+        score += 30;
+        break;
+      case "high":
+        score += 20;
+        break;
+      case "medium":
+        score += 10;
+        break;
+      case "low":
+        score += 0;
+        break;
     }
 
     // Score basé sur la difficulté appropriée
-    const levelDiff = Math.abs(resource.difficulty_level - context.currentLevel);
+    const levelDiff = Math.abs(
+      resource.difficulty_level - context.currentLevel
+    );
     if (levelDiff === 0) score += 15;
     else if (levelDiff === 1) score += 10;
     else if (levelDiff > 2) score -= 20;
@@ -210,34 +224,36 @@ export class AdaptiveResourceManager {
       competence,
       currentLevel: 2,
       timeAvailable: this.userPreferences.timeConstraints,
-      sessionGoal: 'learn',
-      ...context
+      sessionGoal: "learn",
+      ...context,
     };
 
     // Filtrer les ressources pertinentes
-    const relevantResources = RESOURCE_BANK.filter(r => 
-      r.skill_focus.some(skill => skill.includes(competence)) ||
-      r.skill_focus.includes(competence)
+    const relevantResources = RESOURCE_BANK.filter(
+      (r) =>
+        r.skill_focus.some((skill) => skill.includes(competence)) ||
+        r.skill_focus.includes(competence)
     );
 
     // Calculer les scores et trier
-    const scoredResources = relevantResources.map(resource => ({
+    const scoredResources = relevantResources.map((resource) => ({
       resource,
-      score: this.calculateRelevanceScore(resource, fullContext)
+      score: this.calculateRelevanceScore(resource, fullContext),
     }));
 
     scoredResources.sort((a, b) => b.score - a.score);
 
     // Convertir en recommandations
-    return scoredResources
-      .slice(0, maxRecommendations)
-      .map(item => ({
-        resource: item.resource,
-        relevance_score: item.score,
-        estimated_completion_time: this.estimateCompletionTime(item.resource),
-        adaptation_rationale: this.generateAdaptationRationale(item.resource, fullContext),
-        personalization_factors: this.getPersonalizationFactors(item.resource)
-      }));
+    return scoredResources.slice(0, maxRecommendations).map((item) => ({
+      resource: item.resource,
+      relevance_score: item.score,
+      estimated_completion_time: this.estimateCompletionTime(item.resource),
+      adaptation_rationale: this.generateAdaptationRationale(
+        item.resource,
+        fullContext
+      ),
+      personalization_factors: this.getPersonalizationFactors(item.resource),
+    }));
   }
 
   /**
@@ -248,27 +264,27 @@ export class AdaptiveResourceManager {
 
     // Adaptation basée sur le type de ressource
     switch (resource.type) {
-      case 'video':
+      case "video":
         adaptations.push({
-          type: 'pacing',
-          description: 'Vitesse de lecture adaptée',
-          parameters: { speed: 1.0 }
+          type: "pacing",
+          description: "Vitesse de lecture adaptée",
+          parameters: { speed: 1.0 },
         });
         break;
 
-      case 'exercise':
+      case "exercise":
         adaptations.push({
-          type: 'difficulty',
-          description: 'Exercices graduels',
-          parameters: { startLevel: 1 }
+          type: "difficulty",
+          description: "Exercices graduels",
+          parameters: { startLevel: 1 },
         });
         break;
 
-      case 'reading':
+      case "reading":
         adaptations.push({
-          type: 'presentation',
-          description: 'Format de lecture optimisé',
-          parameters: { fontSize: 'medium', highlighting: true }
+          type: "presentation",
+          description: "Format de lecture optimisé",
+          parameters: { fontSize: "medium", highlighting: true },
         });
         break;
     }
@@ -277,7 +293,7 @@ export class AdaptiveResourceManager {
       originalResource: resource,
       adaptations,
       estimatedImprovement: adaptations.length * 10,
-      adaptationRationale: 'Contenu adapté à vos préférences d\'apprentissage'
+      adaptationRationale: "Contenu adapté à vos préférences d'apprentissage",
     };
   }
 
@@ -286,18 +302,20 @@ export class AdaptiveResourceManager {
    */
   analyzeResourceEffectiveness(): ResourceEffectivenessReport {
     const totalResources = RESOURCE_BANK.length;
-    const avgDuration = RESOURCE_BANK.reduce((acc, r) => acc + r.estimated_time, 0) / totalResources;
+    const avgDuration =
+      RESOURCE_BANK.reduce((acc, r) => acc + r.estimated_time, 0) /
+      totalResources;
 
     // Métriques par type
     const typeBreakdown: Record<string, ResourceTypeMetrics> = {};
-    
+
     for (const resource of RESOURCE_BANK) {
       if (!typeBreakdown[resource.type]) {
         typeBreakdown[resource.type] = {
           count: 0,
           avg_duration: 0,
           avg_satisfaction: 4.0,
-          completion_rate: 0.8
+          completion_rate: 0.8,
         };
       }
       typeBreakdown[resource.type].count++;
@@ -305,7 +323,7 @@ export class AdaptiveResourceManager {
     }
 
     // Calcul des moyennes
-    Object.values(typeBreakdown).forEach(metrics => {
+    Object.values(typeBreakdown).forEach((metrics) => {
       if (metrics.count > 0) {
         metrics.avg_duration /= metrics.count;
       }
@@ -317,25 +335,31 @@ export class AdaptiveResourceManager {
       average_duration: avgDuration,
       average_satisfaction: 4.2,
       type_breakdown: typeBreakdown,
-      top_performing_resources: RESOURCE_BANK.slice(0, 3).map(r => ({ id: r.id, score: 85 })),
+      top_performing_resources: RESOURCE_BANK.slice(0, 3).map((r) => ({
+        id: r.id,
+        score: 85,
+      })),
       improvement_recommendations: [
-        'Ajouter plus de ressources interactives',
-        'Développer du contenu adaptatif avancé',
-        'Améliorer les mécaniques de gamification'
+        "Ajouter plus de ressources interactives",
+        "Développer du contenu adaptatif avancé",
+        "Améliorer les mécaniques de gamification",
       ],
-      generated_at: new Date().toISOString()
+      generated_at: new Date().toISOString(),
     };
   }
 
   // ===== MÉTHODES UTILITAIRES =====
 
-  private matchesLearningStyle(resource: AdaptiveResource, userStyle: string): boolean {
-    const styleMapping: Record<string, Array<AdaptiveResource['type']>> = {
-      visual: ['video', 'interactive', 'reading'],
-      auditory: ['video', 'lesson'],
-      kinesthetic: ['interactive', 'exercise', 'game'],
-      reading: ['reading', 'lesson'],
-      mixed: ['video', 'interactive', 'exercise']
+  private matchesLearningStyle(
+    resource: AdaptiveResource,
+    userStyle: string
+  ): boolean {
+    const styleMapping: Record<string, Array<AdaptiveResource["type"]>> = {
+      visual: ["video", "interactive", "reading"],
+      auditory: ["video", "lesson"],
+      kinesthetic: ["interactive", "exercise", "game"],
+      reading: ["reading", "lesson"],
+      mixed: ["video", "interactive", "exercise"],
     };
 
     return styleMapping[userStyle]?.includes(resource.type) || false;
@@ -346,48 +370,57 @@ export class AdaptiveResourceManager {
   }
 
   private generateAdaptationRationale(
-    resource: AdaptiveResource, 
+    resource: AdaptiveResource,
     context: RecommendationContext
   ): string {
     const reasons = [];
-    
-    if (this.matchesLearningStyle(resource, this.userPreferences.learningStyle)) {
-      reasons.push(`adapté à votre style d'apprentissage ${this.userPreferences.learningStyle}`);
-    }
-    
-    if (resource.estimated_time <= context.timeAvailable) {
-      reasons.push(`correspond à votre temps disponible (${context.timeAvailable}min)`);
-    }
-    
-    if (resource.priority === 'high' || resource.priority === 'critical') {
-      reasons.push('priorité élevée pour votre progression');
+
+    if (
+      this.matchesLearningStyle(resource, this.userPreferences.learningStyle)
+    ) {
+      reasons.push(
+        `adapté à votre style d'apprentissage ${this.userPreferences.learningStyle}`
+      );
     }
 
-    return reasons.length > 0 
-      ? `Recommandé car ${reasons.join(', ')}`
-      : resource.adaptation_reason || 'Ressource pertinente pour vos objectifs d\'apprentissage';
+    if (resource.estimated_time <= context.timeAvailable) {
+      reasons.push(
+        `correspond à votre temps disponible (${context.timeAvailable}min)`
+      );
+    }
+
+    if (resource.priority === "high" || resource.priority === "critical") {
+      reasons.push("priorité élevée pour votre progression");
+    }
+
+    return reasons.length > 0
+      ? `Recommandé car ${reasons.join(", ")}`
+      : resource.adaptation_reason ||
+          "Ressource pertinente pour vos objectifs d'apprentissage";
   }
 
-  private getPersonalizationFactors(resource: AdaptiveResource): PersonalizationFactor[] {
+  private getPersonalizationFactors(
+    resource: AdaptiveResource
+  ): PersonalizationFactor[] {
     return [
       {
-        factor: 'learning_style',
+        factor: "learning_style",
         value: this.userPreferences.learningStyle,
-        impact: 'high',
-        explanation: `Adapté au style d'apprentissage ${this.userPreferences.learningStyle}`
+        impact: "high",
+        explanation: `Adapté au style d'apprentissage ${this.userPreferences.learningStyle}`,
       },
       {
-        factor: 'time_constraints',
+        factor: "time_constraints",
         value: `${resource.estimated_time}/${this.userPreferences.timeConstraints}min`,
-        impact: 'medium',
-        explanation: 'Durée adaptée à vos contraintes de temps'
+        impact: "medium",
+        explanation: "Durée adaptée à vos contraintes de temps",
       },
       {
-        factor: 'difficulty_level',
+        factor: "difficulty_level",
         value: resource.difficulty_level.toString(),
-        impact: 'high',
-        explanation: `Niveau de difficulté ${resource.difficulty_level}/5`
-      }
+        impact: "high",
+        explanation: `Niveau de difficulté ${resource.difficulty_level}/5`,
+      },
     ];
   }
 }
@@ -396,17 +429,20 @@ export class AdaptiveResourceManager {
 export const adaptiveResourceManager = new AdaptiveResourceManager();
 
 // ===== FONCTIONS UTILITAIRES =====
-export function getResourcesByCompetence(competence: string): AdaptiveResource[] {
-  return RESOURCE_BANK.filter(r => 
-    r.skill_focus.some(skill => skill.includes(competence)) ||
-    r.skill_focus.includes(competence)
+export function getResourcesByCompetence(
+  competence: string
+): AdaptiveResource[] {
+  return RESOURCE_BANK.filter(
+    (r) =>
+      r.skill_focus.some((skill) => skill.includes(competence)) ||
+      r.skill_focus.includes(competence)
   );
 }
 
 export function initializeResourceSystem() {
-  console.log('Système de ressources adaptatives initialisé');
+  console.log("Système de ressources adaptatives initialisé");
   console.log(`${RESOURCE_BANK.length} ressources disponibles`);
-  
+
   // Mise à jour du store
   recommendedResources.set(RESOURCE_BANK.slice(0, 3));
 }

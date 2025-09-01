@@ -80,10 +80,10 @@ Répondez aux questions suivantes pour tester votre compréhension des fractions
 
   function handleAnswer(event: CustomEvent) {
     if (!currentQuestion) return;
-    
+
     const { selectedOptions } = event.detail;
     const selectedOption = selectedOptions[0]; // Premier élément pour les QCM simples
-    const correctOption = currentQuestion.options.find(opt => opt.isCorrect);
+    const correctOption = currentQuestion.options.find((opt) => opt.isCorrect);
     const isCorrect = selectedOption === correctOption?.id;
 
     answers[currentQuestion.id] = {
@@ -210,18 +210,20 @@ Répondez aux questions suivantes pour tester votre compréhension des fractions
               id: currentQuestion.id,
               title: `Question ${currentQuestionIndex + 1}`,
               description: currentQuestion.question,
-              type: 'qcm',
-              difficulty: 'intermediaire',
+              type: "qcm",
+              difficulty: "intermediaire",
               points: 1,
-              category: 'mathématiques',
-              tags: ['fractions'],
+              category: "mathématiques",
+              tags: ["fractions"],
               createdAt: new Date(),
               updatedAt: new Date(),
               question: currentQuestion.question,
               options: currentQuestion.options,
-              multipleCorrect: false
+              multipleCorrect: false,
             }}
-            selectedOptions={answers[currentQuestion.id]?.selectedOption ? [answers[currentQuestion.id].selectedOption] : []}
+            selectedOptions={answers[currentQuestion.id]?.selectedOption
+              ? [answers[currentQuestion.id].selectedOption]
+              : []}
             showResult={showResults[currentQuestion.id] || false}
             disabled={showResults[currentQuestion.id] || false}
             on:submit={handleAnswer}

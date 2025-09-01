@@ -1,9 +1,12 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { browser } from '$app/environment';
-  import { testFirebaseConnection, getFirebaseStatus } from '$lib/firebase/test-connection-new.js';
-  import { authStore, initAuth } from '$lib/stores/auth.js';
-  
+  import { onMount } from "svelte";
+  import { browser } from "$app/environment";
+  import {
+    testFirebaseConnection,
+    getFirebaseStatus,
+  } from "$lib/firebase/test-connection-new.js";
+  import { authStore, initAuth } from "$lib/stores/auth.js";
+
   let testResults: any = null;
   let loading = false;
   let firebaseStatus: any = null;
@@ -14,7 +17,7 @@
     if (browser) {
       // Initialiser l'authentification
       await initAuth();
-      
+
       // Obtenir le statut Firebase
       firebaseStatus = getFirebaseStatus();
     }
@@ -24,13 +27,13 @@
     loading = true;
     try {
       testResults = await testFirebaseConnection();
-      console.log('🔧 Résultats test Firebase:', testResults);
+      console.log("🔧 Résultats test Firebase:", testResults);
     } catch (error: any) {
-      console.error('❌ Erreur test Firebase:', error);
+      console.error("❌ Erreur test Firebase:", error);
       testResults = {
         success: false,
         results: { auth: false, firestore: false, anonymousAuth: false },
-        errors: [`Erreur critique: ${error?.message || 'Erreur inconnue'}`]
+        errors: [`Erreur critique: ${error?.message || "Erreur inconnue"}`],
       };
     }
     loading = false;
@@ -54,16 +57,26 @@
       {#if firebaseStatus}
         <div class="status-grid">
           <div class="status-item" class:success={firebaseStatus.app}>
-            <span class="icon">{firebaseStatus.app ? '✅' : '❌'}</span>
-            <span>Firebase App: {firebaseStatus.app ? 'Initialisé' : 'Non initialisé'}</span>
+            <span class="icon">{firebaseStatus.app ? "✅" : "❌"}</span>
+            <span
+              >Firebase App: {firebaseStatus.app
+                ? "Initialisé"
+                : "Non initialisé"}</span
+            >
           </div>
           <div class="status-item" class:success={firebaseStatus.auth}>
-            <span class="icon">{firebaseStatus.auth ? '✅' : '❌'}</span>
-            <span>Firebase Auth: {firebaseStatus.auth ? 'Actif' : 'Inactif'}</span>
+            <span class="icon">{firebaseStatus.auth ? "✅" : "❌"}</span>
+            <span
+              >Firebase Auth: {firebaseStatus.auth ? "Actif" : "Inactif"}</span
+            >
           </div>
           <div class="status-item" class:success={firebaseStatus.firestore}>
-            <span class="icon">{firebaseStatus.firestore ? '✅' : '❌'}</span>
-            <span>Firestore: {firebaseStatus.firestore ? 'Connecté' : 'Déconnecté'}</span>
+            <span class="icon">{firebaseStatus.firestore ? "✅" : "❌"}</span>
+            <span
+              >Firestore: {firebaseStatus.firestore
+                ? "Connecté"
+                : "Déconnecté"}</span
+            >
           </div>
         </div>
       {:else}
@@ -77,17 +90,21 @@
       {#if mounted && browser}
         <div class="auth-info">
           <div class="info-item">
-            <strong>Chargement:</strong> {$authStore.loading ? 'Oui' : 'Non'}
+            <strong>Chargement:</strong>
+            {$authStore.loading ? "Oui" : "Non"}
           </div>
           <div class="info-item">
-            <strong>Authentifié:</strong> {$authStore.user ? 'Oui' : 'Non'}
+            <strong>Authentifié:</strong>
+            {$authStore.user ? "Oui" : "Non"}
           </div>
           <div class="info-item">
-            <strong>Utilisateur:</strong> {$authStore.user ? $authStore.user.email || 'Anonyme' : 'Aucun'}
+            <strong>Utilisateur:</strong>
+            {$authStore.user ? $authStore.user.email || "Anonyme" : "Aucun"}
           </div>
           {#if $authStore.error}
             <div class="info-item error">
-              <strong>Erreur:</strong> {$authStore.error}
+              <strong>Erreur:</strong>
+              {$authStore.error}
             </div>
           {/if}
         </div>
@@ -99,33 +116,38 @@
     <!-- Test de connexion -->
     <section class="test-section">
       <h2>🧪 Test de Connexion</h2>
-      <button 
-        class="test-btn" 
-        on:click={runFirebaseTest} 
-        disabled={loading}
-      >
-        {loading ? '⏳ Test en cours...' : '🚀 Lancer le test'}
+      <button class="test-btn" on:click={runFirebaseTest} disabled={loading}>
+        {loading ? "⏳ Test en cours..." : "🚀 Lancer le test"}
       </button>
 
       {#if testResults}
         <div class="test-results">
           <h3>📋 Résultats</h3>
-          <div class="result-summary" class:success={testResults.success} class:error={!testResults.success}>
-            <span class="icon">{testResults.success ? '✅' : '❌'}</span>
-            <span>{testResults.success ? 'Tous les tests réussis' : 'Certains tests ont échoué'}</span>
+          <div
+            class="result-summary"
+            class:success={testResults.success}
+            class:error={!testResults.success}
+          >
+            <span class="icon">{testResults.success ? "✅" : "❌"}</span>
+            <span
+              >{testResults.success
+                ? "Tous les tests réussis"
+                : "Certains tests ont échoué"}</span
+            >
           </div>
 
           <div class="test-details">
             <h4>Détails des tests:</h4>
             <ul>
               <li class:success={testResults.results.auth}>
-                {testResults.results.auth ? '✅' : '❌'} Firebase Auth
+                {testResults.results.auth ? "✅" : "❌"} Firebase Auth
               </li>
               <li class:success={testResults.results.firestore}>
-                {testResults.results.firestore ? '✅' : '❌'} Firestore
+                {testResults.results.firestore ? "✅" : "❌"} Firestore
               </li>
               <li class:success={testResults.results.anonymousAuth}>
-                {testResults.results.anonymousAuth ? '✅' : '❌'} Authentification anonyme
+                {testResults.results.anonymousAuth ? "✅" : "❌"} Authentification
+                anonyme
               </li>
             </ul>
           </div>
@@ -149,7 +171,7 @@
       <h2>📋 Phase 2 - Prochaines étapes</h2>
       <div class="checklist">
         <div class="check-item">
-          <span class="check">{testResults?.success ? '✅' : '⏳'}</span>
+          <span class="check">{testResults?.success ? "✅" : "⏳"}</span>
           <span>Configuration Firebase fonctionnelle</span>
         </div>
         <div class="check-item">

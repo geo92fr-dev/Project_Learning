@@ -7,10 +7,10 @@ function __memo(fn) {
 return {
 	appDir: "_app",
 	appPath: "_app",
-	assets: new Set([]),
-	mimeTypes: {},
+	assets: new Set(["test.html"]),
+	mimeTypes: {".html":"text/html"},
 	_: {
-		client: {"start":"_app/immutable/entry/start.b6036434.js","app":"_app/immutable/entry/app.01f058db.js","imports":["_app/immutable/entry/start.b6036434.js","_app/immutable/chunks/scheduler.9ed29267.js","_app/immutable/chunks/singletons.0071c0a9.js","_app/immutable/chunks/index.ce9bc0b6.js","_app/immutable/chunks/control.c2cf8273.js","_app/immutable/entry/app.01f058db.js","_app/immutable/chunks/preload-helper.a4192956.js","_app/immutable/chunks/scheduler.9ed29267.js","_app/immutable/chunks/index.c5ac0418.js"],"stylesheets":[],"fonts":[]},
+		client: {"start":"_app/immutable/entry/start.f11c1786.js","app":"_app/immutable/entry/app.156bcb61.js","imports":["_app/immutable/entry/start.f11c1786.js","_app/immutable/chunks/scheduler.b71902e7.js","_app/immutable/chunks/singletons.05b9045c.js","_app/immutable/chunks/index.6faaf2b0.js","_app/immutable/chunks/control.c2cf8273.js","_app/immutable/entry/app.156bcb61.js","_app/immutable/chunks/preload-helper.a4192956.js","_app/immutable/chunks/scheduler.b71902e7.js","_app/immutable/chunks/index.160b3567.js"],"stylesheets":[],"fonts":[]},
 		nodes: [
 			__memo(() => import('./nodes/0.js')),
 			__memo(() => import('./nodes/1.js')),
@@ -48,7 +48,8 @@ return {
 			__memo(() => import('./nodes/33.js')),
 			__memo(() => import('./nodes/34.js')),
 			__memo(() => import('./nodes/35.js')),
-			__memo(() => import('./nodes/36.js'))
+			__memo(() => import('./nodes/36.js')),
+			__memo(() => import('./nodes/37.js'))
 		],
 		routes: [
 			{
@@ -143,129 +144,136 @@ return {
 				endpoint: null
 			},
 			{
+				id: "/debug-auth",
+				pattern: /^\/debug-auth\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 19 },
+				endpoint: null
+			},
+			{
 				id: "/demo",
 				pattern: /^\/demo\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 19 },
+				page: { layouts: [0,], errors: [1,], leaf: 20 },
 				endpoint: null
 			},
 			{
 				id: "/demo/exercise",
 				pattern: /^\/demo\/exercise\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 20 },
+				page: { layouts: [0,], errors: [1,], leaf: 21 },
 				endpoint: null
 			},
 			{
 				id: "/demo/markdown",
 				pattern: /^\/demo\/markdown\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 21 },
+				page: { layouts: [0,], errors: [1,], leaf: 22 },
 				endpoint: null
 			},
 			{
 				id: "/pedagogy",
 				pattern: /^\/pedagogy\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 22 },
+				page: { layouts: [0,], errors: [1,], leaf: 23 },
 				endpoint: null
 			},
 			{
 				id: "/roadmap",
 				pattern: /^\/roadmap\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 23 },
+				page: { layouts: [0,], errors: [1,], leaf: 24 },
 				endpoint: null
 			},
 			{
 				id: "/test-auth",
 				pattern: /^\/test-auth\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 24 },
+				page: { layouts: [0,], errors: [1,], leaf: 25 },
 				endpoint: null
 			},
 			{
 				id: "/test-content-fixed",
 				pattern: /^\/test-content-fixed\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 26 },
+				page: { layouts: [0,], errors: [1,], leaf: 27 },
 				endpoint: null
 			},
 			{
 				id: "/test-content",
 				pattern: /^\/test-content\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 25 },
+				page: { layouts: [0,], errors: [1,], leaf: 26 },
 				endpoint: null
 			},
 			{
 				id: "/test-exercises",
 				pattern: /^\/test-exercises\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 27 },
+				page: { layouts: [0,], errors: [1,], leaf: 28 },
 				endpoint: null
 			},
 			{
 				id: "/test-firebase-simple",
 				pattern: /^\/test-firebase-simple\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 29 },
+				page: { layouts: [0,], errors: [1,], leaf: 30 },
 				endpoint: null
 			},
 			{
 				id: "/test-firebase",
 				pattern: /^\/test-firebase\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 28 },
+				page: { layouts: [0,], errors: [1,], leaf: 29 },
 				endpoint: null
 			},
 			{
 				id: "/test-markdown",
 				pattern: /^\/test-markdown\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 30 },
+				page: { layouts: [0,], errors: [1,], leaf: 31 },
 				endpoint: null
 			},
 			{
 				id: "/test-phase4",
 				pattern: /^\/test-phase4\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 31 },
+				page: { layouts: [0,], errors: [1,], leaf: 32 },
 				endpoint: null
 			},
 			{
 				id: "/tests",
 				pattern: /^\/tests\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 32 },
+				page: { layouts: [0,], errors: [1,], leaf: 33 },
 				endpoint: null
 			},
 			{
 				id: "/[matiere]",
 				pattern: /^\/([^/]+?)\/?$/,
 				params: [{"name":"matiere","optional":false,"rest":false,"chained":false}],
-				page: { layouts: [0,3,], errors: [1,,], leaf: 33 },
+				page: { layouts: [0,3,], errors: [1,,], leaf: 34 },
 				endpoint: null
 			},
 			{
 				id: "/[matiere]/[niveau]",
 				pattern: /^\/([^/]+?)\/([^/]+?)\/?$/,
 				params: [{"name":"matiere","optional":false,"rest":false,"chained":false},{"name":"niveau","optional":false,"rest":false,"chained":false}],
-				page: { layouts: [0,3,4,], errors: [1,,,], leaf: 34 },
+				page: { layouts: [0,3,4,], errors: [1,,,], leaf: 35 },
 				endpoint: null
 			},
 			{
 				id: "/[matiere]/[niveau]/[competence]",
 				pattern: /^\/([^/]+?)\/([^/]+?)\/([^/]+?)\/?$/,
 				params: [{"name":"matiere","optional":false,"rest":false,"chained":false},{"name":"niveau","optional":false,"rest":false,"chained":false},{"name":"competence","optional":false,"rest":false,"chained":false}],
-				page: { layouts: [0,3,4,5,], errors: [1,,,,], leaf: 35 },
+				page: { layouts: [0,3,4,5,], errors: [1,,,,], leaf: 36 },
 				endpoint: null
 			},
 			{
 				id: "/[matiere]/[niveau]/[competence]/[cours]",
 				pattern: /^\/([^/]+?)\/([^/]+?)\/([^/]+?)\/([^/]+?)\/?$/,
 				params: [{"name":"matiere","optional":false,"rest":false,"chained":false},{"name":"niveau","optional":false,"rest":false,"chained":false},{"name":"competence","optional":false,"rest":false,"chained":false},{"name":"cours","optional":false,"rest":false,"chained":false}],
-				page: { layouts: [0,3,4,5,], errors: [1,,,,], leaf: 36 },
+				page: { layouts: [0,3,4,5,], errors: [1,,,,], leaf: 37 },
 				endpoint: null
 			}
 		],

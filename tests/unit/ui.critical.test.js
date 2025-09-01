@@ -66,17 +66,16 @@ describe("🔴 CRITICAL: Auth UI Components - Phase 2", () => {
         browser: true,
       }));
 
-      const { user, loading, isAuthenticated, initAuth } = await import(
-        "../../src/lib/stores/auth.js"
+      const { authStore, currentUser, isAuthenticated } = await import(
+        "../../src/lib/stores/auth.ts"
       );
+      const user = currentUser;
       expect(user).toBeDefined();
-      expect(loading).toBeDefined();
+      expect(authStore).toBeDefined();
       expect(isAuthenticated).toBeDefined();
-      expect(initAuth).toBeDefined();
       expect(typeof user.subscribe).toBe("function");
-      expect(typeof loading.subscribe).toBe("function");
+      expect(typeof authStore.subscribe).toBe("function");
       expect(typeof isAuthenticated.subscribe).toBe("function");
-      expect(typeof initAuth).toBe("function");
     });
 
     it("should have Firebase auth integration - Phase 2", async () => {

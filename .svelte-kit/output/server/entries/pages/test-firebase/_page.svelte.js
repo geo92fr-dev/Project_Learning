@@ -1,5 +1,5 @@
 import { s as subscribe } from "../../../chunks/utils.js";
-import { c as create_ssr_component, e as escape } from "../../../chunks/ssr.js";
+import { c as create_ssr_component, a as escape } from "../../../chunks/ssr.js";
 import { a as authStore } from "../../../chunks/auth.js";
 const _page_svelte_svelte_type_style_lang = "";
 const css = {

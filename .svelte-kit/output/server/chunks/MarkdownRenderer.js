@@ -1,4 +1,4 @@
-import { c as create_ssr_component, e as escape, a as each } from "./ssr.js";
+import { c as create_ssr_component, a as escape, e as each } from "./ssr.js";
 import { p as processCourse, e as estimateReadingTime, a as extractHeaders, m as markdownToHtml } from "./content2.js";
 const MarkdownRenderer_svelte_svelte_type_style_lang = "";
 const css = {

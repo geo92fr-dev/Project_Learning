@@ -85,7 +85,7 @@ Chaque phase dispose de deux documents complémentaires :
 | **1**    | [Setup & Architecture](phases/phase-1-setup.md) | [📋 Recap Phase 1](phases/phase-1-recap.md)   | ✅ **COMPLÉTÉE**    |
 | **2**    | [Authentication](phases/phase-2-auth.md)        | [📋 Recap Phase 2](phases/phase-2-recap.md)   | ✅ **COMPLÉTÉE**    |
 | **3**    | [Content Management](phases/phase-3-content.md) | [📋 Recap Phase 3](phases/phase-3-recap.md)   | ✅ **COMPLÉTÉE** 🎉 |
-| **4**    | [Pédagogie Avancée](phases/phase-4-pedagogy.md) | [📋 Recap Phase 4](phases/phase-4-recap.md)   | � **EN COURS** 75% |
+| **4**    | [Pédagogie Avancée](phases/phase-4-pedagogy.md) | [📋 Recap Phase 4](phases/phase-4-recap.md)   | � **EN COURS** 75%  |
 | **5-12** | [Phases 5-12](phases/)                          | [📋 Tous les récaps](phases/README-RECAPS.md) | 🎯 **PLANIFIÉES**   |
 
 ### **⚙️ Commandes de Suivi**
@@ -1217,12 +1217,18 @@ service cloud.firestore {
 # Commande de validation complète Phase 5 ✅ RÉUSSIE
 [CMD] npm run validate:phase5  # 76 tests passés - Release v1.3
 ```
+
 # ✅ Firebase CRUD fonctionnel
+
 # ✅ Règles sécurité testées
+
 # ✅ Performance < 1s
+
 # ✅ Migration données OK
+
 # ✅ Tests d'intégration > 85%
-```
+
+````
 
 ##### 📊 **Phase 6 (Curriculum Génération) - Quality Gates**
 
@@ -1313,7 +1319,7 @@ service cloud.firestore {
 # ✅ Tests E2E complets
 # ✅ Monitoring opérationnel
 # ✅ Prêt pour déploiement
-```
+````
 
 ### 🎯 **Utilisation des Quality Gates**
 

@@ -1,5 +1,5 @@
-import { c as create_ssr_component, o as onDestroy, e as escape, a as each, b as add_attribute, v as validate_component } from "../../../chunks/ssr.js";
-import { d as derived, w as writable } from "../../../chunks/index.js";
+import { c as create_ssr_component, o as onDestroy, a as escape, e as each, b as add_attribute, v as validate_component } from "../../../chunks/ssr.js";
+import { d as derived, w as writable } from "../../../chunks/index2.js";
 import { g as get_store_value, s as subscribe } from "../../../chunks/utils.js";
 const currentAssessment = writable([]);
 const userResponses = writable([]);
@@ -22,18 +22,13 @@ const QUESTION_BANK = [
     question: "Quelle est la méthode correcte pour déclarer une variable en JavaScript moderne ?",
     competence: "javascript-fundamentals",
     difficulty: 2,
-    options: [
-      "var myVar = 5;",
-      "let myVar = 5;",
-      "myVar = 5;",
-      "const myVar;"
-    ],
+    options: ["var myVar = 5;", "let myVar = 5;", "myVar = 5;", "const myVar;"],
     correct_answer: "let myVar = 5;",
     explanation: "let est la méthode moderne recommandée pour déclarer des variables",
     time_limit: 30,
     skill_indicators: ["variable-declaration", "modern-javascript"]
   },
-  // Questions TypeScript - Niveau Intermédiaire  
+  // Questions TypeScript - Niveau Intermédiaire
   {
     id: "ts-001",
     type: "multiple_choice",
@@ -76,12 +71,7 @@ const QUESTION_BANK = [
     question: "Quelle balise HTML est sémantiquement correcte pour un titre principal ?",
     competence: "html-semantics",
     difficulty: 1,
-    options: [
-      "<title>",
-      "<h1>",
-      "<header>",
-      "<main>"
-    ],
+    options: ["<title>", "<h1>", "<header>", "<main>"],
     correct_answer: "<h1>",
     explanation: "h1 représente le titre principal d'une page",
     time_limit: 20,
@@ -150,7 +140,10 @@ class AdaptiveEngine {
    * Calcule les métriques d'engagement
    */
   calculateEngagementMetrics(session) {
-    const focus_score = Math.min(1, session.interactions / (session.duration / 60));
+    const focus_score = Math.min(
+      1,
+      session.interactions / (session.duration / 60)
+    );
     const interaction_rate = session.interactions / session.questionsAnswered;
     const completion_rate = session.questionsAnswered / (session.questionsAnswered + 5);
     const accuracy_rate = session.correctAnswers / session.questionsAnswered;
@@ -166,7 +159,9 @@ class AdaptiveEngine {
    */
   selectNextQuestion(availableQuestions) {
     const answered = this.responses.map((r) => r.question_id);
-    const remaining = availableQuestions.filter((q) => !answered.includes(q.id));
+    const remaining = availableQuestions.filter(
+      (q) => !answered.includes(q.id)
+    );
     if (remaining.length === 0)
       return null;
     if (this.responses.length === 0) {
@@ -188,7 +183,9 @@ class AdaptiveEngine {
     const recentResponses = this.responses.slice(-3);
     if (recentResponses.length === 0)
       return 0.5;
-    const correctCount = recentResponses.filter((r) => this.isCorrect(r)).length;
+    const correctCount = recentResponses.filter(
+      (r) => this.isCorrect(r)
+    ).length;
     return correctCount / recentResponses.length;
   }
   /**
@@ -270,7 +267,10 @@ class AdaptiveEngine {
     const avgTimePerQuestion = this.responses.length > 0 ? this.responses.reduce((acc, r) => acc + r.time_taken, 0) / this.responses.length : 0;
     const confidenceCorrelation = this.calculateConfidenceCorrelation();
     const difficultyProgression = this.calculateDifficultyProgression();
-    const recommendations = this.generateRecommendations(competenceLevel, adjustedScore);
+    const recommendations = this.generateRecommendations(
+      competenceLevel,
+      adjustedScore
+    );
     return {
       rawScore,
       percentage,
@@ -284,7 +284,9 @@ class AdaptiveEngine {
     };
   }
   calculateConfidenceCorrelation() {
-    const validResponses = this.responses.filter((r) => r.confidence_level !== void 0);
+    const validResponses = this.responses.filter(
+      (r) => r.confidence_level !== void 0
+    );
     if (validResponses.length < 2)
       return 0;
     let correlation = 0;
@@ -423,7 +425,9 @@ class PreAssessmentManager {
       competence: questions[0]?.competence || "general",
       current_level: analysis.competenceLevel,
       target_level: this.getTargetLevel(analysis.competenceLevel),
-      estimated_completion_time: this.estimatePathDuration(analysis.competenceLevel),
+      estimated_completion_time: this.estimatePathDuration(
+        analysis.competenceLevel
+      ),
       learning_style: this.generateLearningStyle(),
       recommended_resources: [],
       milestones: this.generateMilestones(analysis.competenceLevel),
@@ -437,7 +441,9 @@ class PreAssessmentManager {
       start_time: startTime || /* @__PURE__ */ new Date(),
       end_time: endTime || /* @__PURE__ */ new Date(),
       total_duration: totalDuration,
-      questions: questions.filter((q) => responses.some((r) => r.question_id === q.id)),
+      questions: questions.filter(
+        (q) => responses.some((r) => r.question_id === q.id)
+      ),
       responses,
       score: {
         raw_score: analysis.rawScore,
@@ -555,14 +561,11 @@ const currentPrompt = writable(null);
 const promptHistory = writable([]);
 const metacognitionState = writable("idle");
 const reflectionQuality = writable(0);
-derived(
-  [promptHistory],
-  ([$history]) => {
-    if ($history.length === 0)
-      return null;
-    return analyzeMetacognitiveStrategies($history);
-  }
-);
+derived([promptHistory], ([$history]) => {
+  if ($history.length === 0)
+    return null;
+  return analyzeMetacognitiveStrategies($history);
+});
 const PROMPT_BANK = [
   // Prompts de planification - Avant l'apprentissage
   {
@@ -576,7 +579,11 @@ const PROMPT_BANK = [
       "Quelles stratégies allez-vous utiliser ?"
     ],
     guidance: "Prenez un moment pour réfléchir à vos connaissances actuelles. Cela vous aidera à mieux comprendre les nouveaux concepts.",
-    expected_elements: ["connaissances préalables", "objectifs d'apprentissage", "stratégies"],
+    expected_elements: [
+      "connaissances préalables",
+      "objectifs d'apprentissage",
+      "stratégies"
+    ],
     competence_focus: "metacognition-planning"
   },
   {
@@ -590,7 +597,11 @@ const PROMPT_BANK = [
       "Que ferez-vous si vous rencontrez des difficultés ?"
     ],
     guidance: "Une bonne planification améliore l'efficacité de l'apprentissage. Pensez à prévoir du temps pour la révision.",
-    expected_elements: ["gestion du temps", "stratégies de résolution", "planification"],
+    expected_elements: [
+      "gestion du temps",
+      "stratégies de résolution",
+      "planification"
+    ],
     competence_focus: "time-management"
   },
   // Prompts de monitoring - Pendant l'apprentissage
@@ -619,7 +630,11 @@ const PROMPT_BANK = [
       "Qu'est-ce qui vous aide le mieux à comprendre ?"
     ],
     guidance: "Adapter sa stratégie en cours de route est une compétence métacognitive importante.",
-    expected_elements: ["évaluation stratégie", "adaptation", "préférences d'apprentissage"],
+    expected_elements: [
+      "évaluation stratégie",
+      "adaptation",
+      "préférences d'apprentissage"
+    ],
     competence_focus: "strategy-adaptation"
   },
   // Prompts d'évaluation - Après l'apprentissage
@@ -634,7 +649,11 @@ const PROMPT_BANK = [
       "Comment pourriez-vous améliorer votre compréhension ?"
     ],
     guidance: "La réflexion après l'apprentissage consolide les connaissances et aide à identifier les lacunes.",
-    expected_elements: ["synthèse", "identification lacunes", "pistes amélioration"],
+    expected_elements: [
+      "synthèse",
+      "identification lacunes",
+      "pistes amélioration"
+    ],
     competence_focus: "knowledge-consolidation"
   },
   {
@@ -663,7 +682,11 @@ const PROMPT_BANK = [
       "Comment les avez-vous surmontés ?"
     ],
     guidance: "Prendre conscience de sa démarche de résolution aide à développer de meilleures stratégies.",
-    expected_elements: ["méthode de résolution", "gestion obstacles", "processus de pensée"],
+    expected_elements: [
+      "méthode de résolution",
+      "gestion obstacles",
+      "processus de pensée"
+    ],
     competence_focus: "problem-solving"
   },
   {
@@ -785,11 +808,22 @@ class ResponseAnalyzer {
    */
   containsSemanticEquivalent(content, target) {
     const equivalents = {
-      "connaissances préalables": ["ce que je sais", "mes acquis", "baggage", "expérience"],
-      "objectifs d'apprentissage": ["but", "goal", "objectif", "viser", "atteindre"],
-      "stratégies": ["méthode", "approche", "technique", "façon de faire"],
+      "connaissances préalables": [
+        "ce que je sais",
+        "mes acquis",
+        "baggage",
+        "expérience"
+      ],
+      "objectifs d'apprentissage": [
+        "but",
+        "goal",
+        "objectif",
+        "viser",
+        "atteindre"
+      ],
+      stratégies: ["méthode", "approche", "technique", "façon de faire"],
       "gestion du temps": ["temps", "durée", "horaire", "planning"],
-      "compréhension": ["comprendre", "saisir", "clair", "évident"],
+      compréhension: ["comprendre", "saisir", "clair", "évident"],
       "auto-évaluation": ["me juger", "évaluer mes", "bilan personnel"]
     };
     const targetEquivalents = equivalents[target] || [];
@@ -804,7 +838,9 @@ class MetacognitionPromptBank {
     let candidates = PROMPT_BANK.filter((p) => p.trigger === trigger);
     candidates = candidates.filter((p) => !previousPrompts.includes(p.id));
     if (competenceFocus) {
-      const focused = candidates.filter((p) => p.competence_focus === competenceFocus);
+      const focused = candidates.filter(
+        (p) => p.competence_focus === competenceFocus
+      );
       if (focused.length > 0)
         candidates = focused;
     }
@@ -865,7 +901,10 @@ class MetacognitionService {
     return {
       strategies,
       awarenessLevel,
-      recommendations: this.generateTestRecommendations(strategies, awarenessLevel)
+      recommendations: this.generateTestRecommendations(
+        strategies,
+        awarenessLevel
+      )
     };
   }
   /**
@@ -929,13 +968,17 @@ class MetacognitionService {
     const recommendations = [];
     if (awarenessLevel === "Faible") {
       recommendations.push("Pratiquez l'autoréflexion régulièrement");
-      recommendations.push("Posez-vous des questions sur votre processus d'apprentissage");
+      recommendations.push(
+        "Posez-vous des questions sur votre processus d'apprentissage"
+      );
     }
     if (strategies.length < 2) {
       recommendations.push("Diversifiez vos stratégies d'apprentissage");
     }
     if (!strategies.includes("Autorégulation")) {
-      recommendations.push("Développez vos capacités d'autocontrôle et de vérification");
+      recommendations.push(
+        "Développez vos capacités d'autocontrôle et de vérification"
+      );
     }
     return recommendations;
   }
@@ -978,7 +1021,11 @@ class MetacognitionService {
   triggerPrompt(trigger, competenceFocus) {
     const history = get_store_value(promptHistory);
     const recentPrompts = history.slice(-3).map((r) => r.prompt_id);
-    const prompt = this.promptBank.selectPrompt(trigger, competenceFocus, recentPrompts);
+    const prompt = this.promptBank.selectPrompt(
+      trigger,
+      competenceFocus,
+      recentPrompts
+    );
     if (prompt) {
       currentPrompt.set(prompt);
       metacognitionState.set("prompting");
@@ -1105,7 +1152,10 @@ class MetacognitionService {
     const allStrategies = history.flatMap((r) => r.metacognitive_strategies);
     const strategyTypes = [...new Set(allStrategies.map((s) => s.type))];
     const reflectionTrend = history.map((r) => r.reflection_depth);
-    const recommendations = this.generateRecommendations(history, averageQuality);
+    const recommendations = this.generateRecommendations(
+      history,
+      averageQuality
+    );
     return {
       totalResponses: history.length,
       averageQuality: Math.round(averageQuality),
@@ -1122,25 +1172,41 @@ class MetacognitionService {
     const recommendations = [];
     if (avgQuality < 50) {
       recommendations.push("Essayez d'être plus détaillé dans vos réflexions");
-      recommendations.push("Prenez plus de temps pour analyser vos processus d'apprentissage");
+      recommendations.push(
+        "Prenez plus de temps pour analyser vos processus d'apprentissage"
+      );
     }
     if (avgQuality >= 50 && avgQuality < 75) {
-      recommendations.push("Continuez à développer vos réflexions métacognitives");
-      recommendations.push("Essayez d'identifier plus de stratégies d'apprentissage");
+      recommendations.push(
+        "Continuez à développer vos réflexions métacognitives"
+      );
+      recommendations.push(
+        "Essayez d'identifier plus de stratégies d'apprentissage"
+      );
     }
     if (avgQuality >= 75) {
-      recommendations.push("Excellente qualité de réflexion ! Maintenez cette approche");
+      recommendations.push(
+        "Excellente qualité de réflexion ! Maintenez cette approche"
+      );
       recommendations.push("Partagez vos stratégies avec d'autres apprenants");
     }
-    const usedStrategies = new Set(history.flatMap((r) => r.metacognitive_strategies.map((s) => s.type)));
+    const usedStrategies = new Set(
+      history.flatMap((r) => r.metacognitive_strategies.map((s) => s.type))
+    );
     if (!usedStrategies.has("planning")) {
-      recommendations.push("Pensez à planifier davantage vos sessions d'apprentissage");
+      recommendations.push(
+        "Pensez à planifier davantage vos sessions d'apprentissage"
+      );
     }
     if (!usedStrategies.has("monitoring")) {
-      recommendations.push("Surveillez plus régulièrement votre compréhension pendant l'apprentissage");
+      recommendations.push(
+        "Surveillez plus régulièrement votre compréhension pendant l'apprentissage"
+      );
     }
     if (!usedStrategies.has("evaluating")) {
-      recommendations.push("Prenez du temps pour évaluer vos acquis après chaque session");
+      recommendations.push(
+        "Prenez du temps pour évaluer vos acquis après chaque session"
+      );
     }
     return recommendations;
   }
@@ -1170,7 +1236,9 @@ function analyzeMetacognitiveStrategies(responses) {
   for (const strategy of allStrategies) {
     strategyDistribution[strategy.type] = (strategyDistribution[strategy.type] || 0) + 1;
   }
-  const dominantStrategy = Object.entries(strategyDistribution).sort(([, a], [, b]) => b - a)[0]?.[0] || "none";
+  const dominantStrategy = Object.entries(strategyDistribution).sort(
+    ([, a], [, b]) => b - a
+  )[0]?.[0] || "none";
   const averageEffectiveness = allStrategies.length > 0 ? allStrategies.reduce((acc, s) => acc + s.effectiveness, 0) / allStrategies.length : 0;
   return {
     totalStrategies: allStrategies.length,
@@ -1195,7 +1263,7 @@ const evaluationState = derived(
 );
 const PreEvaluationQuiz_svelte_svelte_type_style_lang = "";
 const css$1 = {
-  code: ".pre-evaluation-container.svelte-1dspto9.svelte-1dspto9{animation:svelte-1dspto9-fadeInUp 0.6s ease-out}@keyframes svelte-1dspto9-fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.progress-fill.svelte-1dspto9.svelte-1dspto9{background:linear-gradient(90deg, #3b82f6, #1d4ed8)}.answer-option.svelte-1dspto9.svelte-1dspto9:hover{transform:translateY(-1px);box-shadow:0 2px 8px rgba(0, 0, 0, 0.1)}.confidence-indicator.svelte-1dspto9.svelte-1dspto9{transition:all 0.2s ease}.confidence-indicator.svelte-1dspto9.svelte-1dspto9:hover{transform:scale(1.05)}.submit-btn.svelte-1dspto9.svelte-1dspto9{background:linear-gradient(135deg, #3b82f6, #1d4ed8)}.submit-btn.svelte-1dspto9.svelte-1dspto9:hover:not(:disabled){background:linear-gradient(135deg, #1d4ed8, #1e40af);transform:translateY(-1px);box-shadow:0 4px 12px rgba(59, 130, 246, 0.3)}.question-container.svelte-1dspto9.svelte-1dspto9{animation:svelte-1dspto9-slideInRight 0.4s ease-out}@keyframes svelte-1dspto9-slideInRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}@media(max-width: 768px){.pre-evaluation-container.svelte-1dspto9.svelte-1dspto9{margin:1rem;padding:1rem}.question-meta.svelte-1dspto9.svelte-1dspto9{flex-direction:column;gap:0.5rem}.actions.svelte-1dspto9.svelte-1dspto9{flex-direction:column;gap:0.75rem}.actions.svelte-1dspto9 button.svelte-1dspto9{width:100%}.confidence-options.svelte-1dspto9.svelte-1dspto9{flex-direction:column;gap:0.5rem}}@media(prefers-reduced-motion: reduce){.pre-evaluation-container.svelte-1dspto9.svelte-1dspto9,.question-container.svelte-1dspto9.svelte-1dspto9,.answer-option.svelte-1dspto9.svelte-1dspto9,.confidence-indicator.svelte-1dspto9.svelte-1dspto9,.submit-btn.svelte-1dspto9.svelte-1dspto9{animation:none;transition:none}}.answer-option.svelte-1dspto9.svelte-1dspto9:focus-within{outline:2px solid #3b82f6;outline-offset:2px}.confidence-indicator.svelte-1dspto9.svelte-1dspto9:focus-within{outline:2px solid #3b82f6;outline-offset:2px}.submit-btn.svelte-1dspto9.svelte-1dspto9:focus,.cancel-btn.svelte-1dspto9.svelte-1dspto9:focus{outline:2px solid #3b82f6;outline-offset:2px}",
+  code: ".pre-evaluation-container.svelte-1xhusa1.svelte-1xhusa1{animation:svelte-1xhusa1-fadeInUp 0.6s ease-out}@keyframes svelte-1xhusa1-fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.progress-fill.svelte-1xhusa1.svelte-1xhusa1{background:linear-gradient(90deg, #3b82f6, #1d4ed8)}.answer-option.svelte-1xhusa1.svelte-1xhusa1:hover{transform:translateY(-1px);box-shadow:0 2px 8px rgba(0, 0, 0, 0.1)}.confidence-indicator.svelte-1xhusa1.svelte-1xhusa1{transition:all 0.2s ease}.confidence-indicator.svelte-1xhusa1.svelte-1xhusa1:hover{transform:scale(1.05)}.submit-btn.svelte-1xhusa1.svelte-1xhusa1{background:linear-gradient(135deg, #3b82f6, #1d4ed8)}.submit-btn.svelte-1xhusa1.svelte-1xhusa1:hover:not(:disabled){background:linear-gradient(135deg, #1d4ed8, #1e40af);transform:translateY(-1px);box-shadow:0 4px 12px rgba(59, 130, 246, 0.3)}.question-container.svelte-1xhusa1.svelte-1xhusa1{animation:svelte-1xhusa1-slideInRight 0.4s ease-out}@keyframes svelte-1xhusa1-slideInRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}@media(max-width: 768px){.pre-evaluation-container.svelte-1xhusa1.svelte-1xhusa1{margin:1rem;padding:1rem}.question-meta.svelte-1xhusa1.svelte-1xhusa1{flex-direction:column;gap:0.5rem}.actions.svelte-1xhusa1.svelte-1xhusa1{flex-direction:column;gap:0.75rem}.actions.svelte-1xhusa1 button.svelte-1xhusa1{width:100%}.confidence-options.svelte-1xhusa1.svelte-1xhusa1{flex-direction:column;gap:0.5rem}}@media(prefers-reduced-motion: reduce){.pre-evaluation-container.svelte-1xhusa1.svelte-1xhusa1,.question-container.svelte-1xhusa1.svelte-1xhusa1,.answer-option.svelte-1xhusa1.svelte-1xhusa1,.confidence-indicator.svelte-1xhusa1.svelte-1xhusa1,.submit-btn.svelte-1xhusa1.svelte-1xhusa1{animation:none;transition:none}}.answer-option.svelte-1xhusa1.svelte-1xhusa1:focus-within{outline:2px solid #3b82f6;outline-offset:2px}.confidence-indicator.svelte-1xhusa1.svelte-1xhusa1:focus-within{outline:2px solid #3b82f6;outline-offset:2px}.submit-btn.svelte-1xhusa1.svelte-1xhusa1:focus,.cancel-btn.svelte-1xhusa1.svelte-1xhusa1:focus{outline:2px solid #3b82f6;outline-offset:2px}",
   map: null
 };
 function formatTime(seconds) {
@@ -1250,14 +1318,14 @@ const PreEvaluationQuiz = create_ssr_component(($$result, $$props, $$bindings, s
   $$unsubscribe_evaluationState();
   $$unsubscribe_evaluationProgress();
   $$unsubscribe_currentQuestion();
-  return `   <div class="pre-evaluation-container max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-lg svelte-1dspto9"> <div class="header mb-8"><div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold text-gray-800">Pré-évaluation : ${escape(competence)}</h2> <button class="px-4 py-2 text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors" data-svelte-h="svelte-1dr7di9">Annuler</button></div>  <div class="progress-bar bg-gray-200 rounded-full h-3 mb-2"><div class="progress-fill bg-blue-500 h-3 rounded-full transition-all duration-500 svelte-1dspto9" style="${"width: " + escape(progress, true) + "%"}"></div></div> <div class="text-sm text-gray-600 text-center">Progression : ${escape(Math.round(progress))}%</div></div> ${`${question ? ` <div class="question-container svelte-1dspto9"> <div class="question-meta flex justify-between items-center mb-6 p-4 bg-gray-50 rounded-lg svelte-1dspto9"><div class="flex items-center space-x-4"><span class="${"difficulty-badge px-3 py-1 rounded-full text-sm font-medium " + escape(
+  return `   <div class="pre-evaluation-container max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-lg svelte-1xhusa1"> <div class="header mb-8"><div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold text-gray-800">Pré-évaluation : ${escape(competence)}</h2> <button class="px-4 py-2 text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors" data-svelte-h="svelte-1rqh0g9">Annuler</button></div>  <div class="progress-bar bg-gray-200 rounded-full h-3 mb-2"><div class="progress-fill bg-blue-500 h-3 rounded-full transition-all duration-500 svelte-1xhusa1" style="${"width: " + escape(progress, true) + "%"}"></div></div> <div class="text-sm text-gray-600 text-center">Progression : ${escape(Math.round(progress))}%</div></div> ${`${question ? ` <div class="question-container svelte-1xhusa1"> <div class="question-meta flex justify-between items-center mb-6 p-4 bg-gray-50 rounded-lg svelte-1xhusa1"><div class="flex items-center space-x-4"><span class="${"difficulty-badge px-3 py-1 rounded-full text-sm font-medium " + escape(
     question.difficulty <= 2 ? "bg-green-100 text-green-800" : question.difficulty <= 3 ? "bg-yellow-100 text-yellow-800" : "bg-red-100 text-red-800",
     true
-  )}">Niveau ${escape(question.difficulty)}/5</span> <span class="text-sm text-gray-600">${escape(question.type === "multiple_choice" ? "QCM" : question.type === "true_false" ? "Vrai/Faux" : "Question ouverte")}</span></div> <div class="timer flex items-center space-x-2"><svg class="${"w-5 h-5 " + escape(getTimerColor(timeRemaining), true) + " svelte-1dspto9"}" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path></svg> <span class="${"font-mono " + escape(getTimerColor(timeRemaining), true) + " svelte-1dspto9"}">${escape(formatTime(timeRemaining))}</span></div></div>  <div class="question-content mb-8"><h3 class="text-xl font-semibold text-gray-800 mb-6 leading-relaxed">${escape(question.question)}</h3>  <div class="answers-container space-y-3">${isMultipleChoice && question.options ? `${each(question.options, (option, index) => {
+  )}">Niveau ${escape(question.difficulty)}/5</span> <span class="text-sm text-gray-600">${escape(question.type === "multiple_choice" ? "QCM" : question.type === "true_false" ? "Vrai/Faux" : "Question ouverte")}</span></div> <div class="timer flex items-center space-x-2"><svg class="${"w-5 h-5 " + escape(getTimerColor(timeRemaining), true) + " svelte-1xhusa1"}" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path></svg> <span class="${"font-mono " + escape(getTimerColor(timeRemaining), true) + " svelte-1xhusa1"}">${escape(formatTime(timeRemaining))}</span></div></div>  <div class="question-content mb-8"><h3 class="text-xl font-semibold text-gray-800 mb-6 leading-relaxed">${escape(question.question)}</h3>  <div class="answers-container space-y-3">${isMultipleChoice && question.options ? `${each(question.options, (option, index) => {
     return `<label class="${"answer-option flex items-center p-4 border-2 rounded-lg cursor-pointer transition-all " + escape(
       selectedAnswer === option ? "border-blue-500 bg-blue-50" : "border-gray-200 hover:border-gray-300 hover:bg-gray-50",
       true
-    ) + " svelte-1dspto9"}"><input type="radio" name="answer"${add_attribute("value", option, 0)} class="sr-only"${option === selectedAnswer ? add_attribute("checked", true, 1) : ""}> <div class="${"option-indicator w-5 h-5 border-2 rounded-full mr-3 flex items-center justify-center " + escape(
+    ) + " svelte-1xhusa1"}"><input type="radio" name="answer"${add_attribute("value", option, 0)} class="sr-only"${option === selectedAnswer ? add_attribute("checked", true, 1) : ""}> <div class="${"option-indicator w-5 h-5 border-2 rounded-full mr-3 flex items-center justify-center " + escape(
       selectedAnswer === option ? "border-blue-500 bg-blue-500" : "border-gray-300",
       true
     )}">${selectedAnswer === option ? `<div class="w-2 h-2 bg-white rounded-full"></div>` : ``}</div> <span class="option-text text-gray-700 font-medium">${escape(String.fromCharCode(65 + index))}. ${escape(option)}</span> </label>`;
@@ -1265,7 +1333,7 @@ const PreEvaluationQuiz = create_ssr_component(($$result, $$props, $$bindings, s
     return `<label class="${"answer-option flex items-center p-4 border-2 rounded-lg cursor-pointer transition-all " + escape(
       selectedAnswer === option ? "border-blue-500 bg-blue-50" : "border-gray-200 hover:border-gray-300 hover:bg-gray-50",
       true
-    ) + " svelte-1dspto9"}"><input type="radio" name="answer"${add_attribute("value", option, 0)} class="sr-only"${option === selectedAnswer ? add_attribute("checked", true, 1) : ""}> <div class="${"option-indicator w-5 h-5 border-2 rounded-full mr-3 flex items-center justify-center " + escape(
+    ) + " svelte-1xhusa1"}"><input type="radio" name="answer"${add_attribute("value", option, 0)} class="sr-only"${option === selectedAnswer ? add_attribute("checked", true, 1) : ""}> <div class="${"option-indicator w-5 h-5 border-2 rounded-full mr-3 flex items-center justify-center " + escape(
       selectedAnswer === option ? "border-blue-500 bg-blue-500" : "border-gray-300",
       true
     )}">${selectedAnswer === option ? `<div class="w-2 h-2 bg-white rounded-full"></div>` : ``}</div> <span class="option-text text-gray-700 font-medium">${escape(option)}</span> </label>`;
@@ -1274,11 +1342,11 @@ const PreEvaluationQuiz = create_ssr_component(($$result, $$props, $$bindings, s
     "M9 5l7 7-7 7",
     0
   )}></path></svg>
-					Indiquer votre niveau de confiance (optionnel)</button> ${``}</div>  <div class="actions flex justify-between items-center svelte-1dspto9"><button class="cancel-btn px-6 py-3 text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors svelte-1dspto9" data-svelte-h="svelte-pl0yqc">Arrêter l&#39;évaluation</button> <button ${!canSubmit || isLoading ? "disabled" : ""} class="submit-btn px-8 py-3 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors svelte-1dspto9">${escape("Valider ma réponse")}</button></div></div>` : ` <div class="waiting-state text-center py-12" data-svelte-h="svelte-18c17pu"><div class="text-gray-600"><svg class="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> <p class="text-lg">Préparation de votre prochaine question...</p></div></div>`}`} </div>`;
+          Indiquer votre niveau de confiance (optionnel)</button> ${``}</div>  <div class="actions flex justify-between items-center svelte-1xhusa1"><button class="cancel-btn px-6 py-3 text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors svelte-1xhusa1" data-svelte-h="svelte-1pb1xnd">Arrêter l&#39;évaluation</button> <button ${!canSubmit || isLoading ? "disabled" : ""} class="submit-btn px-8 py-3 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors svelte-1xhusa1">${escape("Valider ma réponse")}</button></div></div>` : ` <div class="waiting-state text-center py-12" data-svelte-h="svelte-1o4jmyr"><div class="text-gray-600"><svg class="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> <p class="text-lg">Préparation de votre prochaine question...</p></div></div>`}`} </div>`;
 });
 const _page_svelte_svelte_type_style_lang = "";
 const css = {
-  code: ".test-container.svelte-ubmtgp.svelte-ubmtgp{max-width:1200px;margin:0 auto;padding:2rem;font-family:'Segoe UI', system-ui, sans-serif}.test-header.svelte-ubmtgp.svelte-ubmtgp{text-align:center;margin-bottom:3rem}.test-header.svelte-ubmtgp h1.svelte-ubmtgp{color:#2563eb;margin-bottom:0.5rem}.steps-indicator.svelte-ubmtgp.svelte-ubmtgp{display:flex;justify-content:center;gap:1rem;margin-top:2rem}.step.svelte-ubmtgp.svelte-ubmtgp{padding:0.75rem 1.5rem;background:#f1f5f9;border-radius:0.5rem;color:#64748b;font-weight:500;transition:all 0.3s ease}.step.active.svelte-ubmtgp.svelte-ubmtgp{background:#2563eb;color:white;transform:scale(1.05)}.test-content.svelte-ubmtgp.svelte-ubmtgp{background:white;border-radius:1rem;padding:2rem;box-shadow:0 4px 6px -1px rgba(0, 0, 0, 0.1)}.assessment-section.svelte-ubmtgp h2.svelte-ubmtgp,.metacognition-section.svelte-ubmtgp h2.svelte-ubmtgp,.results-section.svelte-ubmtgp h2.svelte-ubmtgp{color:#1e293b;margin-bottom:1rem}.prompts-container.svelte-ubmtgp.svelte-ubmtgp{display:flex;flex-direction:column;gap:1.5rem;margin:2rem 0}.prompt-card.svelte-ubmtgp.svelte-ubmtgp{background:#f8fafc;padding:1.5rem;border-radius:0.75rem;border-left:4px solid #3b82f6}.prompt-card.svelte-ubmtgp h3.svelte-ubmtgp{color:#1e40af;margin-bottom:0.5rem;font-size:1.1rem}.prompt-card.svelte-ubmtgp textarea.svelte-ubmtgp{width:100%;padding:0.75rem;border:2px solid #e2e8f0;border-radius:0.5rem;font-family:inherit;resize:vertical;margin-top:1rem}.prompt-card.svelte-ubmtgp textarea.svelte-ubmtgp:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59, 130, 246, 0.1)}.complete-btn.svelte-ubmtgp.svelte-ubmtgp,.reset-btn.svelte-ubmtgp.svelte-ubmtgp{background:#3b82f6;color:white;border:none;padding:0.75rem 2rem;border-radius:0.5rem;font-weight:600;cursor:pointer;transition:all 0.3s ease;margin-top:1rem}.complete-btn.svelte-ubmtgp.svelte-ubmtgp:hover,.reset-btn.svelte-ubmtgp.svelte-ubmtgp:hover{background:#2563eb;transform:translateY(-1px)}.complete-btn.svelte-ubmtgp.svelte-ubmtgp:disabled{background:#9ca3af;cursor:not-allowed;transform:none}.results-grid.svelte-ubmtgp.svelte-ubmtgp{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin:2rem 0}.result-card.svelte-ubmtgp.svelte-ubmtgp{background:#f8fafc;padding:1.5rem;border-radius:0.75rem;border:1px solid #e2e8f0}.result-card.svelte-ubmtgp h3.svelte-ubmtgp{color:#1e40af;margin-bottom:1rem;font-size:1.25rem}.result-content.svelte-ubmtgp p.svelte-ubmtgp{margin-bottom:0.5rem}.result-content.svelte-ubmtgp ul.svelte-ubmtgp{margin:0.5rem 0;padding-left:1.5rem}.result-content.svelte-ubmtgp li.svelte-ubmtgp{margin-bottom:0.25rem}.debug-section.svelte-ubmtgp.svelte-ubmtgp{margin-top:3rem;padding-top:2rem;border-top:2px solid #e2e8f0}.debug-section.svelte-ubmtgp h3.svelte-ubmtgp{color:#7c3aed;margin-bottom:1rem}.debug-section.svelte-ubmtgp pre.svelte-ubmtgp{background:#1e293b;color:#e2e8f0;padding:1rem;border-radius:0.5rem;overflow-x:auto;font-size:0.875rem;max-height:400px;overflow-y:auto}@media(max-width: 768px){.test-container.svelte-ubmtgp.svelte-ubmtgp{padding:1rem}.steps-indicator.svelte-ubmtgp.svelte-ubmtgp{flex-direction:column;align-items:center}.results-grid.svelte-ubmtgp.svelte-ubmtgp{grid-template-columns:1fr}}",
+  code: '.test-container.svelte-1svl017.svelte-1svl017{max-width:1200px;margin:0 auto;padding:2rem;font-family:"Segoe UI", system-ui, sans-serif}.test-header.svelte-1svl017.svelte-1svl017{text-align:center;margin-bottom:3rem}.test-header.svelte-1svl017 h1.svelte-1svl017{color:#2563eb;margin-bottom:0.5rem}.steps-indicator.svelte-1svl017.svelte-1svl017{display:flex;justify-content:center;gap:1rem;margin-top:2rem}.step.svelte-1svl017.svelte-1svl017{padding:0.75rem 1.5rem;background:#f1f5f9;border-radius:0.5rem;color:#64748b;font-weight:500;transition:all 0.3s ease}.step.active.svelte-1svl017.svelte-1svl017{background:#2563eb;color:white;transform:scale(1.05)}.test-content.svelte-1svl017.svelte-1svl017{background:white;border-radius:1rem;padding:2rem;box-shadow:0 4px 6px -1px rgba(0, 0, 0, 0.1)}.assessment-section.svelte-1svl017 h2.svelte-1svl017,.metacognition-section.svelte-1svl017 h2.svelte-1svl017,.results-section.svelte-1svl017 h2.svelte-1svl017{color:#1e293b;margin-bottom:1rem}.prompts-container.svelte-1svl017.svelte-1svl017{display:flex;flex-direction:column;gap:1.5rem;margin:2rem 0}.prompt-card.svelte-1svl017.svelte-1svl017{background:#f8fafc;padding:1.5rem;border-radius:0.75rem;border-left:4px solid #3b82f6}.prompt-card.svelte-1svl017 h3.svelte-1svl017{color:#1e40af;margin-bottom:0.5rem;font-size:1.1rem}.prompt-card.svelte-1svl017 textarea.svelte-1svl017{width:100%;padding:0.75rem;border:2px solid #e2e8f0;border-radius:0.5rem;font-family:inherit;resize:vertical;margin-top:1rem}.prompt-card.svelte-1svl017 textarea.svelte-1svl017:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59, 130, 246, 0.1)}.complete-btn.svelte-1svl017.svelte-1svl017,.reset-btn.svelte-1svl017.svelte-1svl017{background:#3b82f6;color:white;border:none;padding:0.75rem 2rem;border-radius:0.5rem;font-weight:600;cursor:pointer;transition:all 0.3s ease;margin-top:1rem}.complete-btn.svelte-1svl017.svelte-1svl017:hover,.reset-btn.svelte-1svl017.svelte-1svl017:hover{background:#2563eb;transform:translateY(-1px)}.complete-btn.svelte-1svl017.svelte-1svl017:disabled{background:#9ca3af;cursor:not-allowed;transform:none}.results-grid.svelte-1svl017.svelte-1svl017{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin:2rem 0}.result-card.svelte-1svl017.svelte-1svl017{background:#f8fafc;padding:1.5rem;border-radius:0.75rem;border:1px solid #e2e8f0}.result-card.svelte-1svl017 h3.svelte-1svl017{color:#1e40af;margin-bottom:1rem;font-size:1.25rem}.result-content.svelte-1svl017 p.svelte-1svl017{margin-bottom:0.5rem}.result-content.svelte-1svl017 ul.svelte-1svl017{margin:0.5rem 0;padding-left:1.5rem}.result-content.svelte-1svl017 li.svelte-1svl017{margin-bottom:0.25rem}.debug-section.svelte-1svl017.svelte-1svl017{margin-top:3rem;padding-top:2rem;border-top:2px solid #e2e8f0}.debug-section.svelte-1svl017 h3.svelte-1svl017{color:#7c3aed;margin-bottom:1rem}.debug-section.svelte-1svl017 pre.svelte-1svl017{background:#1e293b;color:#e2e8f0;padding:1rem;border-radius:0.5rem;overflow-x:auto;font-size:0.875rem;max-height:400px;overflow-y:auto}@media(max-width: 768px){.test-container.svelte-1svl017.svelte-1svl017{padding:1rem}.steps-indicator.svelte-1svl017.svelte-1svl017{flex-direction:column;align-items:center}.results-grid.svelte-1svl017.svelte-1svl017{grid-template-columns:1fr}}',
   map: null
 };
 const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -1313,7 +1381,8 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     currentStep = "metacognition";
   }
   $$result.css.add(css);
-  return `${$$result.head += `<!-- HEAD_svelte-gq2uvf_START -->${$$result.title = `<title>Test Phase 4 - Pédagogie Adaptative</title>`, ""}<!-- HEAD_svelte-gq2uvf_END -->`, ""} <div class="test-container svelte-ubmtgp"><header class="test-header svelte-ubmtgp"><h1 class="svelte-ubmtgp" data-svelte-h="svelte-1yiorxq">🧪 Test Phase 4 - Système de Pédagogie Adaptative</h1> <p data-svelte-h="svelte-s2jjg9">Test des fonctionnalités d&#39;évaluation adaptative et de métacognition</p> <div class="steps-indicator svelte-ubmtgp"><div class="${["step svelte-ubmtgp", currentStep === "assessment" ? "active" : ""].join(" ").trim()}" data-svelte-h="svelte-1si2ice">1. Évaluation Adaptative</div> <div class="${["step svelte-ubmtgp", currentStep === "metacognition" ? "active" : ""].join(" ").trim()}" data-svelte-h="svelte-mencni">2. Métacognition</div> <div class="${["step svelte-ubmtgp", currentStep === "results" ? "active" : ""].join(" ").trim()}" data-svelte-h="svelte-13ys6dk">3. Résultats</div></div></header> <main class="test-content svelte-ubmtgp">${currentStep === "assessment" ? `<section class="assessment-section svelte-ubmtgp"><h2 class="svelte-ubmtgp" data-svelte-h="svelte-1k897uf">📝 Évaluation Pré-Adaptative</h2> <p data-svelte-h="svelte-4k7mt8">Cette évaluation adaptera automatiquement la difficulté selon vos réponses</p> ${validate_component(PreEvaluationQuiz, "PreEvaluationQuiz").$$render(
+  return `${$$result.head += `<!-- HEAD_svelte-gq2uvf_START -->${$$result.title = `<title>Test Phase 4 - Pédagogie Adaptative</title>`, ""}<!-- HEAD_svelte-gq2uvf_END -->`, ""} <div class="test-container svelte-1svl017"><header class="test-header svelte-1svl017"><h1 class="svelte-1svl017" data-svelte-h="svelte-1yiorxq">🧪 Test Phase 4 - Système de Pédagogie Adaptative</h1> <p data-svelte-h="svelte-s2jjg9">Test des fonctionnalités d&#39;évaluation adaptative et de métacognition</p> <div class="steps-indicator svelte-1svl017"><div class="${["step svelte-1svl017", currentStep === "assessment" ? "active" : ""].join(" ").trim()}" data-svelte-h="svelte-gvj0yo">1. Évaluation Adaptative</div> <div class="${["step svelte-1svl017", currentStep === "metacognition" ? "active" : ""].join(" ").trim()}" data-svelte-h="svelte-bhs02e">2. Métacognition</div> <div class="${["step svelte-1svl017", currentStep === "results" ? "active" : ""].join(" ").trim()}" data-svelte-h="svelte-1rm2s6c">3. Résultats</div></div></header> <main class="test-content svelte-1svl017">${currentStep === "assessment" ? `<section class="assessment-section svelte-1svl017"><h2 class="svelte-1svl017" data-svelte-h="svelte-1k897uf">📝 Évaluation Pré-Adaptative</h2> <p data-svelte-h="svelte-106q4dm">Cette évaluation adaptera automatiquement la difficulté selon vos
+          réponses</p> ${validate_component(PreEvaluationQuiz, "PreEvaluationQuiz").$$render(
     $$result,
     {
       userId: studentId,
@@ -1322,15 +1391,15 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     },
     {},
     {}
-  )}</section>` : `${currentStep === "metacognition" ? `<section class="metacognition-section svelte-ubmtgp"><h2 class="svelte-ubmtgp" data-svelte-h="svelte-1sd7r8j">🤔 Réflexion Métacognitive</h2> <p data-svelte-h="svelte-1v5ddhn">Réfléchissez sur votre processus d&#39;apprentissage</p> <div class="prompts-container svelte-ubmtgp">${each(metacognitionPrompts, (prompt, index) => {
-    return `<div class="prompt-card svelte-ubmtgp"><h3 class="svelte-ubmtgp">${escape(prompt.category)}</h3> <p>${escape(prompt.text)}</p> <textarea placeholder="Votre réflexion..." rows="3" class="svelte-ubmtgp">${escape(prompt.userResponse || "")}</textarea> </div>`;
-  })}</div> <button class="complete-btn svelte-ubmtgp" ${!metacognitionPrompts.every((p) => p.userResponse?.trim()) ? "disabled" : ""}>Terminer la réflexion</button></section>` : `${currentStep === "results" ? `<section class="results-section svelte-ubmtgp"><h2 class="svelte-ubmtgp" data-svelte-h="svelte-16f1xuo">📊 Résultats et Analyse</h2> <div class="results-grid svelte-ubmtgp"><div class="result-card svelte-ubmtgp"><h3 class="svelte-ubmtgp" data-svelte-h="svelte-1jysfoi">🎯 Évaluation Adaptative</h3> <div class="result-content svelte-ubmtgp"><p class="svelte-ubmtgp"><strong data-svelte-h="svelte-mk5csw">Niveau détecté:</strong> ${escape(assessmentResults?.level || "Non déterminé")}</p> <p class="svelte-ubmtgp"><strong data-svelte-h="svelte-14742k0">Score:</strong> ${escape(assessmentResults?.score || 0)}/100</p> <p class="svelte-ubmtgp"><strong data-svelte-h="svelte-1qflyc2">Questions répondues:</strong> ${escape(assessmentResults?.answers?.length || 0)}</p> <h4 data-svelte-h="svelte-i8vz1g">Recommandations:</h4> <ul class="svelte-ubmtgp">${each(assessmentResults?.recommendations || [], (rec) => {
-    return `<li class="svelte-ubmtgp">${escape(rec)}</li>`;
-  })}</ul></div></div> <div class="result-card svelte-ubmtgp"><h3 class="svelte-ubmtgp" data-svelte-h="svelte-157jmd0">🧠 Analyse Métacognitive</h3> <div class="result-content svelte-ubmtgp"><p class="svelte-ubmtgp" data-svelte-h="svelte-4rtwdl"><strong>Stratégies identifiées:</strong></p> <ul class="svelte-ubmtgp">${each([], (strategy) => {
-    return `<li class="svelte-ubmtgp">${escape(strategy)}</li>`;
-  })}</ul> <p class="svelte-ubmtgp"><strong data-svelte-h="svelte-19ys1g1">Niveau de conscience:</strong> ${escape("Non évalué")}</p> <h4 data-svelte-h="svelte-9sb7uc">Recommandations métacognitives:</h4> <ul class="svelte-ubmtgp">${each([], (rec) => {
-    return `<li class="svelte-ubmtgp">${escape(rec)}</li>`;
-  })}</ul></div></div></div> <div class="debug-section svelte-ubmtgp"><h3 class="svelte-ubmtgp" data-svelte-h="svelte-jnzqm2">🔧 Données de Debug</h3> <details><summary data-svelte-h="svelte-12922xx">Voir les données brutes</summary> <pre class="svelte-ubmtgp">${escape(JSON.stringify({ assessmentResults, metacognitionResults }, null, 2))}</pre></details></div> <button class="reset-btn svelte-ubmtgp" data-svelte-h="svelte-12l17ty">🔄 Recommencer le test</button></section>` : ``}`}`}</main> </div>`;
+  )}</section>` : `${currentStep === "metacognition" ? `<section class="metacognition-section svelte-1svl017"><h2 class="svelte-1svl017" data-svelte-h="svelte-1sd7r8j">🤔 Réflexion Métacognitive</h2> <p data-svelte-h="svelte-1v5ddhn">Réfléchissez sur votre processus d&#39;apprentissage</p> <div class="prompts-container svelte-1svl017">${each(metacognitionPrompts, (prompt, index) => {
+    return `<div class="prompt-card svelte-1svl017"><h3 class="svelte-1svl017">${escape(prompt.category)}</h3> <p>${escape(prompt.text)}</p> <textarea placeholder="Votre réflexion..." rows="3" class="svelte-1svl017">${escape(prompt.userResponse || "")}</textarea> </div>`;
+  })}</div> <button class="complete-btn svelte-1svl017" ${!metacognitionPrompts.every((p) => p.userResponse?.trim()) ? "disabled" : ""}>Terminer la réflexion</button></section>` : `${currentStep === "results" ? `<section class="results-section svelte-1svl017"><h2 class="svelte-1svl017" data-svelte-h="svelte-16f1xuo">📊 Résultats et Analyse</h2> <div class="results-grid svelte-1svl017"><div class="result-card svelte-1svl017"><h3 class="svelte-1svl017" data-svelte-h="svelte-1jysfoi">🎯 Évaluation Adaptative</h3> <div class="result-content svelte-1svl017"><p class="svelte-1svl017"><strong data-svelte-h="svelte-mk5csw">Niveau détecté:</strong> ${escape(assessmentResults?.level || "Non déterminé")}</p> <p class="svelte-1svl017"><strong data-svelte-h="svelte-14742k0">Score:</strong> ${escape(assessmentResults?.score || 0)}/100</p> <p class="svelte-1svl017"><strong data-svelte-h="svelte-1qflyc2">Questions répondues:</strong> ${escape(assessmentResults?.answers?.length || 0)}</p> <h4 data-svelte-h="svelte-i8vz1g">Recommandations:</h4> <ul class="svelte-1svl017">${each(assessmentResults?.recommendations || [], (rec) => {
+    return `<li class="svelte-1svl017">${escape(rec)}</li>`;
+  })}</ul></div></div> <div class="result-card svelte-1svl017"><h3 class="svelte-1svl017" data-svelte-h="svelte-157jmd0">🧠 Analyse Métacognitive</h3> <div class="result-content svelte-1svl017"><p class="svelte-1svl017" data-svelte-h="svelte-4rtwdl"><strong>Stratégies identifiées:</strong></p> <ul class="svelte-1svl017">${each([], (strategy) => {
+    return `<li class="svelte-1svl017">${escape(strategy)}</li>`;
+  })}</ul> <p class="svelte-1svl017"><strong data-svelte-h="svelte-19ys1g1">Niveau de conscience:</strong> ${escape("Non évalué")}</p> <h4 data-svelte-h="svelte-9sb7uc">Recommandations métacognitives:</h4> <ul class="svelte-1svl017">${each([], (rec) => {
+    return `<li class="svelte-1svl017">${escape(rec)}</li>`;
+  })}</ul></div></div></div> <div class="debug-section svelte-1svl017"><h3 class="svelte-1svl017" data-svelte-h="svelte-jnzqm2">🔧 Données de Debug</h3> <details><summary data-svelte-h="svelte-12922xx">Voir les données brutes</summary> <pre class="svelte-1svl017">${escape(JSON.stringify({ assessmentResults, metacognitionResults }, null, 2))}</pre></details></div> <button class="reset-btn svelte-1svl017" data-svelte-h="svelte-12l17ty">🔄 Recommencer le test</button></section>` : ``}`}`}</main> </div>`;
 });
 export {
   Page as default

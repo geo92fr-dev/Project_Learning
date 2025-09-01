@@ -9,7 +9,7 @@
 <main>
   <h1>🧪 Test Page d'Authentification</h1>
   <p>Cette page teste le rendu basique sans Firebase.</p>
-  
+
   <div class="status">
     <h2>Status des tests :</h2>
     <ul>
@@ -26,7 +26,7 @@
     max-width: 800px;
     margin: 0 auto;
   }
-  
+
   .status {
     background: #f0f9ff;
     border: 1px solid #0ea5e9;

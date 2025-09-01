@@ -1,4 +1,4 @@
-import { d as derived, w as writable } from "./index.js";
+import { d as derived, w as writable } from "./index2.js";
 const user = writable(null);
 const loading = writable(false);
 const error = writable(null);

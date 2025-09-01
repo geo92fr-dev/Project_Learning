@@ -1,115 +1,114 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
-  import { signIn, signUp, signInWithGoogle } from '$lib/stores/auth';
-  
+  import { createEventDispatcher } from "svelte";
+  import { signIn, signUp, signInWithGoogle } from "$lib/stores/auth";
+
   const dispatch = createEventDispatcher();
-  
+
   // Props
-  export let mode = 'login';
+  export let mode = "login";
   export let loading = false;
   export let error = null;
-  
+
   // Form data
-  let email = '';
-  let password = '';
-  let confirmPassword = '';
-  let displayName = '';
-  
+  let email = "";
+  let password = "";
+  let confirmPassword = "";
+  let displayName = "";
+
   // Simple validation
   function isValidEmail(email) {
-    return email && email.includes('@') && email.includes('.');
+    return email && email.includes("@") && email.includes(".");
   }
-  
+
   function isValidPassword(password) {
     return password && password.length >= 6;
   }
-  
+
   function passwordsMatch() {
     return password === confirmPassword;
   }
-  
+
   function isFormValid() {
     const baseValid = isValidEmail(email) && isValidPassword(password);
-    if (mode === 'register') {
+    if (mode === "register") {
       return baseValid && confirmPassword && passwordsMatch();
     }
     return baseValid;
   }
-  
+
   async function handleSubmit() {
     if (!isFormValid() || loading) return;
-    
+
     try {
       loading = true;
       error = null;
-      
-      if (mode === 'login') {
+
+      if (mode === "login") {
         const result = await signIn({ email, password });
         if (result.success) {
-          dispatch('success', { type: 'login', email });
+          dispatch("success", { type: "login", email });
         } else {
           error = result.error;
         }
       } else {
-        const result = await signUp({ 
-          email, 
-          password, 
-          displayName: displayName || email.split('@')[0] 
+        const result = await signUp({
+          email,
+          password,
+          displayName: displayName || email.split("@")[0],
         });
         if (result.success) {
-          dispatch('success', { type: 'register', email });
+          dispatch("success", { type: "register", email });
         } else {
           error = result.error;
         }
       }
     } catch (err) {
-      error = err.message || 'Une erreur est survenue';
-      console.error('❌ Erreur formulaire:', err);
+      error = err.message || "Une erreur est survenue";
+      console.error("❌ Erreur formulaire:", err);
     } finally {
       loading = false;
     }
   }
-  
+
   async function handleGoogleAuth() {
     try {
       loading = true;
       error = null;
-      
+
       const result = await signInWithGoogle();
       if (result.success) {
-        dispatch('success', { type: 'google', email: result.user.email });
+        dispatch("success", { type: "google", email: result.user.email });
       } else {
         error = result.error;
       }
     } catch (err) {
-      error = err.message || 'Erreur connexion Google';
-      console.error('❌ Erreur Google:', err);
+      error = err.message || "Erreur connexion Google";
+      console.error("❌ Erreur Google:", err);
     } finally {
       loading = false;
     }
   }
-  
+
   function toggleMode() {
-    mode = mode === 'login' ? 'register' : 'login';
+    mode = mode === "login" ? "register" : "login";
     error = null;
     // Reset form
-    email = '';
-    password = '';
-    confirmPassword = '';
-    displayName = '';
+    email = "";
+    password = "";
+    confirmPassword = "";
+    displayName = "";
   }
 </script>
 
 <div class="auth-form">
   <div class="form-header">
     <h2>
-      {mode === 'login' ? '🔐 Connexion' : '📝 Inscription'}
+      {mode === "login" ? "🔐 Connexion" : "📝 Inscription"}
     </h2>
     <p>
-      {mode === 'login' 
-        ? 'Connectez-vous à votre compte' 
-        : 'Créez votre compte FunLearning'
-      }
+      {mode === "login"
+        ? "Connectez-vous à votre compte"
+        : "Créez votre compte FunLearning"}
     </p>
   </div>
 
@@ -120,7 +119,7 @@
   {/if}
 
   <form on:submit|preventDefault={handleSubmit} class="auth-form-container">
-    {#if mode === 'register'}
+    {#if mode === "register"}
       <div class="form-group">
         <label for="displayName">Nom d'affichage</label>
         <input
@@ -165,7 +164,7 @@
       {/if}
     </div>
 
-    {#if mode === 'register'}
+    {#if mode === "register"}
       <div class="form-group">
         <label for="confirmPassword">Confirmer le mot de passe *</label>
         <input
@@ -178,7 +177,8 @@
           class:invalid={confirmPassword && !passwordsMatch()}
         />
         {#if confirmPassword && !passwordsMatch()}
-          <span class="field-error">Les mots de passe ne correspondent pas</span>
+          <span class="field-error">Les mots de passe ne correspondent pas</span
+          >
         {/if}
       </div>
     {/if}
@@ -190,9 +190,9 @@
       disabled={!isFormValid() || loading}
     >
       {#if loading}
-        <span class="spinner"></span>
+        <span class="spinner" />
       {/if}
-      {mode === 'login' ? 'Se connecter' : 'S\'inscrire'}
+      {mode === "login" ? "Se connecter" : "S'inscrire"}
     </button>
   </form>
 
@@ -212,12 +212,9 @@
 
   <div class="form-footer">
     <p>
-      {mode === 'login' 
-        ? 'Pas encore de compte ?' 
-        : 'Déjà un compte ?'
-      }
+      {mode === "login" ? "Pas encore de compte ?" : "Déjà un compte ?"}
       <button type="button" on:click={toggleMode} class="toggle-link">
-        {mode === 'login' ? 'S\'inscrire' : 'Se connecter'}
+        {mode === "login" ? "S'inscrire" : "Se connecter"}
       </button>
     </p>
   </div>
@@ -339,8 +336,12 @@
   }
 
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 
   .divider {
@@ -350,7 +351,7 @@
   }
 
   .divider::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     left: 0;
