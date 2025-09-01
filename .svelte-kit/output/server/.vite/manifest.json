@@ -126,14 +126,7 @@
     "isDynamicEntry": true,
     "src": "src/lib/stores/content.ts"
   },
-  "src/routes/+page.css": {
-    "file": "_app/immutable/assets/_page.345ab73c.css",
-    "src": "src/routes/+page.css"
-  },
   "src/routes/+page.svelte": {
-    "css": [
-      "_app/immutable/assets/_page.345ab73c.css"
-    ],
     "file": "entries/pages/_page.svelte.js",
     "imports": [
       "_ssr.js"

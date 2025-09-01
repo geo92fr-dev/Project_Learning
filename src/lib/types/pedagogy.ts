@@ -321,6 +321,64 @@ export interface Achievement {
 }
 
 /**
+ * Interface pour les recommandations d'apprentissage
+ */
+export interface LearningRecommendation {
+	id: string;
+	title: string;
+	description: string;
+	priority: 'low' | 'medium' | 'high';
+	estimated_duration: number; // en minutes
+	competence_targeted: string;
+	type: 'skill_building' | 'metacognitive_reflection' | 'strategy_learning' | 'metacognitive_development';
+	adaptive_parameters: {
+		difficulty_level: string;
+		learning_style_adaptation: string;
+		motivation_boosters: string[];
+	};
+}
+
+/**
+ * Interface pour les sessions d'apprentissage
+ */
+export interface LearningSession {
+	id: string;
+	user_id: string;
+	start_time: Date;
+	end_time: Date;
+	duration_minutes: number;
+	competence_areas: string[];
+	activities_completed: string[];
+	performance_metrics: {
+		accuracy: number;
+		completion_rate: number;
+		engagement_score: number;
+	};
+	learning_objectives: string[];
+	reflection_notes?: string;
+	difficulty_progression: number[];
+	adaptive_adjustments: string[];
+}
+
+/**
+ * Interface pour les analytiques de progression
+ */
+export interface ProgressAnalytics {
+	competence_id: string;
+	time_period: 'daily' | 'weekly' | 'monthly';
+	start_date: Date;
+	end_date: Date;
+	initial_level: number;
+	final_level: number;
+	progression_rate: number;
+	learning_velocity: number;
+	accuracy_trend: number[];
+	engagement_trend: number[];
+	difficulty_adaptation: number[];
+	milestone_achievements: string[];
+}
+
+/**
  * Analytics d'apprentissage
  */
 export interface LearningAnalytics {
