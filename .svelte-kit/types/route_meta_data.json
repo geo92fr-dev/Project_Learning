@@ -1,6 +1,7 @@
 {
 	"/": [],
 	"/auth-google": [],
+	"/auth-test": [],
 	"/auth": [],
 	"/auth/login": [],
 	"/complete": [],
@@ -27,10 +28,14 @@
 	"/demo/markdown": [],
 	"/pedagogy": [],
 	"/roadmap": [],
+	"/test-auth": [],
 	"/test-content-fixed": [],
 	"/test-content": [],
 	"/test-exercises": [],
+	"/test-firebase-simple": [],
+	"/test-firebase": [],
 	"/test-markdown": [],
+	"/test-phase4": [],
 	"/tests": [],
 	"/[matiere]": [
 		"src/routes/[matiere]/+layout.ts",

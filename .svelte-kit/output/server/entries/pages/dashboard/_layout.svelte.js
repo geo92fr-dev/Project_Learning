@@ -13,7 +13,7 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$unsubscribe_loading = subscribe(loading, (value) => value);
   $$unsubscribe_isAuthenticated = subscribe(isAuthenticated, (value) => value);
   $$unsubscribe_user = subscribe(user, (value) => value);
-  let { data } = $$props;
+  const data = void 0;
   if ($$props.data === void 0 && $$bindings.data && data !== void 0)
     $$bindings.data(data);
   $$result.css.add(css);

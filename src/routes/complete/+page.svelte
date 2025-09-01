@@ -25,12 +25,22 @@
     );
   });
 
-  function handleAuthSuccess(event) {
+  function handleAuthSuccess(event: CustomEvent) {
     const { email, name } = event.detail;
+    const now = new Date().toISOString();
 
     authStore.update((state) => ({
       ...state,
-      user: { id: `user-${Date.now()}`, email, name },
+      user: { 
+        id: `user-${Date.now()}`, 
+        uid: `user-${Date.now()}`,
+        email, 
+        displayName: name,
+        name,
+        emailVerified: true,
+        createdAt: now,
+        lastLoginAt: now
+      },
       loading: false,
       error: null,
     }));

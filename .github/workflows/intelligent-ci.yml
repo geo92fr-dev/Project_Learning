@@ -28,6 +28,8 @@ on:
           - "lycee"
 
 env:
+
+env:
   NODE_VERSION: "18"
   EDUCATIONAL_MODE: true
   FUNLEARNING_PHASE: "3"
@@ -466,7 +468,8 @@ jobs:
           echo "- Stratégie tests: $TEST_STRATEGY"
           echo "- Optimisations: $OPTIMIZATION_USED"
           echo "- Succès: $PIPELINE_SUCCESS"
-          echo "- Durée: $(date -u -d @$(($(date +%s) - $START_TIME)) +%H:%M:%S || echo 'N/A')"
+          echo "- Run ID: ${{ github.run_id }}"
+          echo "- Run Number: ${{ github.run_number }}"
 
           # Apprentissage automatique (simulation)
           echo "🤖 Apprentissage automatique:"

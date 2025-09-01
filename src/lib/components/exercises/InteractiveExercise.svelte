@@ -79,9 +79,14 @@ Répondez aux questions suivantes pour tester votre compréhension des fractions
   $: canProceed = answers[currentQuestion?.id];
 
   function handleAnswer(event: CustomEvent) {
-    const { questionId, selectedOption, isCorrect } = event.detail;
+    if (!currentQuestion) return;
+    
+    const { selectedOptions } = event.detail;
+    const selectedOption = selectedOptions[0]; // Premier élément pour les QCM simples
+    const correctOption = currentQuestion.options.find(opt => opt.isCorrect);
+    const isCorrect = selectedOption === correctOption?.id;
 
-    answers[questionId] = {
+    answers[currentQuestion.id] = {
       selectedOption,
       isCorrect,
       timestamp: new Date().toISOString(),
@@ -201,13 +206,26 @@ Répondez aux questions suivantes pour tester votre compréhension des fractions
       {#if currentQuestion}
         <div class="question-container">
           <QCMCard
-            question={currentQuestion.question}
-            options={currentQuestion.options}
-            selectedAnswer={answers[currentQuestion.id]?.selectedOption}
-            showResults={showResults[currentQuestion.id] || false}
-            questionNumber={currentQuestionIndex + 1}
-            totalQuestions={exerciseData.questions.length}
-            on:answer={handleAnswer}
+            exercise={{
+              id: currentQuestion.id,
+              title: `Question ${currentQuestionIndex + 1}`,
+              description: currentQuestion.question,
+              type: 'qcm',
+              difficulty: 'intermediaire',
+              points: 1,
+              category: 'mathématiques',
+              tags: ['fractions'],
+              createdAt: new Date(),
+              updatedAt: new Date(),
+              question: currentQuestion.question,
+              options: currentQuestion.options,
+              multipleCorrect: false
+            }}
+            selectedOptions={answers[currentQuestion.id]?.selectedOption ? [answers[currentQuestion.id].selectedOption] : []}
+            showResult={showResults[currentQuestion.id] || false}
+            disabled={showResults[currentQuestion.id] || false}
+            on:submit={handleAnswer}
+            on:optionChange={handleAnswer}
             on:validate={validateCurrentAnswer}
           />
         </div>

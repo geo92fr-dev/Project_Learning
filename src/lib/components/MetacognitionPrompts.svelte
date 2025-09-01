@@ -181,8 +181,10 @@
 	>
 		<!-- Header compacte -->
 		{#if !isExpanded}
-			<div class="prompt-header flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 transition-colors"
-				 on:click={toggleExpanded}>
+			<button type="button" class="prompt-header flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 transition-colors w-full text-left"
+				 on:click={toggleExpanded}
+				 aria-label="Développer le prompt de métacognition"
+				 aria-expanded={isExpanded}>
 				<div class="flex items-center space-x-3">
 					<div class="prompt-icon text-2xl">
 						{getPromptTypeIcon(prompt.type)}
@@ -200,7 +202,7 @@
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
 					</svg>
 				</div>
-			</div>
+			</button>
 		{/if}
 
 		<!-- Interface expanded -->
@@ -439,7 +441,7 @@
 
 		.prompt-actions {
 			flex-direction: column;
-			space-y: 2;
+			gap: 0.5rem;
 		}
 
 		.prompt-actions button {

@@ -196,35 +196,6 @@
     gap: 1rem;
   }
 
-  .niveau-item {
-    background: #f8fafc;
-    border: 2px solid #e2e8f0;
-    padding: 1rem 1.5rem;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    min-width: 120px;
-    transition: all 0.3s ease;
-  }
-
-  .niveau-item:hover {
-    border-color: #3b82f6;
-    background: #eff6ff;
-  }
-
-  .niveau-item strong {
-    font-size: 1.1rem;
-    color: #1f2937;
-    margin-bottom: 0.25rem;
-  }
-
-  .niveau-item span {
-    font-size: 0.85rem;
-    color: #6b7280;
-  }
-
   .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));

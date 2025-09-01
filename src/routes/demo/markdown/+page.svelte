@@ -301,7 +301,7 @@ Proposez 3 façons différentes de faire cette répartition.
   <main class="demo-content">
     <div class="container">
       <div class="content-wrapper">
-        <MarkdownRenderer content={currentContent} className="demo-markdown" />
+        <MarkdownRenderer content={currentContent} />
       </div>
     </div>
   </main>

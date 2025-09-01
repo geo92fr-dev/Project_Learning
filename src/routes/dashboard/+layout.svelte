@@ -3,7 +3,7 @@
   import { goto } from "$app/navigation";
   import { user, isAuthenticated, loading } from "$lib/stores/googleAuth.js";
 
-  export let data;
+  export const data = undefined; // Marqué comme référence externe
 
   let mounted = false;
 

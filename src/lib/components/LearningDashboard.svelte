@@ -5,13 +5,9 @@
 
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { fade, slide } from 'svelte/transition';
+	import { slide } from 'svelte/transition';
 	import type { 
-		LearnerProfile, 
-		AdaptiveLearningPath, 
-		CompetenceLevel,
-		Achievement,
-		EngagementTrend
+		LearnerProfile
 	} from '$lib/types/pedagogy';
 	import { metacognitionInsights } from '$lib/services/metacognition';
 
@@ -569,7 +565,7 @@
 
 		.dashboard-header {
 			flex-direction: column;
-			space-y: 3;
+			gap: 0.75rem;
 		}
 
 		.dashboard-stats {

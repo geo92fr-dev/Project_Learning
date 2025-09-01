@@ -3,16 +3,11 @@
  * Orchestration des données utilisateur et recommandations personnalisées
  */
 
-import { writable, derived, type Writable } from 'svelte/store';
+import { writable, type Writable } from 'svelte/store';
 import type { 
 	LearnerProfile, 
-	AdaptiveLearningPath,
-	Achievement,
-	EngagementTrend,
-	CompetenceLevel,
 	LearningRecommendation,
-	LearningSession,
-	ProgressAnalytics
+	LearningSession
 } from '../types/pedagogy';
 
 /**

@@ -75,12 +75,14 @@
         {
           "id": "funlearningDashboard",
           "name": "📊 FunLearning Dashboard",
-          "when": "workspaceContains:**/svelte.config.js"
+          "when": "workspaceContains:**/svelte.config.js",
+          "icon": "$(dashboard)"
         },
         {
           "id": "funlearningRoadmap",
           "name": "🗺️ Progression Roadmap",
-          "when": "workspaceContains:**/package.json"
+          "when": "workspaceContains:**/package.json",
+          "icon": "$(map)"
         }
       ]
     },

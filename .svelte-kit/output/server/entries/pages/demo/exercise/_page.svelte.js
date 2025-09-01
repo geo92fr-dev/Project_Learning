@@ -89,12 +89,24 @@ Répondez aux questions suivantes pour tester votre compréhension des fractions
   })}</div></div>  ${currentQuestion ? `<div class="question-container svelte-1txlzu2">${validate_component(QCMCard, "QCMCard").$$render(
     $$result,
     {
-      question: currentQuestion.question,
-      options: currentQuestion.options,
-      selectedAnswer: answers[currentQuestion.id]?.selectedOption,
-      showResults: showResults[currentQuestion.id] || false,
-      questionNumber: currentQuestionIndex + 1,
-      totalQuestions: exerciseData.questions.length
+      exercise: {
+        id: currentQuestion.id,
+        title: `Question ${currentQuestionIndex + 1}`,
+        description: currentQuestion.question,
+        type: "qcm",
+        difficulty: "intermediaire",
+        points: 1,
+        category: "mathématiques",
+        tags: ["fractions"],
+        createdAt: /* @__PURE__ */ new Date(),
+        updatedAt: /* @__PURE__ */ new Date(),
+        question: currentQuestion.question,
+        options: currentQuestion.options,
+        multipleCorrect: false
+      },
+      selectedOptions: answers[currentQuestion.id]?.selectedOption ? [answers[currentQuestion.id].selectedOption] : [],
+      showResult: showResults[currentQuestion.id] || false,
+      disabled: showResults[currentQuestion.id] || false
     },
     {},
     {}

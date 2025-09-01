@@ -27,7 +27,7 @@
 	let isLoading = false;
 	let showConfidenceSelector = false;
 	let timeRemaining = 180; // 3 minutes par défaut
-	let timerInterval: NodeJS.Timeout;
+	let timerInterval: ReturnType<typeof setInterval>;
 
 	// État réactif
 	$: question = $currentQuestion;
@@ -35,7 +35,7 @@
 	$: state = $evaluationState;
 	$: isMultipleChoice = question?.type === 'multiple_choice';
 	$: isTrueFalse = question?.type === 'true_false';
-	$: canSubmit = selectedAnswer !== '' && selectedAnswer !== [];
+	$: canSubmit = selectedAnswer !== '' && (Array.isArray(selectedAnswer) ? selectedAnswer.length > 0 : true);
 
 	/**
 	 * Initialise l'évaluation au montage du composant
@@ -449,12 +449,12 @@
 
 		.question-meta {
 			flex-direction: column;
-			space-y: 2;
+			gap: 0.5rem;
 		}
 
 		.actions {
 			flex-direction: column;
-			space-y: 3;
+			gap: 0.75rem;
 		}
 
 		.actions button {
@@ -463,7 +463,7 @@
 
 		.confidence-options {
 			flex-direction: column;
-			space-y: 2;
+			gap: 0.5rem;
 		}
 	}
 

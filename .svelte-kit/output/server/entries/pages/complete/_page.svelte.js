@@ -1,6 +1,7 @@
 import { s as subscribe } from "../../../chunks/utils.js";
 import { c as create_ssr_component, d as createEventDispatcher, a as each, e as escape, v as validate_component } from "../../../chunks/ssr.js";
 /* empty css                                                       */import { w as writable } from "../../../chunks/index.js";
+import { c as currentUser } from "../../../chunks/auth.js";
 const GoogleAuth_svelte_svelte_type_style_lang = "";
 const css$2 = {
   code: ".google-auth-btn.svelte-cknkf9{display:flex;align-items:center;justify-content:center;gap:0.75rem;width:100%;padding:0.875rem 1.5rem;background:white;border:2px solid #dadce0;border-radius:0.5rem;font-size:1rem;font-weight:600;color:#3c4043;cursor:pointer;transition:all 0.15s ease}.google-auth-btn.svelte-cknkf9:hover:not(:disabled){border-color:#d2d3d4;box-shadow:0 1px 2px rgba(0, 0, 0, 0.1)}.google-auth-btn.svelte-cknkf9:disabled{opacity:0.6;cursor:not-allowed}.google-icon.svelte-cknkf9{flex-shrink:0}.loading-spinner.svelte-cknkf9{width:1rem;height:1rem;border:2px solid transparent;border-top:2px solid #4285f4;border-radius:50%;animation:svelte-cknkf9-spin 1s linear infinite}@keyframes svelte-cknkf9-spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}.error-message.svelte-cknkf9{background:#f8d7da;color:#721c24;padding:0.75rem 1rem;border-radius:0.5rem;border:1px solid #f5c6cb;font-size:0.9rem;text-align:center;margin-top:1rem}",
@@ -55,17 +56,6 @@ const Toast = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     return `<div class="${"toast " + escape(getColorClass(toast.type), true) + " svelte-180508u"}"><div class="toast-content svelte-180508u"><div class="toast-icon svelte-180508u">${escape(getIcon(toast.type))}</div> <div class="toast-body svelte-180508u"><div class="toast-title svelte-180508u">${escape(toast.title)}</div> ${toast.message ? `<div class="toast-message svelte-180508u">${escape(toast.message)}</div>` : ``}</div> ${toast.dismissible ? `<button class="toast-close svelte-180508u" aria-label="Fermer" data-svelte-h="svelte-17jve0r">×
           </button>` : ``}</div> </div>`;
   })} </div>`;
-});
-const authStore = writable({
-  user: null,
-  loading: false,
-  error: null
-});
-const currentUser = writable(null);
-const isAuthenticated = writable(false);
-authStore.subscribe((state) => {
-  currentUser.set(state.user);
-  isAuthenticated.set(!!state.user);
 });
 const learningProgress = writable({
   phase1: { current: 0, total: 10, percentage: 0, label: "Fondations" },
