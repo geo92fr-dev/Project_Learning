@@ -1,28 +1,28 @@
 {
   "codeQuality": {
-    "coverage": 14.374999999999998,
+    "coverage": 26.875,
     "complexity": 1,
-    "duplication": 4.344499822362215,
-    "maintainability": 10
+    "duplication": 3.9757375085656133,
+    "maintainability": 19
   },
   "projectHealth": {
     "buildStatus": "success",
-    "testsPassing": 20,
-    "testsTotal": 23,
-    "dependencies": 35,
-    "vulnerabilities": 0
+    "testsPassing": 40,
+    "testsTotal": 43,
+    "dependencies": 36,
+    "vulnerabilities": 2
   },
   "educationalQuality": {
-    "cbdCompliance": 3,
-    "pedagogicalAlignment": 80,
+    "cbdCompliance": 2,
+    "pedagogicalAlignment": 90,
     "accessibilityScore": 100,
-    "contentQuality": 61
+    "contentQuality": 64
   },
   "performance": {
-    "lighthouse": 86,
+    "lighthouse": 94,
     "loadTime": 500,
-    "bundleSize": 232,
-    "memoryUsage": 16.79779561291505
+    "bundleSize": 88,
+    "memoryUsage": 19.319633623977914
   },
-  "lastUpdate": "2025-09-01T17:36:06.828Z"
+  "lastUpdate": "2025-09-02T09:20:50.684Z"
 }

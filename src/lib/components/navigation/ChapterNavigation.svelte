@@ -100,8 +100,10 @@
   $: nextChapter = currentIndex < chapters.length - 1 ? chapters[currentIndex + 1] : null;
   $: actualIsFirst = currentIndex === 0 || isFirst;
   $: actualIsLast = currentIndex === chapters.length - 1 || isLast;
-  $: actualChapterIndex = currentIndex + 1;
-  $: actualTotalChapters = chapters.length;
+  // Utilise chapterIndex en fallback si currentIndex n'est pas valide
+  $: actualChapterIndex = chapters.length > 0 ? currentIndex + 1 : chapterIndex;
+  // Utilise totalChapters en fallback si chapters n'est pas disponible
+  $: actualTotalChapters = chapters.length > 0 ? chapters.length : totalChapters;
 
   function navigateToChapter(chapter) {
     if (chapter && course && level) {

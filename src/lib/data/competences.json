@@ -1,0 +1,1314 @@
+[
+  {
+    "id": "comp-1",
+    "name": "Nombres et calculs",
+    "matiere": "mathematiques",
+    "matiereDisplay": "Mathématiques",
+    "niveau": "6eme",
+    "description": "Introduction aux concepts de Nombres et calculs adaptée aux élèves de 6ème",
+    "prerequis": [],
+    "objectifs": [
+      "Comprendre les principes de Nombres et calculs",
+      "Appliquer les méthodes de Nombres et calculs",
+      "Résoudre des problèmes liés à Nombres et calculs",
+      "Évaluer ses connaissances en Nombres et calculs"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 60,
+    "createdAt": "2025-09-02T07:48:36.608Z",
+    "updatedAt": "2025-09-02T07:48:36.608Z"
+  },
+  {
+    "id": "comp-2",
+    "name": "Géométrie plane",
+    "matiere": "mathematiques",
+    "matiereDisplay": "Mathématiques",
+    "niveau": "6eme",
+    "description": "Introduction aux concepts de Géométrie plane adaptée aux élèves de 6ème",
+    "prerequis": [],
+    "objectifs": [
+      "Comprendre les principes de Géométrie plane",
+      "Appliquer les méthodes de Géométrie plane",
+      "Résoudre des problèmes liés à Géométrie plane",
+      "Évaluer ses connaissances en Géométrie plane"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.608Z",
+    "updatedAt": "2025-09-02T07:48:36.608Z"
+  },
+  {
+    "id": "comp-3",
+    "name": "Grandeurs et mesures",
+    "matiere": "mathematiques",
+    "matiereDisplay": "Mathématiques",
+    "niveau": "6eme",
+    "description": "Introduction aux concepts de Grandeurs et mesures adaptée aux élèves de 6ème",
+    "prerequis": [],
+    "objectifs": [
+      "Comprendre les principes de Grandeurs et mesures",
+      "Appliquer les méthodes de Grandeurs et mesures",
+      "Résoudre des problèmes liés à Grandeurs et mesures",
+      "Évaluer ses connaissances en Grandeurs et mesures"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.608Z",
+    "updatedAt": "2025-09-02T07:48:36.608Z"
+  },
+  {
+    "id": "comp-4",
+    "name": "Organisation et gestion de données",
+    "matiere": "mathematiques",
+    "matiereDisplay": "Mathématiques",
+    "niveau": "6eme",
+    "description": "Introduction aux concepts de Organisation et gestion de données adaptée aux élèves de 6ème",
+    "prerequis": [],
+    "objectifs": [
+      "Comprendre les principes de Organisation et gestion de données",
+      "Appliquer les méthodes de Organisation et gestion de données",
+      "Résoudre des problèmes liés à Organisation et gestion de données",
+      "Évaluer ses connaissances en Organisation et gestion de données"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.608Z",
+    "updatedAt": "2025-09-02T07:48:36.608Z"
+  },
+  {
+    "id": "comp-5",
+    "name": "Nombres relatifs",
+    "matiere": "mathematiques",
+    "matiereDisplay": "Mathématiques",
+    "niveau": "5eme",
+    "description": "Approfondissement de Nombres relatifs avec des méthodes adaptées au niveau 5ème",
+    "prerequis": [
+      "comp-1"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Nombres relatifs",
+      "Appliquer les méthodes de Nombres relatifs",
+      "Résoudre des problèmes liés à Nombres relatifs",
+      "Évaluer ses connaissances en Nombres relatifs"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 60,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-6",
+    "name": "Fractions",
+    "matiere": "mathematiques",
+    "matiereDisplay": "Mathématiques",
+    "niveau": "5eme",
+    "description": "Approfondissement de Fractions avec des méthodes adaptées au niveau 5ème",
+    "prerequis": [
+      "comp-2"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Fractions",
+      "Appliquer les méthodes de Fractions",
+      "Résoudre des problèmes liés à Fractions",
+      "Évaluer ses connaissances en Fractions"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-7",
+    "name": "Géométrie dans l'espace",
+    "matiere": "mathematiques",
+    "matiereDisplay": "Mathématiques",
+    "niveau": "5eme",
+    "description": "Approfondissement de Géométrie dans l'espace avec des méthodes adaptées au niveau 5ème",
+    "prerequis": [
+      "comp-3"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Géométrie dans l'espace",
+      "Appliquer les méthodes de Géométrie dans l'espace",
+      "Résoudre des problèmes liés à Géométrie dans l'espace",
+      "Évaluer ses connaissances en Géométrie dans l'espace"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-8",
+    "name": "Proportionnalité",
+    "matiere": "mathematiques",
+    "matiereDisplay": "Mathématiques",
+    "niveau": "5eme",
+    "description": "Approfondissement de Proportionnalité avec des méthodes adaptées au niveau 5ème",
+    "prerequis": [
+      "comp-4"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Proportionnalité",
+      "Appliquer les méthodes de Proportionnalité",
+      "Résoudre des problèmes liés à Proportionnalité",
+      "Évaluer ses connaissances en Proportionnalité"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-9",
+    "name": "Calcul littéral",
+    "matiere": "mathematiques",
+    "matiereDisplay": "Mathématiques",
+    "niveau": "4eme",
+    "description": "Maîtrise de Calcul littéral avec des applications concrètes pour la 4ème",
+    "prerequis": [
+      "comp-5"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Calcul littéral",
+      "Appliquer les méthodes de Calcul littéral",
+      "Résoudre des problèmes liés à Calcul littéral",
+      "Évaluer ses connaissances en Calcul littéral"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-10",
+    "name": "Équations",
+    "matiere": "mathematiques",
+    "matiereDisplay": "Mathématiques",
+    "niveau": "4eme",
+    "description": "Maîtrise de Équations avec des applications concrètes pour la 4ème",
+    "prerequis": [
+      "comp-6"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Équations",
+      "Appliquer les méthodes de Équations",
+      "Résoudre des problèmes liés à Équations",
+      "Évaluer ses connaissances en Équations"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-11",
+    "name": "Théorème de Pythagore",
+    "matiere": "mathematiques",
+    "matiereDisplay": "Mathématiques",
+    "niveau": "4eme",
+    "description": "Maîtrise de Théorème de Pythagore avec des applications concrètes pour la 4ème",
+    "prerequis": [
+      "comp-7"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Théorème de Pythagore",
+      "Appliquer les méthodes de Théorème de Pythagore",
+      "Résoudre des problèmes liés à Théorème de Pythagore",
+      "Évaluer ses connaissances en Théorème de Pythagore"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-12",
+    "name": "Statistiques",
+    "matiere": "mathematiques",
+    "matiereDisplay": "Mathématiques",
+    "niveau": "4eme",
+    "description": "Maîtrise de Statistiques avec des applications concrètes pour la 4ème",
+    "prerequis": [
+      "comp-8"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Statistiques",
+      "Appliquer les méthodes de Statistiques",
+      "Résoudre des problèmes liés à Statistiques",
+      "Évaluer ses connaissances en Statistiques"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-13",
+    "name": "Fonctions",
+    "matiere": "mathematiques",
+    "matiereDisplay": "Mathématiques",
+    "niveau": "3eme",
+    "description": "Expertise en Fonctions en préparation du brevet des collèges",
+    "prerequis": [
+      "comp-9"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Fonctions",
+      "Appliquer les méthodes de Fonctions",
+      "Résoudre des problèmes liés à Fonctions",
+      "Évaluer ses connaissances en Fonctions"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-14",
+    "name": "Trigonométrie",
+    "matiere": "mathematiques",
+    "matiereDisplay": "Mathématiques",
+    "niveau": "3eme",
+    "description": "Expertise en Trigonométrie en préparation du brevet des collèges",
+    "prerequis": [
+      "comp-10"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Trigonométrie",
+      "Appliquer les méthodes de Trigonométrie",
+      "Résoudre des problèmes liés à Trigonométrie",
+      "Évaluer ses connaissances en Trigonométrie"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-15",
+    "name": "Probabilités",
+    "matiere": "mathematiques",
+    "matiereDisplay": "Mathématiques",
+    "niveau": "3eme",
+    "description": "Expertise en Probabilités en préparation du brevet des collèges",
+    "prerequis": [
+      "comp-11"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Probabilités",
+      "Appliquer les méthodes de Probabilités",
+      "Résoudre des problèmes liés à Probabilités",
+      "Évaluer ses connaissances en Probabilités"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-16",
+    "name": "Brevet blanc",
+    "matiere": "mathematiques",
+    "matiereDisplay": "Mathématiques",
+    "niveau": "3eme",
+    "description": "Expertise en Brevet blanc en préparation du brevet des collèges",
+    "prerequis": [
+      "comp-12"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Brevet blanc",
+      "Appliquer les méthodes de Brevet blanc",
+      "Résoudre des problèmes liés à Brevet blanc",
+      "Évaluer ses connaissances en Brevet blanc"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-17",
+    "name": "Lecture et compréhension",
+    "matiere": "francais",
+    "matiereDisplay": "Français",
+    "niveau": "6eme",
+    "description": "Introduction aux concepts de Lecture et compréhension adaptée aux élèves de 6ème",
+    "prerequis": [],
+    "objectifs": [
+      "Comprendre les principes de Lecture et compréhension",
+      "Appliquer les méthodes de Lecture et compréhension",
+      "Résoudre des problèmes liés à Lecture et compréhension",
+      "Évaluer ses connaissances en Lecture et compréhension"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-18",
+    "name": "Grammaire de phrase",
+    "matiere": "francais",
+    "matiereDisplay": "Français",
+    "niveau": "6eme",
+    "description": "Introduction aux concepts de Grammaire de phrase adaptée aux élèves de 6ème",
+    "prerequis": [],
+    "objectifs": [
+      "Comprendre les principes de Grammaire de phrase",
+      "Appliquer les méthodes de Grammaire de phrase",
+      "Résoudre des problèmes liés à Grammaire de phrase",
+      "Évaluer ses connaissances en Grammaire de phrase"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-19",
+    "name": "Orthographe lexicale",
+    "matiere": "francais",
+    "matiereDisplay": "Français",
+    "niveau": "6eme",
+    "description": "Introduction aux concepts de Orthographe lexicale adaptée aux élèves de 6ème",
+    "prerequis": [],
+    "objectifs": [
+      "Comprendre les principes de Orthographe lexicale",
+      "Appliquer les méthodes de Orthographe lexicale",
+      "Résoudre des problèmes liés à Orthographe lexicale",
+      "Évaluer ses connaissances en Orthographe lexicale"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-20",
+    "name": "Expression écrite",
+    "matiere": "francais",
+    "matiereDisplay": "Français",
+    "niveau": "6eme",
+    "description": "Introduction aux concepts de Expression écrite adaptée aux élèves de 6ème",
+    "prerequis": [],
+    "objectifs": [
+      "Comprendre les principes de Expression écrite",
+      "Appliquer les méthodes de Expression écrite",
+      "Résoudre des problèmes liés à Expression écrite",
+      "Évaluer ses connaissances en Expression écrite"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-21",
+    "name": "Littérature médiévale",
+    "matiere": "francais",
+    "matiereDisplay": "Français",
+    "niveau": "5eme",
+    "description": "Approfondissement de Littérature médiévale avec des méthodes adaptées au niveau 5ème",
+    "prerequis": [
+      "comp-17"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Littérature médiévale",
+      "Appliquer les méthodes de Littérature médiévale",
+      "Résoudre des problèmes liés à Littérature médiévale",
+      "Évaluer ses connaissances en Littérature médiévale"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 50,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-22",
+    "name": "Conjugaison",
+    "matiere": "francais",
+    "matiereDisplay": "Français",
+    "niveau": "5eme",
+    "description": "Approfondissement de Conjugaison avec des méthodes adaptées au niveau 5ème",
+    "prerequis": [
+      "comp-18"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Conjugaison",
+      "Appliquer les méthodes de Conjugaison",
+      "Résoudre des problèmes liés à Conjugaison",
+      "Évaluer ses connaissances en Conjugaison"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-23",
+    "name": "Vocabulaire",
+    "matiere": "francais",
+    "matiereDisplay": "Français",
+    "niveau": "5eme",
+    "description": "Approfondissement de Vocabulaire avec des méthodes adaptées au niveau 5ème",
+    "prerequis": [
+      "comp-19"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Vocabulaire",
+      "Appliquer les méthodes de Vocabulaire",
+      "Résoudre des problèmes liés à Vocabulaire",
+      "Évaluer ses connaissances en Vocabulaire"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-24",
+    "name": "Argumentation",
+    "matiere": "francais",
+    "matiereDisplay": "Français",
+    "niveau": "5eme",
+    "description": "Approfondissement de Argumentation avec des méthodes adaptées au niveau 5ème",
+    "prerequis": [
+      "comp-20"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Argumentation",
+      "Appliquer les méthodes de Argumentation",
+      "Résoudre des problèmes liés à Argumentation",
+      "Évaluer ses connaissances en Argumentation"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-25",
+    "name": "Roman du XIXe siècle",
+    "matiere": "francais",
+    "matiereDisplay": "Français",
+    "niveau": "4eme",
+    "description": "Maîtrise de Roman du XIXe siècle avec des applications concrètes pour la 4ème",
+    "prerequis": [
+      "comp-21"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Roman du XIXe siècle",
+      "Appliquer les méthodes de Roman du XIXe siècle",
+      "Résoudre des problèmes liés à Roman du XIXe siècle",
+      "Évaluer ses connaissances en Roman du XIXe siècle"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-26",
+    "name": "Grammaire de texte",
+    "matiere": "francais",
+    "matiereDisplay": "Français",
+    "niveau": "4eme",
+    "description": "Maîtrise de Grammaire de texte avec des applications concrètes pour la 4ème",
+    "prerequis": [
+      "comp-22"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Grammaire de texte",
+      "Appliquer les méthodes de Grammaire de texte",
+      "Résoudre des problèmes liés à Grammaire de texte",
+      "Évaluer ses connaissances en Grammaire de texte"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-27",
+    "name": "Figures de style",
+    "matiere": "francais",
+    "matiereDisplay": "Français",
+    "niveau": "4eme",
+    "description": "Maîtrise de Figures de style avec des applications concrètes pour la 4ème",
+    "prerequis": [
+      "comp-23"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Figures de style",
+      "Appliquer les méthodes de Figures de style",
+      "Résoudre des problèmes liés à Figures de style",
+      "Évaluer ses connaissances en Figures de style"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-28",
+    "name": "Théâtre",
+    "matiere": "francais",
+    "matiereDisplay": "Français",
+    "niveau": "4eme",
+    "description": "Maîtrise de Théâtre avec des applications concrètes pour la 4ème",
+    "prerequis": [
+      "comp-24"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Théâtre",
+      "Appliquer les méthodes de Théâtre",
+      "Résoudre des problèmes liés à Théâtre",
+      "Évaluer ses connaissances en Théâtre"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-29",
+    "name": "Littérature contemporaine",
+    "matiere": "francais",
+    "matiereDisplay": "Français",
+    "niveau": "3eme",
+    "description": "Expertise en Littérature contemporaine en préparation du brevet des collèges",
+    "prerequis": [
+      "comp-25"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Littérature contemporaine",
+      "Appliquer les méthodes de Littérature contemporaine",
+      "Résoudre des problèmes liés à Littérature contemporaine",
+      "Évaluer ses connaissances en Littérature contemporaine"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 50,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-30",
+    "name": "Histoire littéraire",
+    "matiere": "francais",
+    "matiereDisplay": "Français",
+    "niveau": "3eme",
+    "description": "Expertise en Histoire littéraire en préparation du brevet des collèges",
+    "prerequis": [
+      "comp-26"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Histoire littéraire",
+      "Appliquer les méthodes de Histoire littéraire",
+      "Résoudre des problèmes liés à Histoire littéraire",
+      "Évaluer ses connaissances en Histoire littéraire"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 35,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-31",
+    "name": "Brevet écrit",
+    "matiere": "francais",
+    "matiereDisplay": "Français",
+    "niveau": "3eme",
+    "description": "Expertise en Brevet écrit en préparation du brevet des collèges",
+    "prerequis": [
+      "comp-27"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Brevet écrit",
+      "Appliquer les méthodes de Brevet écrit",
+      "Résoudre des problèmes liés à Brevet écrit",
+      "Évaluer ses connaissances en Brevet écrit"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-32",
+    "name": "Oral du brevet",
+    "matiere": "francais",
+    "matiereDisplay": "Français",
+    "niveau": "3eme",
+    "description": "Expertise en Oral du brevet en préparation du brevet des collèges",
+    "prerequis": [
+      "comp-28"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Oral du brevet",
+      "Appliquer les méthodes de Oral du brevet",
+      "Résoudre des problèmes liés à Oral du brevet",
+      "Évaluer ses connaissances en Oral du brevet"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-33",
+    "name": "Le vivant",
+    "matiere": "sciences",
+    "matiereDisplay": "Sciences et Technologie",
+    "niveau": "6eme",
+    "description": "Introduction aux concepts de Le vivant adaptée aux élèves de 6ème",
+    "prerequis": [],
+    "objectifs": [
+      "Comprendre les principes de Le vivant",
+      "Appliquer les méthodes de Le vivant",
+      "Résoudre des problèmes liés à Le vivant",
+      "Évaluer ses connaissances en Le vivant"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-34",
+    "name": "Matière et énergie",
+    "matiere": "sciences",
+    "matiereDisplay": "Sciences et Technologie",
+    "niveau": "6eme",
+    "description": "Introduction aux concepts de Matière et énergie adaptée aux élèves de 6ème",
+    "prerequis": [],
+    "objectifs": [
+      "Comprendre les principes de Matière et énergie",
+      "Appliquer les méthodes de Matière et énergie",
+      "Résoudre des problèmes liés à Matière et énergie",
+      "Évaluer ses connaissances en Matière et énergie"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-35",
+    "name": "Technologie et objets",
+    "matiere": "sciences",
+    "matiereDisplay": "Sciences et Technologie",
+    "niveau": "6eme",
+    "description": "Introduction aux concepts de Technologie et objets adaptée aux élèves de 6ème",
+    "prerequis": [],
+    "objectifs": [
+      "Comprendre les principes de Technologie et objets",
+      "Appliquer les méthodes de Technologie et objets",
+      "Résoudre des problèmes liés à Technologie et objets",
+      "Évaluer ses connaissances en Technologie et objets"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-36",
+    "name": "Planète Terre",
+    "matiere": "sciences",
+    "matiereDisplay": "Sciences et Technologie",
+    "niveau": "6eme",
+    "description": "Introduction aux concepts de Planète Terre adaptée aux élèves de 6ème",
+    "prerequis": [],
+    "objectifs": [
+      "Comprendre les principes de Planète Terre",
+      "Appliquer les méthodes de Planète Terre",
+      "Résoudre des problèmes liés à Planète Terre",
+      "Évaluer ses connaissances en Planète Terre"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-37",
+    "name": "Nutrition et digestion",
+    "matiere": "sciences",
+    "matiereDisplay": "Sciences et Technologie",
+    "niveau": "5eme",
+    "description": "Approfondissement de Nutrition et digestion avec des méthodes adaptées au niveau 5ème",
+    "prerequis": [
+      "comp-33"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Nutrition et digestion",
+      "Appliquer les méthodes de Nutrition et digestion",
+      "Résoudre des problèmes liés à Nutrition et digestion",
+      "Évaluer ses connaissances en Nutrition et digestion"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-38",
+    "name": "Circuits électriques",
+    "matiere": "sciences",
+    "matiereDisplay": "Sciences et Technologie",
+    "niveau": "5eme",
+    "description": "Approfondissement de Circuits électriques avec des méthodes adaptées au niveau 5ème",
+    "prerequis": [
+      "comp-34"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Circuits électriques",
+      "Appliquer les méthodes de Circuits électriques",
+      "Résoudre des problèmes liés à Circuits électriques",
+      "Évaluer ses connaissances en Circuits électriques"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-39",
+    "name": "Respiration",
+    "matiere": "sciences",
+    "matiereDisplay": "Sciences et Technologie",
+    "niveau": "5eme",
+    "description": "Approfondissement de Respiration avec des méthodes adaptées au niveau 5ème",
+    "prerequis": [
+      "comp-35"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Respiration",
+      "Appliquer les méthodes de Respiration",
+      "Résoudre des problèmes liés à Respiration",
+      "Évaluer ses connaissances en Respiration"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-40",
+    "name": "Matériaux",
+    "matiere": "sciences",
+    "matiereDisplay": "Sciences et Technologie",
+    "niveau": "5eme",
+    "description": "Approfondissement de Matériaux avec des méthodes adaptées au niveau 5ème",
+    "prerequis": [
+      "comp-36"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Matériaux",
+      "Appliquer les méthodes de Matériaux",
+      "Résoudre des problèmes liés à Matériaux",
+      "Évaluer ses connaissances en Matériaux"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-41",
+    "name": "Reproduction",
+    "matiere": "sciences",
+    "matiereDisplay": "Sciences et Technologie",
+    "niveau": "4eme",
+    "description": "Maîtrise de Reproduction avec des applications concrètes pour la 4ème",
+    "prerequis": [
+      "comp-37"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Reproduction",
+      "Appliquer les méthodes de Reproduction",
+      "Résoudre des problèmes liés à Reproduction",
+      "Évaluer ses connaissances en Reproduction"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-42",
+    "name": "Optique",
+    "matiere": "sciences",
+    "matiereDisplay": "Sciences et Technologie",
+    "niveau": "4eme",
+    "description": "Maîtrise de Optique avec des applications concrètes pour la 4ème",
+    "prerequis": [
+      "comp-38"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Optique",
+      "Appliquer les méthodes de Optique",
+      "Résoudre des problèmes liés à Optique",
+      "Évaluer ses connaissances en Optique"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-43",
+    "name": "Chimie",
+    "matiere": "sciences",
+    "matiereDisplay": "Sciences et Technologie",
+    "niveau": "4eme",
+    "description": "Maîtrise de Chimie avec des applications concrètes pour la 4ème",
+    "prerequis": [
+      "comp-39"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Chimie",
+      "Appliquer les méthodes de Chimie",
+      "Résoudre des problèmes liés à Chimie",
+      "Évaluer ses connaissances en Chimie"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-44",
+    "name": "Système nerveux",
+    "matiere": "sciences",
+    "matiereDisplay": "Sciences et Technologie",
+    "niveau": "4eme",
+    "description": "Maîtrise de Système nerveux avec des applications concrètes pour la 4ème",
+    "prerequis": [
+      "comp-40"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Système nerveux",
+      "Appliquer les méthodes de Système nerveux",
+      "Résoudre des problèmes liés à Système nerveux",
+      "Évaluer ses connaissances en Système nerveux"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-45",
+    "name": "Génétique",
+    "matiere": "sciences",
+    "matiereDisplay": "Sciences et Technologie",
+    "niveau": "3eme",
+    "description": "Expertise en Génétique en préparation du brevet des collèges",
+    "prerequis": [
+      "comp-41"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Génétique",
+      "Appliquer les méthodes de Génétique",
+      "Résoudre des problèmes liés à Génétique",
+      "Évaluer ses connaissances en Génétique"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-46",
+    "name": "Énergie",
+    "matiere": "sciences",
+    "matiereDisplay": "Sciences et Technologie",
+    "niveau": "3eme",
+    "description": "Expertise en Énergie en préparation du brevet des collèges",
+    "prerequis": [
+      "comp-42"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Énergie",
+      "Appliquer les méthodes de Énergie",
+      "Résoudre des problèmes liés à Énergie",
+      "Évaluer ses connaissances en Énergie"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-47",
+    "name": "Évolution",
+    "matiere": "sciences",
+    "matiereDisplay": "Sciences et Technologie",
+    "niveau": "3eme",
+    "description": "Expertise en Évolution en préparation du brevet des collèges",
+    "prerequis": [
+      "comp-43"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Évolution",
+      "Appliquer les méthodes de Évolution",
+      "Résoudre des problèmes liés à Évolution",
+      "Évaluer ses connaissances en Évolution"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.609Z",
+    "updatedAt": "2025-09-02T07:48:36.609Z"
+  },
+  {
+    "id": "comp-48",
+    "name": "Chimie avancée",
+    "matiere": "sciences",
+    "matiereDisplay": "Sciences et Technologie",
+    "niveau": "3eme",
+    "description": "Expertise en Chimie avancée en préparation du brevet des collèges",
+    "prerequis": [
+      "comp-44"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Chimie avancée",
+      "Appliquer les méthodes de Chimie avancée",
+      "Résoudre des problèmes liés à Chimie avancée",
+      "Évaluer ses connaissances en Chimie avancée"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.610Z",
+    "updatedAt": "2025-09-02T07:48:36.610Z"
+  },
+  {
+    "id": "comp-49",
+    "name": "Antiquité",
+    "matiere": "histoire",
+    "matiereDisplay": "Histoire-Géographie",
+    "niveau": "6eme",
+    "description": "Introduction aux concepts de Antiquité adaptée aux élèves de 6ème",
+    "prerequis": [],
+    "objectifs": [
+      "Comprendre les principes de Antiquité",
+      "Appliquer les méthodes de Antiquité",
+      "Résoudre des problèmes liés à Antiquité",
+      "Évaluer ses connaissances en Antiquité"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.610Z",
+    "updatedAt": "2025-09-02T07:48:36.610Z"
+  },
+  {
+    "id": "comp-50",
+    "name": "Géographie de la France",
+    "matiere": "histoire",
+    "matiereDisplay": "Histoire-Géographie",
+    "niveau": "6eme",
+    "description": "Introduction aux concepts de Géographie de la France adaptée aux élèves de 6ème",
+    "prerequis": [],
+    "objectifs": [
+      "Comprendre les principes de Géographie de la France",
+      "Appliquer les méthodes de Géographie de la France",
+      "Résoudre des problèmes liés à Géographie de la France",
+      "Évaluer ses connaissances en Géographie de la France"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.610Z",
+    "updatedAt": "2025-09-02T07:48:36.610Z"
+  },
+  {
+    "id": "comp-51",
+    "name": "Citoyenneté",
+    "matiere": "histoire",
+    "matiereDisplay": "Histoire-Géographie",
+    "niveau": "6eme",
+    "description": "Introduction aux concepts de Citoyenneté adaptée aux élèves de 6ème",
+    "prerequis": [],
+    "objectifs": [
+      "Comprendre les principes de Citoyenneté",
+      "Appliquer les méthodes de Citoyenneté",
+      "Résoudre des problèmes liés à Citoyenneté",
+      "Évaluer ses connaissances en Citoyenneté"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.610Z",
+    "updatedAt": "2025-09-02T07:48:36.610Z"
+  },
+  {
+    "id": "comp-52",
+    "name": "Méthodologie",
+    "matiere": "histoire",
+    "matiereDisplay": "Histoire-Géographie",
+    "niveau": "6eme",
+    "description": "Introduction aux concepts de Méthodologie adaptée aux élèves de 6ème",
+    "prerequis": [],
+    "objectifs": [
+      "Comprendre les principes de Méthodologie",
+      "Appliquer les méthodes de Méthodologie",
+      "Résoudre des problèmes liés à Méthodologie",
+      "Évaluer ses connaissances en Méthodologie"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.610Z",
+    "updatedAt": "2025-09-02T07:48:36.610Z"
+  },
+  {
+    "id": "comp-53",
+    "name": "Moyen Âge",
+    "matiere": "histoire",
+    "matiereDisplay": "Histoire-Géographie",
+    "niveau": "5eme",
+    "description": "Approfondissement de Moyen Âge avec des méthodes adaptées au niveau 5ème",
+    "prerequis": [
+      "comp-49"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Moyen Âge",
+      "Appliquer les méthodes de Moyen Âge",
+      "Résoudre des problèmes liés à Moyen Âge",
+      "Évaluer ses connaissances en Moyen Âge"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.610Z",
+    "updatedAt": "2025-09-02T07:48:36.610Z"
+  },
+  {
+    "id": "comp-54",
+    "name": "Démographie mondiale",
+    "matiere": "histoire",
+    "matiereDisplay": "Histoire-Géographie",
+    "niveau": "5eme",
+    "description": "Approfondissement de Démographie mondiale avec des méthodes adaptées au niveau 5ème",
+    "prerequis": [
+      "comp-50"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Démographie mondiale",
+      "Appliquer les méthodes de Démographie mondiale",
+      "Résoudre des problèmes liés à Démographie mondiale",
+      "Évaluer ses connaissances en Démographie mondiale"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.610Z",
+    "updatedAt": "2025-09-02T07:48:36.610Z"
+  },
+  {
+    "id": "comp-55",
+    "name": "Développement durable",
+    "matiere": "histoire",
+    "matiereDisplay": "Histoire-Géographie",
+    "niveau": "5eme",
+    "description": "Approfondissement de Développement durable avec des méthodes adaptées au niveau 5ème",
+    "prerequis": [
+      "comp-51"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Développement durable",
+      "Appliquer les méthodes de Développement durable",
+      "Résoudre des problèmes liés à Développement durable",
+      "Évaluer ses connaissances en Développement durable"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.610Z",
+    "updatedAt": "2025-09-02T07:48:36.610Z"
+  },
+  {
+    "id": "comp-56",
+    "name": "EMC",
+    "matiere": "histoire",
+    "matiereDisplay": "Histoire-Géographie",
+    "niveau": "5eme",
+    "description": "Approfondissement de EMC avec des méthodes adaptées au niveau 5ème",
+    "prerequis": [
+      "comp-52"
+    ],
+    "objectifs": [
+      "Comprendre les principes de EMC",
+      "Appliquer les méthodes de EMC",
+      "Résoudre des problèmes liés à EMC",
+      "Évaluer ses connaissances en EMC"
+    ],
+    "difficulty": "beginner",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.610Z",
+    "updatedAt": "2025-09-02T07:48:36.610Z"
+  },
+  {
+    "id": "comp-57",
+    "name": "XVIIIe siècle",
+    "matiere": "histoire",
+    "matiereDisplay": "Histoire-Géographie",
+    "niveau": "4eme",
+    "description": "Maîtrise de XVIIIe siècle avec des applications concrètes pour la 4ème",
+    "prerequis": [
+      "comp-53"
+    ],
+    "objectifs": [
+      "Comprendre les principes de XVIIIe siècle",
+      "Appliquer les méthodes de XVIIIe siècle",
+      "Résoudre des problèmes liés à XVIIIe siècle",
+      "Évaluer ses connaissances en XVIIIe siècle"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.610Z",
+    "updatedAt": "2025-09-02T07:48:36.610Z"
+  },
+  {
+    "id": "comp-58",
+    "name": "Espaces urbains",
+    "matiere": "histoire",
+    "matiereDisplay": "Histoire-Géographie",
+    "niveau": "4eme",
+    "description": "Maîtrise de Espaces urbains avec des applications concrètes pour la 4ème",
+    "prerequis": [
+      "comp-54"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Espaces urbains",
+      "Appliquer les méthodes de Espaces urbains",
+      "Résoudre des problèmes liés à Espaces urbains",
+      "Évaluer ses connaissances en Espaces urbains"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.610Z",
+    "updatedAt": "2025-09-02T07:48:36.610Z"
+  },
+  {
+    "id": "comp-59",
+    "name": "Révolution française",
+    "matiere": "histoire",
+    "matiereDisplay": "Histoire-Géographie",
+    "niveau": "4eme",
+    "description": "Maîtrise de Révolution française avec des applications concrètes pour la 4ème",
+    "prerequis": [
+      "comp-55"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Révolution française",
+      "Appliquer les méthodes de Révolution française",
+      "Résoudre des problèmes liés à Révolution française",
+      "Évaluer ses connaissances en Révolution française"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.610Z",
+    "updatedAt": "2025-09-02T07:48:36.610Z"
+  },
+  {
+    "id": "comp-60",
+    "name": "Géopolitique",
+    "matiere": "histoire",
+    "matiereDisplay": "Histoire-Géographie",
+    "niveau": "4eme",
+    "description": "Maîtrise de Géopolitique avec des applications concrètes pour la 4ème",
+    "prerequis": [
+      "comp-56"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Géopolitique",
+      "Appliquer les méthodes de Géopolitique",
+      "Résoudre des problèmes liés à Géopolitique",
+      "Évaluer ses connaissances en Géopolitique"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.610Z",
+    "updatedAt": "2025-09-02T07:48:36.610Z"
+  },
+  {
+    "id": "comp-61",
+    "name": "XXe siècle",
+    "matiere": "histoire",
+    "matiereDisplay": "Histoire-Géographie",
+    "niveau": "3eme",
+    "description": "Expertise en XXe siècle en préparation du brevet des collèges",
+    "prerequis": [
+      "comp-57"
+    ],
+    "objectifs": [
+      "Comprendre les principes de XXe siècle",
+      "Appliquer les méthodes de XXe siècle",
+      "Résoudre des problèmes liés à XXe siècle",
+      "Évaluer ses connaissances en XXe siècle"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.610Z",
+    "updatedAt": "2025-09-02T07:48:36.610Z"
+  },
+  {
+    "id": "comp-62",
+    "name": "Mondialisation",
+    "matiere": "histoire",
+    "matiereDisplay": "Histoire-Géographie",
+    "niveau": "3eme",
+    "description": "Expertise en Mondialisation en préparation du brevet des collèges",
+    "prerequis": [
+      "comp-58"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Mondialisation",
+      "Appliquer les méthodes de Mondialisation",
+      "Résoudre des problèmes liés à Mondialisation",
+      "Évaluer ses connaissances en Mondialisation"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.610Z",
+    "updatedAt": "2025-09-02T07:48:36.610Z"
+  },
+  {
+    "id": "comp-63",
+    "name": "Guerres mondiales",
+    "matiere": "histoire",
+    "matiereDisplay": "Histoire-Géographie",
+    "niveau": "3eme",
+    "description": "Expertise en Guerres mondiales en préparation du brevet des collèges",
+    "prerequis": [
+      "comp-59"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Guerres mondiales",
+      "Appliquer les méthodes de Guerres mondiales",
+      "Résoudre des problèmes liés à Guerres mondiales",
+      "Évaluer ses connaissances en Guerres mondiales"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.610Z",
+    "updatedAt": "2025-09-02T07:48:36.610Z"
+  },
+  {
+    "id": "comp-64",
+    "name": "Union européenne",
+    "matiere": "histoire",
+    "matiereDisplay": "Histoire-Géographie",
+    "niveau": "3eme",
+    "description": "Expertise en Union européenne en préparation du brevet des collèges",
+    "prerequis": [
+      "comp-60"
+    ],
+    "objectifs": [
+      "Comprendre les principes de Union européenne",
+      "Appliquer les méthodes de Union européenne",
+      "Résoudre des problèmes liés à Union européenne",
+      "Évaluer ses connaissances en Union européenne"
+    ],
+    "difficulty": "intermediate",
+    "estimatedTime": 45,
+    "createdAt": "2025-09-02T07:48:36.610Z",
+    "updatedAt": "2025-09-02T07:48:36.610Z"
+  }
+]

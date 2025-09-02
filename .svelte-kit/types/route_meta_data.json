@@ -1,6 +1,8 @@
 {
 	"/": [],
+	"/app-interface": [],
 	"/auth-google": [],
+	"/auth-new": [],
 	"/auth-test": [],
 	"/auth": [],
 	"/auth/login": [],
@@ -26,9 +28,12 @@
 		"src/routes/dashboard/+layout.server.ts"
 	],
 	"/debug-auth": [],
+	"/debug-firebase": [],
 	"/demo": [],
 	"/demo/exercise": [],
 	"/demo/markdown": [],
+	"/design-system-demo": [],
+	"/navigation-test": [],
 	"/pedagogy": [],
 	"/roadmap": [],
 	"/test-auth": [],

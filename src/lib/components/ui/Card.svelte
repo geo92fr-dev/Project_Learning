@@ -21,6 +21,9 @@
     }
   }
   
+  // Gestion propre du tabindex pour l'accessibilité
+  $: attributes = clickable ? { tabindex: 0 } : {};
+  
   // Classes dynamiques
   $: cardClasses = [
     'card',
@@ -37,7 +40,7 @@
   on:click={handleClick}
   on:keydown={(e) => e.key === 'Enter' && handleClick(e)}
   role={clickable ? 'button' : undefined}
-  tabindex={clickable ? 0 : undefined}
+  {...attributes}
 >
   {#if loading}
     <div class="card__loading">

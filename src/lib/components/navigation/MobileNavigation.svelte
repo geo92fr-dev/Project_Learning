@@ -124,6 +124,10 @@
       class="mobile-overlay" 
       transition:fade={{ duration: 200 }}
       on:click={toggleMenu}
+      on:keydown={(e) => { if (e.key === 'Escape') toggleMenu(); }}
+      role="button"
+      tabindex="0"
+      aria-label="Fermer le menu"
     ></div>
   {/if}
 

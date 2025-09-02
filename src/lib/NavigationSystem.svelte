@@ -25,6 +25,7 @@
   let currentFocusIndex = 0;
   let navigationContainer;
   let navigationItems = [];
+  let isTransitionActive = false;
 
   // Event dispatcher
   const dispatch = createEventDispatcher();
@@ -140,8 +141,8 @@
     
     try {
       // Animation de transition
-      if (transitionEnabled && navigationContainer) {
-        navigationContainer.classList.add('transition-active');
+      if (transitionEnabled) {
+        isTransitionActive = true;
       }
 
       dispatch('navigationStart', { path, from: currentRoute });
@@ -160,11 +161,9 @@
     } finally {
       isNavigating = false;
       
-      if (transitionEnabled && navigationContainer) {
+      if (transitionEnabled) {
         setTimeout(() => {
-          if (navigationContainer) {
-            navigationContainer.classList.remove('transition-active');
-          }
+          isTransitionActive = false;
         }, 300);
       }
     }
@@ -245,9 +244,9 @@
   class="navigation-system"
   class:enhanced={enhancedNavigation}
   class:fallback={fallbackNavigation}
+  class:transition-active={isTransitionActive}
   data-testid="navigation-container"
   bind:this={navigationContainer}
-  role="navigation"
   aria-label="Navigation principale"
 >
   <!-- Breadcrumb Navigation -->

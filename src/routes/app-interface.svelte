@@ -6,6 +6,7 @@
 <script>
   import { onMount } from 'svelte';
   import CurriculumIntegrationService from '../lib/curriculum-integration.js';
+  import { userStore, coursesStore, progressStore } from '../lib/firebase-stores.ts';
   
   // 🔗 Service d'intégration avec les données réelles
   let curriculumService;
@@ -722,6 +723,7 @@
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }

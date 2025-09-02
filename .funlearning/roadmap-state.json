@@ -1,6 +1,6 @@
 {
   "currentPhase": 2,
-  "globalProgress": 21,
+  "globalProgress": 19,
   "phases": [
     {
       "phase": 1,
@@ -86,9 +86,9 @@
       "phase": 9,
       "title": "PWA & Offline",
       "totalItems": 4,
-      "completedItems": 1,
-      "percentage": 25,
-      "nextTask": "Cache strategy",
+      "completedItems": 0,
+      "percentage": 0,
+      "nextTask": "Service Worker",
       "estimatedHours": 12,
       "blockers": [
         "Configuration build requise pour PWA"
@@ -125,7 +125,7 @@
       "blockers": []
     }
   ],
-  "lastUpdate": "2025-09-01T17:36:06.513Z",
+  "lastUpdate": "2025-09-02T09:20:50.865Z",
   "activeFiles": [],
   "recentActions": []
 }

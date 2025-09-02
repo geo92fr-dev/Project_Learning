@@ -74,12 +74,15 @@
   function handleDismiss() {
     dispatch('dismiss');
   }
+
+  // Gestion propre du tabindex pour l'accessibilité
+  $: attributes = clickable ? { tabindex: 0 } : {};
 </script>
 
 <span 
   class="{baseClasses} {sizeClasses} {shapeClasses} {variantClasses} {interactionClasses}"
   role={clickable ? 'button' : undefined}
-  tabindex={clickable ? 0 : undefined}
+  {...attributes}
   on:click={handleClick}
   on:keydown={(e) => {
     if (clickable && (e.key === 'Enter' || e.key === ' ')) {

@@ -39,12 +39,14 @@ extension/
 ### 🔍 À Tester Manuellement dans VS Code
 
 #### 1. **Activation Extension**
+**Objectif** : Vérifier que l'extension s'active correctement dans VS Code sans erreurs et que l'interface utilisateur se met à jour.
 
 - [ ] Extension visible dans Extensions Panel
 - [ ] Pas d'erreurs dans Developer Console
 - [ ] Status bar affiche "$(mortar-board) FunLearning"
 
 #### 2. **Commandes Palette**
+**Objectif** : Vérifier que toutes les commandes de l'extension sont accessibles via la palette de commandes avec les raccourcis clavier appropriés.
 
 - [ ] `FunLearning: Valider Prompt CBD` (Ctrl+Shift+V)
 - [ ] `FunLearning: Dashboard Qualité` (Ctrl+Shift+D)
@@ -53,6 +55,7 @@ extension/
 - [ ] `FunLearning: Valider Contenu Pédagogique`
 
 #### 3. **Vues Latérales**
+**Objectif** : Confirmer que les vues personnalisées s'affichent correctement dans l'explorateur VS Code avec données temps réel.
 
 - [ ] `📊 FunLearning Dashboard` dans Explorer
 - [ ] `🗺️ Progression Roadmap` dans Explorer
@@ -60,6 +63,7 @@ extension/
 - [ ] Icônes appropriées
 
 #### 4. **Dashboard Qualité**
+**Objectif** : Valider que le dashboard HTML s'ouvre correctement et affiche toutes les métriques de qualité du projet en temps réel.
 
 - [ ] Ouverture dashboard HTML
 - [ ] 4 métriques affichées (Code/Health/Education/Performance)
@@ -67,6 +71,7 @@ extension/
 - [ ] Design responsive
 
 #### 5. **Validation CBD**
+**Objectif** : Valider que l'extension peut créer et valider des fichiers CBD (Component-Based Development) avec support IntelliSense complet.
 
 - [ ] Création fichier .md avec CBD patterns
 - [ ] Validation temps réel
@@ -74,6 +79,7 @@ extension/
 - [ ] Auto-completion `[CONTEXT]`, `[FILE]`, etc.
 
 #### 6. **Génération Templates**
+**Objectif** : Vérifier que l'extension génère automatiquement des templates de code adaptatifs selon le contexte du projet.
 
 - [ ] Sélection type template
 - [ ] Input variables (nom composant)
@@ -81,6 +87,7 @@ extension/
 - [ ] Templates adaptatifs créés
 
 #### 7. **Détection Phase**
+**Objectif** : Confirmer que l'extension détecte automatiquement la phase de développement du projet et suggère les prochaines actions appropriées.
 
 - [ ] Analyse automatique workspace
 - [ ] Affichage phase détectée
@@ -152,6 +159,7 @@ extension/
 ## 🔄 Prochaines Étapes Tests
 
 ### 1. **Test Manuel Complet**
+**Objectif** : Valider toutes les fonctionnalités de l'extension dans un environnement réel avec le workspace FunLearning.
 
 ```bash
 # Ouvrir VS Code avec workspace FunLearning
@@ -164,6 +172,7 @@ code "C:\Project_Learning\Projet_Learning"
 ```
 
 ### 2. **Test Intégration**
+**Objectif** : Confirmer que l'extension s'intègre parfaitement avec le stack technologique du projet (Svelte, TailwindCSS, Vitest).
 
 - [ ] Extension fonctionne avec workspace Svelte
 - [ ] Détection correcte phase actuelle (Phase 3)
@@ -171,6 +180,7 @@ code "C:\Project_Learning\Projet_Learning"
 - [ ] Templates génèrent code valide
 
 ### 3. **Test Stress**
+**Objectif** : Vérifier les performances et la stabilité de l'extension sous charge avec de gros projets.
 
 - [ ] Performance avec gros workspace
 - [ ] Auto-refresh sous charge

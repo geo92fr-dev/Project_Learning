@@ -12,6 +12,7 @@
   import { onMount, createEventDispatcher } from 'svelte';
   import { preloadData, preloadCode } from '$app/navigation';
   import { page } from '$app/stores';
+  import { fade } from 'svelte/transition';
 
   const dispatch = createEventDispatcher();
 

@@ -60,16 +60,19 @@
     class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
     transition:fade={{ duration: 200 }}
     on:click={handleBackdropClick}
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby={title ? 'modal-title' : undefined}
+    on:keydown={(e) => { if (e.key === 'Escape') close(); }}
+    role="button"
+    tabindex="-1"
+    aria-label="Fermer la modal"
   >
     <!-- Modal Container -->
     <div 
       class="relative w-full {sizeClasses} {maxWidth ? maxWidth : ''} bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 flex flex-col max-h-[90vh]"
       style={maxWidth ? `max-width: ${maxWidth}` : ''}
       transition:scale={{ duration: 200, start: 0.95 }}
-      on:click|stopPropagation
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={title ? 'modal-title' : undefined}
       use:trapFocus
     >
       <!-- Header -->

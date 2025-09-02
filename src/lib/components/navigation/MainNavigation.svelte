@@ -1,10 +1,12 @@
 <!--
   🧭 MainNavigation Component - Phase 8.A Navigation System
-  Navigation principale selon DOC_CoPilot_Practices
+  Navigation principale selon DOC_CoPilot_Practices avec navigation contextuelle et responsive
 -->
 <script>
   export let darkMode = false;
   export let currentRoute = '/';
+  export let userContext = null; // Contexte utilisateur pour navigation contextuelle
+  export let screenSize = 'desktop'; // responsive breakpoints
   
   import { onMount } from 'svelte';
   import { page } from '$app/stores';
@@ -12,11 +14,76 @@
   import Button from '$lib/components/ui/Button.svelte';
   import Badge from '$lib/components/ui/Badge.svelte';
 
-  // État de la navigation
+  // État de la navigation contextuelle et responsive
   let isCoursOpen = false;
   let isExercicesOpen = false;
   let activeMathLevel = '';
   let activeFrancaisLevel = '';
+  let isMobileMenuOpen = false;
+  let contextualSuggestions = [];
+
+  // Breakpoints responsive
+  const breakpoints = {
+    mobile: 768,
+    tablet: 1024,
+    desktop: 1200
+  };
+
+  // Navigation contextuelle basée sur le contexte utilisateur
+  function updateContextualNavigation() {
+    if (!userContext) return;
+    
+    const { currentLevel, preferredSubject, recentActivities } = userContext;
+    
+    // Adapter la navigation selon le contexte
+    contextualSuggestions = [
+      {
+        label: `Continuer ${preferredSubject || 'Mathématiques'}`,
+        path: `/cours/${preferredSubject || 'mathematiques'}/${currentLevel || 'ce1'}`,
+        icon: '▶️',
+        priority: 'high'
+      },
+      {
+        label: 'Exercices recommandés',
+        path: `/exercices/recommandes`,
+        icon: '🎯',
+        priority: 'medium'
+      }
+    ];
+  }
+
+  // Gestion responsive
+  function handleScreenResize() {
+    const width = window.innerWidth;
+    
+    if (width <= breakpoints.mobile) {
+      screenSize = 'mobile';
+    } else if (width <= breakpoints.tablet) {
+      screenSize = 'tablet';
+    } else {
+      screenSize = 'desktop';
+    }
+    
+    // Fermer le menu mobile sur grande taille
+    if (screenSize !== 'mobile') {
+      isMobileMenuOpen = false;
+    }
+  }
+
+  onMount(() => {
+    updateContextualNavigation();
+    handleScreenResize();
+    window.addEventListener('resize', handleScreenResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleScreenResize);
+    };
+  });
+
+  // Réactivité pour le contexte utilisateur
+  $: if (userContext) {
+    updateContextualNavigation();
+  }
 
   // Structure de navigation
   const navigationStructure = {

@@ -1,6 +1,6 @@
 <!--
   🔍 NavigationSearch Component - Phase 8.A Navigation System
-  Recherche intelligente dans la navigation selon DOC_CoPilot_Practices
+  Recherche intelligente dans la navigation avec intégration curriculum service
 -->
 <script>
   export let placeholder = 'Rechercher...';
@@ -13,6 +13,9 @@
   import Input from '$lib/components/ui/Input.svelte';
   import Button from '$lib/components/ui/Button.svelte';
   import Badge from '$lib/components/ui/Badge.svelte';
+  
+  // 🔗 Intégration curriculum service - Phase 8
+  import { curriculumService } from '../../services/curriculumService';
 
   const dispatch = createEventDispatcher();
 
@@ -22,6 +25,29 @@
   let searchResults = [];
   let selectedIndex = -1;
   let searchInput;
+  let curriculumData = { competences: [], courses: [] };
+
+  // Charger les données du curriculum
+  async function loadCurriculumData() {
+    try {
+      const [competences, courses] = await Promise.all([
+        curriculumService.getAllCompetences(),
+        curriculumService.getAllCourses()
+      ]);
+      
+      curriculumData = { competences, courses };
+      console.log('📚 Curriculum data loaded for search:', {
+        competences: competences.length,
+        courses: courses.length
+      });
+    } catch (error) {
+      console.error('❌ Error loading curriculum data:', error);
+    }
+  }
+
+  onMount(() => {
+    loadCurriculumData();
+  });
 
   // Base de données de recherche
   const searchData = [
@@ -69,8 +95,105 @@
     feature: { label: 'Fonction', color: 'gray' }
   };
 
-  // Fonction de recherche intelligente
+  // Fonction de recherche intelligente avec curriculum
   function performSearch(query) {
+    if (!query || !query.trim()) {
+      searchResults = [];
+      return;
+    }
+
+    const queryLower = query.toLowerCase().trim();
+    let results = [];
+
+    // 1. Recherche dans les pages statiques
+    const staticResults = searchData.filter(item => 
+      item.title.toLowerCase().includes(queryLower) ||
+      item.description.toLowerCase().includes(queryLower)
+    ).map(item => ({
+      ...item,
+      score: calculateRelevanceScore(item, queryLower)
+    }));
+
+    results.push(...staticResults);
+
+    // 2. Recherche dans le curriculum (compétences)
+    const competenceResults = curriculumData.competences
+      .filter(comp => 
+        comp.name.toLowerCase().includes(queryLower) ||
+        comp.description.toLowerCase().includes(queryLower) ||
+        comp.matiereDisplay.toLowerCase().includes(queryLower)
+      )
+      .map(comp => ({
+        type: 'competence',
+        title: comp.name,
+        path: `/curriculum/competence/${comp.id}`,
+        description: `${comp.matiereDisplay} - ${comp.niveau} (${comp.difficulty})`,
+        icon: getMatiereIcon(comp.matiere),
+        score: calculateRelevanceScore(comp, queryLower)
+      }));
+
+    results.push(...competenceResults);
+
+    // 3. Recherche dans les cours du curriculum
+    const courseResults = curriculumData.courses
+      .filter(course => 
+        course.title.toLowerCase().includes(queryLower) ||
+        course.description.toLowerCase().includes(queryLower)
+      )
+      .map(course => ({
+        type: 'curriculum_course',
+        title: course.title,
+        path: `/curriculum/course/${course.id}`,
+        description: `${course.matiere} - ${course.niveau} (${course.duration}min)`,
+        icon: getMatiereIcon(course.matiere),
+        score: calculateRelevanceScore(course, queryLower)
+      }));
+
+    results.push(...courseResults);
+
+    // Trier par pertinence et limiter les résultats
+    searchResults = results
+      .sort((a, b) => b.score - a.score)
+      .slice(0, maxResults);
+  }
+
+  // Calcul du score de pertinence
+  function calculateRelevanceScore(item, query) {
+    let score = 0;
+    const title = (item.title || item.name || '').toLowerCase();
+    const description = (item.description || '').toLowerCase();
+    
+    // Score basé sur la correspondance exacte du titre
+    if (title.includes(query)) {
+      score += title.startsWith(query) ? 100 : 50;
+    }
+    
+    // Score basé sur la description
+    if (description.includes(query)) {
+      score += 25;
+    }
+    
+    // Bonus pour les types prioritaires
+    if (item.type === 'competence' || item.type === 'curriculum_course') {
+      score += 10;
+    }
+    
+    return score;
+  }
+
+  // Icônes des matières
+  function getMatiereIcon(matiere) {
+    const icons = {
+      mathematiques: '🔢',
+      francais: '📚',
+      sciences: '🔬',
+      histoire: '🏛️'
+    };
+    return icons[matiere] || '📖';
+  }
+
+  // Fonction de recherche intelligente (legacy)
+  function performSearchLegacy(query) {
     if (!query || !query.trim()) {
       searchResults = [];
       return;
@@ -199,7 +322,7 @@
   });
 </script>
 
-<div class="navigation-search" on:keydown={handleKeydown}>
+<div class="navigation-search" role="search" aria-label="Recherche de navigation">
   <!-- Input de recherche -->
   <div class="search-input-container">
     <Input
@@ -210,6 +333,7 @@
       class="search-input"
       on:focus={handleFocus}
       on:blur={handleBlur}
+      on:keydown={handleKeydown}
     />
     
     {#if showShortcuts}
@@ -403,7 +527,9 @@
   .result-description {
     font-size: 0.75rem;
     color: #6b7280;
-    truncate: true;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .result-type {

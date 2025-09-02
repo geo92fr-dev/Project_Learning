@@ -43,6 +43,15 @@
           <a href="/content">📚 Explorer Contenu</a>
         </div>
       </div>
+
+      <div class="status-card">
+        <h3>🎨 Phase 7 - Design System</h3>
+        <p>Interface dynamique avec composants atomiques</p>
+        <div class="quick-actions">
+          <a href="/app-interface" class="btn primary">🎯 Interface Utilisateur</a>
+          <a href="/design-system-demo" class="btn secondary">🧪 Demo Design System</a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -145,6 +154,18 @@
 
   .btn.primary:hover {
     background: #2563eb;
+    transform: translateY(-1px);
+  }
+
+  .btn.secondary {
+    background: #6b7280;
+    color: white;
+    margin-top: 0.5rem;
+    display: block;
+  }
+
+  .btn.secondary:hover {
+    background: #4b5563;
     transform: translateY(-1px);
   }
 

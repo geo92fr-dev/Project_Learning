@@ -1,6 +1,6 @@
 <!--
   📈 ProgressNavigation Component - Phase 8.A Navigation System
-  Navigation avec indicateurs de progression selon DOC_CoPilot_Practices
+  Navigation avec indicateurs de progression et intégration curriculum service
 -->
 <script>
   export let currentChapter = 1;
@@ -10,18 +10,62 @@
   export let courseLevel = 'CE1';
   export let showDetailedProgress = true;
   export let allowSkipAhead = false;
+  export let userId = 'demo-user';
 
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import { slide, fade } from 'svelte/transition';
   import Button from '$lib/components/ui/Button.svelte';
   import Badge from '$lib/components/ui/Badge.svelte';
+  
+  // 🔗 Intégration curriculum service et progress tracker - Phase 8
+  import { curriculumService } from '../../services/curriculumService';
+  import { progressTracker } from '../../services/progressTracker';
 
   const dispatch = createEventDispatcher();
 
-  // États locaux
+  // États locaux avec données curriculum
   let showProgressDetails = false;
   let expandedChapter = null;
+  let realProgressData = null;
+  let userStats = null;
+  let coursesData = [];
+
+  // Charger les données de progression réelles
+  async function loadProgressData() {
+    try {
+      const [userProgress, userStatistics, courses] = await Promise.all([
+        progressTracker.getUserProgress(userId),
+        progressTracker.getUserStats(userId),
+        curriculumService.getAllCourses()
+      ]);
+      
+      realProgressData = userProgress;
+      userStats = userStatistics;
+      coursesData = courses;
+      
+      console.log('📊 Progress data loaded:', {
+        completedCourses: userStats?.completedCourses || 0,
+        averageScore: userStats?.averageScore || 0,
+        totalCourses: courses.length
+      });
+      
+      // Mettre à jour les données locales avec les vraies données
+      if (userStats) {
+        completedChapters = Array.from(
+          { length: userStats.completedCourses }, 
+          (_, i) => i + 1
+        );
+      }
+      
+    } catch (error) {
+      console.error('❌ Error loading progress data:', error);
+    }
+  }
+
+  onMount(() => {
+    loadProgressData();
+  });
 
   // Données simulées des chapitres
   const chapters = Array.from({ length: totalChapters }, (_, i) => ({

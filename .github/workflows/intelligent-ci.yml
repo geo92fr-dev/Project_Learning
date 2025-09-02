@@ -22,7 +22,7 @@ on:
         type: choice
         options:
           - "6eme"
-          - "5eme"
+          - "5eme" 
           - "4eme"
           - "3eme"
           - "lycee"

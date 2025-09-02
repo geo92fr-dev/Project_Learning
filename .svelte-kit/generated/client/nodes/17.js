@@ -1,3 +1,3 @@
-import * as universal from "../../../../src/routes/cours/[slug]/+page.ts";
+import * as universal from "../../../../src/routes/content/[matiere]/[niveau]/[competence]/+page.ts";
 export { universal };
-export { default as component } from "../../../../src/routes/cours/[slug]/+page.svelte";
+export { default as component } from "../../../../src/routes/content/[matiere]/[niveau]/[competence]/+page.svelte";

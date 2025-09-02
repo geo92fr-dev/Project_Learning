@@ -1,24 +1,56 @@
-<!-- 🎯 FunLearning V3.0 - Phase 3 Composant QCM -->
-<!-- Composant interactif pour Questions à Choix Multiples -->
+<!-- 🎯 FunLearning V3.0 - Phase 9 Composant QCM -->
+<!-- Composant interactif pour Questions à Choix Multiples - Amélioré pour Phase 9 -->
 
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import type { QCMExercise, QCMOption } from "$lib/types/exercise";
+  import type { QCMExercise, QCMOption, UserAnswer, ExerciseResult } from "$lib/types/exercise.js";
+  import { exerciseService } from "$lib/services/exerciseService.js";
 
   export let exercise: QCMExercise;
   export let disabled = false;
   export let showResult = false;
   export let selectedOptions: string[] = [];
+  export let timeLimit: number | null = null;
 
   const dispatch = createEventDispatcher<{
-    submit: { selectedOptions: string[] };
+    submit: { exercise: QCMExercise; result: ExerciseResult };
     optionChange: { selectedOptions: string[] };
+    timeUp: { exercise: QCMExercise };
   }>();
 
   let localSelected: string[] = [...selectedOptions];
+  let submitted = false;
+  let result: ExerciseResult | null = null;
+  let timeRemaining = timeLimit;
+  let timer: NodeJS.Timeout | null = null;
+
+  // Démarrer le timer si une limite de temps est définie
+  $: if (timeLimit && !submitted) {
+    startTimer();
+  }
+
+  function startTimer() {
+    if (timer) clearInterval(timer);
+    
+    timer = setInterval(() => {
+      if (timeRemaining && timeRemaining > 0) {
+        timeRemaining--;
+      } else {
+        handleTimeUp();
+      }
+    }, 1000);
+  }
+
+  function handleTimeUp() {
+    if (timer) clearInterval(timer);
+    if (!submitted) {
+      submitAnswer();
+      dispatch('timeUp', { exercise });
+    }
+  }
 
   function handleOptionChange(optionId: string, isChecked: boolean) {
-    if (disabled) return;
+    if (disabled || submitted) return;
 
     if (exercise.multipleCorrect) {
       // QCM multiple : checkbox
@@ -35,9 +67,35 @@
     dispatch("optionChange", { selectedOptions: localSelected });
   }
 
+  function submitAnswer() {
+    if (submitted || localSelected.length === 0) return;
+
+    const userAnswer: UserAnswer = {
+      exerciseId: exercise.id,
+      type: 'qcm',
+      answer: { selectedOptions: localSelected },
+      timeSpent: timeLimit ? (timeLimit - (timeRemaining || 0)) : 0,
+      submittedAt: new Date()
+    };
+
+    result = exerciseService.evaluateUserAnswer(exercise, userAnswer);
+    submitted = true;
+
+    if (timer) clearInterval(timer);
+
+    if (result) {
+      dispatch('submit', { exercise, result });
+    }
+  }
+
   function handleSubmit() {
-    if (disabled || localSelected.length === 0) return;
-    dispatch("submit", { selectedOptions: localSelected });
+    submitAnswer();
+  }
+
+  function formatTime(seconds: number): string {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
   }
 
   function getOptionClass(option: QCMOption): string {
