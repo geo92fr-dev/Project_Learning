@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FunLearning - Navigation Header</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Design System Documentation -->
+    <!-- 
+    Navigation Strategy: Header global avec navigation contextuelle
+    - Logo + Branding permanent
+    - Menu principal horizontal (desktop)
+    - Search bar centrale 
+    - Actions utilisateur (notifications, profil)
+    - Mobile: transformation en hamburger menu
+    
+    Palette: Mint & Indigo cohérente avec HomePage
+    States: Default, Scrolled, Mobile menu open
+    -->
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%);
+            min-height: 100vh;
+        }
+        
+        .nav-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+            transition: all 0.3s ease;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        
+        .nav-header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 24px;
+            height: 2px;
+            background: #4f46e5;
+            border-radius: 1px;
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-link.active::after,
+        .nav-link:hover::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+        
+        .notification-dot {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 18px;
+            height: 18px;
+            background: #ef4444;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .search-container {
+            position: relative;
+            max-width: 400px;
+            width: 100%;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 10px 16px 10px 44px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            background: white;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+        }
+        
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        @media (max-width: 768px) {
+            .search-container {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="nav-header" id="mainHeader">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                
+                <!-- Logo & Brand -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-emerald-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-lg"></i>
+                    </div>
+                    <div class="hidden sm:block">
+                        <h1 class="text-xl font-bold text-slate-800">FunLearning</h1>
+                        <p class="text-xs text-slate-500">Votre plateforme d'apprentissage</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Desktop -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="nav-link active flex items-center space-x-2 px-3 py-2 text-sm font-medium text-indigo-600">
+                        <i class="fas fa-home"></i>
+                        <span>Accueil</span>
+                    </a>
+                    <a href="#" class="nav-link flex items-center space-x-2 px-3 py-2 text-sm font-medium text-slate-600 hover:text-indigo-600">
+                        <i class="fas fa-book"></i>
+                        <span>Cours</span>
+                    </a>
+                    <a href="#" class="nav-link flex items-center space-x-2 px-3 py-2 text-sm font-medium text-slate-600 hover:text-indigo-600">
+                        <i class="fas fa-dumbbell"></i>
+                        <span>Exercices</span>
+                    </a>
+                    <a href="#" class="nav-link flex items-center space-x-2 px-3 py-2 text-sm font-medium text-slate-600 hover:text-indigo-600">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Progression</span>
+                    </a>
+                    <a href="#" class="nav-link flex items-center space-x-2 px-3 py-2 text-sm font-medium text-slate-600 hover:text-indigo-600">
+                        <i class="fas fa-cog"></i>
+                        <span>Admin</span>
+                    </a>
+                </nav>
+
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input 
+                        type="text" 
+                        class="search-input" 
+                        placeholder="Rechercher des cours, exercices..."
+                        id="globalSearch"
+                    >
+                </div>
+
+                <!-- User Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- Notifications -->
+                    <button class="relative p-2 text-slate-400 hover:text-slate-600 transition-colors">
+                        <i class="fas fa-bell text-lg"></i>
+                        <span class="notification-dot">3</span>
+                    </button>
+
+                    <!-- User Profile -->
+                    <div class="flex items-center space-x-3 cursor-pointer hover:bg-slate-50 p-2 rounded-lg transition-colors">
+                        <img 
+                            src="https://images.unsplash.com/photo-1494790108755-2616b68d2b8c?w=40&h=40&fit=crop&crop=face&auto=format" 
+                            alt="Profile" 
+                            class="w-8 h-8 rounded-full"
+                        >
+                        <div class="hidden sm:block text-left">
+                            <p class="text-sm font-medium text-slate-800">Amandine</p>
+                            <p class="text-xs text-slate-500">Étudiante</p>
+                        </div>
+                        <i class="fas fa-chevron-down text-slate-400 text-xs"></i>
+                    </div>
+
+                    <!-- Mobile Menu Toggle -->
+                    <button class="md:hidden p-2 text-slate-600 hover:text-slate-800" id="mobileMenuToggle">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden" id="mobileOverlay" style="display: none;"></div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu fixed top-0 left-0 w-80 h-full bg-white shadow-xl z-50 md:hidden" id="mobileMenu">
+        <div class="p-6">
+            <!-- Mobile Header -->
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-emerald-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-lg"></i>
+                    </div>
+                    <h2 class="text-lg font-bold text-slate-800">FunLearning</h2>
+                </div>
+                <button class="p-2 text-slate-400 hover:text-slate-600" id="closeMobileMenu">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Search -->
+            <div class="mb-6">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input 
+                        type="text" 
+                        class="search-input" 
+                        placeholder="Rechercher..."
+                    >
+                </div>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <nav class="space-y-2">
+                <a href="#" class="flex items-center space-x-3 p-3 text-indigo-600 bg-indigo-50 rounded-lg font-medium">
+                    <i class="fas fa-home w-5"></i>
+                    <span>Accueil</span>
+                    <i class="fas fa-check ml-auto text-indigo-500"></i>
+                </a>
+                <a href="#" class="flex items-center space-x-3 p-3 text-slate-700 hover:bg-slate-50 rounded-lg transition-colors">
+                    <i class="fas fa-book w-5"></i>
+                    <span>Cours</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 p-3 text-slate-700 hover:bg-slate-50 rounded-lg transition-colors">
+                    <i class="fas fa-dumbbell w-5"></i>
+                    <span>Exercices</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 p-3 text-slate-700 hover:bg-slate-50 rounded-lg transition-colors">
+                    <i class="fas fa-chart-line w-5"></i>
+                    <span>Progression</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 p-3 text-slate-700 hover:bg-slate-50 rounded-lg transition-colors">
+                    <i class="fas fa-cog w-5"></i>
+                    <span>Administration</span>
+                </a>
+            </nav>
+
+            <!-- Mobile User Section -->
+            <div class="mt-8 pt-6 border-t border-slate-200">
+                <div class="flex items-center space-x-3 mb-4">
+                    <img 
+                        src="https://images.unsplash.com/photo-1494790108755-2616b68d2b8c?w=48&h=48&fit=crop&crop=face&auto=format" 
+                        alt="Profile" 
+                        class="w-12 h-12 rounded-full"
+                    >
+                    <div>
+                        <p class="font-medium text-slate-800">Amandine Dubois</p>
+                        <p class="text-sm text-slate-500">Étudiante • Niveau 3</p>
+                    </div>
+                </div>
+                
+                <div class="space-y-2">
+                    <button class="w-full flex items-center space-x-3 p-3 text-slate-700 hover:bg-slate-50 rounded-lg transition-colors text-left">
+                        <i class="fas fa-user w-4"></i>
+                        <span>Mon Profil</span>
+                    </button>
+                    <button class="w-full flex items-center space-x-3 p-3 text-slate-700 hover:bg-slate-50 rounded-lg transition-colors text-left">
+                        <i class="fas fa-cog w-4"></i>
+                        <span>Paramètres</span>
+                    </button>
+                    <button class="w-full flex items-center space-x-3 p-3 text-slate-700 hover:bg-slate-50 rounded-lg transition-colors text-left">
+                        <i class="fas fa-question-circle w-4"></i>
+                        <span>Aide</span>
+                    </button>
+                    <button class="w-full flex items-center space-x-3 p-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors text-left">
+                        <i class="fas fa-sign-out-alt w-4"></i>
+                        <span>Déconnexion</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4">Navigation Header Demo</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="font-semibold text-slate-700 mb-3">🎯 Fonctionnalités testées</h3>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Navigation contextuelle avec états actifs</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Recherche globale responsive</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Menu mobile avec overlay</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Notifications avec compteur</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Profil utilisateur intégré</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-slate-700 mb-3">📱 Tests responsives</h3>
+                    <div class="space-y-3">
+                        <button onclick="simulateScroll()" class="w-full bg-indigo-100 text-indigo-700 px-4 py-2 rounded-lg hover:bg-indigo-200 transition-colors">
+                            Simuler scroll (effet backdrop)
+                        </button>
+                        <button onclick="toggleMobileMenu()" class="w-full bg-emerald-100 text-emerald-700 px-4 py-2 rounded-lg hover:bg-emerald-200 transition-colors">
+                            Toggle menu mobile
+                        </button>
+                        <p class="text-xs text-slate-500">
+                            Redimensionnez la fenêtre pour tester le responsive
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Demo Content -->
+        <div class="space-y-8">
+            <div class="bg-white rounded-xl p-6 shadow-sm">
+                <h3 class="text-lg font-semibold mb-4">Section 1 - Démonstration scroll</h3>
+                <p class="text-slate-600">Scrollez pour voir l'effet de backdrop sur le header.</p>
+            </div>
+            <div class="bg-white rounded-xl p-6 shadow-sm">
+                <h3 class="text-lg font-semibold mb-4">Section 2</h3>
+                <p class="text-slate-600">Contenu de démonstration pour tester les interactions.</p>
+            </div>
+            <div class="bg-white rounded-xl p-6 shadow-sm">
+                <h3 class="text-lg font-semibold mb-4">Section 3</h3>
+                <p class="text-slate-600">Plus de contenu pour valider le comportement sticky.</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+
+        function toggleMobileMenu() {
+            const isOpen = mobileMenu.classList.contains('open');
+            
+            if (isOpen) {
+                mobileMenu.classList.remove('open');
+                mobileOverlay.style.display = 'none';
+                document.body.style.overflow = '';
+            } else {
+                mobileMenu.classList.add('open');
+                mobileOverlay.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+        closeMobileMenu.addEventListener('click', toggleMobileMenu);
+        mobileOverlay.addEventListener('click', toggleMobileMenu);
+
+        // Scroll effect for header
+        let isScrolled = false;
+        
+        function handleScroll() {
+            const header = document.getElementById('mainHeader');
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > 20 && !isScrolled) {
+                header.classList.add('scrolled');
+                isScrolled = true;
+            } else if (scrollTop <= 20 && isScrolled) {
+                header.classList.remove('scrolled');
+                isScrolled = false;
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll);
+
+        // Demo functions
+        function simulateScroll() {
+            window.scrollTo({ top: 100, behavior: 'smooth' });
+        }
+
+        // Search functionality demo
+        const searchInput = document.getElementById('globalSearch');
+        searchInput.addEventListener('input', (e) => {
+            if (e.target.value.length > 2) {
+                console.log('Recherche:', e.target.value);
+                // Ici on pourrait implémenter l'autocomplétion
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+                toggleMobileMenu();
+            }
+        });
+    </script>
+</body>
+</html>

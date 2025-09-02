@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FunLearning - Administration Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Design System Documentation -->
+    <!-- 
+    Admin Dashboard Strategy: Analytics-first avec contrôles avancés
+    - Sidebar navigation contextuelle (admin sections)
+    - Multi-dashboard views (Analytics, Users, Content, System)
+    - Real-time metrics avec WebSocket simulation
+    - CRUD interfaces pour gestion contenu
+    - Permissions RBAC avec niveaux d'accès
+    - Export/Import tools intégrés (Phase 11.5)
+    - Bulk operations pour gestion efficace
+    
+    Layout Patterns:
+    - Sidebar collapsible avec sous-menus
+    - Header avec breadcrumbs + quick actions
+    - Grid dashboard avec cartes métriques
+    - Tables avec tri, filtres, pagination
+    - Modals pour édition/création
+    - Toast notifications pour feedback
+    
+    Data Visualization:
+    - Charts.js pour graphiques temps réel
+    - Progress bars pour métriques système
+    - Heatmaps pour analytics utilisateur
+    - Tables avec inline editing
+    -->
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 280px;
+            background: #1e293b;
+            color: white;
+            transition: all 0.3s ease;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+        
+        .sidebar.collapsed {
+            width: 80px;
+        }
+        
+        .sidebar-header {
+            padding: 24px 20px;
+            border-bottom: 1px solid #334155;
+        }
+        
+        .sidebar-nav {
+            padding: 20px 0;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-item:hover {
+            background: #334155;
+            color: white;
+        }
+        
+        .nav-item.active {
+            background: #4f46e5;
+            border-left-color: #818cf8;
+            color: white;
+        }
+        
+        .nav-icon {
+            width: 20px;
+            margin-right: 12px;
+            text-align: center;
+        }
+        
+        .nav-label {
+            transition: opacity 0.3s ease;
+        }
+        
+        .sidebar.collapsed .nav-label {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+        }
+        
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            transition: margin-left 0.3s ease;
+        }
+        
+        .sidebar.collapsed + .main-content {
+            margin-left: 80px;
+        }
+        
+        .admin-header {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 16px 32px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .metric-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .metric-label {
+            color: #64748b;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .metric-trend {
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+            font-size: 0.75rem;
+        }
+        
+        .trend-up {
+            color: #059669;
+        }
+        
+        .trend-down {
+            color: #dc2626;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .table-header {
+            background: #f8fafc;
+            padding: 16px 24px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+        
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .status-active {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .status-inactive {
+            background: #fef2f2;
+            color: #991b1b;
+        }
+        
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .action-button {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .action-primary {
+            background: #4f46e5;
+            color: white;
+        }
+        
+        .action-primary:hover {
+            background: #4338ca;
+        }
+        
+        .action-secondary {
+            background: #f1f5f9;
+            color: #475569;
+        }
+        
+        .action-secondary:hover {
+            background: #e2e8f0;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-top: 16px;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center mr-3">
+                        <i class="fas fa-graduation-cap text-white"></i>
+                    </div>
+                    <div class="nav-label">
+                        <h2 class="text-lg font-bold">FunLearning</h2>
+                        <p class="text-sm text-slate-400">Administration</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sidebar-nav">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-chart-line nav-icon"></i>
+                    <span class="nav-label">Analytics</span>
+                </a>
+                
+                <a href="#" class="nav-item">
+                    <i class="fas fa-users nav-icon"></i>
+                    <span class="nav-label">Utilisateurs</span>
+                </a>
+                
+                <a href="#" class="nav-item">
+                    <i class="fas fa-book nav-icon"></i>
+                    <span class="nav-label">Contenu</span>
+                </a>
+                
+                <a href="#" class="nav-item">
+                    <i class="fas fa-dumbbell nav-icon"></i>
+                    <span class="nav-label">Exercices</span>
+                </a>
+                
+                <a href="#" class="nav-item">
+                    <i class="fas fa-upload nav-icon"></i>
+                    <span class="nav-label">Import/Export</span>
+                </a>
+                
+                <a href="#" class="nav-item">
+                    <i class="fas fa-shield-alt nav-icon"></i>
+                    <span class="nav-label">Permissions</span>
+                </a>
+                
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog nav-icon"></i>
+                    <span class="nav-label">Système</span>
+                </a>
+                
+                <a href="#" class="nav-item">
+                    <i class="fas fa-file-alt nav-icon"></i>
+                    <span class="nav-label">Rapports</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="admin-header">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <button class="p-2 hover:bg-gray-100 rounded-lg" id="sidebarToggle">
+                            <i class="fas fa-bars text-gray-600"></i>
+                        </button>
+                        
+                        <!-- Breadcrumb -->
+                        <nav class="flex items-center space-x-2 text-sm text-gray-500">
+                            <span>Administration</span>
+                            <i class="fas fa-chevron-right text-xs"></i>
+                            <span class="text-gray-900 font-medium">Analytics</span>
+                        </nav>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <!-- Quick Actions -->
+                        <button class="action-button action-secondary">
+                            <i class="fas fa-download mr-2"></i>
+                            Exporter
+                        </button>
+                        
+                        <button class="action-button action-primary">
+                            <i class="fas fa-plus mr-2"></i>
+                            Nouveau
+                        </button>
+                        
+                        <!-- Notifications -->
+                        <div class="relative">
+                            <button class="p-2 hover:bg-gray-100 rounded-lg">
+                                <i class="fas fa-bell text-gray-600"></i>
+                                <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">3</span>
+                            </button>
+                        </div>
+                        
+                        <!-- Admin Profile -->
+                        <div class="flex items-center space-x-3">
+                            <img 
+                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face&auto=format" 
+                                alt="Admin" 
+                                class="w-8 h-8 rounded-full"
+                            >
+                            <div class="text-sm">
+                                <div class="font-medium text-gray-900">Admin</div>
+                                <div class="text-gray-500">Administrateur</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="p-8">
+                <!-- Page Title -->
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Tableau de bord Analytics</h1>
+                    <p class="text-gray-600">Vue d'ensemble des métriques et performances de la plateforme</p>
+                </div>
+
+                <!-- Key Metrics -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="metric-card">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="metric-value text-blue-600">2,847</div>
+                                <div class="metric-label">Utilisateurs actifs</div>
+                                <div class="metric-trend trend-up">
+                                    <i class="fas fa-arrow-up mr-1"></i>
+                                    +12% ce mois
+                                </div>
+                            </div>
+                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-users text-blue-600"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="metric-value text-green-600">156</div>
+                                <div class="metric-label">Cours disponibles</div>
+                                <div class="metric-trend trend-up">
+                                    <i class="fas fa-arrow-up mr-1"></i>
+                                    +8 nouveaux
+                                </div>
+                            </div>
+                            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-book text-green-600"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="metric-value text-purple-600">89.2%</div>
+                                <div class="metric-label">Taux de complétion</div>
+                                <div class="metric-trend trend-up">
+                                    <i class="fas fa-arrow-up mr-1"></i>
+                                    +3.2%
+                                </div>
+                            </div>
+                            <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-chart-pie text-purple-600"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="metric-value text-orange-600">4.8</div>
+                                <div class="metric-label">Note moyenne</div>
+                                <div class="metric-trend trend-down">
+                                    <i class="fas fa-arrow-down mr-1"></i>
+                                    -0.1 point
+                                </div>
+                            </div>
+                            <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-star text-orange-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <!-- User Activity Chart -->
+                    <div class="metric-card">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold text-gray-900">Activité utilisateurs</h3>
+                            <select class="text-sm border border-gray-300 rounded-lg px-3 py-1">
+                                <option>7 derniers jours</option>
+                                <option>30 derniers jours</option>
+                                <option>3 derniers mois</option>
+                            </select>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="userActivityChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Course Performance -->
+                    <div class="metric-card">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold text-gray-900">Performance des cours</h3>
+                            <button class="text-indigo-600 text-sm font-medium hover:text-indigo-700">
+                                Voir détails
+                            </button>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="coursePerformanceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Users Table -->
+                <div class="data-table">
+                    <div class="table-header">
+                        <div class="flex items-center justify-between w-full">
+                            <h3 class="text-lg font-semibold text-gray-900">Utilisateurs récents</h3>
+                            <div class="flex items-center space-x-3">
+                                <div class="relative">
+                                    <input 
+                                        type="text" 
+                                        placeholder="Rechercher..."
+                                        class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                    >
+                                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                </div>
+                                <button class="action-button action-secondary">
+                                    <i class="fas fa-filter mr-2"></i>
+                                    Filtrer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Utilisateur</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dernière connexion</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img 
+                                                src="https://images.unsplash.com/photo-1494790108755-2616b68d2b8c?w=40&h=40&fit=crop&crop=face&auto=format" 
+                                                alt="User" 
+                                                class="w-10 h-10 rounded-full mr-3"
+                                            >
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">Amandine Dubois</div>
+                                                <div class="text-sm text-gray-500">Étudiante</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">amandine.dubois@email.com</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="status-badge status-active">Actif</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Il y a 2 minutes</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm space-x-2">
+                                        <button class="text-indigo-600 hover:text-indigo-900">Voir</button>
+                                        <button class="text-gray-600 hover:text-gray-900">Éditer</button>
+                                    </td>
+                                </tr>
+                                
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img 
+                                                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face&auto=format" 
+                                                alt="User" 
+                                                class="w-10 h-10 rounded-full mr-3"
+                                            >
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">Lucas Martin</div>
+                                                <div class="text-sm text-gray-500">Étudiant</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">lucas.martin@email.com</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="status-badge status-pending">En attente</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Il y a 1 heure</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm space-x-2">
+                                        <button class="text-indigo-600 hover:text-indigo-900">Voir</button>
+                                        <button class="text-gray-600 hover:text-gray-900">Éditer</button>
+                                    </td>
+                                </tr>
+                                
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img 
+                                                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face&auto=format" 
+                                                alt="User" 
+                                                class="w-10 h-10 rounded-full mr-3"
+                                            >
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">Sophie Durand</div>
+                                                <div class="text-sm text-gray-500">Instructrice</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">sophie.durand@email.com</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="status-badge status-active">Actif</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Il y a 15 minutes</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm space-x-2">
+                                        <button class="text-indigo-600 hover:text-indigo-900">Voir</button>
+                                        <button class="text-gray-600 hover:text-gray-900">Éditer</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="px-6 py-4 flex items-center justify-between border-t border-gray-200">
+                        <div class="text-sm text-gray-700">
+                            Affichage de <strong>1</strong> à <strong>10</strong> sur <strong>97</strong> résultats
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="px-3 py-2 text-sm text-gray-500 hover:text-gray-700 disabled:opacity-50" disabled>
+                                Précédent
+                            </button>
+                            <button class="px-3 py-2 text-sm bg-indigo-600 text-white rounded-lg">1</button>
+                            <button class="px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg">2</button>
+                            <button class="px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg">3</button>
+                            <button class="px-3 py-2 text-sm text-gray-500 hover:text-gray-700">
+                                Suivant
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Example (hidden by default) -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-semibold text-gray-900">Créer un utilisateur</h2>
+                <button class="p-2 hover:bg-gray-100 rounded-lg" id="closeModal">
+                    <i class="fas fa-times text-gray-500"></i>
+                </button>
+            </div>
+            
+            <form class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Prénom</label>
+                        <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nom</label>
+                        <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input type="email" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Rôle</label>
+                    <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <option>Étudiant</option>
+                        <option>Instructeur</option>
+                        <option>Administrateur</option>
+                    </select>
+                </div>
+                
+                <div class="flex items-center justify-end space-x-3 pt-6">
+                    <button type="button" class="action-button action-secondary" id="cancelModal">
+                        Annuler
+                    </button>
+                    <button type="submit" class="action-button action-primary">
+                        Créer l'utilisateur
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Sidebar toggle
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
+
+        // Modal functionality
+        const modal = document.getElementById('modal');
+        const closeModal = document.getElementById('closeModal');
+        const cancelModal = document.getElementById('cancelModal');
+        
+        function openModal() {
+            modal.classList.add('active');
+        }
+        
+        function closeModalFunc() {
+            modal.classList.remove('active');
+        }
+        
+        closeModal.addEventListener('click', closeModalFunc);
+        cancelModal.addEventListener('click', closeModalFunc);
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModalFunc();
+            }
+        });
+
+        // Charts initialization
+        const ctx1 = document.getElementById('userActivityChart').getContext('2d');
+        const userActivityChart = new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
+                datasets: [{
+                    label: 'Utilisateurs actifs',
+                    data: [432, 521, 498, 612, 587, 445, 378],
+                    borderColor: '#4f46e5',
+                    backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        const ctx2 = document.getElementById('coursePerformanceChart').getContext('2d');
+        const coursePerformanceChart = new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: ['Mathématiques', 'Français', 'Sciences', 'Histoire', 'Autres'],
+                datasets: [{
+                    data: [35, 25, 20, 15, 5],
+                    backgroundColor: [
+                        '#4f46e5',
+                        '#10b981',
+                        '#f59e0b',
+                        '#ef4444',
+                        '#8b5cf6'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true,
+                            padding: 20
+                        }
+                    }
+                }
+            }
+        });
+
+        // Simulate real-time updates
+        function updateMetrics() {
+            const metricValues = document.querySelectorAll('.metric-value');
+            metricValues.forEach(metric => {
+                const currentValue = parseFloat(metric.textContent.replace(/[^\d.]/g, ''));
+                const variation = (Math.random() - 0.5) * 0.1;
+                const newValue = Math.max(0, currentValue * (1 + variation));
+                
+                if (metric.textContent.includes('%')) {
+                    metric.textContent = newValue.toFixed(1) + '%';
+                } else if (metric.textContent.includes('.')) {
+                    metric.textContent = newValue.toFixed(1);
+                } else {
+                    metric.textContent = Math.round(newValue).toLocaleString();
+                }
+            });
+        }
+
+        // Update metrics every 30 seconds
+        setInterval(updateMetrics, 30000);
+
+        // Navigation item switching
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                navItems.forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+
+        // Demo: Open modal when clicking "Nouveau" button
+        document.querySelector('.action-primary').addEventListener('click', openModal);
+    </script>
+</body>
+</html>

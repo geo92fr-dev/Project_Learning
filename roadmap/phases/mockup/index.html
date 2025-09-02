@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FunLearning - Index des Mockups UX</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%);
+            margin: 0;
+            min-height: 100vh;
+        }
+        
+        .mockup-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .mockup-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .status-implemented {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .status-new {
+            background: #f3e8ff;
+            color: #7c3aed;
+        }
+        
+        .status-todo {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .status-in-progress {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .mockup-preview {
+            width: 100%;
+            height: 200px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+        
+        .mockup-preview iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            transform: scale(0.3);
+            transform-origin: 0 0;
+            width: 333.33%;
+            height: 333.33%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <div class="flex items-center justify-center mb-6">
+                <div class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-emerald-500 rounded-2xl flex items-center justify-center mr-4">
+                    <i class="fas fa-graduation-cap text-white text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-4xl font-bold text-slate-900">FunLearning</h1>
+                    <p class="text-lg text-slate-600">Collection de Mockups UX</p>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 max-w-4xl mx-auto">
+                <h2 class="text-2xl font-semibold text-slate-900 mb-4">📋 Phase 11.6 - UX Design System</h2>
+                <p class="text-slate-600 mb-6">
+                    Collection complète de mockups HTML pour valider et itérer sur l'expérience utilisateur de la plateforme FunLearning.
+                    Chaque mockup est interactif et responsive pour tester les concepts UX en conditions réelles.
+                </p>
+                
+                <!-- Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="text-center p-4 bg-blue-50 rounded-lg">
+                        <div class="text-2xl font-bold text-blue-600">9</div>
+                        <div class="text-sm text-blue-700">Mockups créés</div>
+                    </div>
+                    <div class="text-center p-4 bg-green-50 rounded-lg">
+                        <div class="text-2xl font-bold text-green-600">5</div>
+                        <div class="text-sm text-green-700">Catégories UX</div>
+                    </div>
+                    <div class="text-center p-4 bg-purple-50 rounded-lg">
+                        <div class="text-2xl font-bold text-purple-600">84</div>
+                        <div class="text-sm text-purple-700">Écrans estimés</div>
+                    </div>
+                    <div class="text-center p-4 bg-amber-50 rounded-lg">
+                        <div class="text-2xl font-bold text-amber-600">100%</div>
+                        <div class="text-sm text-amber-700">Responsive</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation des catégories -->
+        <nav class="mb-8">
+            <div class="flex flex-wrap justify-center gap-2">
+                <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium" data-category="all">
+                    Tous les mockups
+                </button>
+                <button class="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg font-medium hover:bg-slate-300" data-category="homepage">
+                    Homepage
+                </button>
+                <button class="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200" data-category="navigation">
+                    Navigation
+                </button>
+                <button class="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200" data-category="dashboard">
+                    Dashboard
+                </button>
+                <button class="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200" data-category="courses">
+                    Cours
+                </button>
+                <button class="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200" data-category="mobile">
+                    Mobile
+                </button>
+                <button class="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg font-medium hover:bg-slate-200" data-category="admin">
+                    Administration
+                </button>
+            </div>
+        </nav>
+
+        <!-- Grille des mockups -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- Homepage Dashboard (Nouveau) -->
+            <div class="mockup-card category-card" data-category="homepage">
+                <div class="mockup-preview">
+                    <iframe src="02-homepage/homepage-dashboard.html" title="Homepage Dashboard"></iframe>
+                </div>
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-lg font-semibold text-slate-900">Homepage Dashboard</h3>
+                    <span class="px-2 py-1 rounded-full text-xs font-medium status-implemented">
+                        Implémenté ✅
+                    </span>
+                </div>
+                <p class="text-sm text-slate-600 mb-4">
+                    Tableau de bord complet avec navigation intégrée, plan d'action, progression et cours actifs.
+                </p>
+                <div class="flex items-center justify-between">
+                    <div class="flex space-x-2">
+                        <span class="px-2 py-1 bg-blue-100 text-blue-700 rounded-md text-xs">Dashboard</span>
+                        <span class="px-2 py-1 bg-green-100 text-green-700 rounded-md text-xs">Charts</span>
+                        <span class="px-2 py-1 bg-purple-100 text-purple-700 rounded-md text-xs">Actions</span>
+                    </div>
+                    <a href="02-homepage/homepage-dashboard.html" target="_blank" class="text-indigo-600 hover:text-indigo-700 font-medium text-sm">
+                        Ouvrir <i class="fas fa-external-link-alt ml-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Homepage v2 (Sidebar Layout) -->
+            <div class="mockup-card category-card" data-category="homepage">
+                <div class="mockup-preview">
+                    <iframe src="02-homepage/homepage-v2.html" title="Homepage v2"></iframe>
+                </div>
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-lg font-semibold text-slate-900">Homepage v2 (Sidebar)</h3>
+                    <span class="px-2 py-1 rounded-full text-xs font-medium status-new">
+                        Nouveau ✨
+                    </span>
+                </div>
+                <p class="text-sm text-slate-600 mb-4">
+                    Layout sidebar + colonnes avec bandeau collapsible intégré et actions rapides.
+                </p>
+                <div class="flex items-center justify-between">
+                    <div class="flex space-x-2">
+                        <span class="px-2 py-1 bg-purple-100 text-purple-700 rounded-md text-xs">Sidebar</span>
+                        <span class="px-2 py-1 bg-blue-100 text-blue-700 rounded-md text-xs">Collapsible</span>
+                        <span class="px-2 py-1 bg-green-100 text-green-700 rounded-md text-xs">Spec-Based</span>
+                    </div>
+                    <a href="02-homepage/homepage-v2.html" target="_blank" class="text-indigo-600 hover:text-indigo-700 font-medium text-sm">
+                        Ouvrir <i class="fas fa-external-link-alt ml-1"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Dashboard Principal (Original) -->
+            <div class="mockup-card category-card" data-category="homepage">
+                <div class="mockup-preview">
+                    <iframe src="HomePage - mockup1.html" title="Dashboard Principal"></iframe>
+                </div>
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-lg font-semibold text-slate-900">Dashboard Principal</h3>
+                    <span class="px-2 py-1 rounded-full text-xs font-medium status-implemented">
+                        Implémenté ✅
+                    </span>
+                </div>
+                <p class="text-sm text-slate-600 mb-4">
+                    Page d'accueil personnalisée avec progression, cours actifs et recommandations.
+                </p>
+                <div class="flex items-center justify-between">
+                    <div class="flex space-x-2">
+                        <span class="px-2 py-1 bg-blue-100 text-blue-700 rounded-md text-xs">Responsive</span>
+                        <span class="px-2 py-1 bg-green-100 text-green-700 rounded-md text-xs">Interactive</span>
+                    </div>
+                    <a href="HomePage - mockup1.html" target="_blank" class="text-indigo-600 hover:text-indigo-700 font-medium text-sm">
+                        Ouvrir <i class="fas fa-external-link-alt ml-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Navigation Header -->
+            <div class="mockup-card category-card" data-category="navigation">
+                <div class="mockup-preview">
+                    <iframe src="01-navigation/header-navigation.html" title="Navigation Header"></iframe>
+                </div>
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-lg font-semibold text-slate-900">Navigation Header</h3>
+                    <span class="px-2 py-1 rounded-full text-xs font-medium status-implemented">
+                        Implémenté ✅
+                    </span>
+                </div>
+                <p class="text-sm text-slate-600 mb-4">
+                    Header global avec navigation responsive, recherche et menu mobile.
+                </p>
+                <div class="flex items-center justify-between">
+                    <div class="flex space-x-2">
+                        <span class="px-2 py-1 bg-blue-100 text-blue-700 rounded-md text-xs">Mobile Menu</span>
+                        <span class="px-2 py-1 bg-purple-100 text-purple-700 rounded-md text-xs">Sticky</span>
+                    </div>
+                    <a href="01-navigation/header-navigation.html" target="_blank" class="text-indigo-600 hover:text-indigo-700 font-medium text-sm">
+                        Ouvrir <i class="fas fa-external-link-alt ml-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Liste des Cours -->
+            <div class="mockup-card category-card" data-category="courses">
+                <div class="mockup-preview">
+                    <iframe src="03-courses/course-list.html" title="Liste des Cours"></iframe>
+                </div>
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-lg font-semibold text-slate-900">Liste des Cours</h3>
+                    <span class="px-2 py-1 rounded-full text-xs font-medium status-implemented">
+                        Implémenté ✅
+                    </span>
+                </div>
+                <p class="text-sm text-slate-600 mb-4">
+                    Catalogue de cours avec filtres avancés, vue grille/liste et recherche.
+                </p>
+                <div class="flex items-center justify-between">
+                    <div class="flex space-x-2">
+                        <span class="px-2 py-1 bg-orange-100 text-orange-700 rounded-md text-xs">Filtres</span>
+                        <span class="px-2 py-1 bg-green-100 text-green-700 rounded-md text-xs">Pagination</span>
+                    </div>
+                    <a href="03-courses/course-list.html" target="_blank" class="text-indigo-600 hover:text-indigo-700 font-medium text-sm">
+                        Ouvrir <i class="fas fa-external-link-alt ml-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Mobile Dashboard -->
+            <div class="mockup-card category-card" data-category="mobile">
+                <div class="mockup-preview">
+                    <iframe src="04-mobile/mobile-dashboard.html" title="Mobile Dashboard"></iframe>
+                </div>
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-lg font-semibold text-slate-900">Mobile Dashboard</h3>
+                    <span class="px-2 py-1 rounded-full text-xs font-medium status-implemented">
+                        Implémenté ✅
+                    </span>
+                </div>
+                <p class="text-sm text-slate-600 mb-4">
+                    Interface mobile native avec gestures, bottom tabs et pull-to-refresh.
+                </p>
+                <div class="flex items-center justify-between">
+                    <div class="flex space-x-2">
+                        <span class="px-2 py-1 bg-pink-100 text-pink-700 rounded-md text-xs">Gestures</span>
+                        <span class="px-2 py-1 bg-blue-100 text-blue-700 rounded-md text-xs">Touch</span>
+                    </div>
+                    <a href="04-mobile/mobile-dashboard.html" target="_blank" class="text-indigo-600 hover:text-indigo-700 font-medium text-sm">
+                        Ouvrir <i class="fas fa-external-link-alt ml-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Admin Dashboard -->
+            <div class="mockup-card category-card" data-category="admin">
+                <div class="mockup-preview">
+                    <iframe src="05-admin/admin-dashboard.html" title="Admin Dashboard"></iframe>
+                </div>
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-lg font-semibold text-slate-900">Admin Dashboard</h3>
+                    <span class="px-2 py-1 rounded-full text-xs font-medium status-implemented">
+                        Implémenté ✅
+                    </span>
+                </div>
+                <p class="text-sm text-slate-600 mb-4">
+                    Interface d'administration avec analytics, gestion utilisateurs et métriques.
+                </p>
+                <div class="flex items-center justify-between">
+                    <div class="flex space-x-2">
+                        <span class="px-2 py-1 bg-red-100 text-red-700 rounded-md text-xs">Analytics</span>
+                        <span class="px-2 py-1 bg-purple-100 text-purple-700 rounded-md text-xs">Charts</span>
+                    </div>
+                    <a href="05-admin/admin-dashboard.html" target="_blank" class="text-indigo-600 hover:text-indigo-700 font-medium text-sm">
+                        Ouvrir <i class="fas fa-external-link-alt ml-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Mockups à venir -->
+            <div class="mockup-card category-card" data-category="courses">
+                <div class="mockup-preview bg-slate-100 flex items-center justify-center">
+                    <div class="text-center text-slate-500">
+                        <i class="fas fa-play-circle text-4xl mb-2"></i>
+                        <div class="text-sm">À développer</div>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-lg font-semibold text-slate-900">Player de Cours</h3>
+                    <span class="px-2 py-1 rounded-full text-xs font-medium status-todo">
+                        Todo 📝
+                    </span>
+                </div>
+                <p class="text-sm text-slate-600 mb-4">
+                    Interface de lecture de cours avec progression, navigation et interactions.
+                </p>
+                <div class="flex items-center justify-between">
+                    <div class="flex space-x-2">
+                        <span class="px-2 py-1 bg-slate-100 text-slate-600 rounded-md text-xs">Video</span>
+                        <span class="px-2 py-1 bg-slate-100 text-slate-600 rounded-md text-xs">Progress</span>
+                    </div>
+                    <span class="text-slate-400 text-sm">En développement</span>
+                </div>
+            </div>
+
+            <div class="mockup-card category-card" data-category="courses">
+                <div class="mockup-preview bg-slate-100 flex items-center justify-center">
+                    <div class="text-center text-slate-500">
+                        <i class="fas fa-dumbbell text-4xl mb-2"></i>
+                        <div class="text-sm">À développer</div>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-lg font-semibold text-slate-900">Interface Exercices</h3>
+                    <span class="px-2 py-1 rounded-full text-xs font-medium status-in-progress">
+                        En cours 🔄
+                    </span>
+                </div>
+                <p class="text-sm text-slate-600 mb-4">
+                    Interface d'exercices interactifs avec feedback temps réel et scoring.
+                </p>
+                <div class="flex items-center justify-between">
+                    <div class="flex space-x-2">
+                        <span class="px-2 py-1 bg-slate-100 text-slate-600 rounded-md text-xs">Interactive</span>
+                        <span class="px-2 py-1 bg-slate-100 text-slate-600 rounded-md text-xs">Scoring</span>
+                    </div>
+                    <span class="text-slate-400 text-sm">70% terminé</span>
+                </div>
+            </div>
+
+            <div class="mockup-card category-card" data-category="mobile">
+                <div class="mockup-preview bg-slate-100 flex items-center justify-center">
+                    <div class="text-center text-slate-500">
+                        <i class="fas fa-mobile-alt text-4xl mb-2"></i>
+                        <div class="text-sm">À développer</div>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-lg font-semibold text-slate-900">Mobile Cours</h3>
+                    <span class="px-2 py-1 rounded-full text-xs font-medium status-todo">
+                        Todo 📝
+                    </span>
+                </div>
+                <p class="text-sm text-slate-600 mb-4">
+                    Adaptation mobile du player de cours avec gestures optimisées.
+                </p>
+                <div class="flex items-center justify-between">
+                    <div class="flex space-x-2">
+                        <span class="px-2 py-1 bg-slate-100 text-slate-600 rounded-md text-xs">Swipe</span>
+                        <span class="px-2 py-1 bg-slate-100 text-slate-600 rounded-md text-xs">Offline</span>
+                    </div>
+                    <span class="text-slate-400 text-sm">Planifié</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Guide d'utilisation -->
+        <section class="mt-12 bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+            <h2 class="text-2xl font-semibold text-slate-900 mb-6">📖 Guide d'utilisation des Mockups</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-800 mb-4">🎯 Objectif des Mockups</h3>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                            <span>Valider les concepts UX avant développement</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                            <span>Tester la navigation et les interactions</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                            <span>Recueillir des feedbacks utilisateurs</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                            <span>Documenter le design system</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-800 mb-4">🔧 Fonctionnalités Testables</h3>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li class="flex items-start">
+                            <i class="fas fa-mobile-alt text-blue-500 mr-2 mt-1"></i>
+                            <span>Responsive design (320px → 1440px)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-mouse-pointer text-indigo-500 mr-2 mt-1"></i>
+                            <span>Interactions et animations</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-universal-access text-purple-500 mr-2 mt-1"></i>
+                            <span>Accessibilité et navigation clavier</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-tachometer-alt text-orange-500 mr-2 mt-1"></i>
+                            <span>Performance et fluidité</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-8 p-4 bg-blue-50 rounded-lg">
+                <div class="flex items-start">
+                    <i class="fas fa-lightbulb text-blue-600 mr-3 mt-1"></i>
+                    <div>
+                        <h4 class="font-semibold text-blue-900 mb-2">💡 Conseils d'évaluation</h4>
+                        <p class="text-sm text-blue-800">
+                            Testez chaque mockup sur différents appareils, redimensionnez la fenêtre pour valider le responsive, 
+                            utilisez la navigation clavier, et notez vos observations pour améliorer l'expérience utilisateur.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="mt-12 text-center text-slate-500">
+            <p>&copy; 2025 FunLearning - Phase 11.6 UX Design System</p>
+            <p class="text-sm mt-2">
+                Mockups créés avec HTML, CSS, JavaScript • Optimisés pour tous les navigateurs
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Category filtering
+        const categoryButtons = document.querySelectorAll('[data-category]');
+        const mockupCards = document.querySelectorAll('.mockup-card');
+
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const category = button.dataset.category;
+                
+                // Update button states
+                categoryButtons.forEach(btn => {
+                    btn.classList.remove('bg-indigo-600', 'text-white');
+                    btn.classList.add('bg-slate-100', 'text-slate-700');
+                });
+                
+                button.classList.remove('bg-slate-100', 'text-slate-700');
+                button.classList.add('bg-indigo-600', 'text-white');
+                
+                // Filter cards
+                mockupCards.forEach(card => {
+                    if (category === 'all' || card.dataset.category === category) {
+                        card.style.display = 'block';
+                        card.style.animation = 'fadeIn 0.5s ease';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Add CSS animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Statistics update
+        function updateStats() {
+            const totalMockups = mockupCards.length;
+            const implementedMockups = document.querySelectorAll('.status-implemented').length;
+            const inProgressMockups = document.querySelectorAll('.status-in-progress').length;
+            
+            console.log(`Stats: ${implementedMockups}/${totalMockups} mockups implémentés`);
+        }
+
+        updateStats();
+    </script>
+</body>
+</html>

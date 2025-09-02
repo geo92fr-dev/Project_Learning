@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FunLearning - Liste des Cours</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Design System Documentation -->
+    <!-- 
+    Course List Strategy: Grid/List adaptative avec filtres avancés
+    - Vue grille par défaut (cartes visuelles)
+    - Vue liste pour comparaison rapide
+    - Filtres multiples: niveau, matière, progression, durée
+    - Search avec auto-complétion
+    - Tri par pertinence, date, popularité
+    - États: Nouveau, En cours, Terminé, Verrouillé
+    
+    Layout Patterns:
+    - Header avec titre + contrôles de vue
+    - Sidebar filtres (desktop) / Drawer (mobile)
+    - Grille adaptative responsive
+    - Pagination ou infinite scroll
+    
+    Palette: Mint & Indigo + couleurs matières
+    -->
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%);
+            margin: 0;
+            min-height: 100vh;
+        }
+        
+        .course-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .course-card.completed {
+            border-left: 4px solid #10b981;
+        }
+        
+        .course-card.in-progress {
+            border-left: 4px solid #f59e0b;
+        }
+        
+        .course-card.new {
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .course-card.locked {
+            opacity: 0.6;
+            filter: grayscale(30%);
+        }
+        
+        .progress-bar {
+            background: #e2e8f0;
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 9999px;
+            transition: width 0.5s ease;
+        }
+        
+        .filter-tag {
+            transition: all 0.2s ease;
+        }
+        
+        .filter-tag:hover {
+            transform: scale(1.05);
+        }
+        
+        .filter-tag.active {
+            background: #4f46e5;
+            color: white;
+        }
+        
+        .view-toggle {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+        }
+        
+        .view-toggle button {
+            padding: 8px 16px;
+            background: white;
+            border: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .view-toggle button.active {
+            background: #4f46e5;
+            color: white;
+        }
+        
+        .list-view .course-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .list-view .course-card {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+        }
+        
+        .list-view .course-image {
+            width: 80px;
+            height: 60px;
+            flex-shrink: 0;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+        }
+        
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header avec breadcrumb -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-4">
+            <!-- Breadcrumb -->
+            <nav class="mb-4" aria-label="Breadcrumb">
+                <ol class="flex items-center space-x-2 text-sm text-slate-500">
+                    <li><a href="#" class="hover:text-slate-700">Accueil</a></li>
+                    <li><i class="fas fa-chevron-right text-xs"></i></li>
+                    <li class="text-slate-900 font-medium">Cours</li>
+                </ol>
+            </nav>
+            
+            <!-- Header principal -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-bold text-slate-900">Catalogue des Cours</h1>
+                    <p class="text-slate-600 mt-1">Découvrez et continuez vos cours d'apprentissage</p>
+                </div>
+                
+                <!-- Contrôles de vue -->
+                <div class="flex items-center space-x-4">
+                    <div class="view-toggle">
+                        <button class="active" id="gridView" title="Vue grille">
+                            <i class="fas fa-th"></i>
+                        </button>
+                        <button id="listView" title="Vue liste">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                    
+                    <select class="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <option>Trier par pertinence</option>
+                        <option>Trier par date</option>
+                        <option>Trier par popularité</option>
+                        <option>Trier par progression</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-6">
+        <div class="flex flex-col lg:flex-row gap-6">
+            
+            <!-- Sidebar Filtres -->
+            <aside class="lg:w-64 flex-shrink-0">
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 sticky top-24">
+                    <h3 class="font-semibold text-slate-900 mb-4">Filtres</h3>
+                    
+                    <!-- Recherche -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-slate-700 mb-2">Rechercher</label>
+                        <div class="relative">
+                            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                            <input 
+                                type="text" 
+                                placeholder="Nom du cours..."
+                                class="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                id="searchInput"
+                            >
+                        </div>
+                    </div>
+                    
+                    <!-- Progression -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-slate-700 mb-3">Progression</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="rounded text-indigo-600 focus:ring-indigo-500">
+                                <span class="ml-2 text-sm text-slate-600">Nouveau</span>
+                                <span class="ml-auto text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">12</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="rounded text-indigo-600 focus:ring-indigo-500">
+                                <span class="ml-2 text-sm text-slate-600">En cours</span>
+                                <span class="ml-auto text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">5</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="rounded text-indigo-600 focus:ring-indigo-500">
+                                <span class="ml-2 text-sm text-slate-600">Terminé</span>
+                                <span class="ml-auto text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">8</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Matières -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-slate-700 mb-3">Matières</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="rounded text-indigo-600 focus:ring-indigo-500">
+                                <span class="ml-2 text-sm text-slate-600">Mathématiques</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="rounded text-indigo-600 focus:ring-indigo-500">
+                                <span class="ml-2 text-sm text-slate-600">Français</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="rounded text-indigo-600 focus:ring-indigo-500">
+                                <span class="ml-2 text-sm text-slate-600">Sciences</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="rounded text-indigo-600 focus:ring-indigo-500">
+                                <span class="ml-2 text-sm text-slate-600">Histoire</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Niveau -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-slate-700 mb-3">Niveau</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="radio" name="level" class="text-indigo-600 focus:ring-indigo-500">
+                                <span class="ml-2 text-sm text-slate-600">6ème</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="level" class="text-indigo-600 focus:ring-indigo-500">
+                                <span class="ml-2 text-sm text-slate-600">5ème</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="level" class="text-indigo-600 focus:ring-indigo-500">
+                                <span class="ml-2 text-sm text-slate-600">4ème</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button class="w-full bg-slate-100 text-slate-600 px-4 py-2 rounded-lg hover:bg-slate-200 transition-colors text-sm">
+                        Réinitialiser les filtres
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Contenu principal -->
+            <main class="flex-1">
+                <!-- Tags filtres actifs -->
+                <div class="flex flex-wrap gap-2 mb-6" id="activeFilters">
+                    <span class="filter-tag active inline-flex items-center px-3 py-1 rounded-full text-sm bg-indigo-100 text-indigo-700">
+                        En cours
+                        <button class="ml-2 hover:bg-indigo-200 rounded-full p-1">
+                            <i class="fas fa-times text-xs"></i>
+                        </button>
+                    </span>
+                    <span class="filter-tag inline-flex items-center px-3 py-1 rounded-full text-sm bg-slate-100 text-slate-700">
+                        Mathématiques
+                        <button class="ml-2 hover:bg-slate-200 rounded-full p-1">
+                            <i class="fas fa-times text-xs"></i>
+                        </button>
+                    </span>
+                </div>
+
+                <!-- Statistiques -->
+                <div class="bg-white rounded-lg border border-slate-200 p-4 mb-6">
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-slate-600">
+                            <strong>25 cours</strong> trouvés • <strong>5</strong> en cours
+                        </span>
+                        <button class="text-sm text-indigo-600 hover:text-indigo-700 font-medium">
+                            Voir mes recommandations
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Grille des cours -->
+                <div class="course-grid grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="courseGrid">
+                    
+                    <!-- Cours 1 - En cours -->
+                    <article class="course-card in-progress bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden fade-in">
+                        <div class="relative">
+                            <img 
+                                src="https://images.unsplash.com/photo-1596496356650-7ad5cb50badd?w=400&h=200&fit=crop&auto=format" 
+                                alt="Théorème de Pythagore"
+                                class="course-image w-full h-48 object-cover"
+                            >
+                            <div class="absolute top-3 left-3">
+                                <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full text-xs font-medium">
+                                    En cours
+                                </span>
+                            </div>
+                            <div class="absolute top-3 right-3">
+                                <button class="bg-white bg-opacity-90 p-2 rounded-full hover:bg-opacity-100 transition-all">
+                                    <i class="fas fa-heart text-slate-400 hover:text-red-500"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <div class="flex items-start justify-between mb-3">
+                                <div>
+                                    <h3 class="font-semibold text-slate-900 mb-1">Le Théorème de Pythagore</h3>
+                                    <p class="text-sm text-slate-600">Mathématiques • 6ème</p>
+                                </div>
+                                <div class="flex items-center text-yellow-500">
+                                    <i class="fas fa-star text-xs"></i>
+                                    <span class="text-xs ml-1 text-slate-600">4.8</span>
+                                </div>
+                            </div>
+                            
+                            <p class="text-sm text-slate-600 mb-4 line-clamp-2">
+                                Apprenez à utiliser le théorème de Pythagore pour calculer les longueurs dans un triangle rectangle.
+                            </p>
+                            
+                            <!-- Progression -->
+                            <div class="mb-4">
+                                <div class="flex items-center justify-between text-sm mb-2">
+                                    <span class="text-slate-600">Progression</span>
+                                    <span class="font-medium text-yellow-600">75%</span>
+                                </div>
+                                <div class="progress-bar h-2">
+                                    <div class="progress-fill bg-yellow-500" style="width: 75%"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Métadonnées -->
+                            <div class="flex items-center justify-between text-xs text-slate-500 mb-4">
+                                <span><i class="fas fa-clock mr-1"></i> 15 min restant</span>
+                                <span><i class="fas fa-users mr-1"></i> 1,234 étudiants</span>
+                            </div>
+                            
+                            <button class="w-full bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors font-medium">
+                                Continuer le cours
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Cours 2 - Nouveau -->
+                    <article class="course-card new bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden fade-in">
+                        <div class="relative">
+                            <img 
+                                src="https://images.unsplash.com/photo-1454391304352-2bf4678b1a7a?w=400&h=200&fit=crop&auto=format" 
+                                alt="Grammaire française"
+                                class="course-image w-full h-48 object-cover"
+                            >
+                            <div class="absolute top-3 left-3">
+                                <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
+                                    Nouveau
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <div class="flex items-start justify-between mb-3">
+                                <div>
+                                    <h3 class="font-semibold text-slate-900 mb-1">Les Fonctions Syntaxiques</h3>
+                                    <p class="text-sm text-slate-600">Français • 5ème</p>
+                                </div>
+                                <div class="flex items-center text-yellow-500">
+                                    <i class="fas fa-star text-xs"></i>
+                                    <span class="text-xs ml-1 text-slate-600">4.6</span>
+                                </div>
+                            </div>
+                            
+                            <p class="text-sm text-slate-600 mb-4 line-clamp-2">
+                                Maîtrisez l'analyse grammaticale et identifiez les différentes fonctions dans une phrase.
+                            </p>
+                            
+                            <!-- Métadonnées -->
+                            <div class="flex items-center justify-between text-xs text-slate-500 mb-4">
+                                <span><i class="fas fa-clock mr-1"></i> 2h 30min</span>
+                                <span><i class="fas fa-users mr-1"></i> 892 étudiants</span>
+                            </div>
+                            
+                            <button class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                                Commencer le cours
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Cours 3 - Terminé -->
+                    <article class="course-card completed bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden fade-in">
+                        <div class="relative">
+                            <img 
+                                src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=200&fit=crop&auto=format" 
+                                alt="Révolution française"
+                                class="course-image w-full h-48 object-cover"
+                            >
+                            <div class="absolute top-3 left-3">
+                                <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-medium">
+                                    Terminé
+                                </span>
+                            </div>
+                            <div class="absolute bottom-3 right-3">
+                                <div class="bg-green-500 text-white p-2 rounded-full">
+                                    <i class="fas fa-check text-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <div class="flex items-start justify-between mb-3">
+                                <div>
+                                    <h3 class="font-semibold text-slate-900 mb-1">La Révolution Française</h3>
+                                    <p class="text-sm text-slate-600">Histoire • 4ème</p>
+                                </div>
+                                <div class="flex items-center text-yellow-500">
+                                    <i class="fas fa-star text-xs"></i>
+                                    <span class="text-xs ml-1 text-slate-600">4.9</span>
+                                </div>
+                            </div>
+                            
+                            <p class="text-sm text-slate-600 mb-4 line-clamp-2">
+                                Découvrez les événements majeurs et les conséquences de la Révolution française de 1789.
+                            </p>
+                            
+                            <!-- Badge de réussite -->
+                            <div class="flex items-center mb-4 p-2 bg-green-50 rounded-lg">
+                                <i class="fas fa-trophy text-green-500 mr-2"></i>
+                                <span class="text-sm text-green-700 font-medium">Cours terminé avec succès!</span>
+                            </div>
+                            
+                            <div class="flex space-x-2">
+                                <button class="flex-1 bg-slate-100 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-200 transition-colors font-medium">
+                                    Revoir
+                                </button>
+                                <button class="flex-1 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors font-medium">
+                                    Certificat
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Skeleton loaders pour la pagination -->
+                    <div class="skeleton bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden" style="display: none;">
+                        <div class="skeleton h-48"></div>
+                        <div class="p-6">
+                            <div class="skeleton h-4 w-3/4 mb-2 rounded"></div>
+                            <div class="skeleton h-3 w-1/2 mb-4 rounded"></div>
+                            <div class="skeleton h-3 w-full mb-2 rounded"></div>
+                            <div class="skeleton h-3 w-2/3 mb-4 rounded"></div>
+                            <div class="skeleton h-8 w-full rounded"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="flex items-center justify-between mt-8">
+                    <p class="text-sm text-slate-600">
+                        Affichage de <strong>1</strong> à <strong>9</strong> sur <strong>25</strong> cours
+                    </p>
+                    
+                    <nav class="flex items-center space-x-2">
+                        <button class="px-3 py-2 text-sm text-slate-500 hover:text-slate-700 disabled:opacity-50" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="px-3 py-2 text-sm bg-indigo-600 text-white rounded-lg">1</button>
+                        <button class="px-3 py-2 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg">2</button>
+                        <button class="px-3 py-2 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg">3</button>
+                        <span class="px-2 text-slate-400">…</span>
+                        <button class="px-3 py-2 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg">8</button>
+                        <button class="px-3 py-2 text-sm text-slate-500 hover:text-slate-700">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </nav>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // View toggle functionality
+        const gridViewBtn = document.getElementById('gridView');
+        const listViewBtn = document.getElementById('listView');
+        const courseGrid = document.getElementById('courseGrid');
+        const body = document.body;
+
+        function setGridView() {
+            gridViewBtn.classList.add('active');
+            listViewBtn.classList.remove('active');
+            body.classList.remove('list-view');
+            courseGrid.className = 'course-grid grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6';
+        }
+
+        function setListView() {
+            listViewBtn.classList.add('active');
+            gridViewBtn.classList.remove('active');
+            body.classList.add('list-view');
+            courseGrid.className = 'course-grid flex flex-col gap-4';
+        }
+
+        gridViewBtn.addEventListener('click', setGridView);
+        listViewBtn.addEventListener('click', setListView);
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        let searchTimeout;
+
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                const query = e.target.value.toLowerCase();
+                console.log('Recherche:', query);
+                // Ici on filtrerait les cours selon la recherche
+                simulateSearch(query);
+            }, 300);
+        });
+
+        function simulateSearch(query) {
+            const courses = document.querySelectorAll('.course-card:not(.skeleton)');
+            courses.forEach(course => {
+                const title = course.querySelector('h3').textContent.toLowerCase();
+                if (title.includes(query) || query === '') {
+                    course.style.display = '';
+                    course.classList.add('fade-in');
+                } else {
+                    course.style.display = 'none';
+                }
+            });
+        }
+
+        // Filter functionality
+        const filterCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+        const filterRadios = document.querySelectorAll('input[type="radio"]');
+
+        filterCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', applyFilters);
+        });
+
+        filterRadios.forEach(radio => {
+            radio.addEventListener('change', applyFilters);
+        });
+
+        function applyFilters() {
+            console.log('Filtres appliqués');
+            // Ici on appliquerait les filtres sélectionnés
+        }
+
+        // Simulate loading more courses
+        function loadMoreCourses() {
+            const skeletons = document.querySelectorAll('.skeleton');
+            skeletons.forEach((skeleton, index) => {
+                setTimeout(() => {
+                    skeleton.style.display = 'block';
+                    setTimeout(() => {
+                        skeleton.style.display = 'none';
+                        // Ici on ajouterait de vrais cours
+                    }, 2000);
+                }, index * 200);
+            });
+        }
+
+        // Demo: Charger plus de cours après 3 secondes
+        setTimeout(loadMoreCourses, 3000);
+
+        // Heart/favorite functionality
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('fa-heart')) {
+                e.target.classList.toggle('text-red-500');
+                e.target.classList.toggle('text-slate-400');
+            }
+        });
+
+        // Active filter tags removal
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('fa-times')) {
+                e.target.closest('.filter-tag').remove();
+            }
+        });
+    </script>
+</body>
+</html>

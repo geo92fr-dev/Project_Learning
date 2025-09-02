@@ -37,7 +37,7 @@
 
 ### 🚀 **Phases d'Extension UX + Content Management** 🆕
 
-#### 🎨 **Phase 11.4 - UX Design System** 
+#### 🎨 **Phase 11.6 - UX Design System** 
 - **Focus :** Système de design complet avec approche itérative
 - **Innovation :** Design tokens + 45+ composants atomiques
 - **Méthode :** Développement modulaire piloté par mockups
@@ -51,7 +51,7 @@
 
 ### 📋 **Extensions UX + Content Management**
 
-#### 🎨 **Phase 11.4 - UX Design Features**
+#### 🎨 **Phase 11.6 - UX Design Features**
 - ✅ **Design System** : Tokens (couleurs, typo, espacements) + Architecture atomique
 - ✅ **Navigation** : Responsive mobile/desktop avec animations fluides
 - ✅ **Dashboard** : Métriques interactives + cartes statistiques animées
@@ -123,7 +123,7 @@ Chaque phase dispose de deux documents complémentaires :
 | **5**      | [Firebase Data Layer](phases/phase-5-firebase.md)    | [📋 Recap Phase 5](phases/phase-5-recap.md)    | ✅ **COMPLÉTÉE** 🚀   |
 | **6-10**   | [Phases 6-10](phases/)                               | [📋 Récaps 6-10](phases/README-RECAPS.md)      | 🎯 **PLANIFIÉES**     |
 | **11**     | [Admin Dashboard](phases/phase-11-admin-dashboard.md) | [📋 Recap Phase 11](phases/phase-11-recap.md)  | ✅ **PHASE 11.1 TERMINÉ** 🎉 |
-| **11.4**   | [UX Design System](phases/phase-11.4-ux-design.md)   | *Extension UX*                                  | 🎨 **NOUVELLE** ⭐    |
+| **11.6**   | [UX Design System](phases/phase-11.6-ux-design.md)   | *Extension UX*                                  | 🎨 **NOUVELLE** ⭐    |
 | **11.5**   | [Content Versioning](phases/phase-11.5-content-versioning.md) | *Phase Extension*          | 🆕 **NOUVELLE** ⭐    |
 | **12**     | [Production Deploy](phases/phase-12-production.md)   | [📋 Recap Phase 12](phases/phase-12-recap.md)  | 🎯 **FINALE**         |
 

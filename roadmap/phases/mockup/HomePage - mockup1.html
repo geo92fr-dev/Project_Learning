@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FunLearning - Homepage v2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Design System Documentation -->
+    <!-- 
+    HomePage v2 Strategy: Approche card-centric avec mise en avant des actions
+    - Layout en colonnes asymétriques (sidebar + main content)
+    - Quick actions prominentes dans sidebar
+    - Content principal avec sections modulaires
+    - Bandeau collapsible plus intégré visuellement
+    - Focus sur la découvrabilité et l'efficacité
+    
+    Différences v1 vs v2:
+    - v1: Layout traditionnel vertical
+    - v2: Layout sidebar + colonnes pour optimiser l'espace
+    - v1: Bandeau simple
+    - v2: Bandeau intégré avec preview des sélections
+    - v1: Progression linéaire
+    - v2: Progression en dashboard modulaire
+    
+    Palette: Mint & Indigo avec accents Purple pour différenciation
+    -->
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .text-gradient {
+            background-image: linear-gradient(90deg, #6366f1, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card {
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+        .collapsible-content.open {
+            max-height: 1000px;
+        }
+        .rotate-180 {
+            transform: rotate(180deg);
+        }
+        .custom-notification {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background-color: #fff;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(150%);
+            transition: transform 0.3s ease-out;
+            z-index: 1000;
+        }
+        .custom-notification.show {
+            transform: translateY(0);
+        }
+        .custom-notification.success {
+            border-left: 5px solid #10b981;
+        }
+        .custom-notification.error {
+            border-left: 5px solid #ef4444;
+        }
+    </style>
+</head>
+<body class="antialiased text-slate-800">
+
+    <!-- Custom Notification -->
+    <div id="notification" class="custom-notification flex items-center">
+        <i id="notification-icon" class="mr-3 text-2xl"></i>
+        <span id="notification-text" class="text-sm font-medium"></span>
+    </div>
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+        <!-- Sidebar -->
+        <aside class="lg:col-span-1 p-6 bg-white rounded-2xl shadow-lg h-full">
+            <div class="flex items-center space-x-4 mb-8">
+                <i class="fas fa-hat-wizard text-3xl text-indigo-500"></i>
+                <h1 class="text-2xl font-extrabold text-gradient">FunLearning</h1>
+            </div>
+
+            <nav class="space-y-2">
+                <a href="#" class="flex items-center p-3 font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg shadow-md transition">
+                    <i class="fas fa-home mr-3"></i>
+                    Tableau de Bord
+                </a>
+                <a href="#" class="flex items-center p-3 text-slate-600 hover:text-indigo-600 transition">
+                    <i class="fas fa-book-open mr-3"></i>
+                    Mes Matières
+                </a>
+                <a href="#" class="flex items-center p-3 text-slate-600 hover:text-indigo-600 transition">
+                    <i class="fas fa-chart-line mr-3"></i>
+                    Mes Statistiques
+                </a>
+                <a href="#" class="flex items-center p-3 text-slate-600 hover:text-indigo-600 transition">
+                    <i class="fas fa-cog mr-3"></i>
+                    Paramètres
+                </a>
+            </nav>
+
+            <div class="mt-8 pt-8 border-t border-slate-200">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-indigo-200 flex items-center justify-center font-bold text-indigo-700">A</div>
+                    <div>
+                        <div id="student-name" class="font-semibold text-slate-900">Amandine</div>
+                        <div class="text-xs text-slate-500">Étudiante</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Contenu principal -->
+        <main class="lg:col-span-3">
+
+            <!-- Sélection de cours (bandeau) -->
+            <div class="mb-6 p-6 bg-white rounded-2xl shadow-lg">
+                <div id="collapse-toggle" class="flex justify-between items-center cursor-pointer">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-edit text-xl text-slate-600"></i>
+                        <h3 class="text-xl font-bold text-slate-900">Sélectionner mes cours d'actualité</h3>
+                        <span id="selected-count" class="bg-indigo-100 text-indigo-700 text-sm font-bold px-3 py-1 rounded-full">0 sélectionnés</span>
+                    </div>
+                    <i id="collapse-icon" class="fas fa-chevron-down w-6 h-6 text-slate-500 transition-transform"></i>
+                </div>
+                <div id="course-selector-panel" class="collapsible-content">
+                    <p class="mt-4 text-slate-600">Sélectionnez les cours sur lesquels vous travaillez actuellement.</p>
+                    <div id="course-selection-grid" class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Course selection cards will be injected here -->
+                    </div>
+                    
+                    <div class="mt-6 p-4 bg-slate-100 rounded-xl border border-slate-200">
+                        <h4 class="font-bold text-slate-900">Un cours manque à l'appel ?</h4>
+                        <p class="text-sm text-slate-600 mt-1">Suggérez-le-nous pour que nous puissions l'ajouter.</p>
+                        <div class="mt-2 flex space-x-2">
+                            <input type="text" id="suggestion-input" class="flex-grow p-2 border border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="Ex: Les équations à une variable">
+                            <button id="suggest-course-btn" class="px-4 py-2 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition whitespace-nowrap">Envoyer</button>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex justify-end space-x-2">
+                        <button id="reset-selection-btn" class="px-4 py-2 text-slate-600 hover:text-slate-800 font-semibold rounded-lg transition">Réinitialiser</button>
+                        <button id="save-selection-btn" class="px-4 py-2 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition">Enregistrer</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panneau "Ton Plan de Travail" -->
+            <section class="mb-6 p-6 bg-white rounded-2xl shadow-lg">
+                <h2 class="text-2xl font-bold text-slate-900 mb-6">🎯 Ton Plan de Travail</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Carte "Ton Actualité" -->
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200">
+                        <h3 class="text-xl font-bold text-slate-900">📰 Ton Actualité</h3>
+                        <div id="current-topics-container" class="mt-4 space-y-4">
+                            <!-- Les indicateurs d'actualité seront injectés ici par JavaScript -->
+                        </div>
+                    </div>
+                    <!-- Carte "À réviser" -->
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200">
+                        <h3 class="text-xl font-bold text-slate-900">📚 Cours à Réviser</h3>
+                        <p class="mt-2 text-slate-600">
+                            Pour une meilleure mémorisation, revois ces cours aux dates recommandées.
+                        </p>
+                        <div id="revisions-container" class="mt-4 space-y-3">
+                            <!-- Les cours à réviser seront injectés ici par JavaScript -->
+                        </div>
+                    </div>
+                    <!-- Carte "Parcours Personnalisé" -->
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 lg:col-span-3">
+                        <h3 class="text-xl font-bold text-indigo-700">🚀 Ton Parcours Personnalisé</h3>
+                        <p id="reco-description" class="mt-2 text-slate-600">
+                            Basé sur tes dernières performances, nous te conseillons de revoir...
+                        </p>
+                        <div id="reco-topic-card" class="card mt-4 p-4 bg-white rounded-xl shadow-sm border border-slate-200 cursor-pointer">
+                            <h4 id="reco-topic-title" class="font-semibold text-slate-900">Le sujet du cours</h4>
+                            <p id="reco-topic-subject" class="text-sm text-slate-500">Matière</p>
+                            <button id="start-reco-btn" class="mt-4 w-full px-4 py-2 text-sm bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition">Commencer ce parcours</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section "Mes Matières" -->
+            <section class="p-6 bg-white rounded-2xl shadow-lg">
+                <h2 class="text-2xl font-bold text-slate-900 mb-6">Mes Matières</h2>
+                <div id="subjects-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Les cartes des matières seront injectées ici par JavaScript -->
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // Static student data
+        const studentData = {
+            name: "Amandine",
+            subjects: [
+                { 
+                    id: 'math', name: "Mathématiques", progress: 75, color: '#f97316', icon: '🔢',
+                    courses: [
+                        { id: 'pythagore', name: 'Le Théorème de Pythagore', completed: 15, total: 20, selected: true },
+                        { id: 'thales', name: 'Le Théorème de Thalès', completed: 10, total: 20, selected: false },
+                        { id: 'fractions', name: 'Les fractions', completed: 8, total: 15, selected: false }
+                    ]
+                },
+                { 
+                    id: 'fr', name: "Français", progress: 50, color: '#10b981', icon: '📖',
+                    courses: [
+                        { id: 'syntaxe', name: 'Les fonctions syntaxiques', completed: 10, total: 20, selected: false },
+                        { id: 'grammaire', name: 'La grammaire', completed: 5, total: 15, selected: false }
+                    ]
+                },
+                { 
+                    id: 'phys', name: "Physique-Chimie", progress: 20, color: '#8b5cf6', icon: '🧪',
+                    courses: [
+                        { id: 'air', name: 'La composition de l\'air', completed: 5, total: 25, selected: true },
+                        { id: 'electricite', name: 'L\'électricité statique', completed: 3, total: 10, selected: false }
+                    ]
+                },
+                { 
+                    id: 'hist', name: "Histoire-Géo", progress: 90, color: '#ef4444', icon: '🌍',
+                    courses: [
+                        { id: 'revolution', name: 'La Révolution Française', completed: 18, total: 20, selected: false }
+                    ]
+                },
+                { 
+                    id: 'svt', name: "SVT", progress: 40, color: '#3b82f6', icon: '🧬',
+                    courses: [
+                        { id: 'cellule', name: 'La cellule', completed: 8, total: 20, selected: false }
+                    ]
+                }
+            ],
+            recommendedPath: {
+                title: "Les fractions et les nombres décimaux",
+                subject: "Mathématiques",
+                reason: "Exercices sur les divisions peu maîtrisés."
+            },
+            revisions: [
+                { title: "L'électricité statique", subject: "Physique", date: "aujourd'hui" },
+                { title: "La Révolution Française", subject: "Histoire", date: "dans 2 jours" },
+                { title: "Les fonctions syntaxiques", subject: "Français", date: "dans 7 jours" }
+            ]
+        };
+
+        // Custom notification system
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            const icon = document.getElementById('notification-icon');
+            const text = document.getElementById('notification-text');
+            
+            // Set content
+            text.textContent = message;
+            
+            // Set type
+            notification.className = `custom-notification ${type}`;
+            
+            // Set icon
+            if (type === 'success') {
+                icon.className = 'fas fa-check-circle mr-3 text-green-500';
+            } else {
+                icon.className = 'fas fa-exclamation-circle mr-3 text-red-500';
+            }
+            
+            // Show notification
+            notification.classList.add('show');
+            
+            // Auto-hide after 4 seconds
+            setTimeout(() => {
+                hideNotification();
+            }, 4000);
+        }
+        
+        function hideNotification() {
+            const notification = document.getElementById('notification');
+            notification.classList.remove('show');
+        }
+
+        // Render functions
+        function renderCourseSelector() {
+            const courseSelectionGrid = document.getElementById('course-selection-grid');
+            courseSelectionGrid.innerHTML = studentData.subjects.map(subject => `
+                <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
+                    <h4 class="font-semibold text-slate-900">${subject.name}</h4>
+                    <div class="mt-2 space-y-2">
+                        ${subject.courses.map(course => `
+                            <label class="flex items-center space-x-2 text-sm text-slate-600 cursor-pointer">
+                                <input type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 rounded" data-subject-id="${subject.id}" data-course-id="${course.id}" ${course.selected ? 'checked' : ''}>
+                                <span>${course.name}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+            updateSelectedCount();
+        }
+
+        function renderCurrentTopics() {
+            const currentTopicsContainer = document.getElementById('current-topics-container');
+            const selectedCourses = studentData.subjects.flatMap(subject => 
+                subject.courses.filter(course => course.selected).map(course => ({
+                    ...course, 
+                    subjectName: subject.name, 
+                    subjectColor: subject.color 
+                }))
+            );
+
+            if (selectedCourses.length > 0) {
+                currentTopicsContainer.innerHTML = selectedCourses.map(course => {
+                    const progress = Math.round((course.completed / course.total) * 100);
+                    return `
+                        <div class="bg-white p-4 rounded-xl border border-slate-200">
+                            <h3 class="font-semibold text-lg">${course.subjectName}</h3>
+                            <p class="text-sm opacity-80">${course.name}</p>
+                            <p class="text-xs opacity-60 mt-2">${course.completed} sur ${course.total} compétences</p>
+                            <div class="mt-2 w-full bg-slate-200 rounded-full h-2">
+                                <div class="h-2 rounded-full" style="width: ${progress}%; background-color: ${course.subjectColor};"></div>
+                            </div>
+                            <p class="text-right mt-1 text-xs font-semibold" style="color: ${course.subjectColor};">${progress}%</p>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                currentTopicsContainer.innerHTML = '<p class="text-slate-400 text-center">Aucun cours sélectionné pour le moment. Ouvrez le bandeau ci-dessus pour faire votre choix.</p>';
+            }
+        }
+
+        function renderRevisions() {
+            const revisionsContainer = document.getElementById('revisions-container');
+            revisionsContainer.innerHTML = studentData.revisions.map(rev => `
+                <div class="flex items-center space-x-2">
+                    <span class="text-sm font-semibold px-2 py-1 bg-white rounded-full border border-slate-200">${rev.date}</span>
+                    <p class="text-sm text-slate-800">${rev.title} <span class="text-xs text-slate-500">(${rev.subject})</span></p>
+                </div>
+            `).join('');
+        }
+
+        function renderSubjectsGrid() {
+            const subjectsGrid = document.getElementById('subjects-grid');
+            subjectsGrid.innerHTML = studentData.subjects.map(subject => `
+                <div class="card p-6 bg-slate-50 rounded-2xl shadow-sm border border-slate-200 cursor-pointer">
+                    <div class="flex items-center space-x-4">
+                        <span class="text-4xl">${subject.icon}</span>
+                        <div>
+                            <h3 class="font-bold text-xl text-slate-900">${subject.name}</h3>
+                            <p class="text-sm text-slate-500">Progression</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 w-full bg-slate-200 rounded-full h-2.5">
+                        <div class="h-2.5 rounded-full" style="width: ${subject.progress}%; background-color: ${subject.color};"></div>
+                    </div>
+                    <p class="text-right mt-1 text-sm font-semibold" style="color: ${subject.color};">${subject.progress}%</p>
+                </div>
+            `).join('');
+        }
+
+        // Update selected count
+        function updateSelectedCount() {
+            const selectedCount = document.querySelectorAll('#course-selection-grid input[type="checkbox"]:checked').length;
+            document.getElementById('selected-count').textContent = `${selectedCount} sélectionnés`;
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Collapse toggle
+            document.getElementById('collapse-toggle').addEventListener('click', () => {
+                const courseSelectorPanel = document.getElementById('course-selector-panel');
+                const collapseIcon = document.getElementById('collapse-icon');
+                const isCollapsed = courseSelectorPanel.classList.toggle('open');
+                collapseIcon.classList.toggle('rotate-180', isCollapsed);
+            });
+
+            // Save selection
+            document.getElementById('save-selection-btn').addEventListener('click', () => {
+                const checkboxes = document.querySelectorAll('#course-selection-grid input[type="checkbox"]');
+                checkboxes.forEach(checkbox => {
+                    const subjectId = checkbox.dataset.subjectId;
+                    const courseId = checkbox.dataset.courseId;
+                    const subject = studentData.subjects.find(s => s.id === subjectId);
+                    if (subject) {
+                        const course = subject.courses.find(c => c.id === courseId);
+                        if (course) {
+                            course.selected = checkbox.checked;
+                        }
+                    }
+                });
+                renderCurrentTopics();
+                showNotification('Votre sélection a été enregistrée avec succès !', 'success');
+            });
+
+            // Reset selection
+            document.getElementById('reset-selection-btn').addEventListener('click', () => {
+                const checkboxes = document.querySelectorAll('#course-selection-grid input[type="checkbox"]');
+                checkboxes.forEach(checkbox => checkbox.checked = false);
+                updateSelectedCount();
+                showNotification('La sélection a été réinitialisée.', 'success');
+            });
+
+            // Course suggestion
+            document.getElementById('suggest-course-btn').addEventListener('click', () => {
+                const suggestionInput = document.getElementById('suggestion-input');
+                const suggestionText = suggestionInput.value.trim();
+                if (suggestionText) {
+                    showNotification(`Merci pour votre suggestion ! Le cours "${suggestionText}" a été envoyé à l'administrateur.`, 'success');
+                    suggestionInput.value = ''; // Reset input field
+                } else {
+                    showNotification('Veuillez écrire le nom du cours avant de l\'envoyer.', 'error');
+                }
+            });
+
+            // Checkbox change listener to update count
+            document.getElementById('course-selection-grid').addEventListener('change', (e) => {
+                if (e.target.type === 'checkbox') {
+                    updateSelectedCount();
+                }
+            });
+
+            // Simulated navigation
+            document.getElementById('start-reco-btn').addEventListener('click', () => {
+                showNotification(`Démarrage du parcours "${studentData.recommendedPath.title}".`, 'success');
+            });
+            
+            document.getElementById('subjects-grid').addEventListener('click', (e) => {
+                const card = e.target.closest('.card');
+                if (card) {
+                    const subjectName = card.querySelector('h3').textContent;
+                    showNotification(`Navigation vers la page de la matière "${subjectName}".`, 'success');
+                }
+            });
+
+            // Initial rendering
+            document.getElementById('student-name').textContent = studentData.name;
+            document.getElementById('reco-topic-title').textContent = studentData.recommendedPath.title;
+            document.getElementById('reco-topic-subject').textContent = studentData.recommendedPath.subject;
+            document.getElementById('reco-description').textContent = `Basé sur tes dernières performances, nous te conseillons de revoir : "${studentData.recommendedPath.reason}"`;
+
+            renderCourseSelector();
+            renderCurrentTopics();
+            renderRevisions();
+            renderSubjectsGrid();
+        });
+    </script>
+</body>
+</html>
