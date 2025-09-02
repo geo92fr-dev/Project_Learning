@@ -1,0 +1,967 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FunLearning - Apprends. Progresse. Réussis.</title>
+    
+    <!-- Tailwind CSS + DaisyUI -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.0/dist/full.min.css" rel="stylesheet" type="text/css" />
+    
+    <!-- Google Fonts - Inter (moderne et lisible) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Framer Motion CDN (pour les animations) -->
+    <script src="https://unpkg.com/framer-motion@6/dist/framer-motion.js"></script>
+    
+    <style>
+        /* Configuration Tailwind personnalisée */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        /* Variables CSS pour la palette éducative */
+        :root {
+            --primary: #6366f1; /* Indigo moderne */
+            --secondary: #ec4899; /* Pink vibrant */
+            --accent: #10b981; /* Emerald pour succès */
+            --neutral: #374151; /* Gray professionnel */
+            --base-100: #ffffff;
+            --base-200: #f8fafc;
+            --base-300: #e2e8f0;
+            
+            /* Glassmorphism */
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Glassmorphism effet */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px var(--glass-shadow);
+        }
+
+        /* Bento Grid responsive */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .bento-card {
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .bento-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Micro-interactions */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Gradient héro moderne */
+        .hero-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        /* Progress ring animation */
+        .progress-ring {
+            transition: stroke-dasharray 0.5s ease-in-out;
+        }
+
+        /* Animations d'apparition */
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Delay pour les animations */
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+
+        /* Scrollbar moderne */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Custom utilities */
+        .text-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Nobel avatars avec border colorée */
+        .nobel-avatar {
+            border: 3px solid;
+            border-image: linear-gradient(45deg, #667eea, #764ba2) 1;
+            border-radius: 50%;
+        }
+
+        /* Barre d'informations intégrée */
+        .info-bar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+            padding: 0.75rem 1rem;
+            position: sticky;
+            top: 80px;
+            z-index: 40;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: rgba(99, 102, 241, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .info-item:hover {
+            background: rgba(99, 102, 241, 0.15);
+            border-color: rgba(99, 102, 241, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .info-text {
+            font-size: 0.875rem;
+            color: #374151;
+        }
+
+        .info-text strong {
+            color: #1f2937;
+            font-weight: 600;
+        }
+    </style>
+
+    <script>
+        // Configuration Tailwind personnalisée
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#ec4899',
+                        accent: '#10b981',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-gradient-to-br from-slate-50 to-blue-50">
+    
+    <!-- Header moderne avec glassmorphism -->
+    <header class="fixed top-0 w-full z-50 glass">
+        <div class="navbar max-w-7xl mx-auto px-4">
+            <div class="navbar-start">
+                <div class="dropdown lg:hidden">
+                    <label tabindex="0" class="btn btn-ghost">
+                        <i class="fas fa-bars text-xl"></i>
+                    </label>
+                    <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                        <li><a>Cours</a></li>
+                        <li><a>Exercices</a></li>
+                        <li><a>Révisions</a></li>
+                        <li><a>Communauté</a></li>
+                    </ul>
+                </div>
+                <a class="btn btn-ghost text-xl font-bold text-gradient">
+                    <i class="fas fa-graduation-cap text-2xl mr-2"></i>
+                    FunLearning
+                </a>
+            </div>
+            
+            <div class="navbar-center hidden lg:flex">
+                <ul class="menu menu-horizontal px-1 text-base font-medium">
+                    <li><a class="hover:text-primary transition-colors">Cours</a></li>
+                    <li><a class="hover:text-primary transition-colors">Exercices</a></li>
+                    <li><a class="hover:text-primary transition-colors">Révisions</a></li>
+                    <li><a class="hover:text-primary transition-colors">Communauté</a></li>
+                </ul>
+            </div>
+            
+            <div class="navbar-end gap-2">
+                <button class="btn btn-ghost hover-lift">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="btn btn-ghost hover-lift">
+                    <i class="fas fa-bell"></i>
+                </button>
+                <div class="dropdown dropdown-end">
+                    <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                        <div class="w-10 rounded-full">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Niels_Bohr.jpg/256px-Niels_Bohr.jpg" alt="Profile">
+                        </div>
+                    </label>
+                    <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                        <li><a>Profil</a></li>
+                        <li><a>Paramètres</a></li>
+                        <li><a>Déconnexion</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Barre d'informations intégrée -->
+    <div class="info-bar">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center gap-4">
+            <div class="info-item" onclick="showMarieAdvice()">
+                <i class="fas fa-lightbulb text-indigo-600"></i>
+                <div class="info-text">
+                    <strong>Conseil de Marie:</strong> Consolider l'analyse avant les équations différentielles
+                </div>
+            </div>
+            
+            <div class="info-item" onclick="openPersonalization()">
+                <i class="fas fa-cogs text-indigo-600"></i>
+                <div class="info-text">
+                    <strong>Mon parcours:</strong> Intermédiaire • 1h/jour • Carrière + Révisions
+                </div>
+            </div>
+
+            <div class="ml-auto flex gap-2">
+                <button class="btn btn-sm btn-primary" onclick="updatePlanning()">
+                    <i class="fas fa-sync-alt mr-1"></i> Actualiser
+                </button>
+                <button class="btn btn-sm btn-outline btn-primary" onclick="openPersonalization()">
+                    <i class="fas fa-edit mr-1"></i> Modifier
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content avec padding pour compenser le header fixe -->
+    <main class="pt-20">
+
+    <!-- Sections Conseil et Personnalisation supprimées - maintenant dans la barre d'informations -->
+
+    <!-- Plan de travail moderne en première section -->
+    <section class="py-16 bg-gradient-to-br from-blue-50 to-indigo-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gradient mb-12">📅 Ton Plan de Travail</h2>
+            
+            <div class="grid gap-6">
+                <!-- Tâche en cours -->
+                <div class="card bg-white shadow-xl hover-lift">
+                    <div class="card-body">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-play text-green-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="card-title text-xl">Analyse Mathématique - Chapitre 3</h3>
+                                    <p class="text-gray-600">Maintenant • 45 min restantes</p>
+                                    <div class="w-64 bg-gray-200 rounded-full h-2 mt-2">
+                                        <div class="bg-green-500 h-2 rounded-full" style="width: 60%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="btn btn-circle btn-primary hover-lift">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                                <button class="btn btn-circle btn-success hover-lift">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tâche programmée -->
+                <div class="card bg-white shadow-xl hover-lift">
+                    <div class="card-body">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-clock text-blue-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="card-title text-xl">React Hooks - Projet pratique</h3>
+                                    <p class="text-gray-600">15h30 • 1h 30min</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="btn btn-circle btn-info hover-lift">
+                                    <i class="fas fa-bell"></i>
+                                </button>
+                                <button class="btn btn-circle btn-warning hover-lift">
+                                    <i class="fas fa-calendar-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Révisions -->
+                <div class="card bg-white shadow-xl hover-lift">
+                    <div class="card-body">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-book text-purple-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="card-title text-xl">Révisions Physique Quantique</h3>
+                                    <p class="text-gray-600">Ce soir • 30 min</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="btn btn-circle btn-secondary hover-lift">
+                                    <i class="fas fa-sticky-note"></i>
+                                </button>
+                                <button class="btn btn-circle btn-accent hover-lift">
+                                    <i class="fas fa-question-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mes Matières - Bento Grid avec Prix Nobel -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gradient mb-12">🎓 Mes Matières</h2>
+            
+            <div class="bento-grid">
+                <!-- Mathématiques -->
+                <div class="bento-card bg-gradient-to-br from-blue-500 to-purple-600 text-white hover-lift cursor-pointer">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="avatar">
+                            <div class="w-16 rounded-full ring ring-white ring-offset-2">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/John_Forbes_Nash%2C_Jr._by_Peter_Badge.jpg/256px-John_Forbes_Nash%2C_Jr._by_Peter_Badge.jpg" alt="John Nash">
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">Mathématiques</h3>
+                            <p class="opacity-90">John Nash - Prix Nobel Économie</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-lg">8 cours • 65% terminé</p>
+                            <div class="w-32 bg-white/20 rounded-full h-2 mt-2">
+                                <div class="bg-white h-2 rounded-full" style="width: 65%"></div>
+                            </div>
+                        </div>
+                        <i class="fas fa-square-root-alt text-4xl opacity-50"></i>
+                    </div>
+                </div>
+
+                <!-- Physique -->
+                <div class="bento-card bg-gradient-to-br from-green-500 to-teal-600 text-white hover-lift cursor-pointer">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="avatar">
+                            <div class="w-16 rounded-full ring ring-white ring-offset-2">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Einstein_1921_by_F_Schmutzer_-_restoration.jpg/256px-Einstein_1921_by_F_Schmutzer_-_restoration.jpg" alt="Einstein">
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">Physique</h3>
+                            <p class="opacity-90">Albert Einstein - Prix Nobel Physique</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-lg">6 cours • 42% terminé</p>
+                            <div class="w-32 bg-white/20 rounded-full h-2 mt-2">
+                                <div class="bg-white h-2 rounded-full" style="width: 42%"></div>
+                            </div>
+                        </div>
+                        <i class="fas fa-atom text-4xl opacity-50"></i>
+                    </div>
+                </div>
+
+                <!-- Informatique -->
+                <div class="bento-card bg-gradient-to-br from-orange-500 to-red-600 text-white hover-lift cursor-pointer">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="avatar">
+                            <div class="w-16 rounded-full ring ring-white ring-offset-2">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Alan_Turing_Aged_16.jpg/256px-Alan_Turing_Aged_16.jpg" alt="Alan Turing">
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">Informatique</h3>
+                            <p class="opacity-90">Alan Turing - Père de l'informatique</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-lg">12 cours • 78% terminé</p>
+                            <div class="w-32 bg-white/20 rounded-full h-2 mt-2">
+                                <div class="bg-white h-2 rounded-full" style="width: 78%"></div>
+                            </div>
+                        </div>
+                        <i class="fas fa-code text-4xl opacity-50"></i>
+                    </div>
+                </div>
+
+                <!-- Intelligence Artificielle -->
+                <div class="bento-card bg-gradient-to-br from-purple-500 to-pink-600 text-white hover-lift cursor-pointer">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="avatar">
+                            <div class="w-16 rounded-full ring ring-white ring-offset-2">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Yoshua_Bengio_2019.jpg/256px-Yoshua_Bengio_2019.jpg" alt="Yoshua Bengio">
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">Intelligence Artificielle</h3>
+                            <p class="opacity-90">Yoshua Bengio - Prix Turing</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-lg">5 cours • 23% terminé</p>
+                            <div class="w-32 bg-white/20 rounded-full h-2 mt-2">
+                                <div class="bg-white h-2 rounded-full" style="width: 23%"></div>
+                            </div>
+                        </div>
+                        <i class="fas fa-brain text-4xl opacity-50"></i>
+                    </div>
+                </div>
+
+                <!-- Chimie -->
+                <div class="bento-card bg-gradient-to-br from-emerald-500 to-green-600 text-white hover-lift cursor-pointer">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="avatar">
+                            <div class="w-16 rounded-full ring ring-white ring-offset-2">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Marie_Curie_c1920.jpg/256px-Marie_Curie_c1920.jpg" alt="Marie Curie">
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">Chimie</h3>
+                            <p class="opacity-90">Marie Curie - Prix Nobel Physique & Chimie</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-lg">7 cours • 56% terminé</p>
+                            <div class="w-32 bg-white/20 rounded-full h-2 mt-2">
+                                <div class="bg-white h-2 rounded-full" style="width: 56%"></div>
+                            </div>
+                        </div>
+                        <i class="fas fa-flask text-4xl opacity-50"></i>
+                    </div>
+                </div>
+
+                <!-- Biologie -->
+                <div class="bento-card bg-gradient-to-br from-cyan-500 to-blue-600 text-white hover-lift cursor-pointer">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="avatar">
+                            <div class="w-16 rounded-full ring ring-white ring-offset-2">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Rosalind_Franklin.jpg/256px-Rosalind_Franklin.jpg" alt="Rosalind Franklin">
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">Biologie</h3>
+                            <p class="opacity-90">Rosalind Franklin - Cristallographie ADN</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-lg">9 cours • 34% terminé</p>
+                            <div class="w-32 bg-white/20 rounded-full h-2 mt-2">
+                                <div class="bg-white h-2 rounded-full" style="width: 34%"></div>
+                            </div>
+                        </div>
+                        <i class="fas fa-dna text-4xl opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Anecdotes des génies -->
+    <section class="py-16 bg-gradient-to-br from-gray-50 to-blue-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gradient mb-4">🧠 Anecdotes des Génies</h2>
+            <p class="text-center text-gray-600 mb-12 text-lg">Découvre les histoires fascinantes derrière les plus grandes découvertes</p>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Anecdote Einstein -->
+                <div class="card bg-white shadow-xl hover-lift">
+                    <div class="card-body">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="avatar">
+                                <div class="w-16 rounded-full ring ring-blue-300 ring-offset-2">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Einstein_1921_by_F_Schmutzer_-_restoration.jpg/256px-Einstein_1921_by_F_Schmutzer_-_restoration.jpg" alt="Einstein">
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Albert Einstein</h4>
+                                <p class="text-sm text-gray-600">Physique • E=mc²</p>
+                            </div>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="text-sm italic mb-3">"Einstein a découvert la relativité en imaginant ce qui se passerait s'il courait à la vitesse de la lumière. Cette simple pensée a révolutionné notre compréhension de l'univers !"</p>
+                            <div class="badge badge-primary badge-sm">💡 Physique Moderne</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Anecdote Marie Curie -->
+                <div class="card bg-white shadow-xl hover-lift">
+                    <div class="card-body">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="avatar">
+                                <div class="w-16 rounded-full ring ring-green-300 ring-offset-2">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Marie_Curie_c1920.jpg/256px-Marie_Curie_c1920.jpg" alt="Marie Curie">
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Marie Curie</h4>
+                                <p class="text-sm text-gray-600">Chimie • Radioactivité</p>
+                            </div>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="text-sm italic mb-3">"Marie Curie a traité 8 tonnes de minerai à la main pour isoler 1 gramme de radium ! Sa détermination lui a valu 2 Prix Nobel dans 2 domaines différents."</p>
+                            <div class="badge badge-success badge-sm">⚗️ Chimie Expérimentale</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Anecdote Alan Turing -->
+                <div class="card bg-white shadow-xl hover-lift">
+                    <div class="card-body">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="avatar">
+                                <div class="w-16 rounded-full ring ring-orange-300 ring-offset-2">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Alan_Turing_Aged_16.jpg/256px-Alan_Turing_Aged_16.jpg" alt="Alan Turing">
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Alan Turing</h4>
+                                <p class="text-sm text-gray-600">Informatique • IA</p>
+                            </div>
+                        </div>
+                        <div class="bg-orange-50 p-4 rounded-lg">
+                            <p class="text-sm italic mb-3">"Turing a créé le premier 'ordinateur' mécanique pour décoder Enigma et raccourcir la guerre de 2 ans. Il a littéralement sauvé des millions de vies avec ses maths !"</p>
+                            <div class="badge badge-warning badge-sm">💻 Cryptographie</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Anecdote John Nash -->
+                <div class="card bg-white shadow-xl hover-lift">
+                    <div class="card-body">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="avatar">
+                                <div class="w-16 rounded-full ring ring-purple-300 ring-offset-2">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/John_Forbes_Nash%2C_Jr._by_Peter_Badge.jpg/256px-John_Forbes_Nash%2C_Jr._by_Peter_Badge.jpg" alt="John Nash">
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">John Nash</h4>
+                                <p class="text-sm text-gray-600">Mathématiques • Théorie des jeux</p>
+                            </div>
+                        </div>
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <p class="text-sm italic mb-3">"Nash a développé la théorie des jeux en observant... des stratégies de drague dans un bar ! Cette théorie révolutionne aujourd'hui l'économie mondiale."</p>
+                            <div class="badge badge-secondary badge-sm">🎯 Mathématiques Appliquées</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Anecdote Rosalind Franklin -->
+                <div class="card bg-white shadow-xl hover-lift">
+                    <div class="card-body">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="avatar">
+                                <div class="w-16 rounded-full ring ring-cyan-300 ring-offset-2">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Rosalind_Franklin.jpg/256px-Rosalind_Franklin.jpg" alt="Rosalind Franklin">
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Rosalind Franklin</h4>
+                                <p class="text-sm text-gray-600">Biologie • Structure ADN</p>
+                            </div>
+                        </div>
+                        <div class="bg-cyan-50 p-4 rounded-lg">
+                            <p class="text-sm italic mb-3">"Sa fameuse 'Photo 51' a révélé la structure en double hélice de l'ADN. Une seule image qui a changé notre compréhension de la vie elle-même !"</p>
+                            <div class="badge badge-info badge-sm">🧬 Biologie Moléculaire</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Anecdote Yoshua Bengio -->
+                <div class="card bg-white shadow-xl hover-lift">
+                    <div class="card-body">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="avatar">
+                                <div class="w-16 rounded-full ring ring-pink-300 ring-offset-2">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Yoshua_Bengio_2019.jpg/256px-Yoshua_Bengio_2019.jpg" alt="Yoshua Bengio">
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Yoshua Bengio</h4>
+                                <p class="text-sm text-gray-600">IA • Deep Learning</p>
+                            </div>
+                        </div>
+                        <div class="bg-pink-50 p-4 rounded-lg">
+                            <p class="text-sm italic mb-3">"Bengio a passé 20 ans à développer les réseaux de neurones quand personne n'y croyait. Aujourd'hui, son travail alimente ChatGPT et toute l'IA moderne !"</p>
+                            <div class="badge badge-accent badge-sm">🤖 Intelligence Artificielle</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Citation inspirante -->
+            <div class="text-center mt-12">
+                <div class="bg-white/60 backdrop-blur-sm rounded-2xl p-8 max-w-3xl mx-auto">
+                    <blockquote class="text-2xl font-light italic text-gray-700 mb-4">
+                        "La curiosité est plus importante que la connaissance"
+                    </blockquote>
+                    <p class="text-gray-600 font-semibold">— Albert Einstein</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer moderne -->
+    <footer class="footer footer-center p-10 bg-gradient-to-r from-indigo-900 to-purple-900 text-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-flow-col gap-4">
+                <a class="link link-hover">Cours</a>
+                <a class="link link-hover">Exercices</a>
+                <a class="link link-hover">Révisions</a>
+                <a class="link link-hover">Communauté</a>
+                <a class="link link-hover">Support</a>
+            </div>
+            <div>
+                <div class="grid grid-flow-col gap-4">
+                    <a class="hover-lift"><i class="fab fa-twitter text-2xl"></i></a>
+                    <a class="hover-lift"><i class="fab fa-youtube text-2xl"></i></a>
+                    <a class="hover-lift"><i class="fab fa-facebook text-2xl"></i></a>
+                    <a class="hover-lift"><i class="fab fa-linkedin text-2xl"></i></a>
+                </div>
+            </div>
+            <div>
+                <p class="text-lg font-semibold text-gradient">FunLearning</p>
+                <p class="opacity-80">Apprends avec les plus grands esprits de l'histoire</p>
+                <p class="text-sm opacity-60">© 2025 FunLearning. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts pour les animations et interactions -->
+    <script>
+        // Animation d'apparition au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observer tous les éléments avec fade-in-up
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Gestion des badges interactifs
+        document.querySelectorAll('.badge').forEach(badge => {
+            badge.addEventListener('click', function() {
+                // Toggle entre badge-primary et badge-outline
+                if (this.classList.contains('badge-primary')) {
+                    this.classList.remove('badge-primary');
+                    this.classList.add('badge-outline');
+                } else {
+                    this.classList.remove('badge-outline');
+                    this.classList.add('badge-primary');
+                }
+            });
+        });
+
+        // Gestion des boutons de temps
+        document.querySelectorAll('.btn-outline').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Retirer la classe active de tous les boutons du même groupe
+                if (this.parentElement.querySelectorAll('.btn').length > 1) {
+                    this.parentElement.querySelectorAll('.btn').forEach(b => {
+                        b.classList.remove('btn-primary');
+                        b.classList.add('btn-outline');
+                    });
+                    
+                    // Ajouter la classe active au bouton cliqué
+                    this.classList.remove('btn-outline');
+                    this.classList.add('btn-primary');
+                }
+            });
+        });
+
+        // Notifications toast modernes
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            const colors = {
+                success: 'alert-success',
+                error: 'alert-error',
+                warning: 'alert-warning',
+                info: 'alert-info'
+            };
+            
+            toast.className = `alert ${colors[type]} fixed top-20 right-4 z-50 max-w-sm shadow-lg`;
+            toast.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(toast);
+            
+            // Animation d'entrée
+            setTimeout(() => {
+                toast.style.transform = 'translateX(0)';
+                toast.style.opacity = '1';
+            }, 10);
+            
+            // Suppression automatique
+            setTimeout(() => {
+                toast.style.transform = 'translateX(100%)';
+                toast.style.opacity = '0';
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Gestion des clics sur les cartes de matières
+        document.querySelectorAll('.bento-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const subject = this.querySelector('h3').textContent;
+                showToast(`Ouverture de ${subject} 🎓`, 'info');
+            });
+        });
+
+        // Gestion des boutons d'action
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // Effet ripple
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    background: rgba(255, 255, 255, 0.5);
+                    border-radius: 50%;
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    pointer-events: none;
+                `;
+                
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // CSS pour l'animation ripple
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            showToast('Bienvenue sur FunLearning ! 🎉', 'success');
+        });
+
+        // Nouvelles fonctions pour la barre d'informations
+        function showMarieAdvice() {
+            const advices = [
+                "Consolider l'analyse avant les équations différentielles",
+                "Pratiquer les exercices de dérivation quotidiennement", 
+                "Réviser la trigonométrie avant d'aborder les intégrales",
+                "Maîtriser les limites pour comprendre la continuité"
+            ];
+            const randomAdvice = advices[Math.floor(Math.random() * advices.length)];
+            
+            // Mettre à jour l'affichage du conseil
+            const adviceText = document.querySelector('.info-item .info-text');
+            adviceText.innerHTML = `<strong>Conseil de Marie:</strong> ${randomAdvice}`;
+            
+            showToast('Nouveau conseil de Marie Curie ! 💡', 'info');
+        }
+
+        function openPersonalization() {
+            // Modal moderne avec DaisyUI
+            const modal = document.createElement('div');
+            modal.className = 'modal modal-open';
+            modal.innerHTML = `
+                <div class="modal-box w-11/12 max-w-2xl">
+                    <h3 class="font-bold text-lg text-gradient mb-4">⚙️ Personnaliser mon parcours</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <h4 class="font-semibold mb-3">🎯 Objectifs</h4>
+                            <div class="space-y-2">
+                                <label class="label cursor-pointer justify-start gap-3">
+                                    <input type="checkbox" class="checkbox checkbox-primary" checked>
+                                    <span class="label-text">Examens</span>
+                                </label>
+                                <label class="label cursor-pointer justify-start gap-3">
+                                    <input type="checkbox" class="checkbox checkbox-primary" checked>
+                                    <span class="label-text">Carrière</span>
+                                </label>
+                                <label class="label cursor-pointer justify-start gap-3">
+                                    <input type="checkbox" class="checkbox checkbox-primary" checked>
+                                    <span class="label-text">Révisions</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-3">⏰ Temps/jour</h4>
+                            <div class="space-y-2">
+                                <label class="label cursor-pointer justify-start gap-3">
+                                    <input type="radio" name="time" class="radio radio-primary">
+                                    <span class="label-text">30 min</span>
+                                </label>
+                                <label class="label cursor-pointer justify-start gap-3">
+                                    <input type="radio" name="time" class="radio radio-primary" checked>
+                                    <span class="label-text">1 heure</span>
+                                </label>
+                                <label class="label cursor-pointer justify-start gap-3">
+                                    <input type="radio" name="time" class="radio radio-primary">
+                                    <span class="label-text">2+ heures</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-action">
+                        <button class="btn btn-primary" onclick="savePersonalization()">Sauvegarder</button>
+                        <button class="btn btn-ghost" onclick="closePersonalization()">Annuler</button>
+                    </div>
+                </div>
+                <div class="modal-backdrop" onclick="closePersonalization()"></div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function savePersonalization() {
+            closePersonalization();
+            showToast('Préférences mises à jour ! ✅', 'success');
+            
+            // Mettre à jour l'affichage dans la barre d'info
+            const parcourText = document.querySelectorAll('.info-item .info-text')[1];
+            parcourText.innerHTML = '<strong>Mon parcours:</strong> Intermédiaire • 1h/jour • Carrière + Révisions';
+        }
+
+        function closePersonalization() {
+            const modal = document.querySelector('.modal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        function updatePlanning() {
+            showToast('Planning actualisé ! 🔄', 'success');
+            
+            // Animation de rotation sur l'icône
+            const icon = event.target.querySelector('i');
+            if (icon) {
+                icon.style.transform = 'rotate(360deg)';
+                icon.style.transition = 'transform 0.5s ease';
+                setTimeout(() => {
+                    icon.style.transform = 'rotate(0deg)';
+                }, 500);
+            }
+        }
+    </script>
+</body>
+</html>

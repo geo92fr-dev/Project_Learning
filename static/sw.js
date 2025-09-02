@@ -4,7 +4,7 @@
  * Features: Cache intelligent, stratégies adaptatives, background sync
  */
 
-const CACHE_VERSION = "v1.8.0";
+const CACHE_VERSION = "v1.8.1";
 const STATIC_CACHE = `funlearning-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE = `funlearning-dynamic-${CACHE_VERSION}`;
 const OFFLINE_CACHE = `funlearning-offline-${CACHE_VERSION}`;
@@ -31,7 +31,7 @@ const API_CACHE_CONFIG = {
 
 // ===== INSTALLATION =====
 self.addEventListener("install", (event) => {
-  console.log("[SW] Installation Phase 10...");
+  console.log(`[SW] Installation Phase 10 - Version ${CACHE_VERSION}...`);
 
   event.waitUntil(
     (async () => {
@@ -88,6 +88,9 @@ self.addEventListener("fetch", (event) => {
 
   // Ignorer les requêtes non-HTTP
   if (!url.protocol.startsWith("http")) return;
+
+  // Ignorer les requêtes POST, PUT, DELETE (non cachables)
+  if (request.method !== 'GET') return;
 
   // Choisir la stratégie selon le type de requête
   if (url.pathname.startsWith("/api/")) {
@@ -164,7 +167,21 @@ async function handleStaticRequest(request) {
  * Gestion des requêtes dynamiques
  */
 async function handleDynamicRequest(request) {
-  return staleWhileRevalidate(request, DYNAMIC_CACHE);
+  try {
+    return await staleWhileRevalidate(request, DYNAMIC_CACHE);
+  } catch (error) {
+    console.warn('[SW] Erreur requête dynamique:', error);
+    // Fallback: essayer de servir depuis le cache sans conditions
+    const cachedResponse = await caches.match(request);
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+    // Si pas de cache, retourner une réponse d'erreur personnalisée
+    return new Response('Service temporairement indisponible', {
+      status: 503,
+      statusText: 'Service Unavailable'
+    });
+  }
 }
 
 // ===== STRATÉGIES DE CACHE IMPLÉMENTATIONS =====
@@ -247,11 +264,17 @@ async function cacheFirst(request, cacheName, ttl = 3600000) {
  * Stratégie Stale While Revalidate
  */
 async function staleWhileRevalidate(request, cacheName, ttl = 1800000) {
+  // Vérifier que la requête est cachable
+  if (request.method !== 'GET') {
+    return fetch(request);
+  }
+
   const cachedResponse = await caches.match(request);
   
   // Toujours essayer de revalider en arrière-plan
   const fetchPromise = fetch(request).then(response => {
-    if (response.ok) {
+    // Seulement cacher les réponses valides GET
+    if (response.ok && request.method === 'GET') {
       const cache = caches.open(cacheName);
       const responseToCache = response.clone();
       
@@ -264,9 +287,18 @@ async function staleWhileRevalidate(request, cacheName, ttl = 1800000) {
         }
       });
       
-      cache.then(c => c.put(request, cachedResponse));
+      cache.then(c => c.put(request, cachedResponse)).catch(err => {
+        console.warn('[SW] Erreur cache:', err);
+      });
     }
     return response;
+  }).catch(error => {
+    console.warn('[SW] Erreur fetch:', error);
+    // Retourner le cache en cas d'erreur réseau
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+    throw error;
   });
   
   // Retourner immédiatement le cache si disponible et valide

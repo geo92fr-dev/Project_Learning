@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FunLearning - Accueil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables CSS inspirées du design system Spotify */
+        :root {
+            --green: rgb(30, 215, 96);
+            --light-black: rgb(40, 40, 40);
+            --black: rgb(24, 24, 24);
+            --grey: rgb(170, 170, 170);
+            --sand: rgb(200, 200, 200);
+            --white: rgb(255, 255, 255);
+            --blue: #4688d7;
+            
+            --padding-xs: 5px;
+            --padding-sm: 10px;
+            --padding: 15px;
+            --padding-lg: 30px;
+            --padding-xl: 60px;
+            
+            --margin-xs: 5px;
+            --margin-sm: 10px;
+            --margin: 15px;
+            --margin-lg: 30px;
+            --margin-xl: 60px;
+            
+            --border-radius: 15px;
+            
+            --x-small: 11px;
+            --small: 14px;
+            --medium: 16px;
+            --large: 20px;
+            --x-large: 24px;
+            --xx-large: 36px;
+            --xxx-large: 52px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--black);
+            font-family: 'Roboto', sans-serif;
+            color: var(--grey);
+            overflow-x: hidden;
+        }
+
+        a {
+            color: var(--grey);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--sand);
+        }
+
+        /* Header style Spotify */
+        .header {
+            background: var(--light-black);
+            padding: var(--padding-sm);
+            color: var(--grey);
+            border-bottom: 1px solid var(--black);
+            display: flex;
+            flex-flow: row wrap;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: var(--x-large);
+            font-weight: 700;
+            color: var(--green);
+            margin-right: var(--margin-lg);
+        }
+
+        .search {
+            margin-left: 1%;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .search input {
+            border-radius: var(--border-radius);
+            border: none;
+            background: var(--white);
+            color: var(--black);
+            padding: 12px var(--padding-lg);
+            outline: none;
+            width: 100%;
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIxIDIxTDE2LjUxNDIgMTYuNTE0MiIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8Y2lyY2xlIGN4PSIxMSIgY3k9IjExIiByPSI4IiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iMiIvPgo8L3N2Zz4K);
+            background-repeat: no-repeat;
+            background-size: 16px;
+            background-position: 12px center;
+            padding-left: 40px;
+        }
+
+        .user {
+            width: 300px;
+            margin-left: auto;
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user i {
+            font-size: var(--large);
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .user i:hover {
+            color: var(--white);
+        }
+
+        .user__info img {
+            max-width: 32px;
+            max-height: 32px;
+            border-radius: 50%;
+            display: inline-block;
+            border: 2px solid var(--green);
+        }
+
+        /* Barre d'informations sous le header */
+        .info-bar {
+            background: var(--black);
+            padding: var(--padding-sm) var(--padding-lg);
+            border-bottom: 1px solid rgba(170, 170, 170, 0.1);
+            display: flex;
+            gap: var(--margin-lg);
+            align-items: center;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 70px;
+            z-index: 99;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: var(--margin-sm);
+            background: var(--light-black);
+            padding: var(--padding-xs) var(--padding-sm);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(170, 170, 170, 0.1);
+        }
+
+        .info-item:hover {
+            border-color: var(--green);
+            transform: translateY(-1px);
+        }
+
+        .info-item i {
+            color: var(--green);
+            font-size: var(--medium);
+        }
+
+        .info-text {
+            color: var(--grey);
+            font-size: var(--small);
+        }
+
+        .info-text strong {
+            color: var(--white);
+        }
+
+        .quick-action {
+            margin-left: auto;
+            display: flex;
+            gap: var(--margin-sm);
+        }
+
+        .quick-btn {
+            background: var(--green);
+            color: var(--white);
+            border: none;
+            padding: var(--padding-xs) var(--padding-sm);
+            border-radius: var(--padding-sm);
+            font-size: var(--small);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quick-btn:hover {
+            background: #1db954;
+            transform: translateY(-1px);
+        }
+
+        .quick-btn.secondary {
+            background: transparent;
+            border: 1px solid var(--grey);
+            color: var(--grey);
+        }
+
+        .quick-btn.secondary:hover {
+            border-color: var(--white);
+            color: var(--white);
+        }
+
+        /* Layout principal */
+        .content {
+            display: flex;
+            flex-flow: row wrap;
+            min-height: calc(100vh - 70px);
+        }
+
+        .content__left {
+            width: 25%;
+            background: var(--light-black);
+            padding: var(--padding);
+            overflow-y: auto;
+        }
+
+        .content__middle {
+            width: 75%;
+            padding: var(--padding-lg);
+            overflow-y: auto;
+        }
+
+        /* Suppression de la sidebar droite */
+
+        /* Stories style Instagram */
+        .stories-section {
+            margin-bottom: var(--margin-lg);
+        }
+
+        .stories-container {
+            display: flex;
+            gap: var(--margin);
+            padding: var(--padding) 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .stories-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .story-item {
+            flex-shrink: 0;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .story-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            padding: 3px;
+            margin-bottom: var(--margin-xs);
+        }
+
+        .story-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--black);
+        }
+
+        .story-label {
+            font-size: var(--x-small);
+            color: var(--sand);
+            max-width: 70px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Navigation sidebar */
+        .navigation__list {
+            display: flex;
+            flex-flow: column wrap;
+            margin-bottom: var(--margin);
+        }
+
+        .navigation__list__header {
+            font-size: var(--x-small);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: var(--margin-xs);
+            color: var(--grey);
+        }
+
+        .navigation__list__item {
+            color: var(--grey);
+            padding: var(--padding-xs) 0;
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .navigation__list__item:hover {
+            color: var(--white);
+            border-right: 3px solid var(--green);
+        }
+
+        .navigation__list__item i {
+            width: 25px;
+            display: block;
+            margin-right: var(--margin-sm);
+        }
+
+        /* Cards style Instagram */
+        .course-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--margin-lg);
+            margin-bottom: var(--margin-xl);
+        }
+
+        .course-card {
+            background: var(--light-black);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .course-card__image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--green), var(--blue));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-card__image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        .course-card__image i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            color: var(--white);
+            z-index: 2;
+        }
+
+        .course-card__actions {
+            position: absolute;
+            top: var(--padding);
+            right: var(--padding);
+            display: flex;
+            gap: var(--margin-xs);
+            z-index: 3;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .course-card:hover .course-card__actions {
+            opacity: 1;
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.7);
+            border: none;
+            color: var(--white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+
+        .action-btn:hover {
+            background: var(--green);
+        }
+
+        .course-card__content {
+            padding: var(--padding);
+        }
+
+        .course-card__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--margin-sm);
+        }
+
+        .course-card__title {
+            font-size: var(--medium);
+            font-weight: 500;
+            color: var(--white);
+            margin-bottom: var(--margin-xs);
+        }
+
+        .course-card__subtitle {
+            font-size: var(--small);
+            color: var(--grey);
+        }
+
+        .difficulty-badge {
+            padding: var(--padding-xs) var(--padding-sm);
+            border-radius: 12px;
+            font-size: var(--x-small);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .difficulty-beginner {
+            background: rgba(52, 201, 74, 0.2);
+            color: #34c94a;
+            border: 1px solid #34c94a;
+        }
+
+        .difficulty-intermediate {
+            background: rgba(253, 190, 65, 0.2);
+            color: #fdbe41;
+            border: 1px solid #fdbe41;
+        }
+
+        .difficulty-advanced {
+            background: rgba(252, 97, 92, 0.2);
+            color: #fc615c;
+            border: 1px solid #fc615c;
+        }
+
+        .course-card__stats {
+            display: flex;
+            gap: var(--margin);
+            margin: var(--margin-sm) 0;
+            font-size: var(--small);
+            color: var(--grey);
+        }
+
+        .stat-item i {
+            margin-right: var(--margin-xs);
+        }
+
+        .course-card__footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: var(--padding-sm);
+            border-top: 1px solid rgba(170, 170, 170, 0.1);
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 4px;
+            background: rgba(170, 170, 170, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-right: var(--margin-sm);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--green);
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: var(--x-small);
+            color: var(--sand);
+            min-width: 40px;
+        }
+
+        /* Section Activity Feed style Instagram */
+        .activity-feed {
+            margin-bottom: var(--margin-lg);
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            padding: var(--padding-sm);
+            margin-bottom: var(--margin-sm);
+            background: var(--light-black);
+            border-radius: var(--padding-sm);
+            transition: background 0.2s ease;
+        }
+
+        .activity-item:hover {
+            background: rgba(40, 40, 40, 0.8);
+        }
+
+        .activity-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: var(--margin-sm);
+            border: 2px solid var(--green);
+        }
+
+        .activity-content {
+            flex: 1;
+            font-size: var(--small);
+        }
+
+        .activity-user {
+            color: var(--white);
+            font-weight: 500;
+        }
+
+        .activity-time {
+            color: var(--grey);
+            font-size: var(--x-small);
+            margin-top: var(--margin-xs);
+        }
+
+        .activity-action {
+            color: var(--sand);
+            font-size: var(--small);
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1400px) {
+            .content__left {
+                width: 30%;
+            }
+            .content__middle {
+                width: 70%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content__left {
+                width: 100%;
+                order: 2;
+            }
+            .content__middle {
+                width: 100%;
+                order: 1;
+            }
+            .course-cards {
+                grid-template-columns: 1fr;
+            }
+            .header {
+                flex-direction: column;
+                gap: var(--margin);
+            }
+            .user {
+                width: 100%;
+                justify-content: space-around;
+            }
+        }
+
+        /* Plan de travail */
+        .work-plan {
+            background: var(--light-black);
+            border-radius: var(--border-radius);
+            padding: var(--padding-lg);
+            margin-bottom: var(--margin-lg);
+        }
+
+        .plan-item {
+            display: flex;
+            align-items: center;
+            padding: var(--padding-sm);
+            margin-bottom: var(--margin-sm);
+            background: rgba(40, 40, 40, 0.5);
+            border-radius: var(--padding-sm);
+            transition: background 0.2s ease;
+        }
+
+        .plan-item:hover {
+            background: rgba(40, 40, 40, 0.8);
+        }
+
+        .plan-item i {
+            color: var(--green);
+            margin-right: var(--margin-sm);
+            width: 20px;
+        }
+
+        .plan-content {
+            flex: 1;
+        }
+
+        .plan-title {
+            color: var(--white);
+            font-weight: 500;
+            margin-bottom: var(--margin-xs);
+        }
+
+        .plan-time {
+            color: var(--grey);
+            font-size: var(--small);
+        }
+
+        .plan-actions {
+            display: flex;
+            gap: var(--margin-xs);
+        }
+
+        /* Mes Matières - style Instagram cards */
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: var(--margin);
+            margin-bottom: var(--margin-xl);
+        }
+
+        .subject-card {
+            background: var(--light-black);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .subject-card__image {
+            height: 150px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-card__image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .subject-card:hover .subject-card__image img {
+            transform: scale(1.1);
+        }
+
+        .subject-card__overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+            display: flex;
+            align-items: flex-end;
+            padding: var(--padding);
+        }
+
+        .subject-card__content {
+            padding: var(--padding);
+        }
+
+        .subject-card__title {
+            color: var(--white);
+            font-size: var(--medium);
+            font-weight: 500;
+            margin-bottom: var(--margin-xs);
+        }
+
+        .subject-card__expert {
+            color: var(--green);
+            font-size: var(--small);
+            margin-bottom: var(--margin-sm);
+        }
+
+        .subject-card__stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: var(--small);
+            color: var(--grey);
+        }
+
+        /* Scrollbar custom */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            border-radius: 4px;
+            background: rgba(40, 40, 40, 0.8);
+        }
+
+        /* Buttons */
+        button {
+            border-radius: 20px;
+            border: none;
+            padding: var(--padding-xs) var(--padding);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: var(--x-small);
+            outline: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .button-dark {
+            background: var(--green);
+            color: var(--white);
+            border: 1px solid var(--green);
+        }
+
+        .button-dark:hover {
+            background: rgba(30, 215, 96, 0.8);
+        }
+
+        .button-light {
+            background: none;
+            color: var(--sand);
+            border: 1px solid var(--sand);
+        }
+
+        .button-light:hover {
+            border-color: var(--white);
+            color: var(--white);
+        }
+
+        /* Section titles */
+        .section-title {
+            text-transform: uppercase;
+            color: var(--grey);
+            letter-spacing: 1.25px;
+            font-size: calc(var(--x-small) * 1.2);
+            margin-bottom: var(--margin-sm);
+        }
+
+        /* Animations et micro-interactions */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .story-avatar:hover {
+            animation: pulse 0.6s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .course-card {
+            animation: slideIn 0.6s ease-out;
+        }
+
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--green);
+            color: var(--white);
+            padding: var(--padding) var(--padding-lg);
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Spotify Style -->
+    <div class="header">
+        <div class="logo">
+            <i class="fas fa-graduation-cap"></i> FunLearning
+        </div>
+        
+        <div class="search">
+            <input type="text" placeholder="Rechercher des cours, sujets, professeurs...">
+        </div>
+        
+        <div class="user">
+            <i class="fas fa-bell" title="Notifications"></i>
+            <i class="fas fa-heart" title="Favoris"></i>
+            <i class="fas fa-comment-dots" title="Messages"></i>
+            <div class="user__info">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Niels_Bohr.jpg/256px-Niels_Bohr.jpg" alt="Niels Bohr - Mon Profil">
+            </div>
+        </div>
+    </div>
+
+    <!-- Barre d'informations intégrée -->
+    <div class="info-bar">
+        <div class="info-item" onclick="showMarieAdvice()">
+            <i class="fas fa-lightbulb"></i>
+            <div class="info-text">
+                <strong>Conseil de Marie:</strong> Consolider l'analyse avant les équations différentielles
+            </div>
+        </div>
+        
+        <div class="info-item" onclick="openPersonalization()">
+            <i class="fas fa-cogs"></i>
+            <div class="info-text">
+                <strong>Mon parcours:</strong> Intermédiaire • 1h/jour • Carrière + Révisions
+            </div>
+        </div>
+
+        <div class="quick-action">
+            <button class="quick-btn" onclick="showToast('Planning mis à jour !', 'success')">
+                <i class="fas fa-sync-alt"></i> Actualiser
+            </button>
+            <button class="quick-btn secondary" onclick="openPersonalization()">
+                <i class="fas fa-edit"></i> Modifier
+            </button>
+        </div>
+    </div>
+
+    <div class="content">
+        <!-- Sidebar Navigation -->
+        <div class="content__left">
+            <div class="navigation">
+                <div class="navigation__list">
+                    <div class="navigation__list__header">Découvrir</div>
+                    <a href="#" class="navigation__list__item">
+                        <i class="fas fa-home"></i>
+                        <span>Accueil</span>
+                    </a>
+                    <a href="#" class="navigation__list__item">
+                        <i class="fas fa-compass"></i>
+                        <span>Explorer</span>
+                    </a>
+                    <a href="#" class="navigation__list__item">
+                        <i class="fas fa-fire"></i>
+                        <span>Tendances</span>
+                    </a>
+                </div>
+
+                <div class="navigation__list">
+                    <div class="navigation__list__header">Ma Bibliothèque</div>
+                    <a href="#" class="navigation__list__item">
+                        <i class="fas fa-book"></i>
+                        <span>Mes Cours</span>
+                    </a>
+                    <a href="#" class="navigation__list__item">
+                        <i class="fas fa-bookmark"></i>
+                        <span>Sauvegardés</span>
+                    </a>
+                    <a href="#" class="navigation__list__item">
+                        <i class="fas fa-history"></i>
+                        <span>Récents</span>
+                    </a>
+                    <a href="#" class="navigation__list__item">
+                        <i class="fas fa-download"></i>
+                        <span>Téléchargés</span>
+                    </a>
+                </div>
+
+                <div class="navigation__list">
+                    <div class="navigation__list__header">Communauté</div>
+                    <a href="#" class="navigation__list__item">
+                        <i class="fas fa-users"></i>
+                        <span>Mes Groupes</span>
+                    </a>
+                    <a href="#" class="navigation__list__item">
+                        <i class="fas fa-trophy"></i>
+                        <span>Classements</span>
+                    </a>
+                    <a href="#" class="navigation__list__item">
+                        <i class="fas fa-star"></i>
+                        <span>Achievements</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="content__middle">
+            <!-- Section Ton Plan de Travail (maintenant visible d'emblée) -->
+            <div class="work-plan">
+                <div class="section-title">📅 Ton Plan de Travail</div>
+                
+                <div class="plan-item">
+                    <i class="fas fa-play"></i>
+                    <div class="plan-content">
+                        <div class="plan-title">Analyse Mathématique - Chapitre 3</div>
+                        <div class="plan-time">Maintenant • 45 min restantes</div>
+                    </div>
+                    <div class="plan-actions">
+                        <button class="action-btn" onclick="showToast('Cours ouvert !', 'success')" title="Continuer">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="action-btn" onclick="showToast('Marqué comme terminé !', 'success')" title="Terminer">
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="plan-item">
+                    <i class="fas fa-clock"></i>
+                    <div class="plan-content">
+                        <div class="plan-title">React Hooks - Projet pratique</div>
+                        <div class="plan-time">15h30 • 1h 30min</div>
+                    </div>
+                    <div class="plan-actions">
+                        <button class="action-btn" onclick="showToast('Rappel programmé !', 'info')" title="Rappel">
+                            <i class="fas fa-bell"></i>
+                        </button>
+                        <button class="action-btn" onclick="showToast('Reporté à demain', 'info')" title="Reporter">
+                            <i class="fas fa-calendar-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="plan-item">
+                    <i class="fas fa-book"></i>
+                    <div class="plan-content">
+                        <div class="plan-title">Révisions Physique Quantique</div>
+                        <div class="plan-time">Ce soir • 30 min</div>
+                    </div>
+                    <div class="plan-actions">
+                        <button class="action-btn" onclick="showToast('Notes ouvertes !', 'info')" title="Voir notes">
+                            <i class="fas fa-sticky-note"></i>
+                        </button>
+                        <button class="action-btn" onclick="showToast('Quiz lancé !', 'success')" title="Quiz">
+                            <i class="fas fa-question-circle"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Mes Matières avec Prix Nobel -->
+            <div class="section-title">🎓 Mes Matières</div>
+            <div class="subjects-grid">
+                <div class="subject-card" onclick="openSubject('Mathématiques')">
+                    <div class="subject-card__image">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/John_Forbes_Nash%2C_Jr._by_Peter_Badge.jpg/400px-John_Forbes_Nash%2C_Jr._by_Peter_Badge.jpg" alt="John Nash">
+                        <div class="subject-card__overlay">
+                            <i class="fas fa-square-root-alt" style="color: var(--white); font-size: var(--xx-large);"></i>
+                        </div>
+                    </div>
+                    <div class="subject-card__content">
+                        <div class="subject-card__title">Mathématiques</div>
+                        <div class="subject-card__expert">John Nash - Prix Nobel Économie</div>
+                        <div class="subject-card__stats">
+                            <span>8 cours</span>
+                            <span>65% terminé</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subject-card" onclick="openSubject('Physique')">
+                    <div class="subject-card__image">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Einstein_1921_by_F_Schmutzer_-_restoration.jpg/400px-Einstein_1921_by_F_Schmutzer_-_restoration.jpg" alt="Albert Einstein">
+                        <div class="subject-card__overlay">
+                            <i class="fas fa-atom" style="color: var(--white); font-size: var(--xx-large);"></i>
+                        </div>
+                    </div>
+                    <div class="subject-card__content">
+                        <div class="subject-card__title">Physique</div>
+                        <div class="subject-card__expert">Albert Einstein - Prix Nobel Physique</div>
+                        <div class="subject-card__stats">
+                            <span>6 cours</span>
+                            <span>42% terminé</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subject-card" onclick="openSubject('Informatique')">
+                    <div class="subject-card__image">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Alan_Turing_Aged_16.jpg/400px-Alan_Turing_Aged_16.jpg" alt="Alan Turing">
+                        <div class="subject-card__overlay">
+                            <i class="fas fa-code" style="color: var(--white); font-size: var(--xx-large);"></i>
+                        </div>
+                    </div>
+                    <div class="subject-card__content">
+                        <div class="subject-card__title">Informatique</div>
+                        <div class="subject-card__expert">Alan Turing - Père de l'informatique</div>
+                        <div class="subject-card__stats">
+                            <span>12 cours</span>
+                            <span>78% terminé</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subject-card" onclick="openSubject('Intelligence Artificielle')">
+                    <div class="subject-card__image">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Yoshua_Bengio_2019.jpg/400px-Yoshua_Bengio_2019.jpg" alt="Yoshua Bengio">
+                        <div class="subject-card__overlay">
+                            <i class="fas fa-brain" style="color: var(--white); font-size: var(--xx-large);"></i>
+                        </div>
+                    </div>
+                    <div class="subject-card__content">
+                        <div class="subject-card__title">Intelligence Artificielle</div>
+                        <div class="subject-card__expert">Yoshua Bengio - Prix Turing</div>
+                        <div class="subject-card__stats">
+                            <span>5 cours</span>
+                            <span>23% terminé</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subject-card" onclick="openSubject('Chimie')">
+                    <div class="subject-card__image">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Marie_Curie_c1920.jpg/400px-Marie_Curie_c1920.jpg" alt="Marie Curie">
+                        <div class="subject-card__overlay">
+                            <i class="fas fa-flask" style="color: var(--white); font-size: var(--xx-large);"></i>
+                        </div>
+                    </div>
+                    <div class="subject-card__content">
+                        <div class="subject-card__title">Chimie</div>
+                        <div class="subject-card__expert">Marie Curie - Prix Nobel Physique & Chimie</div>
+                        <div class="subject-card__stats">
+                            <span>7 cours</span>
+                            <span>56% terminé</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subject-card" onclick="openSubject('Biologie')">
+                    <div class="subject-card__image">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Rosalind_Franklin.jpg/400px-Rosalind_Franklin.jpg" alt="Rosalind Franklin">
+                        <div class="subject-card__overlay">
+                            <i class="fas fa-dna" style="color: var(--white); font-size: var(--xx-large);"></i>
+                        </div>
+                    </div>
+                    <div class="subject-card__content">
+                        <div class="subject-card__title">Biologie</div>
+                        <div class="subject-card__expert">Rosalind Franklin - Cristallographie ADN</div>
+                        <div class="subject-card__stats">
+                            <span>9 cours</span>
+                            <span>34% terminé</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // État global de l'application
+        const appState = {
+            bookmarks: new Set(),
+            currentUser: {
+                name: "Utilisateur",
+                avatar: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Niels_Bohr.jpg/256px-Niels_Bohr.jpg"
+            }
+        };
+
+        // Fonction pour ouvrir une matière
+        function openSubject(subject) {
+            showToast(`Ouverture de ${subject} 📚`, 'success');
+        }
+
+        // Fonctions pour la barre d'informations
+        function showMarieAdvice() {
+            const advices = [
+                "Consolider l'analyse avant les équations différentielles",
+                "Pratiquer les exercices de dérivation quotidiennement",
+                "Réviser la trigonométrie avant d'aborder les intégrales",
+                "Maîtriser les limites pour comprendre la continuité"
+            ];
+            const randomAdvice = advices[Math.floor(Math.random() * advices.length)];
+            
+            // Mettre à jour l'affichage du conseil
+            const adviceText = document.querySelector('.info-item .info-text');
+            adviceText.innerHTML = `<strong>Conseil de Marie:</strong> ${randomAdvice}`;
+            
+            showToast('Nouveau conseil de Marie Curie ! 💡', 'info');
+        }
+
+        function openPersonalization() {
+            // Simule l'ouverture d'un modal de personnalisation
+            const modal = `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; display: flex; align-items: center; justify-content: center;" id="personalization-modal">
+                    <div style="background: var(--light-black); padding: var(--padding-lg); border-radius: var(--border-radius); max-width: 500px; width: 90%;">
+                        <h3 style="color: var(--white); margin-bottom: var(--margin);">⚙️ Personnaliser mon parcours</h3>
+                        <p style="color: var(--grey); margin-bottom: var(--margin-lg);">Ajustez vos préférences d'apprentissage</p>
+                        
+                        <div style="margin-bottom: var(--margin);">
+                            <label style="color: var(--grey); display: block; margin-bottom: var(--margin-xs);">Temps disponible:</label>
+                            <select style="background: var(--black); color: var(--white); border: 1px solid var(--grey); padding: var(--padding-xs); border-radius: var(--padding-xs); width: 100%;">
+                                <option>30 minutes</option>
+                                <option selected>1 heure</option>
+                                <option>2 heures</option>
+                                <option>3+ heures</option>
+                            </select>
+                        </div>
+                        
+                        <div style="margin-bottom: var(--margin-lg);">
+                            <label style="color: var(--grey); display: block; margin-bottom: var(--margin-xs);">Niveau:</label>
+                            <select style="background: var(--black); color: var(--white); border: 1px solid var(--grey); padding: var(--padding-xs); border-radius: var(--padding-xs); width: 100%;">
+                                <option>Débutant</option>
+                                <option selected>Intermédiaire</option>
+                                <option>Avancé</option>
+                            </select>
+                        </div>
+                        
+                        <div style="display: flex; gap: var(--margin-sm);">
+                            <button class="button-dark" onclick="savePersonalization()">Sauvegarder</button>
+                            <button class="button-light" onclick="closePersonalization()">Annuler</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modal);
+        }
+
+        function savePersonalization() {
+            closePersonalization();
+            showToast('Préférences sauvegardées avec succès ! ✅', 'success');
+        }
+
+        function closePersonalization() {
+            const modal = document.getElementById('personalization-modal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        // Système de notifications toast
+        function showToast(message, type = 'info') {
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) {
+                existingToast.remove();
+            }
+
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            
+            // Couleurs selon le type
+            const colors = {
+                success: 'var(--green)',
+                error: '#fc615c',
+                warning: '#fdbe41',
+                info: 'var(--blue)'
+            };
+            
+            toast.style.background = colors[type] || colors.info;
+            
+            document.body.appendChild(toast);
+            
+            // Animation d'entrée
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+            
+            // Animation de sortie
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Navigation active
+        document.querySelectorAll('.navigation__list__item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Retirer la classe active de tous les éléments
+                document.querySelectorAll('.navigation__list__item').forEach(el => {
+                    el.style.borderRight = 'none';
+                    el.style.color = 'var(--grey)';
+                });
+                
+                // Ajouter la classe active à l'élément cliqué
+                this.style.borderRight = '3px solid var(--green)';
+                this.style.color = 'var(--white)';
+                
+                const text = this.querySelector('span').textContent;
+                showToast(`Navigation : ${text}`, 'info');
+            });
+        });
+
+        // Recherche en temps réel
+        document.querySelector('.search input').addEventListener('input', function() {
+            const query = this.value;
+            if (query.length > 2) {
+                console.log(`Recherche : ${query}`);
+                // Ici on déclencherait une vraie recherche
+            }
+        });
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            showToast('Bienvenue sur FunLearning ! 🎉', 'success');
+            
+            // Marquer l'accueil comme actif par défaut
+            const homeItem = document.querySelector('.navigation__list__item');
+            homeItem.style.borderRight = '3px solid var(--green)';
+            homeItem.style.color = 'var(--white)';
+        });
+
+        // Gestion responsive pour mobile
+        if (window.innerWidth <= 768) {
+            document.body.style.fontSize = '14px';
+        }
+    </script>
+</body>
+</html>

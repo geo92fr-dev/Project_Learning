@@ -19,7 +19,39 @@ const firebaseConfig = {
 
 let app = null;
 let auth = null;
+let db = null;
 let initializationPromise = null;
+
+// Firestore mock pour développement et tests
+function createMockFirestore() {
+  return {
+    collection: () => ({
+      add: async () => ({ id: 'mock-doc-' + Date.now() }),
+      doc: () => ({
+        get: async () => ({ exists: false, data: () => null }),
+        set: async () => ({}),
+        update: async () => ({}),
+        delete: async () => ({})
+      }),
+      where: () => ({
+        orderBy: () => ({
+          get: async () => ({ empty: true, docs: [] })
+        }),
+        get: async () => ({ empty: true, docs: [] })
+      }),
+      orderBy: () => ({
+        get: async () => ({ empty: true, docs: [] })
+      }),
+      get: async () => ({ empty: true, docs: [] })
+    }),
+    doc: () => ({
+      get: async () => ({ exists: false, data: () => null }),
+      set: async () => ({}),
+      update: async () => ({}),
+      delete: async () => ({})
+    })
+  };
+}
 
 // Auth mock pour développement et tests
 function createMockAuth() {
@@ -62,15 +94,17 @@ async function initializeFirebase() {
   initializationPromise = (async () => {
     if (!browser) {
       // Mode simulation pour SSR
-      return { app: null, auth: createMockAuth() };
+      return { app: null, auth: createMockAuth(), db: createMockFirestore() };
     }
 
     try {
       const { initializeApp } = await import("firebase/app");
       const { getAuth, connectAuthEmulator } = await import("firebase/auth");
+      const { getFirestore, connectFirestoreEmulator } = await import("firebase/firestore");
 
       app = initializeApp(firebaseConfig);
       auth = getAuth(app);
+      db = getFirestore(app);
 
       // Connect to auth emulator in development
       if (
@@ -89,11 +123,26 @@ async function initializeFirebase() {
         }
       }
 
+      // Connect to Firestore emulator in development
+      if (
+        import.meta.env.DEV &&
+        import.meta.env.VITE_FIREBASE_EMULATOR_FIRESTORE === "true"
+      ) {
+        try {
+          connectFirestoreEmulator(db, "localhost", 8080);
+          console.log("🔥 Firebase Firestore Emulator connecté");
+        } catch (error) {
+          console.warn(
+            "🔥 Firebase Firestore Emulator non disponible, utilisation production"
+          );
+        }
+      }
+
       console.log("🔥 Firebase initialisé avec succès");
-      return { app, auth };
+      return { app, auth, db };
     } catch (error) {
       console.warn("🔥 Firebase non disponible, mode simulation:", error);
-      return { app: null, auth: createMockAuth() };
+      return { app: null, auth: createMockAuth(), db: createMockFirestore() };
     }
   })();
 
@@ -106,6 +155,12 @@ async function getAuthInstance() {
   return auth;
 }
 
+// Getter pour Firestore (initialise si nécessaire)
+async function getFirestoreInstance() {
+  const { db } = await initializeFirebase();
+  return db;
+}
+
 // Exports
-export { firebaseConfig, initializeFirebase, getAuthInstance };
-export { auth };
+export { firebaseConfig, initializeFirebase, getAuthInstance, getFirestoreInstance };
+export { auth, db };

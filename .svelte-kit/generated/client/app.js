@@ -57,7 +57,8 @@ export const nodes = [
 	() => import('./nodes/53'),
 	() => import('./nodes/54'),
 	() => import('./nodes/55'),
-	() => import('./nodes/56')
+	() => import('./nodes/56'),
+	() => import('./nodes/57')
 ];
 
 export const server_loads = [2];
@@ -96,24 +97,25 @@ export const dictionary = {
 		"/roadmap": [36],
 		"/test-auth": [37],
 		"/test-config-v2": [38],
-		"/test-content-fixed": [40],
+		"/test-content-export-import": [40],
+		"/test-content-fixed": [41],
 		"/test-content": [39],
-		"/test-debug": [41],
-		"/test-exercises": [42],
-		"/test-firebase-clean": [44],
-		"/test-firebase-init": [45],
-		"/test-firebase-simple": [46],
-		"/test-firebase-ultra": [47],
-		"/test-firebase": [43],
-		"/test-markdown": [48],
-		"/test-nouveau": [49],
-		"/test-phase4": [50],
-		"/test-simple": [51],
-		"/tests": [52],
-		"/[matiere]": [53,[3]],
-		"/[matiere]/[niveau]": [54,[3,4]],
-		"/[matiere]/[niveau]/[competence]": [55,[3,4,5]],
-		"/[matiere]/[niveau]/[competence]/[cours]": [56,[3,4,5]]
+		"/test-debug": [42],
+		"/test-exercises": [43],
+		"/test-firebase-clean": [45],
+		"/test-firebase-init": [46],
+		"/test-firebase-simple": [47],
+		"/test-firebase-ultra": [48],
+		"/test-firebase": [44],
+		"/test-markdown": [49],
+		"/test-nouveau": [50],
+		"/test-phase4": [51],
+		"/test-simple": [52],
+		"/tests": [53],
+		"/[matiere]": [54,[3]],
+		"/[matiere]/[niveau]": [55,[3,4]],
+		"/[matiere]/[niveau]/[competence]": [56,[3,4,5]],
+		"/[matiere]/[niveau]/[competence]/[cours]": [57,[3,4,5]]
 	};
 
 export const hooks = {
