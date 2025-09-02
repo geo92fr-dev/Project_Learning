@@ -56,7 +56,7 @@
     
     try {
       const stats = await indexedDBStore.getCacheStats();
-      totalCacheSize = stats.totalSize || 0;
+      totalCacheSize = stats?.size || 0;
     } catch (error) {
       console.error('Erreur calcul taille cache:', error);
     }
