@@ -1,12 +1,14 @@
-<!-- 🎯 Route Exercices - Phase 9 -->
-<!-- Page principale pour les exercices interactifs -->
+<!-- 🎯 Route Exercices - Phase 10.2 PWA Offline -->
+<!-- Page principale pour les exercices interactifs avec support offline -->
 
 <script lang="ts">
   import { onMount } from 'svelte';
   import type { Exercise, ExerciseCollection } from '$lib/types/exercise.js';
   import { exerciseService } from '$lib/services/exerciseService.js';
+  import { isOnline } from '$lib/stores/pwa';
   import ExerciseSession from '$lib/components/exercises/ExerciseSession.svelte';
   import QCMCard from '$lib/components/exercises/QCMCard.svelte';
+  import OfflineExercises from '$lib/components/OfflineExercises.svelte';
 
   // State
   let exercises: Exercise[] = [];
@@ -164,6 +166,9 @@
       </div>
     </div>
 
+    <!-- Section PWA Offline -->
+    <OfflineExercises />
+
     <!-- Sessions rapides -->
     <section class="quick-sessions">
       <h2 class="section-title">🚀 Sessions rapides</h2>
@@ -255,12 +260,17 @@
         </p>
         
         <div class="demo-container">
-          <QCMCard
-            exercise={exercises.find(ex => ex.type === 'qcm') || exercises[0]}
-            showResult={true}
-            timeLimit={null}
-            on:submit={(e) => console.log('Démo soumise:', e.detail)}
-          />
+          {#if exercises.find(ex => ex.type === 'qcm')}
+            {@const qcmExercise = exercises.find(ex => ex.type === 'qcm')}
+            {#if qcmExercise}
+              <QCMCard
+                exercise={qcmExercise}
+                showResult={true}
+                timeLimit={null}
+                on:submit={(e) => console.log('Démo soumise:', e.detail)}
+              />
+            {/if}
+          {/if}
         </div>
       </section>
     {/if}

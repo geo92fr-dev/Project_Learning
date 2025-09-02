@@ -1,5 +1,5 @@
-// 🎯 FunLearning V3.0 - Phase 3 Store Exercices
-// Store réactif pour gestion des exercices et validation
+// 🎯 FunLearning V3.0 - Phase 10.2 Store Exercices avec Offline
+// Store réactif pour gestion des exercices et validation + IndexedDB
 
 import { writable, derived } from "svelte/store";
 import { browser } from "$app/environment";
@@ -11,6 +11,15 @@ import type {
   ExerciseCollection,
   QCMAnswer,
 } from "../types/exercise";
+import { 
+  saveExerciseResult, 
+  getOfflineExercises, 
+  getExerciseById,
+  saveExerciseOffline,
+  type OfflineExercise 
+} from "./indexeddb";
+import { isOnline } from "./pwa";
+import { get } from "svelte/store";
 
 // État global des exercices
 interface ExercisesState {
@@ -21,6 +30,8 @@ interface ExercisesState {
   timeStarted: Date | null;
   collection: ExerciseCollection | null;
   currentIndex: number;
+  offlineMode: boolean;
+  offlineExercises: OfflineExercise[];
 }
 
 // Store principal
@@ -32,6 +43,8 @@ const initialState: ExercisesState = {
   timeStarted: null,
   collection: null,
   currentIndex: 0,
+  offlineMode: false,
+  offlineExercises: [],
 };
 
 export const exercisesStore = writable<ExercisesState>(initialState);
@@ -183,9 +196,216 @@ export const exerciseActions = {
     });
   },
 
-  // Réinitialiser l'état
-  reset: () => {
+    // Réinitialiser complètement les exercices
+  resetExercises: () => {
     exercisesStore.set(initialState);
+  },
+
+    // ===== MÉTHODES OFFLINE ÉTENDUES =====
+  
+  async cachePopularExercises(): Promise<void> {
+    if (!browser) return;
+    
+    try {
+      // Récupérer les exercices populaires (par exemple les plus récents)
+      const response = await fetch('/api/exercises?popular=true&limit=10');
+      if (!response.ok) throw new Error('Erreur API');
+      
+      const popularExercises = await response.json();
+      
+      for (const exercise of popularExercises) {
+        await this.cacheExerciseOffline(exercise.id);
+      }
+      
+      console.log(`✅ ${popularExercises.length} exercices populaires mis en cache`);
+    } catch (error) {
+      console.error('❌ Erreur cache exercices populaires:', error);
+      throw error;
+    }
+  },
+  
+  async cacheExercisesByDifficulty(maxDifficulty: number): Promise<void> {
+    if (!browser) return;
+    
+    try {
+      const response = await fetch(`/api/exercises?difficulty_max=${maxDifficulty}&limit=5`);
+      if (!response.ok) throw new Error('Erreur API');
+      
+      const exercises = await response.json();
+      
+      for (const exercise of exercises) {
+        await this.cacheExerciseOffline(exercise.id);
+      }
+      
+      console.log(`✅ ${exercises.length} exercices (difficulté ≤${maxDifficulty}) mis en cache`);
+    } catch (error) {
+      console.error(`❌ Erreur cache exercices difficulté ${maxDifficulty}:`, error);
+      throw error;
+    }
+  },
+
+  // Charger les exercices disponibles offline
+  loadOfflineExercises: async () => {
+    try {
+      const offlineExercises = await getOfflineExercises();
+      exercisesStore.update(state => ({
+        ...state,
+        offlineExercises,
+        offlineMode: !get(isOnline)
+      }));
+      console.log(`[Exercises] ${offlineExercises.length} exercices offline chargés`);
+    } catch (error) {
+      console.error('[Exercises] Erreur chargement exercices offline:', error);
+    }
+  },
+
+  // Sauvegarder un exercice pour utilisation offline
+  cacheExerciseOffline: async (exercise: Exercise) => {
+    try {
+      // Mapper les niveaux de difficulté
+      const difficultyMap: Record<string, 'beginner' | 'intermediate' | 'advanced'> = {
+        'debutant': 'beginner',
+        'intermediaire': 'intermediate', 
+        'avance': 'advanced',
+        'beginner': 'beginner',
+        'intermediate': 'intermediate',
+        'advanced': 'advanced'
+      };
+
+      const offlineExercise: OfflineExercise = {
+        id: exercise.id,
+        type: exercise.type,
+        title: exercise.title,
+        content: exercise,
+        difficulty: difficultyMap[exercise.difficulty as string] || 'intermediate',
+        tags: exercise.tags || [],
+        cachedAt: Date.now(),
+        offline: true
+      };
+
+      await saveExerciseOffline(offlineExercise);
+      
+      // Mettre à jour la liste locale
+      exercisesStore.update(state => ({
+        ...state,
+        offlineExercises: [...state.offlineExercises, offlineExercise]
+      }));
+
+      console.log(`[Exercises] Exercice ${exercise.id} mis en cache offline`);
+    } catch (error) {
+      console.error('[Exercises] Erreur cache exercice offline:', error);
+    }
+  },
+
+  // Charger un exercice offline par ID
+  loadOfflineExercise: async (exerciseId: string) => {
+    try {
+      const offlineExercise = await getExerciseById(exerciseId);
+      if (offlineExercise) {
+        exercisesStore.update(state => ({
+          ...state,
+          currentExercise: offlineExercise.content,
+          timeStarted: new Date(),
+          offlineMode: true
+        }));
+        console.log(`[Exercises] Exercice offline ${exerciseId} chargé`);
+      }
+    } catch (error) {
+      console.error('[Exercises] Erreur chargement exercice offline:', error);
+    }
+  },
+
+  // Soumettre une réponse en mode offline
+  submitAnswerOffline: async (answer: any): Promise<ExerciseResult | null> => {
+    return new Promise(async (resolve) => {
+      const currentState = get(exercisesStore);
+      
+      if (!currentState.currentExercise) {
+        resolve(null);
+        return;
+      }
+
+      const exercise = currentState.currentExercise;
+      const timeSpent = currentState.timeStarted
+        ? Math.floor((Date.now() - currentState.timeStarted.getTime()) / 1000)
+        : 0;
+
+      const userAnswer: UserAnswer = {
+        exerciseId: exercise.id,
+        type: exercise.type,
+        answer,
+        timeSpent,
+        submittedAt: new Date(),
+      };
+
+      // Valider selon le type d'exercice
+      let result: ExerciseResult | null = null;
+      
+      if (exercise.type === 'qcm') {
+        result = validateQCMAnswer(exercise as QCMExercise, answer.selectedOptions, userAnswer);
+      }
+      // TODO: Ajouter validation pour autres types
+
+      if (result) {
+        try {
+          // Sauvegarder le résultat en IndexedDB (sera syncé plus tard)
+          await saveExerciseResult({
+            exerciseId: result.exerciseId,
+            userId: result.userId,
+            answers: answer,
+            score: result.score,
+            isCorrect: result.isCorrect
+          });
+
+          console.log(`[Exercises] Résultat sauvé offline pour exercice ${exercise.id}`);
+        } catch (error) {
+          console.error('[Exercises] Erreur sauvegarde résultat offline:', error);
+        }
+      }
+
+      // Mettre à jour le store
+      exercisesStore.update(state => ({
+        ...state,
+        userAnswer,
+        result,
+        isSubmitting: false,
+      }));
+
+      resolve(result);
+    });
+  },
+
+  // Basculer en mode offline/online
+  toggleOfflineMode: () => {
+    exercisesStore.update(state => ({
+      ...state,
+      offlineMode: !state.offlineMode
+    }));
+  },
+
+  // Synchroniser les exercices depuis le serveur
+  syncExercisesFromServer: async () => {
+    if (!get(isOnline)) {
+      console.log('[Exercises] Sync impossible: hors ligne');
+      return;
+    }
+
+    try {
+      // TODO: Récupérer les exercices depuis l'API
+      const response = await fetch('/api/exercises');
+      if (response.ok) {
+        const exercises = await response.json();
+        
+        // Mettre en cache les exercices importants
+        for (const exercise of exercises.slice(0, 10)) { // Limiter à 10 pour la démo
+          await exerciseActions.cacheExerciseOffline(exercise);
+        }
+
+        console.log(`[Exercises] ${exercises.length} exercices synchronisés`);
+      }
+    } catch (error) {
+      console.error('[Exercises] Erreur synchronisation exercices:', error);
+    }
   },
 };
 

@@ -101,15 +101,15 @@
 
   function renderTextWithBlanks(): Array<{type: 'text' | 'blank', content: string, index?: number}> {
     const parts = exercise.text.split(/\{\{blank\}\}/);
-    const result = [];
+    const result: Array<{type: 'text' | 'blank', content: string, index?: number}> = [];
     
     for (let i = 0; i < parts.length; i++) {
       if (parts[i]) {
-        result.push({ type: 'text', content: parts[i] });
+        result.push({ type: 'text' as const, content: parts[i] });
       }
       
       if (i < parts.length - 1) {
-        result.push({ type: 'blank', content: '', index: i });
+        result.push({ type: 'blank' as const, content: '', index: i });
       }
     }
     
@@ -130,9 +130,11 @@
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   }
 
-  function handleKeyPress(event: KeyboardEvent, index: number) {
+  function handleKeyPress(event: KeyboardEvent) {
     if (event.key === 'Enter') {
       event.preventDefault();
+      const target = event.target as HTMLInputElement;
+      const index = parseInt(target.dataset.index || '0');
       if (index < exercise.blanks.length - 1) {
         // Passer au champ suivant
         inputRefs[index + 1]?.focus();
@@ -142,6 +144,15 @@
           submitAnswer();
         }
       }
+    }
+  }
+
+  function handleInputChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const input = target.closest('input');
+    if (input) {
+      const index = parseInt(input.dataset.index || '0');
+      updateAnswer(index, target.value || '');
     }
   }
 
@@ -195,8 +206,9 @@
             class={getInputClass(part.index)}
             placeholder="..."
             disabled={submitted}
-            on:input={(e) => updateAnswer(part.index, e.target.value)}
-            on:keypress={(e) => handleKeyPress(e, part.index)}
+            data-index={part.index}
+            on:input={handleInputChange}
+            on:keypress={handleKeyPress}
             autocomplete="off"
             spellcheck="false"
           />

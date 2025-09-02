@@ -1,0 +1,122 @@
+{
+  "name": "FunLearning - Plateforme d'Apprentissage",
+  "short_name": "FunLearning",
+  "description": "Plateforme d'apprentissage interactive avec exercices, cours et suivi de progression",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#6366f1",
+  "background_color": "#ffffff",
+  "lang": "fr",
+  "scope": "/",
+  "categories": ["education", "learning", "productivity"],
+  "icons": [
+    {
+      "src": "/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Exercices",
+      "short_name": "Exercices",
+      "description": "Accéder aux exercices interactifs",
+      "url": "/exercises",
+      "icons": [
+        {
+          "src": "/icons/shortcut-exercises.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Cours",
+      "short_name": "Cours",
+      "description": "Consulter les cours disponibles",
+      "url": "/lessons",
+      "icons": [
+        {
+          "src": "/icons/shortcut-lessons.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Progression",
+      "short_name": "Stats",
+      "description": "Voir votre progression",
+      "url": "/progress",
+      "icons": [
+        {
+          "src": "/icons/shortcut-progress.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "capture_links": "existing-client-navigate",
+  "edge_side_panel": {
+    "preferred_width": 400
+  }
+}

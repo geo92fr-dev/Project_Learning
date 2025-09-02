@@ -7,7 +7,7 @@ import type {
   Course,
   UserProgress,
   Competence,
-} from "../collections";
+} from "./firebase/collections";
 
 // === STORES TEMPORAIRES ===
 export const users = writable<UserProfile[]>([]);

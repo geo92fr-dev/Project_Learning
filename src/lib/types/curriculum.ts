@@ -108,13 +108,18 @@ export interface LearningPath {
 }
 
 export interface CurriculumStats {
-  totalCompetences: number;
-  totalCourses: number;
-  totalExercises: number;
-  totalEstimatedTime: number;
-  byMatiere: Record<string, number>;
-  byNiveau: Record<string, number>;
-  byDifficulty: Record<string, number>;
+  competences: {
+    total: number;
+    byMatiere: Record<string, number>;
+    byNiveau: Record<string, number>;
+    byDifficulty: Record<string, number>;
+  };
+  courses: {
+    total: number;
+    byType: Record<string, number>;
+    totalEstimatedTime: number;
+    averageDuration: number;
+  };
 }
 
 export interface UserCurriculumStats {
@@ -192,3 +197,11 @@ export type PaginatedResult<T> = {
   page?: number;
   pageSize?: number;
 };
+
+export interface CurriculumFilter {
+  matiere?: string;
+  niveau?: string;
+  difficulty?: 'beginner' | 'intermediate' | 'advanced' | 'expert';
+  type?: 'lesson' | 'exercises';
+  query?: string;
+}

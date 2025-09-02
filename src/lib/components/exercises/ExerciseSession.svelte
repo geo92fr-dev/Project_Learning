@@ -122,7 +122,7 @@
   }
 
   function exitSession() {
-    dispatch('sessionExit');
+    dispatch('sessionExit', {});
   }
 
   function getExerciseComponent(exercise: Exercise) {
@@ -189,14 +189,31 @@
     <!-- Exercice actuel -->
     {#if currentExercise}
       <div class="exercise-container">
-        <svelte:component 
-          this={getExerciseComponent(currentExercise)}
-          exercise={currentExercise}
-          showResult={true}
-          timeLimit={timeLimit}
-          on:submit={handleExerciseAnswer}
-          on:timeUp={handleExerciseAnswer}
-        />
+        {#if currentExercise.type === 'qcm'}
+          <QCMCard 
+            exercise={currentExercise}
+            showResult={true}
+            timeLimit={timeLimit}
+            on:submit={handleExerciseAnswer}
+            on:timeUp={handleExerciseAnswer}
+          />
+        {:else if currentExercise.type === 'true-false'}
+          <TrueFalseCard 
+            exercise={currentExercise}
+            showResult={true}
+            timeLimit={timeLimit}
+            on:submit={handleExerciseAnswer}
+            on:timeUp={handleExerciseAnswer}
+          />
+        {:else if currentExercise.type === 'fill-blanks'}
+          <FillBlanksCard 
+            exercise={currentExercise}
+            showResult={true}
+            timeLimit={timeLimit}
+            on:submit={handleExerciseAnswer}
+            on:timeUp={handleExerciseAnswer}
+          />
+        {/if}
       </div>
     {/if}
 
@@ -251,13 +268,13 @@
 
 {:else}
   <!-- Résultats de session -->
-  <div class="session-results">
-    <div class="results-header">
-      <h2>🎉 Session terminée !</h2>
-      <p>Voici un récapitulatif de vos performances</p>
-    </div>
-
+  {#if sessionComplete}
     {@const stats = calculateSessionStats()}
+    <div class="session-results">
+      <div class="results-header">
+        <h2>🎉 Session terminée !</h2>
+        <p>Voici un récapitulatif de vos performances</p>
+      </div>
     
     <div class="results-grid">
       <div class="result-card">
@@ -329,6 +346,7 @@
       </button>
     </div>
   </div>
+  {/if}
 {/if}
 
 <style>

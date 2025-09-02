@@ -3,7 +3,7 @@
  * Service principal pour la gestion du curriculum et des compétences
  */
 
-import type { Competence, Course, UserProgress } from '../types/curriculum';
+import type { Competence, Course, UserProgress } from '../types/curriculum.js';
 
 // Import des données générées
 import competencesData from '../data/competences.json';

@@ -95,8 +95,9 @@
     <h2 class="text-lg font-semibold mb-4">🔍 Filtres</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Matière</label>
+        <label for="matiere-select" class="block text-sm font-medium text-gray-700 mb-2">Matière</label>
         <select 
+          id="matiere-select"
           bind:value={selectedMatiere}
           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
@@ -108,8 +109,9 @@
       </div>
       
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Niveau</label>
+        <label for="niveau-select" class="block text-sm font-medium text-gray-700 mb-2">Niveau</label>
         <select 
+          id="niveau-select"
           bind:value={selectedNiveau}
           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
@@ -201,6 +203,7 @@
   .line-clamp-3 {
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }

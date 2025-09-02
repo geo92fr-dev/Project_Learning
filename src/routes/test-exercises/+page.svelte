@@ -7,7 +7,7 @@
     exerciseProgress,
     exerciseActions,
   } from "$lib/stores/exercises";
-  import type { QCMExercise, ExerciseCollection } from "$lib/types/exercise";
+  import type { QCMExercise, ExerciseCollection, ExerciseResult } from "$lib/types/exercise";
 
   // État local
   let currentResult: any = null;
@@ -75,15 +75,24 @@
   });
 
   async function handleSubmit(
-    event: CustomEvent<{ selectedOptions: string[] }>
+    event: CustomEvent<{ exercise: QCMExercise; result: ExerciseResult; }> | CustomEvent<{ selectedOptions: string[] }>
   ) {
-    const result = await exerciseActions.submitQCMAnswer(
-      event.detail.selectedOptions
-    );
-    if (result) {
-      currentResult = result;
+    // Gérer les deux formats d'événements
+    if ('selectedOptions' in event.detail) {
+      // Format ancien
+      const result = await exerciseActions.submitQCMAnswer(
+        event.detail.selectedOptions
+      );
+      if (result) {
+        currentResult = result;
+        showResult = true;
+        selectedOptions = event.detail.selectedOptions;
+      }
+    } else {
+      // Format nouveau avec exercice et résultat
+      currentResult = event.detail.result;
       showResult = true;
-      selectedOptions = event.detail.selectedOptions;
+      selectedOptions = []; // À adapter selon le besoin
     }
   }
 
